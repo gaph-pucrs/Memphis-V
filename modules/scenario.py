@@ -76,8 +76,6 @@ class Scenario:
 		makedirs(self.base_dir+"/management", exist_ok=True)
 		makedirs(self.base_dir+"/management/ma", exist_ok=True)
 		makedirs(self.base_dir+"/applications", exist_ok=True)
-		makedirs(self.base_dir+"/libmemphis/src/include", exist_ok=True)
-		makedirs(self.base_dir+"/libmutils/src/include", exist_ok=True)
 
 		copyfile("{}/Phivers/sim/Makefile".format(self.testcase_path), "{}/Makefile".format(self.base_dir))
 		copyfile("{}/Phivers/sim/vsim.mk".format(self.testcase_path), "{}/vsim.mk".format(self.base_dir))
