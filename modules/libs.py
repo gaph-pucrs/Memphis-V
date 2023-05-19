@@ -22,12 +22,3 @@ class Libs:
 		make = run(["make", "-C", "{}/libmemphis".format(self.testcase_path), "-j", str(NCPU)])
 		if make.returncode != 0:
 			raise Exception("Error building libraries.")
-
-	def install(self):
-		make = run(["make", "-C", "{}/libmutils".format(self.testcase_path), "install"])
-		if make.returncode != 0:
-			raise Exception("Error installing libraries.")
-		
-		make = run(["make", "-C", "{}/libmemphis".format(self.testcase_path), "install"])
-		if make.returncode != 0:
-			raise Exception("Error building libraries.")

@@ -7,30 +7,17 @@ from repository import Repository
 from yaml import safe_load
 
 class Application:
-	def __init__(self, app, app_name, instance, platform_path, scenario_path, testcase_path):
+	def __init__(self, app_name, instance, platform_path, base_path, testcase_path, definitions=None, start_ms=None, mapping=None):
 		self.app_name = app_name
 		self.testcase_path = testcase_path
 
-		try:
-			self.start_ms = app["start_time_ms"]
-		except:
-			print("Using 0 ms as starting time for app {}".format(self.app_name))
-			self.start_ms = 0
-
-		try:
-			self.definitions = app["definitions"]
-		except:
-			self.definitions = []
+		self.definitions = definitions
+		self.start_ms = start_ms
+		self.mapping = mapping
    
-		try:
-			self.mapping = app["static_mapping"]
-		except:
-			print("Using pure dinamic mapping for app {}".format(self.app_name))
-			self.mapping = []
-
 		self.instance = instance
 		self.source_path = "{}/applications/{}".format(platform_path, self.app_name)
-		self.base_path = "{}/applications".format(scenario_path)
+		self.base_path = base_path
 		self.app_path = "{}_{}".format(self.app_name, instance)
 
 		try:
@@ -97,7 +84,6 @@ class Application:
 
 			out = check_output(["riscv64-elf-readelf", path, "-h"]).split(b'\n')[10].split(b' ')[-1]
 			self.entry_points[task] = int(out, 16)
-
 			
 		print("\n******************** {} page size report ********************".format(self.app_name.center(20)))
 		for task in self.tasks:
@@ -116,9 +102,10 @@ class Application:
 	def generate_descr(self, repodebug):
 		descr = Repository()
 
-		# repo.add("".format(len(self.tasks)), "Number of tasks of application {}".format(self.app_name))
-
 		dep_list, dep_list_len = self.__get_dep_list()
+
+		descr.add("{}".format(len(self.tasks)), "Number of tasks")
+		descr.add("{}".format(dep_list_len), "Graph size")
 
 		for t in range(len(self.tasks)):
 			for c in range(len(dep_list[t])):
@@ -137,8 +124,6 @@ class Application:
 
 		if repodebug:
 			descr.write_debug("{}/{}_debug.txt".format(self.base_path, self.get_full_name()))
-
-		return dep_list_len
 
 	def get_tasks(self):
 		return self.tasks

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 from yaml import safe_load
 from os import makedirs
-from distutils.dir_util import remove_tree, copy_tree
-from shutil import copyfile, copy
+from distutils.dir_util import remove_tree
+from shutil import copyfile
 from management import Management
 from application import Application
 from repository import Repository
@@ -41,20 +41,34 @@ class Scenario:
 
 		self.management = Management(self.platform_path, self.base_dir, self.testcase_path, yaml["management"])
 
+		apps_dir = "{}/applications".format(testcase_path)
 		self.applications = []
-		instances = {}
 
 		try:
 			for app in yaml["apps"]:
 				app_name = app["name"]
-				try:
-					instances[app_name] += 1
-				except:
-					instances[app_name] = 0
-     
-				self.applications.append(Application(app, app_name, instances[app_name], self.platform_path, self.base_dir, self.testcase_path))
 
-			self.applications.sort(key=lambda x: x.start_ms)
+				app_inst = "default"
+				try:
+					app_inst = app["instance"]
+				except:
+					pass
+
+				start_ms = 0
+				try:
+					start_ms = app["start_time_ms"]
+				except:
+					print("Using 0 ms as starting time for app {}".format(app_name))
+
+				mapping = []
+				try:
+					mapping = app["static_mapping"]
+				except:
+					print("Using pure dinamic mapping for app {}".format(app_name))
+					
+				self.applications.append(Application(app_name, app_inst, platform_path, apps_dir, testcase_path, start_ms=start_ms, mapping=mapping))
+
+			self.applications.sort(key=lambda x: x.start_ms) # Sort by start time
 		except:
 			pass
 
@@ -66,23 +80,24 @@ class Scenario:
 		if self.__is_obsolete():
 			remove_tree(self.base_dir)
 
+		# Maybe change this block to simulation
 		makedirs(self.base_dir+"/debug/pipe", exist_ok=True)
 		makedirs(self.base_dir+"/debug/request", exist_ok=True)
 		makedirs(self.base_dir+"/debug/available", exist_ok=True)
 		makedirs(self.base_dir+"/debug/ram", exist_ok=True)
 		makedirs(self.base_dir+"/debug/cpu", exist_ok=True)
 		makedirs(self.base_dir+"/log", exist_ok=True)
+		open("{}/debug/traffic_router.txt".format(self.base_dir), "w").close()
+		# end
+
 		makedirs(self.base_dir+"/management", exist_ok=True)
 		makedirs(self.base_dir+"/management/ma", exist_ok=True)
-		makedirs(self.base_dir+"/applications", exist_ok=True)
 
+		# Change to symbolic link?
 		copyfile("{}/Phivers/sim/sim.mk".format(self.testcase_path), "{}/sim.mk".format(self.base_dir))
-		
-		copy_tree("{}/applications/common".format(self.platform_path), "{}/applications/common".format(self.base_dir))
-
-		open("{}/debug/traffic_router.txt".format(self.base_dir), "w").close()
 		copyfile(self.base, self.file)
 
+		# Maybe change to symbolic link
 		if not skipdebug:
 			copyfile("{}/services.cfg".format(self.testcase_path), "{}/debug/services.cfg".format(self.base_dir))
 			copyfile("{}/cpu.cfg".format(self.testcase_path), "{}/debug/cpu.cfg".format(self.base_dir))
@@ -90,48 +105,28 @@ class Scenario:
 			self.__append_platform()
 
 		self.management.copy()
-
-		for app in self.applications:
-			app.copy()
-
 		print("Scenario copied.")
 
 	def build(self, repodebug):
 		print("Building scenario...")
 
 		self.management.build()
-		for app in self.applications:
-			app.build()
-
 		self.management.check_size(self.PKG_PAGE_SIZE_INST, self.PKG_PAGE_SIZE_DATA)
-		for app in self.applications:
-			app.check_size(self.PKG_PAGE_SIZE_INST, self.PKG_PAGE_SIZE_DATA)
-
 		self.management.generate_descr(self.base_dir, repodebug)
-		graph_sizes = []
-		for app in self.applications:
-			graph_size = app.generate_descr(repodebug)
-			graph_sizes.append(graph_size)
-
 		self.management.generate_start(self.base_dir, repodebug)
-		self.__generate_app_start(graph_sizes, repodebug)
+
+		self.__generate_app_start(repodebug)
 
 		print("Scenario built.")
 
-	def __generate_app_start(self, graph_sizes, repodebug):
+	def __generate_app_start(self, repodebug):
 		start = Repository()
 
-		for idx, app in enumerate(self.applications):
+		for app in self.applications:
 			start.add(app.get_full_name(), "App name")
-			
-			start.add("{}".format(app.start_ms), "Start time (ms)")
-
-			start.add("{}".format(graph_sizes[idx]), "Graph size")
+			start.add(app.start_ms, "Start time (ms)")
 
 			tasks = app.get_tasks()
-			task_cnt = len(tasks)
-			start.add("{}".format(task_cnt), "Number of tasks")
-
 			for task in app.mapping:
 				if task not in tasks:
 					raise Exception("Task {} in static_mapping list not present in application {}".format(task, app.app_name))
@@ -169,7 +164,6 @@ class Scenario:
 				task_lines.append("{} {}\n".format(tasks[t], app_id << 8 | t))
 
 			app_id += 1
-
 
 		cfg = open("{}/debug/platform.cfg".format(self.base_dir), "a")
 

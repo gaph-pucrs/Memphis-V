@@ -102,7 +102,6 @@ class Testcase:
 		print("Building testcase...")
 		
 		self.libs.build()
-		self.libs.install()
 		
 		self.kernel.build()
 
