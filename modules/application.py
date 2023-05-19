@@ -113,7 +113,7 @@ class Application:
 					raise Exception("Task {} data memory usage of {} is bigger than page size of {}".format(task, dsize, size_data))
 		print("****************** End {} page size report ******************".format(self.app_name.center(20)))
 
-	def generate_descr(self):
+	def generate_descr(self, repodebug):
 		descr = Repository()
 
 		# repo.add("".format(len(self.tasks)), "Number of tasks of application {}".format(self.app_name))
@@ -134,7 +134,9 @@ class Application:
 			descr.add(task, "Task name")
 
 		descr.write("{}/{}.txt".format(self.base_path, self.get_full_name()))
-		descr.write_debug("{}/{}_debug.txt".format(self.base_path, self.get_full_name()))
+
+		if repodebug:
+			descr.write_debug("{}/{}_debug.txt".format(self.base_path, self.get_full_name()))
 
 		return dep_list_len
 

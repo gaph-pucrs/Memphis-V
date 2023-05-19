@@ -108,7 +108,7 @@ class Scenario:
 
 		print("Scenario copied.")
 
-	def build(self):
+	def build(self, repodebug):
 		print("Building scenario...")
 
 		self.management.build()
@@ -119,18 +119,18 @@ class Scenario:
 		for app in self.applications:
 			app.check_size(self.PKG_PAGE_SIZE_INST, self.PKG_PAGE_SIZE_DATA)
 
-		self.management.generate_descr(self.base_dir)
+		self.management.generate_descr(self.base_dir, repodebug)
 		graph_sizes = []
 		for app in self.applications:
-			graph_size = app.generate_descr()
+			graph_size = app.generate_descr(repodebug)
 			graph_sizes.append(graph_size)
 
-		self.management.generate_start(self.base_dir)
-		self.__generate_app_start(graph_sizes)
+		self.management.generate_start(self.base_dir, repodebug)
+		self.__generate_app_start(graph_sizes, repodebug)
 
 		print("Scenario built.")
 
-	def __generate_app_start(self, graph_sizes):
+	def __generate_app_start(self, graph_sizes, repodebug):
 		start = Repository()
 
 		for idx, app in enumerate(self.applications):
@@ -162,7 +162,9 @@ class Scenario:
 				start.add("{:04x}".format(address), "Task {} is {}".format(task, map_comment))
 		
 		start.write(self.base_dir+"/app_start.txt")
-		start.write_debug(self.base_dir+"/app_start_debug.txt")
+		
+		if repodebug:
+			start.write_debug(self.base_dir+"/app_start_debug.txt")
 
 	def __append_platform(self):
 

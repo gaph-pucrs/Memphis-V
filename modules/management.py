@@ -112,7 +112,7 @@ class Management:
 					raise Exception("Task {} data memory usage of {} is bigger than page size of {}".format(task, dsize, size_data))
 		print("*************************** End MA page size report ***************************")
 
-	def generate_descr(self, scenario_path):
+	def generate_descr(self, scenario_path, repodebug):
 		descr = Repository()
 
 		for task in self.tasks:
@@ -120,9 +120,11 @@ class Management:
 			copyfile("{}/management/{}/{}.txt".format(scenario_path, task["task"], task["task"]), "{}/management/ma/{}.txt".format(scenario_path, task["task"]))
 		
 		descr.write      ("{}/management/ma.txt".format(scenario_path))
-		descr.write_debug("{}/management/ma_debug.txt".format(scenario_path))
 
-	def generate_start(self, scenario_path):
+		if repodebug:
+			descr.write_debug("{}/management/ma_debug.txt".format(scenario_path))
+
+	def generate_start(self, scenario_path, repodebug):
 		start = Repository()
 
 		start.add(str(len(self.tasks)), "Number of tasks")
@@ -147,7 +149,8 @@ class Management:
 				raise Exception("All management tasks must have a config.yaml with its task type tag")
 		
 		start.write("{}/ma_start.txt".format(scenario_path))
-		start.write_debug("{}/ma_start_debug.txt".format(scenario_path))
+		if repodebug:
+			start.write_debug("{}/ma_start_debug.txt".format(scenario_path))
 
 	def get_tasks(self):
 		return self.task_names
