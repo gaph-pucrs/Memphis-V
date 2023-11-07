@@ -7,3 +7,6 @@
 [submodule "MAestro"]
 	path = MAestro
 	url = https://github.com/gaph-pucrs/MAestro
+[submodule "Phivers"]
+	path = Phivers
+	url = https://github.com/gaph-pucrs/Phivers
