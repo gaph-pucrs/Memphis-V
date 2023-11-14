@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 import sys
 from argparse import ArgumentParser
-from os import getenv, makedirs, remove
+from os import getenv, makedirs
 from os.path import exists
 from distutils.dir_util import remove_tree
 from subprocess import Popen
+from pathlib import Path
 
 def testcase_build(platform_path, testcase_file):
 	if not exists(testcase_file):
@@ -151,13 +152,10 @@ if __name__ == "__main__":
 		except Exception as ex:
 			sys.exit("\nERROR: {}".format(ex))
 
-	ENV_PLATFORM_PATH = "MA_MEMPHIS_PATH"
-	PLATFORM_PATH = None
+	PLATFORM_PATH = Path(__file__).parent.resolve().parent
 	if option == "testcase" or option == "scenario" or option == "all":
-		PLATFORM_PATH = getenv(ENV_PLATFORM_PATH)
 		if PLATFORM_PATH is None:
-			sys.exit("ERROR: "+ENV_PLATFORM_PATH+" not defined.")
-
+			sys.exit("ERROR: PLATFORM_PATH not defined.")
 	
 	testcase_file = ""
 	if option == "testcase" or option == "all":
@@ -183,11 +181,3 @@ if __name__ == "__main__":
 			memphis_all(PLATFORM_PATH, DEBUGGER_PATH, testcase_file, scenario_file, timeout, nogui)
 	except Exception as ex:
 		sys.exit("\nERROR: {}".format(ex))
-
-
-	# testcase_file = args.testcase
-
-	# try:
-	# 	testcase_build(PLATFORM_PATH, testcase_file)
-	# except Exception as ex:
-	# 	sys.exit("\nERROR: {}".format(ex))
