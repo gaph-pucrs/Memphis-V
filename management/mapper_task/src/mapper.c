@@ -169,14 +169,14 @@ void _map_do(map_t *mapper, app_t *app)
 	}
 
 	/* Send allocation message */
-	size_t out_size = (task_cnt * 2 + 1) << 2;
+	size_t out_size = (task_cnt + 2) << 2;
 	int *out_msg = malloc(out_size);
 	out_msg[0] = APP_ALLOCATION_REQUEST;
-	int *payload = &(out_msg[1]);
+	out_msg[1] = app_get_id(app);
+	int *payload = &(out_msg[2]);
 	for(int i = 0; i < task_cnt; i++){
-		payload[i*2] = task_get_id(&tasks[i]);
 		pe_t *pe = task_get_pe(&tasks[i]);
-		payload[i*2 + 1] = pe_get_addr(pe);
+		payload[i] = pe_get_addr(pe);
 	}
 
 	memphis_send_any(out_msg, out_size, app_get_injector(app));
