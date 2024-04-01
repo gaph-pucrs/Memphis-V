@@ -9,24 +9,25 @@ class Libs:
 		self.testcase_path = testcase_path
 
 	def copy(self):
-		copy_tree(self.platform_path+"/libmemphis", self.testcase_path+"/libmemphis", update=1)
-		copy_tree(self.platform_path+"/libmutils", self.testcase_path+"/libmutils", update=1)
+		copy_tree("{}/libmemphis".format(self.platform_path), "{}/libmemphis".format(self.testcase_path), update=1)
+		copy_tree("{}/libmutils".format(self.platform_path), "{}/libmutils".format(self.testcase_path), update=1)
 
 	def build(self):
 		NCPU = cpu_count()
-		make = run(["make", "-C", self.testcase_path+"/libmemphis", "-j", str(NCPU)])
+
+		make = run(["make", "-C", "{}/libmutils".format(self.testcase_path), "-j", str(NCPU)])
 		if make.returncode != 0:
 			raise Exception("Error building libraries.")
-
-		make = run(["make", "-C", self.testcase_path+"/libmutils", "-j", str(NCPU)])
+		
+		make = run(["make", "-C", "{}/libmemphis".format(self.testcase_path), "-j", str(NCPU)])
 		if make.returncode != 0:
 			raise Exception("Error building libraries.")
 
 	def install(self):
-		make = run(["make", "-C", self.testcase_path+"/libmemphis", "install"])
-		if make.returncode != 0:
-			raise Exception("Error building libraries.")
-
-		make = run(["make", "-C", self.testcase_path+"/libmutils", "install"])
+		make = run(["make", "-C", "{}/libmutils".format(self.testcase_path), "install"])
 		if make.returncode != 0:
 			raise Exception("Error installing libraries.")
+		
+		make = run(["make", "-C", "{}/libmemphis".format(self.testcase_path), "install"])
+		if make.returncode != 0:
+			raise Exception("Error building libraries.")

@@ -11,7 +11,7 @@ def testcase_build(platform_path, testcase_file):
 	if not exists(testcase_file):
 		raise Exception("Testcase {} not found.".format(testcase_file))
 		
-	sys.path.append(platform_path+"/modules")
+	sys.path.append("{}/modules".format(platform_path))
 	from testcase import Testcase
 	tc = Testcase(platform_path, testcase_file)
 	tc.copy()

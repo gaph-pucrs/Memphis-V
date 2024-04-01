@@ -5,62 +5,48 @@ from multiprocessing import cpu_count
 from os import environ
 
 class Hardware:
-	def __init__(self, hw, platform_path, testcase_path):
-		self.PKG_PAGE_SIZE 			= hw["page_size_KB"]
-		self.PKG_MAX_LOCAL_TASKS 	= hw["tasks_per_PE"]
-		self.PKG_N_PE_X 			= hw["mpsoc_dimension"][0]
-		self.PKG_N_PE_Y 			= hw["mpsoc_dimension"][1]
-		self.peripherals			= hw["Peripherals"]
-
-		try:
-			self.definitions = hw["definitions"]
-		except:
-			self.definitions = {}
-
-		self.memory_size = self.PKG_PAGE_SIZE*(self.PKG_MAX_LOCAL_TASKS + 1) # 1 page for kernel
-
-		self.PKG_N_PE = self.PKG_N_PE_X * self.PKG_N_PE_Y
-
-		self.platform_path = platform_path
-		self.testcase_path = testcase_path
+	def __init__(
+		self, 
+		platform_path, 
+		testcase_path, 
+		page_size_inst, 
+		page_size_data, 
+		max_local_tasks, 
+		n_pe_x, 
+		n_pe_y, 
+		peripherals, 
+		definitions
+	):
+		self.platform_path 			= platform_path
+		self.testcase_path 			= testcase_path
+		self.PKG_PAGE_SIZE_INST		= page_size_inst
+		self.PKG_PAGE_SIZE_DATA		= page_size_data
+		self.PKG_MAX_LOCAL_TASKS 	= max_local_tasks
+		self.PKG_N_PE_X 			= n_pe_x
+		self.PKG_N_PE_Y 			= n_pe_y
+		self.peripherals			= peripherals
+		self.definitions			= definitions
 
 	def copy(self):
-		copy_tree(self.platform_path+"/hardware", self.testcase_path+"/hardware", update=1)
+		copy_tree("{}/Phivers".format(self.platform_path), "{}/Phivers".format(self.testcase_path), update=1)
 		self.generate_definitions()
 
 	def generate_definitions(self):
 		definitions = HardwareDefinitions()
-		definitions.define("PAGE_SIZE_BYTES", str(self.PKG_PAGE_SIZE*1024))
-		definitions.define("MEMORY_SIZE_BYTES", str(self.memory_size*1024))
 		definitions.define("N_PE_X", str(self.PKG_N_PE_X))
 		definitions.define("N_PE_Y", str(self.PKG_N_PE_Y))
-		definitions.define("N_PE", str(self.PKG_N_PE))
-
-		io_list = []
+		definitions.define("TASKS_PER_PE", str(self.PKG_MAX_LOCAL_TASKS))
+		definitions.define("IMEM_PAGE_SZ", str(self.PKG_PAGE_SIZE_INST))
+		definitions.define("DMEM_PAGE_SZ", str(self.PKG_PAGE_SIZE_DATA))
+		definitions.define("PATH", "./") # TODO: Change?
+		definitions.define("SIM_FREQ", "100_000_000")
+					 
 		for peripheral in self.peripherals:
-			x = int(peripheral["pe"][0])
-			y = int(peripheral["pe"][2])
-			seq_addr = y*self.PKG_N_PE_X + x
-			port = self.port_code(peripheral["port"])
-			definitions.add_peripheral(peripheral["name"], seq_addr)
-			io_list.append((seq_addr, port))
+			addr = self.peripherals[peripheral][0]
+			port = self.peripherals[peripheral][1]
+			definitions.add_peripheral(peripheral, addr[0], addr[1], port)
 
-		definitions.add_io_list(io_list, self.PKG_N_PE)
-
-		definitions.write(self.testcase_path+"/hardware/definitions.h")
-
-	def port_code(self, char):
-		if char == 'E':
-			return 0
-		if char == 'W':
-			return 1
-		if char == 'N':
-			return 2
-		if char == 'S':
-			return 3
-		if char == 'L':
-			return 4
-		return 5
+		definitions.write("{}/Phivers/sim/PhiversPkg.sv".format(self.testcase_path))
 
 	def build(self):
 		NCPU = cpu_count()
@@ -79,30 +65,18 @@ class Hardware:
 class HardwareDefinitions:
 	def __init__(self):
 		self.lines = []
-		self.lines.append("#pragma once\n")
+		self.lines.append("package PhiversPkg;\n")
+		self.lines.append("\timport HermesPkg::*;\n")
 
 	def define(self, key, value):
-		self.lines.append("#define\t"+key+"\t"+value+"\n")
+		self.lines.append("\tparameter {} = {};\n".format(key, value))
 
-	def add_peripheral(self, peripheral, pe):
-		self.lines.append("#define\t"+peripheral+"\t"+str(pe)+"\n")
-
-	def add_io_list(self, io_list, n_pe):
-		io_list = sorted(io_list, key = lambda x: x[0])
-		self.lines.append("const char io_port[N_PE] = {")
-
-		io_pe = 0
-
-		for pe in range(n_pe):
-			if io_pe < len(io_list) and pe == io_list[io_pe][0]:
-				self.lines.append(str(io_list[io_pe][1])+",")
-				io_pe = io_pe + 1
-			else:
-				self.lines.append(str(5)+",")
-
-		self.lines.append("};\n")
+	def add_peripheral(self, peripheral, x, y, port):
+		self.lines.append("\tparameter logic [15:0] ADDR_{} = 16'h{:02x}{:02x}\n".format(peripheral, x, y))
+		self.lines.append("\tparameter hermes_port_t PORT_{} = {}\n".format(peripheral, port))
 
 	def write(self, path):
+		self.lines.append("endpackage\n")
 		file = open(path, "w")
 		file.writelines(self.lines)
 		file.close()

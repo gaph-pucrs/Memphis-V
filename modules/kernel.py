@@ -5,18 +5,20 @@ from subprocess import run, check_output
 from multiprocessing import cpu_count
 
 class Kernel:
-	def __init__(self, hw, platform_path, testcase_path, ):
-		self.page_size = hw["page_size_KB"] * 1024
+	def __init__(self, platform_path, testcase_path, page_size_inst, page_size_data):
 		self.platform_path = platform_path
 		self.testcase_path = testcase_path
 
+		self.page_size_inst = page_size_inst
+		self.page_size_data = page_size_data
+
 	def copy(self):
-		copy_tree(self.platform_path+"/MAestro", self.testcase_path+"/MAestro", update=1)
-		copy_file(self.platform_path+"/MAestro/Makefile", self.testcase_path+"/MAestro/Makefile")
+		copy_tree("{}/MAestro".format(self.platform_path),          "{}/MAestro".format(self.testcase_path), 	      update=1)
+		copy_file("{}/MAestro/Makefile".format(self.platform_path), "{}/MAestro/Makefile".format(self.testcase_path), update=1)
 
 	def build(self):
 		NCPU = cpu_count()
-		make = run(["make", "-C", self.testcase_path+"/MAestro", "-j", str(NCPU)])
+		make = run(["make", "-C", "{}/MAestro".format(self.testcase_path), "-j", str(NCPU)])
 		if make.returncode != 0:
 			raise Exception("Error building kernel.")
 

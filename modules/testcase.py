@@ -11,6 +11,8 @@ from hardware import Hardware
 
 class Testcase:
 	def __init__(self, platform_path, testcase_base):
+		print("Loading testcase...")
+
 		self.platform_path = platform_path
 		self.path = platform_path
 		self.base = testcase_base
@@ -19,18 +21,54 @@ class Testcase:
 		name = name[len(name) - 1]
 
 		self.base_dir = name
-		self.file = self.base_dir+"/"+name+".yaml"
+		self.file = "{}/{}.yaml".format(self.base_dir, name)
 
 		yaml = safe_load(open(self.base, "r"))
 
-		self.libs = Libs(self.platform_path, self.base_dir)
-		self.kernel = Kernel(yaml["hw"], self.platform_path, self.base_dir)
-		self.hardware = Hardware(yaml["hw"], self.platform_path, self.base_dir)
-
 		self.PKG_N_PE_X = yaml["hw"]["mpsoc_dimension"][0]
 		self.PKG_N_PE_Y = yaml["hw"]["mpsoc_dimension"][1]
+		PKG_PAGE_SIZE_INST 	= yaml["hw"]["page_size_inst_KB"] * 1024
+		PKG_PAGE_SIZE_DATA 	= yaml["hw"]["page_size_data_KB"] * 1024
+		PKG_MAX_LOCAL_TASKS	= yaml["hw"]["tasks_per_PE"]
+		
+		peripherals = {}
+		for peripheral in yaml["hw"]["Peripherals"]:
+			x = int(peripheral["pe"][0])
+			y = int(peripheral["pe"][2])
+			port = self.__port_code(peripheral["port"])
+			peripherals[peripheral["name"]] = ((x, y), port)
+		
+		definitions = {}
+		try:
+			for definition in yaml["hw"]["definitions"]:
+				definitions[str(list(definition.keys())[0])] = str(list(definition.values())[0])
+		except:
+			pass
+
+		self.libs = Libs(self.platform_path, self.base_dir)
+		self.kernel = Kernel(
+			self.platform_path, 
+			self.base_dir, 
+			PKG_PAGE_SIZE_INST, 
+			PKG_PAGE_SIZE_DATA
+		)
+		self.hardware = Hardware(
+			self.platform_path, 
+			self.base_dir, 
+			PKG_PAGE_SIZE_INST, 
+			PKG_PAGE_SIZE_DATA, 
+			PKG_MAX_LOCAL_TASKS, 
+			self.PKG_N_PE_X, 
+			self.PKG_N_PE_Y, 
+			peripherals, 
+			definitions
+		)
+
+		print("Testcase {}.yaml loaded.".format(name))
 		
 	def copy(self):
+		print("Copying testcase...")
+
 		# If testcase has been updated, delete to rebuild everything
 		if self.__is_obsolete():
 			remove_tree(self.base_dir)
@@ -46,7 +84,11 @@ class Testcase:
 		self.__create_services()
 		self.__create_cpu()
 
+		print("Testcase copied.")
+
 	def build(self):
+		print("Building testcase...")
+		
 		self.libs.build()
 		self.libs.install()
 		
@@ -56,6 +98,8 @@ class Testcase:
 
 		self.kernel.check_size()
 
+		print("Testcase built.")
+
 	def __is_obsolete(self):
 		if exists(self.file):
 			if not cmp(self.base, self.file):
@@ -64,7 +108,7 @@ class Testcase:
 		return False
 
 	def __create_platform(self):
-		cfg = open(self.base_dir+"/platform.cfg", "w")
+		cfg = open("{}/platform.cfg".format(self.base_dir), "w")
 
 		cfg.write("router_addressing XY\n")
 		cfg.write("channel_number {}\n".format(2))
@@ -109,3 +153,16 @@ class Testcase:
 		cfg.write("Idle\t524288\n")
 
 		cfg.close()
+
+	def __port_code(self, char):
+		if char == 'E':
+			return "HERMES_EAST"
+		if char == 'W':
+			return "HERMES_WEST"
+		if char == 'N':
+			return "HERMES_NORTH"
+		if char == 'S':
+			return "HERMES_SOUTH"
+		if char == 'L':
+			return "HERMES_LOCAL"
+		return 5
