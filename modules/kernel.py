@@ -27,14 +27,16 @@ class Kernel:
 
 		out = check_output(["riscv64-elf-size", path]).split(b'\n')[1].split(b'\t')
 
-		size = self.__get_txt_size()*4 + int(out[2])# + self.stack_size
+		isize = int(out[0])
+		dsize = int(out[1]) + int(out[2])
 					
 		print("\n******************* Kernel page size report *******************")
-		if size <= self.page_size:
-			print("Kernel memory usage {}/{} bytes".format(str(size).rjust(30), str(self.page_size).ljust(6)))
+		if isize <= self.page_size_inst and isize <= self.page_size_inst:
+			print("Kernel instruction memory usage {}/{} bytes".format(str(isize).rjust(18), str(self.page_size_inst).ljust(6)))
+			print("Kernel data memory usage {}/{} bytes".format(str(dsize).rjust(25), str(self.page_size_data).ljust(6)))
 		else:
-			raise Exception("Kernel memory usage of {} is bigger than page size of {}".format(size, self.page_size))
+			if isize > self.page_size_inst:
+				raise Exception("Kernel instruction memory usage of {} is bigger than page size of {}".format(isize, self.page_size_inst))
+			else:
+				raise Exception("Kernel data memory usage of {} is bigger than page size of {}".format(dsize, self.page_size_data))
 		print("***************** End kernel page size report *****************")
-
-	def __get_txt_size(self):
-		return sum(1 for line in open(self.testcase_path+"/MAestro/kernel.txt"))
