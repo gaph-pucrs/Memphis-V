@@ -38,8 +38,8 @@ class Hardware:
 		definitions.define("TASKS_PER_PE", str(self.PKG_MAX_LOCAL_TASKS))
 		definitions.define("IMEM_PAGE_SZ", str(self.PKG_PAGE_SIZE_INST))
 		definitions.define("DMEM_PAGE_SZ", str(self.PKG_PAGE_SIZE_DATA))
-		definitions.define("PATH", "./") # TODO: Change?
-		definitions.define("SIM_FREQ", "100_000_000")
+		definitions.define("PATH", "\"./\"") # TODO: Change?
+		definitions.define("SIM_FREQ", "100_000_000", "UNUSEDPARAM")
 					 
 		for peripheral in self.peripherals:
 			addr = self.peripherals[peripheral][0]
@@ -58,7 +58,7 @@ class Hardware:
 		make_env = environ.copy()
 		make_env["CFLAGS"] = CFLAGS
 
-		make = run(["make", "-C", self.testcase_path+"/hardware", "-j", str(NCPU)], env=make_env)
+		make = run(["make", "-C", "{}/Phivers/sim".format(self.testcase_path), "-j", str(NCPU)], env=make_env)
 		if make.returncode != 0:
 			raise Exception("Error building hardware.")
 
@@ -68,12 +68,18 @@ class HardwareDefinitions:
 		self.lines.append("package PhiversPkg;\n")
 		self.lines.append("\timport HermesPkg::*;\n")
 
-	def define(self, key, value):
+	def define(self, key, value, lint_off=None):
+		if lint_off is not None:
+			self.lines.append("/* verilator lint_off {} */\n".format(lint_off))
+
 		self.lines.append("\tparameter {} = {};\n".format(key, value))
 
+		if lint_off is not None:
+			self.lines.append("/* verilator lint_on {} */\n".format(lint_off))
+
 	def add_peripheral(self, peripheral, x, y, port):
-		self.lines.append("\tparameter logic [15:0] ADDR_{} = 16'h{:02x}{:02x}\n".format(peripheral, x, y))
-		self.lines.append("\tparameter hermes_port_t PORT_{} = {}\n".format(peripheral, port))
+		self.lines.append("\tparameter logic [15:0] ADDR_{} = 16'h{:02x}{:02x};\n".format(peripheral, x, y))
+		self.lines.append("\tparameter hermes_port_t PORT_{} = {};\n".format(peripheral, port))
 
 	def write(self, path):
 		self.lines.append("endpackage\n")
