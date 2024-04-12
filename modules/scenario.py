@@ -11,6 +11,8 @@ from filecmp import cmp
 
 class Scenario:
 	def __init__(self, platform_path, testcase_path, scenario_file):
+		print("Loading scenario...")
+
 		self.platform_path = platform_path
 		self.testcase_path = testcase_path
 
@@ -20,7 +22,7 @@ class Scenario:
 		name = name[len(name) - 1]
 
 		self.base_dir = self.testcase_path+"/"+name
-		self.file = self.base_dir+"/"+name+".yaml"
+		self.file = "{}/{}.yaml".format(self.base_dir, name)
 
 		yaml = safe_load(open(self.base, "r"))
 
@@ -28,9 +30,10 @@ class Scenario:
 		tc_name = tc_name[len(tc_name) - 1]
 
 		tc_yaml = safe_load(open("{}/{}.yaml".format(self.testcase_path, tc_name), "r"))
-		self.page_size		= tc_yaml["hw"]["page_size_KB"]*1024
+		self.PKG_PAGE_SIZE_INST 	= tc_yaml["hw"]["page_size_inst_KB"] * 1024
+		self.PKG_PAGE_SIZE_DATA 	= tc_yaml["hw"]["page_size_data_KB"] * 1024
 
-		self.management = Management(yaml["management"], self.platform_path, self.base_dir, self.testcase_path)
+		self.management = Management(self.platform_path, self.base_dir, self.testcase_path, yaml["management"])
 
 		self.applications = []
 		instances = {}
@@ -48,8 +51,12 @@ class Scenario:
 			self.applications.sort(key=lambda x: x.start_ms)
 		except:
 			pass
+
+		print("Scenario {}.yaml loaded.".format(name))
 		
 	def copy(self):
+		print("Copying scenario...")
+
 		if self.__is_obsolete():
 			remove_tree(self.base_dir)
 
@@ -62,8 +69,9 @@ class Scenario:
 		makedirs(self.base_dir+"/libmemphis/src/include", exist_ok=True)
 		makedirs(self.base_dir+"/libmutils/src/include", exist_ok=True)
 
-		copy("{}/hardware/memphis".format(self.testcase_path), "{}/memphis".format(self.base_dir))
-		copyfile("{}/MAestro/kernel.txt".format(self.testcase_path), "{}/bootrom.txt".format(self.base_dir))
+		copy("{}/Phivers/sim/phivers".format(self.testcase_path), "{}/phivers".format(self.base_dir))
+		copyfile("{}/MAestro/ikernel.bin".format(self.testcase_path), "{}/ikernel.bin".format(self.base_dir))
+		copyfile("{}/MAestro/dkernel.bin".format(self.testcase_path), "{}/dkernel.bin".format(self.base_dir))
 
 		open("{}/debug/traffic_router.txt".format(self.base_dir), "w").close()
 		copyfile(self.base, self.file)
@@ -77,24 +85,26 @@ class Scenario:
 		for app in self.applications:
 			app.copy()
 
+		print("Scenario copied.")
+
 	def build(self):
+		print("Building scenario...")
+
 		self.management.build()
 		for app in self.applications:
 			app.build()
 
-		# self.management.check_size(self.page_size, self.stack_size)
-		self.management.check_size(self.page_size, 0)
+		self.management.check_size(self.PKG_PAGE_SIZE_INST, self.PKG_PAGE_SIZE_DATA)
 		for app in self.applications:
-			app.check_size(self.page_size, 0)
-			# self.applications[app].check_size(self.page_size, self.stack_size)
-
-		self.management.generate_repo(self.base_dir)
+			app.check_size(self.PKG_PAGE_SIZE_INST, self.PKG_PAGE_SIZE_DATA)
 
 		for app in self.applications:
 			app.generate_repo()
 
 		self.management.generate_start(self.base_dir)
-		self.__generate_app_start()		
+		self.__generate_app_start()
+
+		print("Scenario built.")
 
 	def __generate_app_start(self):
 		start = Start()

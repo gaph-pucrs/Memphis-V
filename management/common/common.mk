@@ -15,8 +15,8 @@ READELF = riscv64-elf-readelf
 LIBDIR = ../../libmemphis
 UTILDIR = ../../libmutils
 
-CFLAGS	+= -march=rv32i -mabi=ilp32 -Os -fdata-sections -ffunction-sections -flto -Wall -std=c11 -I$(INCDIR) -I../../libmutils/src/include -I../../libmemphis/src/include
-LDFLAGS += -L../../libmemphis -L../../libmutils --specs=nano.specs -T ../common/custom.ld -Wl,--gc-sections,-flto -u _getpid -march=rv32i -mabi=ilp32 -lmemphis -lmutils
+CFLAGS	+= -march=rv32i -mabi=ilp32 -Os -fdata-sections -ffunction-sections -flto -Wall -std=c11 -I$(INCDIR) -I../../../libmutils/src/include -I../../../libmemphis/src/include
+LDFLAGS += -L../../../lib --specs=nano.specs -T ../common/custom.ld -Wl,--gc-sections,-flto,-Ttext=0 -u _getpid -march=rv32i -mabi=ilp32 -lmemphis -lmutils
 
 SRC = $(wildcard $(SRCDIR)/*.c)
 OBJ = $(patsubst %.c, %.o, $(SRC))

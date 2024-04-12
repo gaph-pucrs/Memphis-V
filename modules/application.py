@@ -89,7 +89,7 @@ class Application:
 		if make.returncode != 0:
 			raise Exception("Error building application {}.".format(self.app_name))
 
-	def check_size(self, page_size, stack_size):
+	def check_size(self, size_inst, size_data):
 		self.text_sizes = {}
 		self.data_sizes = {}
 		self.bss_sizes	= {}
@@ -98,24 +98,30 @@ class Application:
 		for task in self.tasks:
 			path = "{}/{}/{}.elf".format(self.base_path, self.app_path, task)
 
-			out = check_output(["riscv64-elf-size", path]).split(b'\n')[1].split(b'\t')
+			out = check_output(["riscv64-elf-size", path, "-G"]).split(b'\n')[1].split(b'\t')[0].split(b' ')
+			out = list(filter(lambda c: c != b'', out))
 
+			self.text_sizes[task] = int(out[0])
 			self.data_sizes[task] = int(out[1])
-			self.text_sizes[task] = self.__get_txt_size(task)*4 - self.data_sizes[task]
 			self.bss_sizes[task] = int(out[2])
 
 			out = check_output(["riscv64-elf-readelf", path, "-h"]).split(b'\n')[10].split(b' ')[-1]
 			self.entry_points[task] = int(out, 16)
 
 			
-		print("\n************ {} page size report ************".format(self.app_name.center(20)))
+		print("\n******************** {} page size report ********************".format(self.app_name.center(20)))
 		for task in self.tasks:
-			size = self.text_sizes[task] + self.data_sizes[task] + self.bss_sizes[task] + stack_size
-			if size <= page_size:
-				print("Task {} memory usage {}/{} bytes".format(task.rjust(25), str(size).rjust(6), str(page_size).ljust(6)))
+			isize = self.text_sizes[task]
+			dsize = self.data_sizes[task] + self.bss_sizes[task]
+			if isize <= size_inst and isize <= size_data:
+				print("Task {} instruction memory usage {}/{} bytes".format(task.rjust(29), str(isize).rjust(6), str(size_inst).ljust(6)))
+				print("Task {}        data memory usage {}/{} bytes".format(task.rjust(29), str(dsize).rjust(6), str(size_data).ljust(6)))
 			else:
-				raise Exception("Task {} memory usage of {} is bigger than page size of {}".format(task, size, page_size))
-		print("********** End {} page size report **********".format(self.app_name.center(20)))
+				if isize > size_inst:
+					raise Exception("Task {} instruction memory usage of {} is bigger than page size of {}".format(task, isize, size_inst))
+				else:
+					raise Exception("Task {} data memory usage of {} is bigger than page size of {}".format(task, dsize, size_data))
+		print("****************** End {} page size report ******************".format(self.app_name.center(20)))
 
 	def generate_repo(self):
 		repo = Repository()

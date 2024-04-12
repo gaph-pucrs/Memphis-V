@@ -25,18 +25,19 @@ class Kernel:
 	def check_size(self):
 		path = "{}/MAestro/kernel.elf".format(self.testcase_path)
 
-		out = check_output(["riscv64-elf-size", path]).split(b'\n')[1].split(b'\t')
+		out = check_output(["riscv64-elf-size", path, "-G"]).split(b'\n')[1].split(b'\t')[0].split(b' ')
+		out = list(filter(lambda c: c != b'', out))
 
 		isize = int(out[0])
 		dsize = int(out[1]) + int(out[2])
 					
-		print("\n******************* Kernel page size report *******************")
+		print("\n*************************** Kernel page size report ***************************")
 		if isize <= self.page_size_inst and isize <= self.page_size_inst:
-			print("Kernel instruction memory usage {}/{} bytes".format(str(isize).rjust(18), str(self.page_size_inst).ljust(6)))
-			print("Kernel data memory usage {}/{} bytes".format(str(dsize).rjust(25), str(self.page_size_data).ljust(6)))
+			print("Kernel instruction memory usage {}/{} bytes".format(str(isize).rjust(34), str(self.page_size_inst).ljust(6)))
+			print("Kernel        data memory usage {}/{} bytes".format(str(dsize).rjust(34), str(self.page_size_data).ljust(6)))
 		else:
 			if isize > self.page_size_inst:
 				raise Exception("Kernel instruction memory usage of {} is bigger than page size of {}".format(isize, self.page_size_inst))
 			else:
 				raise Exception("Kernel data memory usage of {} is bigger than page size of {}".format(dsize, self.page_size_data))
-		print("***************** End kernel page size report *****************")
+		print("************************* End kernel page size report *************************")
