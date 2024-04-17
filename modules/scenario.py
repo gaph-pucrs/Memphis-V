@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 from yaml import safe_load
 from os import makedirs
-from distutils.dir_util import remove_tree
-from shutil import copyfile, copy
+from distutils.dir_util import remove_tree, copy_tree
+from shutil import copyfile
 from management import Management
 from application import Application
-from repository import Start
+from repository import Repository
 from os.path import exists
 from filecmp import cmp
 
@@ -69,9 +69,11 @@ class Scenario:
 		makedirs(self.base_dir+"/libmemphis/src/include", exist_ok=True)
 		makedirs(self.base_dir+"/libmutils/src/include", exist_ok=True)
 
-		copy("{}/Phivers/sim/phivers".format(self.testcase_path), "{}/phivers".format(self.base_dir))
+		copyfile("{}/Phivers/sim/phivers".format(self.testcase_path), "{}/phivers".format(self.base_dir))
 		copyfile("{}/MAestro/ikernel.bin".format(self.testcase_path), "{}/ikernel.bin".format(self.base_dir))
 		copyfile("{}/MAestro/dkernel.bin".format(self.testcase_path), "{}/dkernel.bin".format(self.base_dir))
+
+		copy_tree("{}/applications/common".format(self.platform_path), "{}/applications/common".format(self.base_dir))
 
 		open("{}/debug/traffic_router.txt".format(self.base_dir), "w").close()
 		copyfile(self.base, self.file)
@@ -98,32 +100,37 @@ class Scenario:
 		for app in self.applications:
 			app.check_size(self.PKG_PAGE_SIZE_INST, self.PKG_PAGE_SIZE_DATA)
 
+		self.management.generate_descr(self.base_dir)
+		graph_sizes = []
 		for app in self.applications:
-			app.generate_repo()
+			graph_size = app.generate_descr()
+			graph_sizes.append(graph_size)
 
 		self.management.generate_start(self.base_dir)
-		self.__generate_app_start()
+		self.__generate_app_start(graph_sizes)
 
 		print("Scenario built.")
 
-	def __generate_app_start(self):
-		start = Start()
+	def __generate_app_start(self, graph_sizes):
+		start = Repository()
 
-		for app in self.applications:
+		for idx, app in enumerate(self.applications):
 			start.add(app.get_full_name(), "App name")
 			
-			start.add(app.start_ms, "Start time (ms)")
+			start.add("{}".format(app.start_ms), "Start time (ms)")
+
+			start.add("{}".format(graph_sizes[idx]), "Graph size")
 
 			tasks = app.get_tasks()
 			task_cnt = len(tasks)
-			start.add(task_cnt, "Number of tasks")
+			start.add("{}".format(task_cnt), "Number of tasks")
 
 			for task in app.mapping:
 				if task not in tasks:
 					raise Exception("Task {} in static_mapping list not present in application {}".format(task, app.app_name))
 		
 			for task in tasks:
-				address = -1
+				address = 0xffffffff
 				map_comment = ""
 				if task in app.mapping:
 					addr_x = app.mapping[task][0]
@@ -133,7 +140,7 @@ class Scenario:
 				else:
 					map_comment = "dinamically mapped"
 				
-				start.add(str(address), "Task {} is {}".format(task, map_comment))
+				start.add("{:04x}".format(address), "Task {} is {}".format(task, map_comment))
 		
 		start.write(self.base_dir+"/app_start.txt")
 		start.write_debug(self.base_dir+"/app_start_debug.txt")

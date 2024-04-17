@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
 from distutils.dir_util import copy_tree
-from distutils.file_util import copy_file
-from os import environ, getcwd
+from os import environ
 from subprocess import run, check_output
 from multiprocessing import cpu_count
 from descriptor import Descriptor
-from repository import Repository, Start
+from repository import Repository
 
 class Management:
 	def __init__(self, platform_path, scenario_path, testcase_path, management):
@@ -112,14 +111,21 @@ class Management:
 					raise Exception("Task {} data memory usage of {} is bigger than page size of {}".format(task, dsize, size_data))
 		print("*************************** End MA page size report ***************************")
 
+	def generate_descr(self, scenario_path):
+		descr = Repository()
+
+		for task in self.tasks:
+			descr.add(task["task"], "Task name")
+		
+		descr.write      ("{}/management/ma.txt".format(scenario_path))
+		descr.write_debug("{}/management/ma_debug.txt".format(scenario_path))
+
 	def generate_start(self, scenario_path):
-		start = Start()
-		tasks = Start()
+		start = Repository()
 
 		start.add(str(len(self.tasks)), "Number of tasks")
 		for task in self.tasks:
 			name = task["task"]
-			tasks.add(name, "Task name")
 
 			try:
 				address = task["static_mapping"]
@@ -140,7 +146,6 @@ class Management:
 		
 		start.write("{}/ma_start.txt".format(scenario_path))
 		start.write_debug("{}/ma_start_debug.txt".format(scenario_path))
-		tasks.write("{}/management/ma_tasks.txt".format(scenario_path))
 
 	def get_tasks(self):
 		return self.task_names
