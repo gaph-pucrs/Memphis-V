@@ -33,6 +33,12 @@ class Scenario:
 		self.PKG_PAGE_SIZE_INST 	= tc_yaml["hw"]["page_size_inst_KB"] * 1024
 		self.PKG_PAGE_SIZE_DATA 	= tc_yaml["hw"]["page_size_data_KB"] * 1024
 
+		self.simulator = "verilator"
+		try:
+			self.simulator = tc_yaml["simulator"]
+		except:
+			pass
+
 		self.management = Management(self.platform_path, self.base_dir, self.testcase_path, yaml["management"])
 
 		self.applications = []
@@ -69,7 +75,15 @@ class Scenario:
 		makedirs(self.base_dir+"/libmemphis/src/include", exist_ok=True)
 		makedirs(self.base_dir+"/libmutils/src/include", exist_ok=True)
 
-		copyfile("{}/Phivers/sim/phivers".format(self.testcase_path), "{}/phivers".format(self.base_dir))
+		copyfile("{}/Phivers/sim/Makefile".format(self.testcase_path), "{}/Makefile".format(self.base_dir))
+		copyfile("{}/Phivers/sim/vsim.mk".format(self.testcase_path), "{}/vsim.mk".format(self.base_dir))
+		copyfile("{}/Phivers/sim/verilator.mk".format(self.testcase_path), "{}/verilator.mk".format(self.base_dir))
+
+		if (self.simulator == "verilator"):
+			copyfile("{}/Phivers/sim/phivers".format(self.testcase_path), "{}/phivers".format(self.base_dir))
+		elif (self.simulator == "vsim"):
+			copy_tree("{}/Phivers/sim/work".format(self.testcase_path), "{}/work".format(self.base_dir))
+		
 		copyfile("{}/MAestro/ikernel.bin".format(self.testcase_path), "{}/ikernel.bin".format(self.base_dir))
 		copyfile("{}/MAestro/dkernel.bin".format(self.testcase_path), "{}/dkernel.bin".format(self.base_dir))
 
