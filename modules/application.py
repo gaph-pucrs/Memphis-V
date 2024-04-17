@@ -68,23 +68,13 @@ class Application:
 		NCPU = cpu_count()
     
 		make_env = environ.copy()
-		# make_env["CFLAGS"] = CFLAGS
-		try:
-			inc_path = make_env["C_INCLUDE_PATH"]
-		except:
-			inc_path = ""
 
 		CFLAGS = ""
 		for definition in self.definitions:
 			CFLAGS += "-D"+str(list(definition.keys())[0])+"="+str(list(definition.values())[0])+" "
 
-		make_env["C_INCLUDE_PATH"] = "{}/{}/include:{}".format(getcwd(), self.testcase_path, inc_path)
 		make_env["CFLAGS"] = CFLAGS+"--include id_tasks.h"
-		
-
-		make_env["LDFLAGS"] = "-L{}/{}/lib --specs=nano.specs -Wl,-Ttext=0 -u _getpid".format(getcwd(), self.testcase_path)
-  
-		# print(make_env)
+		  
 		make = run(["make", "-C", "{}/{}".format(self.base_path, self.app_path), "-j", str(NCPU)], env=make_env)
 		if make.returncode != 0:
 			raise Exception("Error building application {}.".format(self.app_name))
@@ -123,56 +113,36 @@ class Application:
 					raise Exception("Task {} data memory usage of {} is bigger than page size of {}".format(task, dsize, size_data))
 		print("****************** End {} page size report ******************".format(self.app_name.center(20)))
 
-	def generate_repo(self):
-		repo = Repository()
+	def generate_descr(self):
+		descr = Repository()
 
-		repo.add(len(self.tasks), "Number of tasks of application {}".format(self.app_name))
+		# repo.add("".format(len(self.tasks)), "Number of tasks of application {}".format(self.app_name))
 
 		dep_list, dep_list_len = self.__get_dep_list()
-
-		# First line is the number of tasks
-		# Then, each task has 5 lines (txt, data, bss, entry, repo)
-		# Finally, add the length of the dependence list
-		address = 4 + 5*len(self.tasks)*4 + dep_list_len*4
-
-		for task in self.tasks:
-			repo.add(self.text_sizes[task], "txt size")
-			repo.add(self.data_sizes[task], "data size")
-			repo.add(self.bss_sizes[task], "bss size")
-			repo.add(self.entry_points[task], "entry point")
-			repo.add(address, "Repository address")
-
-			address += self.text_sizes[task] + self.data_sizes[task]
 
 		for t in range(len(self.tasks)):
 			for c in range(len(dep_list[t])):
 					successor = dep_list[t][c] + 1
 					if c == len(dep_list[t]) - 1:
 						successor *= -1	
-					repo.add(successor, "Task {} is successor of task {}".format(self.tasks[dep_list[t][c]], self.tasks[t]))
+					descr.add("{}".format(successor), "Task {} is successor of task {}".format(self.tasks[dep_list[t][c]], self.tasks[t]))
 
 			if len(dep_list[t]) == 0:
-				repo.add(0, "Task {} has no successors".format(self.tasks[t]))
+				descr.add("{}".format(0), "Task {} has no successors".format(self.tasks[t]))
 
 		for task in self.tasks:
-			task_hex = open("{}/{}/{}.txt".format(self.base_path, self.app_path, task), "r")
+			descr.add(task, "Task name")
 
-			for line in task_hex:
-				repo.add(int(line, 16), "")
-	
-			task_hex.close()
+		descr.write("{}/{}.txt".format(self.base_path, self.get_full_name()))
+		descr.write_debug("{}/{}_debug.txt".format(self.base_path, self.get_full_name()))
 
-		repo.write("{}/{}.txt".format(self.base_path, self.get_full_name()))
-		repo.write_debug("{}/{}_debug.txt".format(self.base_path, self.get_full_name()))
+		return dep_list_len
 
 	def get_tasks(self):
 		return self.tasks
 
 	def get_full_name(self):
 		return "{}_{}".format(self.app_name, self.instance)
-
-	def __get_txt_size(self, task):
-		return sum(1 for line in open("{}/{}/{}.txt".format(self.base_path, self.app_path, task)))
 
 	def __get_dep_list(self):
 		dep_list = []
