@@ -40,7 +40,7 @@ i$(TARGET).bin: $(TARGET).elf
 	@printf "${BLUE}Generating instruction binary for task: %s ...${NC}\n" "$(TARGET)"
 	@$(OBJCOPY) -j .text -O binary $< $@
 
-$(TARGET).elf: $(OBJ) $(LIBOBJ)
+$(TARGET).elf: $(OBJ)
 	@printf "${BLUE}Linking task: %s ...${NC}\n" "$(TARGET)"
 	@$(CC) -Wl,-Map=$(TARGET).map -o $@ $^ $(LDFLAGS)
 
