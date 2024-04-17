@@ -58,10 +58,11 @@ class Hardware:
 		make_env = environ.copy()
 		make_env["CFLAGS"] = CFLAGS
 
+		target = "default"
 		if (simulator == "vsim"):
-			simulator = "vopt"
+			target = "work/phivers/_lib.qdb"
 
-		make = run(["make", "-C", "{}/Phivers/sim".format(self.testcase_path), "-j", str(NCPU), simulator], env=make_env)
+		make = run(["make", "-C", "{}/Phivers/sim".format(self.testcase_path), "-j", str(NCPU), target], env=make_env)
 
 		if make.returncode != 0:
 			raise Exception("Error building hardware.")
