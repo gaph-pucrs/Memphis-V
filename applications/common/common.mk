@@ -23,7 +23,7 @@ LDFLAGS += -L../../../lib --specs=nano.specs -T ../common/custom.ld -Wl,--gc-sec
 all: $(TARGETS) $(ELFS)
 
 $(SRCDIR)/%.txt: $(SRCDIR)/i%.bin $(SRCDIR)/d%.bin $(SRCDIR)/%.elf
-	@printf "${GREEN}Dumping to %s ...${NC}\n" "$(patsubst %.txt,%.bin,$@<)"
+	@printf "${GREEN}Dumping to %s ...${NC}\n" "$(patsubst %.txt,%.bin,$@)"
 	@$(SIZE) -G $(patsubst %.txt,%.elf,$@) | sed -n '2p' | awk '{printf "%08x\n", $$1}' > $@
 	@$(SIZE) -G $(patsubst %.txt,%.elf,$@) | sed -n '2p' | awk '{printf "%08x\n", $$2}' >> $@
 	@$(SIZE) -G $(patsubst %.txt,%.elf,$@) | sed -n '2p' | awk '{printf "%08x\n", $$3}' >> $@
