@@ -48,17 +48,21 @@ class Hardware:
 
 		definitions.write("{}/Phivers/sim/PhiversPkg.sv".format(self.testcase_path))
 
-	def build(self):
+	def build(self, simulator):
 		NCPU = cpu_count()
 		CFLAGS = ""
-  
+
 		for definition in self.definitions:
 			CFLAGS = CFLAGS + "-D"+str(list(definition.keys())[0])+"="+str(list(definition.values())[0])+" "
-  
+
 		make_env = environ.copy()
 		make_env["CFLAGS"] = CFLAGS
 
-		make = run(["make", "-C", "{}/Phivers/sim".format(self.testcase_path), "-j", str(NCPU)], env=make_env)
+		if (simulator == "vsim"):
+			simulator = "vopt"
+
+		make = run(["make", "-C", "{}/Phivers/sim".format(self.testcase_path), "-j", str(NCPU), simulator], env=make_env)
+
 		if make.returncode != 0:
 			raise Exception("Error building hardware.")
 

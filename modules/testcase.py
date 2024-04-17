@@ -30,6 +30,12 @@ class Testcase:
 		PKG_PAGE_SIZE_INST 	= yaml["hw"]["page_size_inst_KB"] * 1024
 		PKG_PAGE_SIZE_DATA 	= yaml["hw"]["page_size_data_KB"] * 1024
 		PKG_MAX_LOCAL_TASKS	= yaml["hw"]["tasks_per_PE"]
+
+		self.simulator = "verilator"
+		try:
+			self.simulator = yaml["simulator"]
+		except:
+			pass
 		
 		peripherals = {}
 		for peripheral in yaml["hw"]["Peripherals"]:
@@ -94,7 +100,7 @@ class Testcase:
 		
 		self.kernel.build()
 
-		self.hardware.build()
+		self.hardware.build(self.simulator)
 
 		self.kernel.check_size()
 
