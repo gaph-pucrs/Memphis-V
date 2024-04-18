@@ -38,8 +38,6 @@ class Hardware:
 		definitions.define("TASKS_PER_PE", str(self.PKG_MAX_LOCAL_TASKS))
 		definitions.define("IMEM_PAGE_SZ", str(self.PKG_PAGE_SIZE_INST))
 		definitions.define("DMEM_PAGE_SZ", str(self.PKG_PAGE_SIZE_DATA))
-		definitions.define("PATH", "\"./\"") # TODO: Change?
-		definitions.define("SIM_FREQ", "100_000_000", "UNUSEDPARAM")
 					 
 		for peripheral in self.peripherals:
 			addr = self.peripherals[peripheral][0]
