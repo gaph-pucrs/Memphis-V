@@ -35,7 +35,7 @@ class Scenario:
 
 		self.simulator = "verilator"
 		try:
-			self.simulator = tc_yaml["simulator"]
+			self.simulator = tc_yaml["simulation"]["simulator"]
 		except:
 			pass
 
@@ -83,6 +83,7 @@ class Scenario:
 			copy("{}/Phivers/sim/phivers".format(self.testcase_path), "{}/phivers".format(self.base_dir))
 		elif (self.simulator == "vsim"):
 			copy_tree("{}/Phivers/sim/work".format(self.testcase_path), "{}/work".format(self.base_dir))
+			copyfile("{}/Phivers/sim/wave.do".format(self.testcase_path), "{}/wave.do".format(self.base_dir))
 		
 		copyfile("{}/MAestro/ikernel.bin".format(self.testcase_path), "{}/ikernel.bin".format(self.base_dir))
 		copyfile("{}/MAestro/dkernel.bin".format(self.testcase_path), "{}/dkernel.bin".format(self.base_dir))

@@ -46,7 +46,7 @@ class Simulation:
         make_env["TRACE"] = "1" if self.with_wave else "0"
 
         if(self.timeout == -1):
-            simulation = Popen(["make", "-C", self.scenario_path, self.simulator])
+            simulation = Popen(["make", "-C", self.scenario_path, self.simulator], env=make_env)
         else:
             raise NotImplementedError("Timeout is not implemented yet.")
 
