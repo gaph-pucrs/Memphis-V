@@ -2,7 +2,7 @@
 from yaml import safe_load
 from os import makedirs
 from distutils.dir_util import remove_tree, copy_tree
-from shutil import copyfile
+from shutil import copyfile, copy
 from management import Management
 from application import Application
 from repository import Repository
@@ -80,7 +80,7 @@ class Scenario:
 		copyfile("{}/Phivers/sim/verilator.mk".format(self.testcase_path), "{}/verilator.mk".format(self.base_dir))
 
 		if (self.simulator == "verilator"):
-			copyfile("{}/Phivers/sim/phivers".format(self.testcase_path), "{}/phivers".format(self.base_dir))
+			copy("{}/Phivers/sim/obj_dir/phivers".format(self.testcase_path), "{}/phivers".format(self.base_dir))
 		elif (self.simulator == "vsim"):
 			copy_tree("{}/Phivers/sim/work".format(self.testcase_path), "{}/work".format(self.base_dir))
 		
