@@ -33,10 +33,16 @@ class Testcase:
 
 		self.simulator = "verilator"
 		try:
-			self.simulator = yaml["simulator"]
+			self.simulator = yaml["simulation"]["simulator"]
 		except:
 			pass
-		
+
+		self.trace = False
+		try:
+			self.trace = yaml["simulation"]["trace"]
+		except:
+			pass
+				
 		peripherals = {}
 		for peripheral in yaml["hw"]["Peripherals"]:
 			x = int(peripheral["pe"][0])
@@ -100,7 +106,7 @@ class Testcase:
 		
 		self.kernel.build()
 
-		self.hardware.build(self.simulator)
+		self.hardware.build(self.simulator, self.trace)
 
 		self.kernel.check_size()
 

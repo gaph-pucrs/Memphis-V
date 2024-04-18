@@ -46,7 +46,7 @@ class Hardware:
 
 		definitions.write("{}/Phivers/sim/PhiversPkg.sv".format(self.testcase_path))
 
-	def build(self, simulator):
+	def build(self, simulator="verilator", trace=False):
 		NCPU = cpu_count()
 		CFLAGS = ""
 
@@ -55,6 +55,7 @@ class Hardware:
 
 		make_env = environ.copy()
 		make_env["CFLAGS"] = CFLAGS
+		make_env["TRACE"]  = "1" if trace else "0"
 
 		target = "default"
 		if (simulator == "vsim"):

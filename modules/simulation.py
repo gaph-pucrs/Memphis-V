@@ -2,14 +2,16 @@ from yaml import safe_load
 from distutils.dir_util import remove_tree
 from os import makedirs
 from subprocess import Popen
+from os import environ
 
 class Simulation:
-    def __init__(self, platform_path, debugger_path, scenario_path, timeout, with_gui):
+    def __init__(self, platform_path, debugger_path, scenario_path, timeout, with_gui, with_wave):
         self.platform_path = platform_path
         self.debugger_path = debugger_path
         self.scenario_path = scenario_path
         self.timeout = timeout
         self.with_gui = with_gui
+        self.with_wave = with_wave
 
         tc_name = self.scenario_path.split("/")
         tc_name = tc_name[len(tc_name) - 2]
@@ -17,9 +19,18 @@ class Simulation:
 
         self.simulator = "verilator"
         try:
-            self.simulator = tc_yaml["simulator"]
+            self.simulator = tc_yaml["simulation"]["simulator"]
         except:
             pass
+
+        if with_wave:
+            wave_enabled = False
+            try:
+                wave_enabled = tc_yaml["simulation"]["trace"]
+            except:
+                pass
+            if not wave_enabled:
+                raise Exception("ERROR: Wave viewer is enabled but trace is not enabled in the scenario.")
 
         try:
             remove_tree("{}/log".format(scenario_path))
@@ -31,6 +42,9 @@ class Simulation:
             pass
 
     def run(self):
+        make_env = environ.copy()
+        make_env["TRACE"] = "1" if self.with_wave else "0"
+
         if(self.timeout == -1):
             simulation = Popen(["make", "-C", self.scenario_path, self.simulator])
         else:
@@ -39,9 +53,16 @@ class Simulation:
         if self.with_gui:
             debugger = Popen(["java", "-jar", "{}/Memphis_Debugger.jar".format(self.debugger_path), "{}/debug/platform.cfg".format(self.scenario_path)])
 
+        wave_run = False
         try:
             simulation.wait()
-            if self.with_gui:
+            if self.with_wave and self.simulator == "verilator":
+                wave = Popen(["gtkwave", "-f", "{}/trace.fst".format(self.scenario_path)])
+                wave_run = True
+                wave.wait()
+            elif self.with_gui:
                 debugger.wait()
         except KeyboardInterrupt:
-            pass
+            if not wave_run and self.with_wave and self.simulator == "verilator":
+                wave = Popen(["gtkwave", "-f", "{}/trace.fst".format(self.scenario_path)])
+                wave.wait()
