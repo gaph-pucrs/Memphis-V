@@ -173,7 +173,7 @@ unsigned app_allocated(app_t *app)
 void app_mapping_complete(app_t *app)
 {
 	int out_msg = APP_MAPPING_COMPLETE;
-	memphis_send_any(&out_msg, 4, app->injector);
+	memphis_send_any(&out_msg, sizeof(out_msg), app->injector);
 
 	if(app->id == 0)
 		memphis_br_send_all(0, RELEASE_PERIPHERAL);
