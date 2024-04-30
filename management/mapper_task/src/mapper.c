@@ -653,6 +653,7 @@ void map_task_migrated(map_t *mapper, int id)
 
 void map_request_finish(map_t *mapper)
 {
+	// printf("AppInjector signalized finish\n");
 	mapper->finished = true;
 }
 
