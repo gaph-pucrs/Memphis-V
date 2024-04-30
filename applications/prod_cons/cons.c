@@ -26,8 +26,15 @@ int main()
 	puts("Inicio da aplicacao cons");
 
 	for(int i = 0; i < PROD_CONS_ITERATIONS; i++){
-		memphis_receive(msg, PROD_CONS_MSG_SIZE*sizeof(int), prod);
+		int received = memphis_receive(msg, PROD_CONS_MSG_SIZE*sizeof(int), prod);
 		time[i] = memphis_get_tick();
+
+		for (int j = 1; j < (received >> 2); j++){
+			if (msg[j] != msg[j-1] + 1){
+				printf("Error: message invalid\n");
+				exit(-1);
+			}
+		}
 	}
 
 	for(int i = 0; i < PROD_CONS_ITERATIONS; i++){
