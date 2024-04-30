@@ -68,6 +68,8 @@ class Scenario:
 
 		makedirs(self.base_dir+"/debug/pipe", exist_ok=True)
 		makedirs(self.base_dir+"/debug/request", exist_ok=True)
+		makedirs(self.base_dir+"/debug/ram", exist_ok=True)
+		makedirs(self.base_dir+"/debug/cpu", exist_ok=True)
 		makedirs(self.base_dir+"/log", exist_ok=True)
 		makedirs(self.base_dir+"/flit_sniffer", exist_ok=True)
 		makedirs(self.base_dir+"/management", exist_ok=True)
