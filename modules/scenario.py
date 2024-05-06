@@ -74,6 +74,7 @@ class Scenario:
 		makedirs(self.base_dir+"/log", exist_ok=True)
 		makedirs(self.base_dir+"/flit_sniffer", exist_ok=True)
 		makedirs(self.base_dir+"/management", exist_ok=True)
+		makedirs(self.base_dir+"/management/ma", exist_ok=True)
 		makedirs(self.base_dir+"/applications", exist_ok=True)
 		makedirs(self.base_dir+"/libmemphis/src/include", exist_ok=True)
 		makedirs(self.base_dir+"/libmutils/src/include", exist_ok=True)

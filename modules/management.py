@@ -5,6 +5,7 @@ from subprocess import run, check_output
 from multiprocessing import cpu_count
 from descriptor import Descriptor
 from repository import Repository
+from shutil import copyfile
 
 class Management:
 	def __init__(self, platform_path, scenario_path, testcase_path, management):
@@ -116,6 +117,7 @@ class Management:
 
 		for task in self.tasks:
 			descr.add(task["task"], "Task name")
+			copyfile("{}/management/{}/{}.txt".format(scenario_path, task["task"], task["task"]), "{}/management/ma/{}.txt".format(scenario_path, task["task"]))
 		
 		descr.write      ("{}/management/ma.txt".format(scenario_path))
 		descr.write_debug("{}/management/ma_debug.txt".format(scenario_path))
