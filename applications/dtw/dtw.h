@@ -1,15 +1,16 @@
 #include <stdlib.h>
 #include <memphis.h>
 
+#ifndef NUM_PATTERNS
+#define NUM_PATTERNS			80//40
+#endif
+
 #define SIZE	11	//tamanho da matriz
 #define TOTAL_TASKS	4	//deve ser PAR para dividir igualmente o numero de padroes por task
 #define PATTERN_PER_TASK	NUM_PATTERNS/TOTAL_TASKS
 
 #define EXEC_TIME 42000
 #define DEADLINE 138000
-
-#define NUM_PATTERNS			80//40
-
 
 int P[TOTAL_TASKS] = {p1,p2,p3,p4};
 
