@@ -39,6 +39,8 @@ class Hardware:
 		definitions.define("IMEM_PAGE_SZ", str(self.PKG_PAGE_SIZE_INST))
 		definitions.define("DMEM_PAGE_SZ", str(self.PKG_PAGE_SIZE_DATA))
 
+		definitions.define("RAM_DEBUG", str(0))
+		definitions.define("RS5_DEBUG", str(0))
 		definitions.define("UART_DEBUG", str(1))
 		definitions.define("SCHED_DEBUG", str(1))
 		definitions.define("PIPE_DEBUG", str(1))
