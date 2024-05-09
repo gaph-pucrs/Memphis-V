@@ -38,6 +38,11 @@ class Hardware:
 		definitions.define("TASKS_PER_PE", str(self.PKG_MAX_LOCAL_TASKS))
 		definitions.define("IMEM_PAGE_SZ", str(self.PKG_PAGE_SIZE_INST))
 		definitions.define("DMEM_PAGE_SZ", str(self.PKG_PAGE_SIZE_DATA))
+
+		definitions.define("UART_DEBUG", str(1))
+		definitions.define("SCHED_DEBUG", str(1))
+		definitions.define("PIPE_DEBUG", str(1))
+		definitions.define("TRAFFIC_DEBUG", str(1))
 					 
 		for peripheral in self.peripherals:
 			addr = self.peripherals[peripheral][0]
@@ -69,6 +74,8 @@ class Hardware:
 class HardwareDefinitions:
 	def __init__(self):
 		self.lines = []
+		self.lines.append("`ifndef PHIVERS_PKG\n")
+		self.lines.append("`define PHIVERS_PKG\n")
 		self.lines.append("package PhiversPkg;\n")
 		self.lines.append("\timport HermesPkg::*;\n")
 
@@ -87,6 +94,7 @@ class HardwareDefinitions:
 
 	def write(self, path):
 		self.lines.append("endpackage\n")
+		self.lines.append("`endif\n")
 		file = open(path, "w")
 		file.writelines(self.lines)
 		file.close()
