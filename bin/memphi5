@@ -137,6 +137,7 @@ if __name__ == "__main__":
 			skipdebug = args.skipdebug
 		except:
 			pass
+	nogui = nogui or skipdebug
 
 	scenario_folder = ""
 	if option == "simulate" or option == "debug":
