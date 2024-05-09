@@ -77,19 +77,8 @@ class Scenario:
 		makedirs(self.base_dir+"/management/ma", exist_ok=True)
 		makedirs(self.base_dir+"/applications", exist_ok=True)
 
-		copyfile("{}/Phivers/sim/Makefile".format(self.testcase_path), "{}/Makefile".format(self.base_dir))
-		copyfile("{}/Phivers/sim/vsim.mk".format(self.testcase_path), "{}/vsim.mk".format(self.base_dir))
-		copyfile("{}/Phivers/sim/verilator.mk".format(self.testcase_path), "{}/verilator.mk".format(self.base_dir))
-
-		if (self.simulator == "verilator"):
-			copy("{}/Phivers/sim/phivers".format(self.testcase_path), "{}/phivers".format(self.base_dir))
-		elif (self.simulator == "vsim"):
-			copy_tree("{}/Phivers/sim/work".format(self.testcase_path), "{}/work".format(self.base_dir))
-			copyfile("{}/Phivers/sim/wave.do".format(self.testcase_path), "{}/wave.do".format(self.base_dir))
+		copyfile("{}/Phivers/sim/sim.mk".format(self.testcase_path), "{}/sim.mk".format(self.base_dir))
 		
-		copyfile("{}/MAestro/ikernel.bin".format(self.testcase_path), "{}/ikernel.bin".format(self.base_dir))
-		copyfile("{}/MAestro/dkernel.bin".format(self.testcase_path), "{}/dkernel.bin".format(self.base_dir))
-
 		copy_tree("{}/applications/common".format(self.platform_path), "{}/applications/common".format(self.base_dir))
 
 		open("{}/debug/traffic_router.txt".format(self.base_dir), "w").close()
