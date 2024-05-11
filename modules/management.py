@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 from distutils.dir_util import copy_tree
 from os import listdir
-from os.path import isdir
 from subprocess import run, check_output
 from multiprocessing import cpu_count
 
@@ -19,7 +18,7 @@ class Management:
 		NCPU = cpu_count()
 
 		for task in listdir(self.base_path):
-			if not isdir(task) or task == "common":
+			if task == "common":
 				continue
 			make = run(["make", "-C", "{}/{}".format(self.base_path, task), "-j", str(NCPU)])
 			if make.returncode != 0:
@@ -32,7 +31,7 @@ class Management:
 		self.entry_points = {}
 
 		for task in listdir(self.base_path):
-			if not isdir(task) or task == "common":
+			if task == "common":
 				continue
 			path = "{}/{}/{}.elf".format(self.base_path, task, task)
 
@@ -48,7 +47,7 @@ class Management:
 			
 		print("\n***************************** MA page size report *****************************")
 		for task in listdir(self.base_path):
-			if not isdir(task) or task == "common":
+			if task == "common":
 				continue
 			isize = self.text_sizes[task]
 			dsize = self.data_sizes[task] + self.bss_sizes[task]
