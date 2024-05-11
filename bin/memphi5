@@ -6,10 +6,30 @@ from os.path import exists
 from subprocess import Popen
 from pathlib import Path
 
+def path_to_yaml(path):
+	testcase_name = path.split("/")
+	testcase_name = testcase_name[len(testcase_name) - 1]
+	return "{}/{}.yaml".format(path, testcase_name)
+
+def yaml_to_name(yaml):
+	name = yaml.split(".")
+	name = name[len(name) - 2]
+	name = name.split("/")
+	name = name[len(name) - 1]
+	return name
+
+def check_yaml(tc, app=None, sc=None):
+	if not exists(tc):
+		raise Exception("Testcase {} not found.".format(tc))
+	
+	if app is not None and not exists(app):
+		raise Exception("Applications {} not found.".format(app))
+	
+	if sc is not None and not exists(sc):
+		raise Exception("Scenario {} not found.".format(sc))
+
 def testcase_build(platform_path, testcase_file):
-	if not exists(testcase_file):
-		raise Exception("Testcase {} not found.".format(testcase_file))
-		
+	check_yaml(testcase_file)		
 	sys.path.append("{}/modules".format(platform_path))
 	from testcase import Testcase
 	tc = Testcase(platform_path, testcase_file)
@@ -17,16 +37,7 @@ def testcase_build(platform_path, testcase_file):
 	tc.build()
 
 def applications_build(platform_path, testcase_folder, applications_file, repodebug):
-	testcase_name = testcase_folder.split("/")
-	testcase_name = testcase_name[len(testcase_name) - 1]
-	testcase_file = "{}/{}.yaml".format(testcase_folder, testcase_name)
-
-	if not exists(testcase_file):
-		raise Exception("Testcase {} not found.".format(testcase_file))
-	
-	if not exists(applications_file):
-		raise Exception("Applications {} not found.".format(applications_file))
-	
+	check_yaml(path_to_yaml(testcase_folder), applications_file)	
 	sys.path.append("{}/modules".format(platform_path))
 	from applications import Applications
 	apps = Applications(platform_path, testcase_folder, applications_file)
@@ -34,16 +45,7 @@ def applications_build(platform_path, testcase_folder, applications_file, repode
 	apps.build(repodebug)
 
 def scenario_build(platform_path, testcase_folder, scenario_file, skipdebug, repodebug):
-	testcase_name = testcase_folder.split("/")
-	testcase_name = testcase_name[len(testcase_name) - 1]
-	testcase_file = "{}/{}.yaml".format(testcase_folder, testcase_name)
-
-	if not exists(testcase_file):
-		raise Exception("Testcase {} not found.".format(testcase_file))
-
-	if not exists(scenario_file):
-		raise Exception("Scenario {} not found.".format(scenario_file))
-
+	check_yaml(path_to_yaml(testcase_folder), sc=scenario_file)
 	sys.path.append("{}/modules".format(platform_path))
 	from scenario import Scenario
 	scenario = Scenario(platform_path, testcase_folder, scenario_file)
@@ -62,18 +64,12 @@ def simulate(platform_path, debugger_path, scenario_folder, timeout, nogui, wave
 def memphis_all(platform_path, debugger_path, testcase_file, scenario_file, applications_file, timeout, nogui, wave, skipdebug, repodebug):
 	testcase_build(platform_path, testcase_file)
 
-	testcase_name = testcase_file.split(".")
-	testcase_name = testcase_name[len(testcase_name) - 2]
-	testcase_name = testcase_name.split("/")
-	testcase_name = testcase_name[len(testcase_name) - 1]
+	testcase_name = yaml_to_name(testcase_file)
 
 	applications_build(platform_path, testcase_name, applications_file, repodebug)
 	scenario_build(platform_path, testcase_name, scenario_file, skipdebug, repodebug)
 
-	scenario_name = scenario_file.split(".")
-	scenario_name = scenario_name[len(scenario_name) - 2]
-	scenario_name = scenario_name.split("/")
-	scenario_name = scenario_name[len(scenario_name) - 1]
+	scenario_name = yaml_to_name(scenario_file)
 
 	simulate(platform_path, debugger_path, "{}/{}".format(testcase_name, scenario_name), timeout, nogui, wave)
 
@@ -133,7 +129,7 @@ if __name__ == "__main__":
 	wave  = False
 
 	ENV_DEBUGGER_PATH = "MEMPHIS_DEBUGGER_PATH"
-	DEBUGGER_PATH = None
+	debugger_path = None
 	if option == "simulate" or option == "all" or option == "debug":
 		try:
 			nogui = args.nogui
@@ -146,8 +142,8 @@ if __name__ == "__main__":
 				pass
 		nogui = args.nogui or args.wave
 		if not nogui:
-			DEBUGGER_PATH = getenv(ENV_DEBUGGER_PATH)
-			if DEBUGGER_PATH is None:
+			debugger_path = getenv(ENV_DEBUGGER_PATH)
+			if debugger_path is None:
 				sys.exit("ERROR: "+ENV_DEBUGGER_PATH+" not defined.")
     
 	timeout = -1
@@ -178,7 +174,7 @@ if __name__ == "__main__":
 
 	if option == "debug":
 		try:
-			debug(DEBUGGER_PATH, scenario_folder)
+			debug(debugger_path, scenario_folder)
 			exit(0)
 		except Exception as ex:
 			sys.exit("\nERROR: {}".format(ex))
@@ -208,7 +204,7 @@ if __name__ == "__main__":
 	elif option == "scenario":
 		scenario_build(platform_path, testcase_folder, scenario_file, skipdebug, repodebug)
 	elif option == "simulate":
-		simulate(platform_path, DEBUGGER_PATH, scenario_folder, timeout, nogui, wave)
+		simulate(platform_path, debugger_path, scenario_folder, timeout, nogui, wave)
 	else:
 		# all
-		memphis_all(platform_path, DEBUGGER_PATH, testcase_file, scenario_file, applications_file, timeout, nogui, wave, skipdebug, repodebug)
+		memphis_all(platform_path, debugger_path, testcase_file, scenario_file, applications_file, timeout, nogui, wave, skipdebug, repodebug)
