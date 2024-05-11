@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from distutils.dir_util import copy_tree
+from shutil import copytree
 from subprocess import run
 from multiprocessing import cpu_count
 from os import environ
@@ -28,7 +28,7 @@ class Hardware:
 		self.definitions			= definitions
 
 	def copy(self):
-		copy_tree("{}/Phivers".format(self.platform_path), "{}/Phivers".format(self.testcase_path), update=1)
+		copytree("{}/Phivers".format(self.platform_path), "{}/Phivers".format(self.testcase_path), dirs_exist_ok=1)
 		self.generate_definitions()
 
 	def generate_definitions(self):

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from distutils.dir_util import copy_tree
+from shutil import copytree
 from subprocess import run
 from multiprocessing import cpu_count
 
@@ -9,8 +9,8 @@ class Libs:
 		self.testcase_path = testcase_path
 
 	def copy(self):
-		copy_tree("{}/libmemphis".format(self.platform_path), "{}/libmemphis".format(self.testcase_path), update=1)
-		copy_tree("{}/libmutils".format(self.platform_path), "{}/libmutils".format(self.testcase_path), update=1)
+		copytree("{}/libmemphis".format(self.platform_path), "{}/libmemphis".format(self.testcase_path), dirs_exist_ok=1)
+		copytree("{}/libmutils".format(self.platform_path), "{}/libmutils".format(self.testcase_path), dirs_exist_ok=1)
 
 	def build(self):
 		NCPU = cpu_count()

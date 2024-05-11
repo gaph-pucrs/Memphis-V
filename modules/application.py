@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-from distutils.dir_util import copy_tree
-from os import listdir, environ, getcwd
+from shutil import copytree
+from os import listdir, environ
 from subprocess import run, check_output
 from multiprocessing import cpu_count
 from repository import Repository
@@ -41,7 +41,7 @@ class Application:
 			pass
 
 	def copy(self):
-		copy_tree(self.source_path, "{}/{}".format(self.base_path, self.app_path), update=1)
+		copytree(self.source_path, "{}/{}".format(self.base_path, self.app_path), dirs_exist_ok=1)
 		self.generate_ids()
 
 	def generate_ids(self):
@@ -89,7 +89,7 @@ class Application:
 		for task in self.tasks:
 			isize = self.text_sizes[task]
 			dsize = self.data_sizes[task] + self.bss_sizes[task]
-			if isize <= size_inst and isize <= size_data:
+			if isize <= size_inst and dsize <= size_data:
 				print("Task {} instruction memory usage {}/{} bytes".format(task.rjust(29), str(isize).rjust(6), str(size_inst).ljust(6)))
 				print("Task {}        data memory usage {}/{} bytes".format(task.rjust(29), str(dsize).rjust(6), str(size_data).ljust(6)))
 			else:

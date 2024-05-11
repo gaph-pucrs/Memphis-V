@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from distutils.dir_util import copy_tree
+from shutil import copytree
 from os import listdir
 from subprocess import run, check_output
 from multiprocessing import cpu_count
@@ -12,7 +12,7 @@ class Management:
 		self.base_path = "{}/management".format(testcase_path)
 
 	def copy(self):
-		copy_tree(self.source_path, self.base_path, update=1)
+		copytree(self.source_path, self.base_path, dirs_exist_ok=1)
 
 	def build(self):
 		NCPU = cpu_count()

@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 from yaml import safe_load
 from os import makedirs
-from distutils.dir_util import remove_tree
-from shutil import copyfile
+from shutil import copyfile, rmtree
 from descriptor import Descriptor
 from application import Application
 from repository import Repository
@@ -81,7 +80,7 @@ class Scenario:
 		print("Copying scenario...")
 
 		if self.__is_obsolete():
-			remove_tree(self.base_dir)
+			rmtree(self.base_dir)
 
 		# Maybe change this block to simulation
 		makedirs("{}/debug/pipe".format(self.base_dir),      exist_ok=True)

@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 from yaml import safe_load
 from os import makedirs
-from distutils.dir_util import remove_tree, copy_tree
-from shutil import copyfile
+from shutil import copyfile, rmtree, copytree
 from application import Application
 from os.path import exists
 from filecmp import cmp
@@ -55,10 +54,10 @@ class Applications:
 
 	def copy(self):
 		if self.__is_obsolete():
-			remove_tree(self.apps_dir)
+			rmtree(self.apps_dir)
 
 		makedirs(self.apps_dir, exist_ok=True)
-		copy_tree("{}/applications/common".format(self.platform_path), "{}/common".format(self.apps_dir))
+		copytree("{}/applications/common".format(self.platform_path), "{}/common".format(self.apps_dir), dirs_exist_ok=1)
 		copyfile(self.app_file, self.file)
 
 		for app in self.applications:

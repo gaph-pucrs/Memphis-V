@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-from distutils.dir_util import copy_tree
-from distutils.file_util import copy_file
+from shutil import copytree, copyfile
 from subprocess import run, check_output
 from multiprocessing import cpu_count
 
@@ -10,8 +9,8 @@ class Kernel:
 		self.testcase_path = testcase_path
 
 	def copy(self):
-		copy_tree("{}/MAestro".format(self.platform_path),          "{}/MAestro".format(self.testcase_path), 	      update=1)
-		copy_file("{}/MAestro/Makefile".format(self.platform_path), "{}/MAestro/Makefile".format(self.testcase_path), update=1)
+		copytree("{}/MAestro".format(self.platform_path),          "{}/MAestro".format(self.testcase_path), dirs_exist_ok=1)
+		copyfile("{}/MAestro/Makefile".format(self.platform_path), "{}/MAestro/Makefile".format(self.testcase_path))
 
 	def build(self):
 		NCPU = cpu_count()

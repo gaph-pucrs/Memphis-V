@@ -2,8 +2,7 @@
 from os.path import exists
 from filecmp import cmp
 from os import makedirs
-from shutil import copyfile
-from distutils.dir_util import remove_tree
+from shutil import copyfile, rmtree
 from yaml import safe_load
 from libs import Libs
 from kernel import Kernel
@@ -82,7 +81,7 @@ class Testcase:
 
 		# If testcase has been updated, delete to rebuild everything
 		if self.__is_obsolete():
-			remove_tree(self.base_dir)
+			rmtree(self.base_dir)
 
 		makedirs(self.base_dir, exist_ok=True)
 		copyfile(self.base, self.file)

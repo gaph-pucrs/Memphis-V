@@ -1,8 +1,7 @@
 from yaml import safe_load
-from distutils.dir_util import remove_tree
-from os import makedirs
+from shutil import rmtree
 from subprocess import Popen
-from os import environ
+from os import environ, makedirs
 
 class Simulation:
     def __init__(self, platform_path, debugger_path, scenario_path, timeout, with_gui, with_wave):
@@ -33,7 +32,7 @@ class Simulation:
                 raise Exception("ERROR: Wave viewer is enabled but trace is not enabled in the scenario.")
 
         try:
-            remove_tree("{}/log".format(scenario_path))
+            rmtree("{}/log".format(scenario_path))
             makedirs("{}/log".format(scenario_path))
             open("{}/debug/scheduling_report.txt", 'w').close()
             open("{}/debug/traffic_router.txt", 'w').close()
