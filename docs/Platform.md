@@ -1,41 +1,8 @@
-# MA-Memphis platform
-
-## Overview
-
-The image below pictures an overview of the MA-Memphis platform.
-
-![Memphis](fig/MA-Memphis.png)
-
-The many-core is composed of:
-* **GPPC:** The GPPC contains a set of identical PEs that execute general purpose applications. 
-  Each PE of the GPPC region contains:
-	* **CPU:** The standard version of Mephis adopts a RISC-V (RV32IM_zicsr) processor.
-  	A low integration effort is required to replace this processor with a different architecture.
-	Besides the connection to the local memory, the processor has a connection to the DMNI enabling the management of the data transfers using the NoCs;
-	* **DMNI:** The Direct Memory Network Interface merges two hardware modules: NI (Network Interface) and DMA (Direct Memory Access);
-  	The advantage of the DMNI compared to the traditional PE implementation (NI+DMA) is a specialized module that directly connects the NoC router to the internal memory;
-	* **Scratchpad memory:** The local memory is a true dual-port scratchpad memory, storing code and instructions.
-  	The goal of using this memory model is to reduce the power consumption related to cache controllers and NoC traffic (transfer of cache lines).
-	If some application requires a larger memory space than the one available in the local memory, it is possible to have shared memories connected to the system as peripherals;
-	* **Packet-Switching:** Memphis adopts the Hermes Network-on-Chip comprising the the PS (Packet Switching) router of the figure above.
-  	The main features of the wormhole PS router are: XY routing, round-robin arbitration, input buffering, credit-based flow control.
-	* **BrNoC Router:** A lighter version of the BrNoC with removed unicast, the BrLite. This broadcast-based NoC sends message to TARGET or ALL PEs. It also has a set of 5 monitoring message classes dinamically configured by the platform to provide real-time monitoring without interfering in running user tasks. 
-* **Peripherals:** Peripherals provide I/O interface or hardware acceleration for tasks running on the GPPC region. 
-Examples of peripherals include shared memories, accelerators for image processing, communication protocols (e.g., Ethernet, USB), and Application Injectors.
-The system requires at least two peripheral, the Application Injector and the MA Injector.
-These peripherals are responsible for transmitting applications and the management application to be executed in the GPPC, repectively.
-
-## Peripherals
-
-The connection of peripherals is at the mesh NoC boundary ports due to the benefits of regular  floorplanning for the GPPC region, easing the physical synthesis with peripherals distributed along the GPPC boundary. 
-The NoC router was modified in such a way to enable the communication with boundary ports.
-Our NoC differentiates data packets from peripheral packets, as depicted in the figure from [overview](#overview).
-Data packets are those exchanged by tasks running in PEs, and peripheral packets are those transferred between a task and a peripheral.
-A peripheral packet arriving in a boundary PE goes to the peripheral, and not to the DMNI.
+# Memphis-V platform
 
 ## Adding new peripherals
 
-The MA-Memphis is bundled with the AppInjector and the MAInjector.
+Memphis-V is bundled with AppInjector and MAInjector peripherals.
 To create your own peripheral, check the [guide to add new peripherals](AddPeripheral.md).
 
 ## Packets
@@ -64,7 +31,7 @@ In the picture above, each step is:
 
 Applications may start at any moment in Memphis, characterizing a dynamic workload behavior.
 To support the dynamic injection of new applications, it is necessary to deploy a protocol enabling the admission of new applications into the system. 
-In MA-Memphis, the application can be injected by the AppInjector, while the Management Application is injected by the MAInjector due to security concerns. 
+In Memphis-V, the application can be injected by the AppInjector, while the Management Application is injected by the MAInjector due to security concerns. 
 The figure below depics the injection protocol, which is generic, and may be deployed by other entities, as for example an Ethernet core. 
 
 ![AppInjector](fig/AppInjector.png)
@@ -82,23 +49,22 @@ Each step of the figure above is:
 
 ## Applications
 
-MA-Memphis runs _applications_ composed of _tasks_. 
+Memphis-V runs _applications_ composed of _tasks_. 
 A standard set of applications is included in [applications directory](/applications).
 Each .c file inside an application folder is generated as a task.
 The image below shows a communicating task graph model of almost all applications included:
 
 ![ctg](fig/ctg.png)
 
-To add a new application to MA-Memphis, you can add it directly to the [applications directory](/applications), or inside the application directory of a generated testcase.
-
+To add a new application to Memphis-V, you can add it directly to the [applications directory](/applications), or inside the application directory of a generated testcase.
 
 ## Management Application
 
-The MA-Memphis main differential is being Application-managed.
+The Memphis-V main differential is being Application-managed.
 The Management Application can be distributed between various many-cores.
 The main advantage is leveraging the parallelism in management, by pipelining it into observation, decision and actuation tasks.
 Another possibility is to parallelize the management into functions, i.e., separating, for example, DVFS management from migration management.
-MA-Memphis is bundled with the following MA tasks:
+Memphis-V is bundled with the following MA tasks:
 
 * **RT Monitor (Obvservation):** Receives messages periodically from the kernel LLM (Low-Level Monitor) and detects if a deadline from a real-time task has been violated to send this information to the Decision task.
 * **QoS Migration (Decision):** Stores information about the latest missed deadlines.
