@@ -147,7 +147,7 @@ if __name__ == "__main__":
 			if debugger_path is None:
 				sys.exit("ERROR: "+ENV_DEBUGGER_PATH+" not defined.")
     
-	timeout = -1
+	timeout = 0
 	if option == "simulate" or option == "all":
 		try:
 			timeout = int(args.timeout)
