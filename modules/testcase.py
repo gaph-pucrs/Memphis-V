@@ -76,7 +76,7 @@ class Testcase:
 
 		print("Testcase {}.yaml loaded.".format(name))
 		
-	def copy(self):
+	def copy(self, skipdebug):
 		print("Copying testcase...")
 
 		# If testcase has been updated, delete to rebuild everything
@@ -91,9 +91,11 @@ class Testcase:
 		self.hardware.copy()
 		self.management.copy()
 
-		self.__create_platform()
-		self.__create_services()
-		self.__create_cpu()
+		if not skipdebug:
+			makedirs("{}/debug".format(self.base_dir), exist_ok=True)
+			self.__create_platform()
+			self.__create_services()
+			self.__create_cpu()
 
 		print("Testcase copied.")
 
@@ -120,51 +122,43 @@ class Testcase:
 		return False
 
 	def __create_platform(self):
-		cfg = open("{}/platform.cfg".format(self.base_dir), "w")
+		with open("{}/debug/platform.cfg".format(self.base_dir), "w") as cfg:
+			cfg.write("router_addressing XY\n")
+			cfg.write("channel_number {}\n".format(2))
+			cfg.write("mpsoc_x {}\n".format(self.PKG_N_PE_X))
+			cfg.write("mpsoc_y {}\n".format(self.PKG_N_PE_Y))
+			cfg.write("flit_size {}\n".format(32))
+			cfg.write("clock_period_ns {}\n".format(10))
 
-		cfg.write("router_addressing XY\n")
-		cfg.write("channel_number {}\n".format(2))
-		cfg.write("mpsoc_x {}\n".format(self.PKG_N_PE_X))
-		cfg.write("mpsoc_y {}\n".format(self.PKG_N_PE_Y))
-		cfg.write("flit_size {}\n".format(32))
-		cfg.write("clock_period_ns {}\n".format(10))
+			# Legacy lines. This will 'trick' the debugger into assigning no master
+			cfg.write("cluster_x {}\n".format(self.PKG_N_PE_X))
+			cfg.write("cluster_y {}\n".format(self.PKG_N_PE_Y))
+			cfg.write("manager_position_x {}\n".format(self.PKG_N_PE_X))
+			cfg.write("manager_position_y {}\n".format(self.PKG_N_PE_Y))
 
-		# Legacy lines. This will 'trick' the debugger into assigning no master
-		cfg.write("cluster_x {}\n".format(self.PKG_N_PE_X))
-		cfg.write("cluster_y {}\n".format(self.PKG_N_PE_Y))
-		cfg.write("manager_position_x {}\n".format(self.PKG_N_PE_X))
-		cfg.write("manager_position_y {}\n".format(self.PKG_N_PE_Y))
-
-		cfg.close()
 		
 	def __create_services(self):
-		services = open("{}/libmemphis/src/include/memphis/services.h".format(self.base_dir), "r")
-		cfg = open("{}/services.cfg".format(self.base_dir), "w")
+		with open("{}/libmemphis/src/include/memphis/services.h".format(self.base_dir), "r") as services:
+			with open("{}/debug/services.cfg".format(self.base_dir), "w") as cfg:
+				for line in services:
+					words = line.split()
+					if "#define" in words and len(words) > 2:
+						key = words[1]
+						value = 0
+						value = int(words[2], base=16)
+						cfg.write("{} {:x}\n".format(key, value))
 
-		for line in services:
-			words = line.split()
-			if "#define" in words and len(words) > 2:
-				key = words[1]
-				value = 0
-				value = int(words[2], base=16)
-				cfg.write("{} {:x}\n".format(key, value))
+				services.close()
 
-		services.close()
-
-		cfg.write("\n")
-		cfg.write("$TASK_ALLOCATION_SERVICE 40 23\n")
-		cfg.write("$TASK_TERMINATED_SERVICE 70 23\n")
-
-		cfg.close()
+				cfg.write("\n")
+				cfg.write("$TASK_ALLOCATION_SERVICE 40 23\n")
+				cfg.write("$TASK_TERMINATED_SERVICE 70 23\n")
 
 	def __create_cpu(self):
-		cfg = open("{}/cpu.cfg".format(self.base_dir), "w")
-
-		cfg.write("Interruption\t65536\n")
-		cfg.write("Scheduler\t262144\n")
-		cfg.write("Idle\t524288\n")
-
-		cfg.close()
+		with open("{}/debug/cpu.cfg".format(self.base_dir), "w") as cfg:
+			cfg.write("Interruption\t65536\n")
+			cfg.write("Scheduler\t262144\n")
+			cfg.write("Idle\t524288\n")
 
 	def __port_code(self, char):
 		if char == 'E':

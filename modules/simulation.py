@@ -31,14 +31,9 @@ class Simulation:
             if not wave_enabled:
                 raise Exception("ERROR: Wave viewer is enabled but trace is not enabled in the scenario.")
 
-        try:
-            rmtree("{}/log".format(scenario_path))
-            makedirs("{}/log".format(scenario_path))
-            open("{}/debug/scheduling_report.txt", 'w').close()
-            open("{}/debug/traffic_router.txt", 'w').close()
-            open("{}/debug/dmni.log", 'w').close()
-        except:
-            pass
+        # Clear files that are written in append mode
+        open("{}/debug/scheduling_report.txt".format(scenario_path), 'w').close()
+        open("{}/debug/traffic_router.txt"   .format(scenario_path), 'w').close()
 
     def run(self):
         make_env = environ.copy()

@@ -28,12 +28,12 @@ def check_yaml(tc, app=None, sc=None):
 	if sc is not None and not exists(sc):
 		raise Exception("Scenario {} not found.".format(sc))
 
-def testcase_build(platform_path, testcase_file):
+def testcase_build(platform_path, testcase_file, skipdebug):
 	check_yaml(testcase_file)		
 	sys.path.append("{}/modules".format(platform_path))
 	from testcase import Testcase
 	tc = Testcase(platform_path, testcase_file)
-	tc.copy()
+	tc.copy(skipdebug)
 	tc.build()
 
 def applications_build(platform_path, testcase_folder, applications_file, repodebug):
@@ -62,7 +62,7 @@ def simulate(platform_path, debugger_path, scenario_folder, timeout, nogui, wave
 	simulation.run()
 
 def memphis_all(platform_path, debugger_path, testcase_file, scenario_file, applications_file, timeout, nogui, wave, skipdebug, repodebug):
-	testcase_build(platform_path, testcase_file)
+	testcase_build(platform_path, testcase_file, skipdebug)
 
 	testcase_name = yaml_to_name(testcase_file)
 
@@ -90,6 +90,7 @@ if __name__ == "__main__":
 
 	tc_parser = subparsers.add_parser("testcase", help="Generate a testcase")
 	tc_parser.add_argument("TESTCASE_FILE", help="Path to testcase description (yaml)")
+	tc_parser.add_argument("--skipdebug", action="store_true", help="Disables debugger configuration")
 
 	app_parser = subparsers.add_parser("applications", help="Generate applications")
 	app_parser.add_argument("TESTCASE_FOLDER", help="Path to generated testcase folder")
@@ -154,7 +155,7 @@ if __name__ == "__main__":
 			pass
 
 	skipdebug = False
-	if option == "scenario" or option == "all":
+	if option == "testcase" or option == "scenario" or option == "all":
 		try:
 			skipdebug = args.skipdebug
 		except:
@@ -198,7 +199,7 @@ if __name__ == "__main__":
 		scenario_file = args.SCENARIO_FILE
  
 	if option == "testcase":
-		testcase_build(platform_path, testcase_file)
+		testcase_build(platform_path, testcase_file, skipdebug)
 	elif option == "applications":
 		applications_build(platform_path, testcase_folder, applications_file, repodebug)
 	elif option == "scenario":

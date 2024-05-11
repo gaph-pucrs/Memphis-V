@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from yaml import safe_load
 from os import makedirs
-from shutil import copyfile, rmtree
+from shutil import copyfile, rmtree, copytree
 from descriptor import Descriptor
 from application import Application
 from repository import Repository
@@ -82,25 +82,18 @@ class Scenario:
 		if self.__is_obsolete():
 			rmtree(self.base_dir)
 
-		# Maybe change this block to simulation
-		makedirs("{}/debug/pipe".format(self.base_dir),      exist_ok=True)
-		makedirs("{}/debug/request".format(self.base_dir),   exist_ok=True)
 		makedirs("{}/debug/available".format(self.base_dir), exist_ok=True)
+		makedirs("{}/debug/request".format(self.base_dir),   exist_ok=True)
+		makedirs("{}/debug/pipe".format(self.base_dir),      exist_ok=True)
 		makedirs("{}/debug/ram".format(self.base_dir),       exist_ok=True)
 		makedirs("{}/debug/cpu".format(self.base_dir),       exist_ok=True)
-		makedirs("{}/log".format(self.base_dir),             exist_ok=True)
-		open("{}/debug/traffic_router.txt".format(self.base_dir), "w").close()
-		# end
+		makedirs("{}/log".format(self.base_dir),		     exist_ok=True)
 
-		# Change to symbolic link?
 		copyfile("{}/Phivers/sim/sim.mk".format(self.testcase_path), "{}/sim.mk".format(self.base_dir))
 		copyfile(self.base, self.file)
 
-		# Change origin folder and copy_tree
 		if not skipdebug:
-			copyfile("{}/services.cfg".format(self.testcase_path), "{}/debug/services.cfg".format(self.base_dir))
-			copyfile("{}/cpu.cfg".format(self.testcase_path), "{}/debug/cpu.cfg".format(self.base_dir))
-			copyfile("{}/platform.cfg".format(self.testcase_path), "{}/debug/platform.cfg".format(self.base_dir))
+			copytree("{}/debug".format(self.testcase_path), "{}/debug".format(self.base_dir), dirs_exist_ok=1)
 			self.__append_platform()
 
 		print("Scenario copied.")
