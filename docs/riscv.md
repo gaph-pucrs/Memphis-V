@@ -1,6 +1,6 @@
 # Acquiring RISCV Cross-compiler
 
-## CentOS (yum/dnf-based distros) and Ubuntu (apt-based distros)
+## RHEL (dnf-based distros) and Ubuntu (apt-based distros)
 
 For GCC 12.1.0 (latest tested version, recommended) you need to build it manually.
 Create a directory for installation and for building:
@@ -13,9 +13,9 @@ mkdir ~/riscv64-elf
 Obtain binutils, extract, compile and install:
 ```console
 cd ~/riscv64-elf
-wget https://ftp.gnu.org/gnu/binutils/binutils-2.38.tar.xz
-tar xf binutils-2.38.tar.xz
-cd binutils-2.38
+wget https://ftp.gnu.org/gnu/binutils/binutils-2.39.tar.xz
+tar xf binutils-2.39.tar.xz
+cd binutils-2.39
 sed -i '/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/' libiberty/configure
 mkdir build
 cd build
@@ -30,8 +30,8 @@ rm -r $HOME/tools_memphis/riscv64-elf/share/info
 Obtain newlib and extract to build GCC:
 ```console
 cd ~/riscv64-elf
-wget https://sourceware.org/pub/newlib/newlib-4.2.0.20211231.tar.gz
-tar xf newlib-4.2.0.20211231.tar.gz
+wget https://sourceware.org/pub/newlib/newlib-4.1.0.tar.gz
+tar xf newlib-4.1.0.tar.gz
 ```
 
 Obtain GCC, extract, build and install:
@@ -66,7 +66,7 @@ rm $HOME/tools_memphis/riscv64-elf/lib64/libcc1.*
 Build newlib-nano and install:
 ```console
 export PATH=$HOME/tools_memphis/riscv64-elf/bin:$PATH
-cd ~/riscv64-elf/newlib-4.2.0.20211231
+cd ~/riscv64-elf/newlib-4.1.0
 mkdir build-nano
 cd build-nano
 export CFLAGS_FOR_TARGET='-g -Os -ffunction-sections -fdata-sections'
@@ -80,7 +80,7 @@ install -m644 -t "$HOME/tools_memphis/riscv64-elf"/riscv64-elf/include/newlib-na
 
 Build newlib and install:
 ```console
-cd ~/riscv64-elf/newlib-4.2.0.20211231
+cd ~/riscv64-elf/newlib-4.1.0
 mkdir build-newlib
 cd build-newlib
 export CFLAGS_FOR_TARGET='-g -O2 -ffunction-sections -fdata-sections'

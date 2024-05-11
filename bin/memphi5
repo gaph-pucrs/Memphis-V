@@ -131,17 +131,19 @@ if __name__ == "__main__":
 
 	ENV_DEBUGGER_PATH = "MEMPHIS_DEBUGGER_PATH"
 	debugger_path = None
-	if option == "simulate" or option == "all" or option == "debug":
+	if option == "simulate" or option == "all":
 		try:
 			nogui = args.nogui
 		except:
 			pass
-		if option != "debug":
-			try:
-				wave = args.wave
-			except:
-				pass
-		nogui = args.nogui or args.wave
+
+		try:
+			wave = args.wave
+		except:
+			pass
+		nogui = nogui or args.wave
+
+	if option == "simulate" or option == "all" or option == "debug":
 		if not nogui:
 			debugger_path = getenv(ENV_DEBUGGER_PATH)
 			if debugger_path is None:
