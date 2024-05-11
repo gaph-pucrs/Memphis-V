@@ -158,18 +158,19 @@ if __name__ == "__main__":
 			pass
 
 	skipdebug = False
-	repodebug = False
-	if option == "applications" or option == "scenario" or option == "all":
+	if option == "scenario" or option == "all":
 		try:
 			skipdebug = args.skipdebug
 		except:
 			pass
 	nogui = nogui or skipdebug
 
-	try:
-		repodebug = args.repodebug
-	except:
-		pass
+	repodebug = False
+	if option == "applications" or option == "scenario" or option == "all":
+		try:
+			repodebug = args.repodebug
+		except:
+			pass
 
 	scenario_folder = ""
 	if option == "simulate" or option == "debug":
@@ -200,17 +201,14 @@ if __name__ == "__main__":
 	if option == "scenario" or option == "all":
 		scenario_file = args.SCENARIO_FILE
  
-	try:
-		if option == "testcase":
-			testcase_build(platform_path, testcase_file)
-		elif option == "applications":
-			applications_build(platform_path, testcase_folder, applications_file, repodebug)
-		elif option == "scenario":
-			scenario_build(platform_path, testcase_folder, scenario_file, skipdebug, repodebug)
-		elif option == "simulate":
-			simulate(platform_path, DEBUGGER_PATH, scenario_folder, timeout, nogui, wave)
-		else:
-			# all
-			memphis_all(platform_path, DEBUGGER_PATH, testcase_file, scenario_file, applications_file, timeout, nogui, wave, skipdebug, repodebug)
-	except Exception as ex:
-		sys.exit("\nERROR: {}".format(ex))
+	if option == "testcase":
+		testcase_build(platform_path, testcase_file)
+	elif option == "applications":
+		applications_build(platform_path, testcase_folder, applications_file, repodebug)
+	elif option == "scenario":
+		scenario_build(platform_path, testcase_folder, scenario_file, skipdebug, repodebug)
+	elif option == "simulate":
+		simulate(platform_path, DEBUGGER_PATH, scenario_folder, timeout, nogui, wave)
+	else:
+		# all
+		memphis_all(platform_path, DEBUGGER_PATH, testcase_file, scenario_file, applications_file, timeout, nogui, wave, skipdebug, repodebug)

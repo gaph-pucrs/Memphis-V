@@ -3,7 +3,7 @@ from yaml import safe_load
 from os import makedirs
 from distutils.dir_util import remove_tree
 from shutil import copyfile
-from management import Management
+from descriptor import Descriptor
 from application import Application
 from repository import Repository
 from os.path import exists
@@ -21,7 +21,7 @@ class Scenario:
 		name = self.base.split(".yaml")[0].split("/")
 		name = name[len(name) - 1]
 
-		self.base_dir = self.testcase_path+"/"+name
+		self.base_dir = "{}/{}".format(self.testcase_path, name)
 		self.file = "{}/{}.yaml".format(self.base_dir, name)
 
 		yaml = safe_load(open(self.base, "r"))
@@ -39,7 +39,10 @@ class Scenario:
 		except:
 			pass
 
-		self.management = Management(self.platform_path, self.base_dir, self.testcase_path, yaml["management"])
+		self.ma_tasks = []
+
+		for task in yaml["management"]:
+			self.ma_tasks.append(task)
 
 		apps_dir = "{}/applications".format(testcase_path)
 		self.applications = []
@@ -81,40 +84,34 @@ class Scenario:
 			remove_tree(self.base_dir)
 
 		# Maybe change this block to simulation
-		makedirs(self.base_dir+"/debug/pipe", exist_ok=True)
-		makedirs(self.base_dir+"/debug/request", exist_ok=True)
-		makedirs(self.base_dir+"/debug/available", exist_ok=True)
-		makedirs(self.base_dir+"/debug/ram", exist_ok=True)
-		makedirs(self.base_dir+"/debug/cpu", exist_ok=True)
-		makedirs(self.base_dir+"/log", exist_ok=True)
+		makedirs("{}/debug/pipe".format(self.base_dir),      exist_ok=True)
+		makedirs("{}/debug/request".format(self.base_dir),   exist_ok=True)
+		makedirs("{}/debug/available".format(self.base_dir), exist_ok=True)
+		makedirs("{}/debug/ram".format(self.base_dir),       exist_ok=True)
+		makedirs("{}/debug/cpu".format(self.base_dir),       exist_ok=True)
+		makedirs("{}/log".format(self.base_dir),             exist_ok=True)
 		open("{}/debug/traffic_router.txt".format(self.base_dir), "w").close()
 		# end
-
-		makedirs(self.base_dir+"/management", exist_ok=True)
-		makedirs(self.base_dir+"/management/ma", exist_ok=True)
 
 		# Change to symbolic link?
 		copyfile("{}/Phivers/sim/sim.mk".format(self.testcase_path), "{}/sim.mk".format(self.base_dir))
 		copyfile(self.base, self.file)
 
-		# Maybe change to symbolic link
+		# Change origin folder and copy_tree
 		if not skipdebug:
 			copyfile("{}/services.cfg".format(self.testcase_path), "{}/debug/services.cfg".format(self.base_dir))
 			copyfile("{}/cpu.cfg".format(self.testcase_path), "{}/debug/cpu.cfg".format(self.base_dir))
 			copyfile("{}/platform.cfg".format(self.testcase_path), "{}/debug/platform.cfg".format(self.base_dir))
 			self.__append_platform()
 
-		self.management.copy()
 		print("Scenario copied.")
 
 	def build(self, repodebug):
 		print("Building scenario...")
 
-		self.management.build()
-		self.management.check_size(self.PKG_PAGE_SIZE_INST, self.PKG_PAGE_SIZE_DATA)
-		self.management.generate_descr(self.base_dir, repodebug)
-		self.management.generate_start(self.base_dir, repodebug)
+		self.__generate_ma_descr(repodebug)
 
+		self.__generate_ma_start(repodebug)
 		self.__generate_app_start(repodebug)
 
 		print("Scenario built.")
@@ -140,7 +137,7 @@ class Scenario:
 					address = addr_x << 8 | addr_y
 					map_comment = "statically mapped to PE {}x{}".format(addr_x, addr_y)
 				else:
-					map_comment = "dinamically mapped"
+					map_comment = "dynamically mapped"
 				
 				start.add("{:04x}".format(address), "Task {} is {}".format(task, map_comment))
 		
@@ -149,8 +146,52 @@ class Scenario:
 		if repodebug:
 			start.write_debug(self.base_dir+"/app_start_debug.txt")
 
-	def __append_platform(self):
+	def __generate_ma_start(self, repodebug):
+		start = Repository()
 
+		start.add(len(self.ma_tasks), "Number of tasks")
+
+		for task in self.ma_tasks:
+			name = task["task"]
+
+			try:
+				address = task["static_mapping"]
+				addr_x = int(address[0])
+				addr_y = int(address[1])
+				address = addr_x << 8 | addr_y
+				map_comment = "statically mapped to PE {}x{}".format(addr_x, addr_y)
+				start.add("{:04x}".format(address), "Task {} is {}".format(name, map_comment))
+			except:
+				raise Exception("All management tasks must be STATICALLY MAPPED")
+			
+			start.add(name, "Task name")
+			
+			try:
+				descr = Descriptor("{}/management/{}/config.yaml".format(self.testcase_path, task["task"]), task["task"])
+				task_type = descr.get_type()
+				start.add("{:08x}".format(task_type), "Task type tag")
+			except:
+				raise Exception("All management tasks must have a config.yaml with its task type tag")
+			
+		start.write("{}/ma_start.txt".format(self.base_dir))
+
+		if repodebug:
+			start.write_debug("{}/ma_start_debug.txt".format(self.base_dir))
+
+	def __generate_ma_descr(self, repodebug):
+		descr = Repository()
+
+		for idx, task in enumerate(self.ma_tasks):
+			if idx == 0 and task["task"] != "mapper_task":
+				raise Exception("First management task must be mapper_task")
+			descr.add(task["task"], "Task name")
+
+		descr.write("{}/ma_tasks.txt".format(self.base_dir))
+
+		if repodebug:
+			descr.write_debug("{}/ma_tasks_debug.txt".format(self.base_dir))
+
+	def __append_platform(self):
 		task_lines = []
 		app_lines = []
 
@@ -169,9 +210,8 @@ class Scenario:
 
 		cfg.write("BEGIN_task_name_relation\n")
 
-		ma_tasks = self.management.get_tasks()
-		for t in range(len(ma_tasks)):
-			cfg.write("{} {}\n".format(ma_tasks[t], t))
+		for t in range(len(self.ma_tasks)):
+			cfg.write("{} {}\n".format(self.ma_tasks[t], t))
 
 		cfg.writelines(task_lines)
 		cfg.write("END_task_name_relation\n")

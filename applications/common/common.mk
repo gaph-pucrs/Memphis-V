@@ -13,6 +13,7 @@ OBJDUMP = riscv64-elf-objdump
 OBJCOPY = riscv64-elf-objcopy
 SIZE    = riscv64-elf-size
 READELF = riscv64-elf-readelf
+HEXDUMP = hexdump -v -e '1/4 "%08x" "\n"'
 
 LIBDIR = ../../libmemphis
 UTILDIR = ../../libmutils
@@ -28,8 +29,8 @@ $(SRCDIR)/%.txt: $(SRCDIR)/i%.bin $(SRCDIR)/d%.bin $(SRCDIR)/%.elf
 	@$(SIZE) -G $(patsubst %.txt,%.elf,$@) | sed -n '2p' | awk '{printf "%08x\n", $$2}' >> $@
 	@$(SIZE) -G $(patsubst %.txt,%.elf,$@) | sed -n '2p' | awk '{printf "%08x\n", $$3}' >> $@
 	@$(READELF) -h $(patsubst %.txt,%.elf,$@) | awk '/Entry point/ { printf "%08x\n", strtonum($$4) }' >> $@
-	@hexdump -v -e '1/4 "%08x" "\n"' i$(patsubst %.txt,%.bin,$@) >> $@
-	@hexdump -v -e '1/4 "%08x" "\n"' d$(patsubst %.txt,%.bin,$@) >> $@
+	@$(HEXDUMP) i$(patsubst %.txt,%.bin,$@) >> $@
+	@$(HEXDUMP) d$(patsubst %.txt,%.bin,$@) >> $@
 
 $(SRCDIR)/d%.bin: $(SRCDIR)/%.elf
 	@printf "${GREEN}Generating binary %s ...${NC}\n" "$@"

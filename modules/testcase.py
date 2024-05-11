@@ -8,6 +8,7 @@ from yaml import safe_load
 from libs import Libs
 from kernel import Kernel
 from hardware import Hardware
+from management import Management
 
 class Testcase:
 	def __init__(self, platform_path, testcase_base):
@@ -27,8 +28,8 @@ class Testcase:
 
 		self.PKG_N_PE_X = yaml["hw"]["mpsoc_dimension"][0]
 		self.PKG_N_PE_Y = yaml["hw"]["mpsoc_dimension"][1]
-		PKG_PAGE_SIZE_INST 	= yaml["hw"]["page_size_inst_KB"] * 1024
-		PKG_PAGE_SIZE_DATA 	= yaml["hw"]["page_size_data_KB"] * 1024
+		self.PKG_PAGE_SIZE_INST 	= yaml["hw"]["page_size_inst_KB"] * 1024
+		self.PKG_PAGE_SIZE_DATA 	= yaml["hw"]["page_size_data_KB"] * 1024
 		PKG_MAX_LOCAL_TASKS	= yaml["hw"]["tasks_per_PE"]
 
 		self.simulator = "verilator"
@@ -58,23 +59,21 @@ class Testcase:
 			pass
 
 		self.libs = Libs(self.platform_path, self.base_dir)
-		self.kernel = Kernel(
-			self.platform_path, 
-			self.base_dir, 
-			PKG_PAGE_SIZE_INST, 
-			PKG_PAGE_SIZE_DATA
-		)
+		self.kernel = Kernel(self.platform_path, self.base_dir)
+
 		self.hardware = Hardware(
 			self.platform_path, 
 			self.base_dir, 
-			PKG_PAGE_SIZE_INST, 
-			PKG_PAGE_SIZE_DATA, 
+			self.PKG_PAGE_SIZE_INST, 
+			self.PKG_PAGE_SIZE_DATA, 
 			PKG_MAX_LOCAL_TASKS, 
 			self.PKG_N_PE_X, 
 			self.PKG_N_PE_Y, 
 			peripherals, 
 			definitions
 		)
+
+		self.management = Management(self.platform_path, self.base_dir)
 
 		print("Testcase {}.yaml loaded.".format(name))
 		
@@ -91,6 +90,7 @@ class Testcase:
 		self.libs.copy()
 		self.kernel.copy()
 		self.hardware.copy()
+		self.management.copy()
 
 		self.__create_platform()
 		self.__create_services()
@@ -104,10 +104,12 @@ class Testcase:
 		self.libs.build()
 		
 		self.kernel.build()
+		self.management.build()
 
 		self.hardware.build(self.simulator, self.trace)
 
-		self.kernel.check_size()
+		self.kernel.check_size(self.PKG_PAGE_SIZE_INST, self.PKG_PAGE_SIZE_DATA)
+		self.management.check_size(self.PKG_PAGE_SIZE_INST, self.PKG_PAGE_SIZE_DATA)
 
 		print("Testcase built.")
 

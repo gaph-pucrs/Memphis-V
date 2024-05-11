@@ -1,6 +1,7 @@
 BLUE  =\033[0;34m
 NC   =\033[0m # No Color
 
+CONFIG = config.yaml
 SRCDIR = src
 INCDIR = src/include
 INCLIB = ../../libmemphis/src/include
@@ -11,9 +12,10 @@ OBJDUMP = riscv64-elf-objdump
 OBJCOPY = riscv64-elf-objcopy
 SIZE    = riscv64-elf-size
 READELF = riscv64-elf-readelf
+HEXDUMP = hexdump -v -e '1/4 "%08x" "\n"'
 
-LIBDIR = ../../../libmemphis
-UTILDIR = ../../../libmutils
+LIBDIR = ../../libmemphis
+UTILDIR = ../../libmutils
 
 CFLAGS	+= -march=rv32im -mabi=ilp32 -Os -fdata-sections -ffunction-sections -flto -Wall -std=c17 -I$(INCDIR) -I$(LIBDIR)/src/include -I$(UTILDIR)/src/include
 LDFLAGS += -L$(LIBDIR) -L$(UTILDIR) --specs=nano.specs -T $(LIBDIR)/memphis.ld -Wl,--gc-sections,-flto -u _getpid -march=rv32im -mabi=ilp32 -lmemphis -lmutils
@@ -29,8 +31,8 @@ $(TARGET).txt: i$(TARGET).bin d$(TARGET).bin $(TARGET).elf
 	@$(SIZE) -G $(TARGET).elf | sed -n '2p' | awk '{printf "%08x\n", $$2}' >> $@
 	@$(SIZE) -G $(TARGET).elf | sed -n '2p' | awk '{printf "%08x\n", $$3}' >> $@
 	@$(READELF) -h $(TARGET).elf | awk '/Entry point/ { printf "%08x\n", strtonum($$4) }' >> $@
-	@hexdump -v -e '1/4 "%08x" "\n"' i$(TARGET).bin >> $@
-	@hexdump -v -e '1/4 "%08x" "\n"' d$(TARGET).bin >> $@
+	@$(HEXDUMP) i$(TARGET).bin >> $@
+	@$(HEXDUMP) d$(TARGET).bin >> $@
 
 d$(TARGET).bin: $(TARGET).elf
 	@printf "${BLUE}Generating data binary for task: %s ...${NC}\n" "$(TARGET)"
