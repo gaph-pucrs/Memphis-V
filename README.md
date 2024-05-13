@@ -5,7 +5,7 @@ Many-core Modeling Platform for Phivers (Processor Hive for RS5)
 ## About
 
 Memphis-V is a full many-core model with:
-* [Phivers](https://github.com/gaph-pucrs/MAestro): hardware modeled in SystemVerilog
+* [Phivers](https://github.com/gaph-pucrs/Phivers): hardware modeled in SystemVerilog
 * [MAestro](https://github.com/gaph-pucrs/MAestro): an operating system for many-cores 
 * [libmemphis](https://github.com/gaph-pucrs/libmemphis) and [libmutils](https://github.com/gaph-pucrs/libmutils): standard set of support libraries
 * Standard set of applications
@@ -14,7 +14,7 @@ Memphis-V is a full many-core model with:
 * [Debug tools](https://github.com/gaph-pucrs/GraphicalDebugger)
 
 The chip area is divided in two regions: GPPC (General Purpose Processing Cores) and Peripherals.
-For more information, check the [platform documentation](/docs/Platform.md).
+For more information, check the [platform documentation](/docs/Platform.md) and all submodules linked above.
 
 Memphis-V is derived from several years of research in many-core platforms.
 It is also the 5th major version since [HeMPS](https://github.com/gaph-pucrs/hemps), hence the "V" suffix.
@@ -214,6 +214,16 @@ Check the [GraphicalDebugger](https://github.com/gaph-pucrs/GraphicalDebugger) r
 A [video](https://youtu.be/nvgtvFcCc60) in portuguese is available showing all features of the Debugger.
 
 # Acknowledgements
+
+* Migration heuristic
+```
+Dalzotto, A. E., Borges, C. S., Ruaro, M., and Moraes, F. G. (2022). Leveraging NoC-based Many-core Performance Through Runtime Mapping Defragmentation. In Proceedings of the International Conference on Electronics, Circuits, and Systems (ICECS), pages 1-6.
+```
+
+* Mapping heuristic
+```
+Dalzotto, A. E., Ruaro, M., Erthal, L. V., and Moraes, F. G. (2021). Dynamic Mapping for Many-cores using Management Application Organization. In Proceedings of the International Conference on Electronics, Circuits, and Systems (ICECS), pages 1-6.
+```
 
 * MA-Memphis
 ```

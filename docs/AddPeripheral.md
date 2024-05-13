@@ -1,3 +1,0 @@
-# Adding new peripherals
-
-TODO

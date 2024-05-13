@@ -27,26 +27,6 @@ In the picture above, each step is:
 3. Calling a `Receive` syscall, the consumer checks the FIFO buffer of `data available` messages for a ID and location to request a message via the `message request` packet;
 4. The producer kernel, on receiving the `message request` packet, dispaches the message in its buffer with a `message delivery` packet.
 
-## Application Injection
-
-Applications may start at any moment in Memphis, characterizing a dynamic workload behavior.
-To support the dynamic injection of new applications, it is necessary to deploy a protocol enabling the admission of new applications into the system. 
-In Memphis-V, the application can be injected by the AppInjector, while the Management Application is injected by the MAInjector due to security concerns. 
-The figure below depics the injection protocol, which is generic, and may be deployed by other entities, as for example an Ethernet core. 
-
-![AppInjector](fig/AppInjector.png)
-
-Each step of the figure above is:
-
-1. The Injector monitors for new applications to arrive;
-2. Then, it builds a packet containing the `application description` to the Mapper task;
-3. The Mapper task executes its mapping heuristics;
-4. The Mapper task then sends the mapping coordinates of all tasks inside an `allocation request` packet;
-5. The Injector sends the binary of each task to each target PE mapped by the Mapper task;
-6. The Kernel of each target PE sends a `task allocated message` to the Mapper task;
-7. Finally, upon receiving the task allocated from all pending tasks, the Mapper sends a `task release` to all mapped tasks to release its execution.
-
-
 ## Applications
 
 Memphis-V runs _applications_ composed of _tasks_. 
@@ -79,3 +59,7 @@ Please also note that the mapper task should be the first in the yaml management
 
 It is possible to add new management tasks to the platform.
 Check the [guide to add new management tasks](AddManagement.md).
+
+## Adding new peripherals
+
+TODO
