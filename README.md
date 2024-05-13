@@ -35,7 +35,7 @@ It is possible to use the WSL to run Memphis-V platform under Windows.
 ### Pre-requisites
 
 * riscv64-elf-gcc (to build OS, libraries and applications, check [how to obtain RISCV cross-compiler](/docs/riscv.md))
-* Python and needed libraries (to generate platform, check [how to obtain Python](/docs/python.md))
+* Python >= 3.8 and needed libraries (to generate platform, check [how to obtain Python](/docs/python.md))
 * Graphical Debugger (optional, check [how to obtain Debugger](/docs/Debugger.md))
 * Either Verilator ([how to obtain Verilator](/docs/verilator.md)) or [Questa](https://eda.sw.siemens.com/en-US/ic/questa/simulation/advanced-simulator/)
 

@@ -13,7 +13,8 @@ apt install python3 python3-yaml
 Run:
 ```console
 dnf update
-dnf install python3 python3-pyyaml
+dnf install python38 python38-pyyaml
+alternatives --set python /usr/bin/python38
 ```
 
 ## Arch (pacman/aur distros)
