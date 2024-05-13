@@ -107,7 +107,7 @@ if __name__ == "__main__":
 	sim_parser.add_argument("SCENARIO_FOLDER", help="Path to generated scenario folder")
 	sim_parser.add_argument("--timeout", help="Simulation timeout in milliseconds")
 	sim_parser.add_argument("--nogui", action="store_true", help="Disables graphical debugger")
-	sim_parser.add_argument("--wave", action="store_true", help="Enables wave visualization. Implies --nogui.")
+	sim_parser.add_argument("--wave", action="store_true", help="Enables wave visualization.")
 
 	all_parser = subparsers.add_parser("all", help="Simulate a scenario")
 	all_parser.add_argument("TESTCASE_FILE", help="Path to testcase description (yaml)")
@@ -115,7 +115,7 @@ if __name__ == "__main__":
 	all_parser.add_argument("SCENARIO_FILE", help="Path to scenario description (yaml)")
 	all_parser.add_argument("--timeout", help="Simulation timeout in milliseconds")
 	all_parser.add_argument("--nogui", action="store_true", help="Disables graphical debugger.")
-	all_parser.add_argument("--wave", action="store_true", help="Enables wave visualization. Implies --nogui.")
+	all_parser.add_argument("--wave", action="store_true", help="Enables wave visualization.")
 	all_parser.add_argument("--skipdebug", action="store_true", help="Disables debugger configuration")
 	all_parser.add_argument("--repodebug", action="store_true", help="Generates repository/appstart debug files")
 
@@ -141,7 +141,6 @@ if __name__ == "__main__":
 			wave = args.wave
 		except:
 			pass
-		nogui = nogui or args.wave
 
 	if option == "simulate" or option == "all" or option == "debug":
 		if not nogui:
