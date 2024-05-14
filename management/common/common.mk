@@ -4,8 +4,17 @@ NC   =\033[0m # No Color
 CONFIG = config.yaml
 SRCDIR = src
 INCDIR = src/include
-INCLIB = ../../libmemphis/src/include
-INCUTILS = ../../libmutils/src/include
+HEADERS = $(wildcard $(INCDIR)/*.h)
+
+DIRMEMPHIS = ../../libmemphis
+INCMEMPHIS = $(DIRMEMPHIS)/src/include
+HDRMEMPHIS = $(wildcard $(DIRMEMPHIS)/*.h) $(wildcard $(DIRMEMPHIS)/**/*.h)
+LIBMEMPHIS = $(DIRMEMPHIS)/libmemphis.a
+
+DIRMUTILS = ../../libmutils
+INCMUTILS = $(DIRMUTILS)/src/include
+HDRMUTILS = $(wildcard $(DIRMUTILS)/*.h) $(wildcard $(DIRMUTILS)/**/*.h)
+LIBMUTILS = $(DIRMUTILS)/libmutils.a
 
 CC = riscv64-elf-gcc
 OBJDUMP = riscv64-elf-objdump
@@ -14,11 +23,8 @@ SIZE    = riscv64-elf-size
 READELF = riscv64-elf-readelf
 HEXDUMP = hexdump -v -e '1/4 "%08x" "\n"'
 
-LIBDIR = ../../libmemphis
-UTILDIR = ../../libmutils
-
-CFLAGS	+= -march=rv32im -mabi=ilp32 -Os -fdata-sections -ffunction-sections -flto -Wall -std=c17 -I$(INCDIR) -I$(LIBDIR)/src/include -I$(UTILDIR)/src/include
-LDFLAGS += -L$(LIBDIR) -L$(UTILDIR) --specs=nano.specs -T $(LIBDIR)/memphis.ld -Wl,--gc-sections,-flto -u _getpid -march=rv32im -mabi=ilp32 -lmemphis -lmutils
+CFLAGS	+= -march=rv32im -mabi=ilp32 -Os -fdata-sections -ffunction-sections -flto -Wall -std=c17 -I$(INCDIR) -I$(INCMEMPHIS) -I$(INCMUTILS)
+LDFLAGS += -L$(DIRMEMPHIS) -L$(DIRMUTILS) --specs=nano.specs -T $(DIRMEMPHIS)/memphis.ld -Wl,--gc-sections,-flto -u _getpid -march=rv32im -mabi=ilp32 -lmemphis -lmutils
 
 SRC = $(wildcard $(SRCDIR)/*.c)
 OBJ = $(patsubst %.c, %.o, $(SRC))
@@ -42,15 +48,15 @@ i$(TARGET).bin: $(TARGET).elf
 	@printf "${BLUE}Generating instruction binary for task: %s ...${NC}\n" "$(TARGET)"
 	@$(OBJCOPY) -j .text -O binary $< $@
 
-$(TARGET).elf: $(OBJ)
+$(TARGET).elf: $(OBJ) $(LIBMEMPHIS) $(LIBMUTILS)
 	@printf "${BLUE}Linking task: %s ...${NC}\n" "$(TARGET)"
-	@$(CC) -Wl,-Map=$(TARGET).map -o $@ $^ $(LDFLAGS)
+	@$(CC) -Wl,-Map=$(TARGET).map -o $@ $(OBJ) $(LDFLAGS)
 
 $(TARGET).lst: $(TARGET).elf
 	@printf "${BLUE}Listing task: %s ...${NC}\n" "$(TARGET)"
 	@$(OBJDUMP) -S $< > $@
 
-$(SRCDIR)/%.o: $(SRCDIR)/%.c
+$(SRCDIR)/%.o: $(SRCDIR)/%.c $(HEADERS) $(HDRMEMPHIS) $(HDRMUTILS)
 	@printf "${BLUE}Compiling task: %s ...${NC}\n" "$*.c"
 	@$(CC) -c $< -o $@ $(CFLAGS)
 

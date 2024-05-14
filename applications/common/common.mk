@@ -15,11 +15,18 @@ SIZE    = riscv64-elf-size
 READELF = riscv64-elf-readelf
 HEXDUMP = hexdump -v -e '1/4 "%08x" "\n"'
 
-LIBDIR = ../../libmemphis
-UTILDIR = ../../libmutils
+DIRMEMPHIS = ../../libmemphis
+INCMEMPHIS = $(DIRMEMPHIS)/src/include
+HDRMEMPHIS = $(wildcard $(DIRMEMPHIS)/*.h) $(wildcard $(DIRMEMPHIS)/**/*.h)
+LIBMEMPHIS = $(DIRMEMPHIS)/libmemphis.a
 
-CFLAGS	+= -march=rv32im -mabi=ilp32 -Os -fdata-sections -ffunction-sections -flto -Wall -std=c17 -I$(UTILDIR)/src/include -I$(LIBDIR)/src/include
-LDFLAGS += -L$(LIBDIR) -L$(UTILDIR) --specs=nano.specs -T $(LIBDIR)/memphis.ld -Wl,--gc-sections,-flto -u _getpid -march=rv32im -mabi=ilp32 -lmemphis -lmutils
+DIRMUTILS = ../../libmutils
+INCMUTILS = $(DIRMUTILS)/src/include
+HDRMUTILS = $(wildcard $(DIRMUTILS)/*.h) $(wildcard $(DIRMUTILS)/**/*.h)
+LIBMUTILS = $(DIRMUTILS)/libmutils.a
+
+CFLAGS	+= -march=rv32im -mabi=ilp32 -Os -fdata-sections -ffunction-sections -flto -Wall -std=c17 -I$(SRCDIR) -I$(INCMUTILS) -I$(INCMEMPHIS)
+LDFLAGS += -L$(DIRMEMPHIS) -L$(DIRMUTILS) --specs=nano.specs -T $(DIRMEMPHIS)/memphis.ld -Wl,--gc-sections,-flto -u _getpid -march=rv32im -mabi=ilp32 -lmemphis -lmutils
 
 all: $(TARGETS) $(ELFS)
 
@@ -40,11 +47,11 @@ $(SRCDIR)/i%.bin: $(SRCDIR)/%.elf
 	@printf "${GREEN}Generating binary %s ...${NC}\n" "$@"
 	@$(OBJCOPY) -j .text -O binary $< $@
 
-$(SRCDIR)/%.elf: $(SRCDIR)/%.o
+$(SRCDIR)/%.elf: $(SRCDIR)/%.o $(LIBMEMPHIS) $(LIBMUTILS)
 	@printf "${GREEN}Linking %s ...${NC}\n" "$@"
-	@$(CC) -o $@ $^ $(LDFLAGS)
+	@$(CC) -o $@ $< $(LDFLAGS)
 
-$(SRCDIR)/%.o: $(SRCDIR)/%.c
+$(SRCDIR)/%.o: $(SRCDIR)/%.c $(HDRMEMPHIS) $(HDRMUTILS)
 	@printf "${GREEN}Compiling %s ...${NC}\n" "$<"
 	@$(CC) -c $< -o $@ $(CFLAGS)
 
