@@ -199,14 +199,17 @@ if __name__ == "__main__":
 	if option == "scenario" or option == "all":
 		scenario_file = args.SCENARIO_FILE
  
-	if option == "testcase":
-		testcase_build(platform_path, testcase_file, skipdebug)
-	elif option == "applications":
-		applications_build(platform_path, testcase_folder, applications_file, repodebug)
-	elif option == "scenario":
-		scenario_build(platform_path, testcase_folder, scenario_file, skipdebug, repodebug)
-	elif option == "simulate":
-		simulate(platform_path, debugger_path, scenario_folder, timeout, nogui, wave)
-	else:
-		# all
-		memphis_all(platform_path, debugger_path, testcase_file, scenario_file, applications_file, timeout, nogui, wave, skipdebug, repodebug)
+	try:
+		if option == "testcase":
+			testcase_build(platform_path, testcase_file, skipdebug)
+		elif option == "applications":
+			applications_build(platform_path, testcase_folder, applications_file, repodebug)
+		elif option == "scenario":
+			scenario_build(platform_path, testcase_folder, scenario_file, skipdebug, repodebug)
+		elif option == "simulate":
+			simulate(platform_path, debugger_path, scenario_folder, timeout, nogui, wave)
+		else:
+			# all
+			memphis_all(platform_path, debugger_path, testcase_file, scenario_file, applications_file, timeout, nogui, wave, skipdebug, repodebug)
+	except Exception as ex:
+		sys.exit("\nERROR: {}".format(ex))

@@ -29,7 +29,7 @@ class Simulation:
             except:
                 pass
             if not wave_enabled:
-                raise Exception("ERROR: Wave viewer is enabled but trace is not enabled in the scenario.")
+                raise Exception("Wave viewer is enabled but trace is not enabled in the testcase.")
 
         # Clear files that are written in append mode
         open("{}/debug/scheduling_report.txt".format(scenario_path), 'w').close()
