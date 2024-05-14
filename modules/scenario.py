@@ -155,9 +155,7 @@ class Scenario:
 				start.add("{:04x}".format(address), "Task {} is {}".format(name, map_comment))
 			except:
 				raise Exception("All management tasks must be STATICALLY MAPPED")
-			
-			start.add(name, "Task name")
-			
+						
 			try:
 				descr = Descriptor("{}/management/{}/config.yaml".format(self.testcase_path, task["task"]), task["task"])
 				task_type = descr.get_type()
