@@ -39,7 +39,7 @@ int main()
 		message[i] = i % 256;
 
 	for(int i = 0; i < FRAMES; i++){
-		memphis_send(message, COMPRESSED_SAMPLES, adpcm_dec);
+		memphis_send(message, sizeof(message), adpcm_dec);
 		memphis_send(vlc_array, sizeof(vlc_array), ivlc);
 	}
 
