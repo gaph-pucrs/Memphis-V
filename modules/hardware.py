@@ -15,7 +15,7 @@ class Hardware:
 		n_pe_x, 
 		n_pe_y, 
 		peripherals, 
-		definitions
+		parameters
 	):
 		self.platform_path 			= platform_path
 		self.testcase_path 			= testcase_path
@@ -25,7 +25,7 @@ class Hardware:
 		self.PKG_N_PE_X 			= n_pe_x
 		self.PKG_N_PE_Y 			= n_pe_y
 		self.peripherals			= peripherals
-		self.definitions			= definitions
+		self.parameters				= parameters
 
 	def copy(self):
 		copytree("{}/Phivers".format(self.platform_path), "{}/Phivers".format(self.testcase_path), dirs_exist_ok=1)
@@ -39,12 +39,12 @@ class Hardware:
 		definitions.define("IMEM_PAGE_SZ", str(self.PKG_PAGE_SIZE_INST))
 		definitions.define("DMEM_PAGE_SZ", str(self.PKG_PAGE_SIZE_DATA))
 
-		definitions.define("RAM_DEBUG", str(0))
-		definitions.define("RS5_DEBUG", str(0))
-		definitions.define("UART_DEBUG", str(1))
-		definitions.define("SCHED_DEBUG", str(1))
-		definitions.define("PIPE_DEBUG", str(1))
-		definitions.define("TRAFFIC_DEBUG", str(1))
+		definitions.define("RAM_DEBUG",     int(self.__param_or_default("RAM_DEBUG",     False) == "True"))
+		definitions.define("RS5_DEBUG",     int(self.__param_or_default("RS5_DEBUG",     False) == "True"))
+		definitions.define("UART_DEBUG",    int(self.__param_or_default("UART_DEBUG",    True)  == "True"))
+		definitions.define("SCHED_DEBUG",   int(self.__param_or_default("SCHED_DEBUG",   True)  == "True"))
+		definitions.define("PIPE_DEBUG",    int(self.__param_or_default("PIPE_DEBUG",    True)  == "True"))
+		definitions.define("TRAFFIC_DEBUG", int(self.__param_or_default("TRAFFIC_DEBUG", True)  == "True"))
 					 
 		for peripheral in self.peripherals:
 			addr = self.peripherals[peripheral][0]
@@ -56,9 +56,6 @@ class Hardware:
 	def build(self, simulator="verilator", trace=False):
 		NCPU = cpu_count()
 		CFLAGS = ""
-
-		for definition in self.definitions:
-			CFLAGS = CFLAGS + "-D"+str(list(definition.keys())[0])+"="+str(list(definition.values())[0])+" "
 
 		make_env = environ.copy()
 		make_env["CFLAGS"] = CFLAGS
@@ -72,6 +69,12 @@ class Hardware:
 
 		if make.returncode != 0:
 			raise Exception("Error building hardware.")
+	
+	def __param_or_default(self, key, default):
+		try:
+			return self.parameters[key]
+		except:
+			return default
 
 class HardwareDefinitions:
 	def __init__(self):

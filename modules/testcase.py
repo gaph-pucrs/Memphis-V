@@ -50,10 +50,10 @@ class Testcase:
 			port = self.__port_code(peripheral["port"])
 			peripherals[peripheral["name"]] = ((x, y), port)
 		
-		definitions = {}
+		parameters = {}
 		try:
-			for definition in yaml["hw"]["definitions"]:
-				definitions[str(list(definition.keys())[0])] = str(list(definition.values())[0])
+			for parameter in yaml["hw"]["parameters"]:
+				parameters[str(list(parameter.keys())[0])] = str(list(parameter.values())[0])
 		except:
 			pass
 
@@ -69,7 +69,7 @@ class Testcase:
 			self.PKG_N_PE_X, 
 			self.PKG_N_PE_Y, 
 			peripherals, 
-			definitions
+			parameters
 		)
 
 		self.management = Management(self.platform_path, self.base_dir)
