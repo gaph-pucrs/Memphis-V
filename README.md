@@ -90,6 +90,7 @@ hw:                         # Hardware properties
     - PIPE_DEBUG: yes       # Optional: enable messagin protocol debug (default is on)
     - RAM_DEBUG: no         # Optional: enable RAM access debug (default is off)
     - RS5_DEBUG: no         # Optional: enable core register bank debug (default is off)
+    - DMNI_DEBUG: no        # Optional: enable DMNI timing debug (default is off)
 ```
 
 The applications description contains a list of **possible** applications to evaluate in a scenario.

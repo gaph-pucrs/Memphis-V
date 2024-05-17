@@ -45,7 +45,8 @@ class Hardware:
 		definitions.define("SCHED_DEBUG",   int(self.__param_or_default("SCHED_DEBUG",   True)  == "True"))
 		definitions.define("PIPE_DEBUG",    int(self.__param_or_default("PIPE_DEBUG",    True)  == "True"))
 		definitions.define("TRAFFIC_DEBUG", int(self.__param_or_default("TRAFFIC_DEBUG", True)  == "True"))
-					 
+		definitions.define("DMNI_DEBUG",    int(self.__param_or_default("DMNI_DEBUG",    False) == "True"))
+
 		for peripheral in self.peripherals:
 			addr = self.peripherals[peripheral][0]
 			port = self.peripherals[peripheral][1]
