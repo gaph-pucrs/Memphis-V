@@ -39,13 +39,13 @@ class Hardware:
 		definitions.define("IMEM_PAGE_SZ", str(self.PKG_PAGE_SIZE_INST))
 		definitions.define("DMEM_PAGE_SZ", str(self.PKG_PAGE_SIZE_DATA))
 
-		definitions.define("RAM_DEBUG",     int(self.__param_or_default("RAM_DEBUG",     False) == "True"))
-		definitions.define("RS5_DEBUG",     int(self.__param_or_default("RS5_DEBUG",     False) == "True"))
-		definitions.define("UART_DEBUG",    int(self.__param_or_default("UART_DEBUG",    True)  == "True"))
-		definitions.define("SCHED_DEBUG",   int(self.__param_or_default("SCHED_DEBUG",   True)  == "True"))
-		definitions.define("PIPE_DEBUG",    int(self.__param_or_default("PIPE_DEBUG",    True)  == "True"))
-		definitions.define("TRAFFIC_DEBUG", int(self.__param_or_default("TRAFFIC_DEBUG", True)  == "True"))
-		definitions.define("DMNI_DEBUG",    int(self.__param_or_default("DMNI_DEBUG",    False) == "True"))
+		definitions.define("RAM_DEBUG",     int(self.__param_or_default("RAM_DEBUG",     "False") == "True"))
+		definitions.define("RS5_DEBUG",     int(self.__param_or_default("RS5_DEBUG",     "False") == "True"))
+		definitions.define("UART_DEBUG",    int(self.__param_or_default("UART_DEBUG",     "True") == "True"))
+		definitions.define("SCHED_DEBUG",   int(self.__param_or_default("SCHED_DEBUG",    "True") == "True"))
+		definitions.define("PIPE_DEBUG",    int(self.__param_or_default("PIPE_DEBUG",     "True") == "True"))
+		definitions.define("TRAFFIC_DEBUG", int(self.__param_or_default("TRAFFIC_DEBUG",  "True") == "True"))
+		definitions.define("DMNI_DEBUG",    int(self.__param_or_default("DMNI_DEBUG",    "False") == "True"))
 
 		for peripheral in self.peripherals:
 			addr = self.peripherals[peripheral][0]
@@ -56,10 +56,8 @@ class Hardware:
 
 	def build(self, simulator="verilator", trace=False):
 		NCPU = cpu_count()
-		CFLAGS = ""
 
 		make_env = environ.copy()
-		make_env["CFLAGS"] = CFLAGS
 		make_env["TRACE"]  = "1" if trace else "0"
 
 		target = "default"
