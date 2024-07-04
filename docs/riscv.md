@@ -3,9 +3,16 @@
 ## RHEL (dnf-based distros) and Ubuntu (apt-based distros)
 
 For GCC 14.1.0 (the latest tested version, recommended), you must build it manually.
-First, install dependencies (as root):
+First, install dependencies.
+
+For dnf-based (as root):
 ```console
 dnf install texinfo gmp-devel mpfr-devel libmpc-devel isl-devel
+```
+
+For apt-based (as root):
+```console
+apt install libmpfr-dev libgmp-dev libmpc-dev zlib1g-dev libisl-dev
 ```
 
 Export versions and directories to customize your installation:
@@ -73,7 +80,7 @@ export CFLAGS_FOR_TARGET='-g -Os -ffunction-sections -fdata-sections'
 ../configure --prefix=$INSTALL_DIR --target=riscv64-elf --disable-newlib-supplied-syscalls --enable-newlib-reent-small --enable-newlib-retargetable-locking --disable-newlib-fvwrite-in-streamio --disable-newlib-fseek-optimization --disable-newlib-wide-orient --enable-newlib-nano-malloc --disable-newlib-unbuf-stream-opt --enable-lite-exit --enable-newlib-global-atexit --enable-newlib-nano-formatted-io --disable-nls
 make -j$(nproc)
 make install
-find $INSTALL_DIR -regex ".*/lib\(c\|g\|m\|rdimon\|gloss\)\.a" -exec rename .a _nano.a '{}' \;
+find $INSTALL_DIR -regex ".*/lib\(c\|g\|m\|rdimon\|gloss\)\.a" -exec sh -c 'mv "$0" "${0%.a}_nano.a"' {} \;
 install -d $INSTALL_DIR/riscv64-elf/include/newlib-nano
 install -m644 -t $INSTALL_DIR/riscv64-elf/include/newlib-nano $INSTALL_DIR/riscv64-elf/include/newlib.h
 ```
