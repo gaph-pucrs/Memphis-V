@@ -15,6 +15,7 @@ class Hardware:
 		n_pe_x, 
 		n_pe_y, 
 		peripherals, 
+		links, 
 		parameters
 	):
 		self.platform_path 			= platform_path
@@ -25,13 +26,14 @@ class Hardware:
 		self.PKG_N_PE_X 			= n_pe_x
 		self.PKG_N_PE_Y 			= n_pe_y
 		self.peripherals			= peripherals
+		self.links					= links
 		self.parameters				= parameters
 
 	def copy(self):
 		copytree("{}/Phivers".format(self.platform_path), "{}/Phivers".format(self.testcase_path), dirs_exist_ok=1)
-		self.generate_definitions()
+		self.__generate_definitions()
 
-	def generate_definitions(self):
+	def __generate_definitions(self):
 		definitions = HardwareDefinitions()
 		definitions.define("N_PE_X", str(self.PKG_N_PE_X))
 		definitions.define("N_PE_Y", str(self.PKG_N_PE_Y))
@@ -46,6 +48,26 @@ class Hardware:
 		definitions.define("PIPE_DEBUG",    int(self.__param_or_default("PIPE_DEBUG",     "True") == "True"))
 		definitions.define("TRAFFIC_DEBUG", int(self.__param_or_default("TRAFFIC_DEBUG",  "True") == "True"))
 		definitions.define("DMNI_DEBUG",    int(self.__param_or_default("DMNI_DEBUG",    "False") == "True"))
+
+		ports = ["" for x in range(self.PKG_N_PE_X) for y in range(self.PKG_N_PE_Y) for p in range(5)]
+		for link in self.links:
+			ports[5*(link[0][0] + self.PKG_N_PE_X*link[0][1]) + self.__port_val(link[0][2])] = link[1][0]
+			if link[1][0] == "rs":
+				with open("{}/link/rs{}x{}-{}.cfg".format(self.testcase_path, link[0][0], link[0][1], link[0][2]), "w") as file:
+					file.write("{}\n".format(self.__link_param_or_default(link[1][1], "interval_min",    5)))
+					file.write("{}\n".format(self.__link_param_or_default(link[1][1], "interval_max",   10)))
+					file.write("{}\n".format(self.__link_param_or_default(link[1][1], "cycle_min",    1000)))
+					file.write("{}\n".format(self.__link_param_or_default(link[1][1], "cycle_max",    9999)))
+			else:
+				raise Exception("Invalid link type at {}x{}-{}".format(link[0][0], link[0][1], link[0][2]))
+
+		port_param = "{"
+		for port in ports[:-1]:
+			port_param += "\"{}\",".format(port)
+
+		port_param += "\"{}\"}}".format(ports[-1])
+
+		definitions.define("string LINK_CFG [N_PE_X*N_PE_Y*HERMES_NPORT]", port_param)
 
 		for peripheral in self.peripherals:
 			addr = self.peripherals[peripheral][0]
@@ -74,6 +96,26 @@ class Hardware:
 			return self.parameters[key]
 		except:
 			return default
+
+	def __link_param_or_default(self, dict, key, default):
+		try:
+			return dict[key]
+		except:
+			return default
+		
+	def __port_val(self, port):
+		if port == "E":
+			return 0
+		elif port == "W":
+			return 1
+		elif port == "N":
+			return 2
+		elif port == "S":
+			return 3
+		elif port == "L":
+			return 4
+		else:
+			raise Exception("Invalid port name: {}".format(port))
 
 class HardwareDefinitions:
 	def __init__(self):

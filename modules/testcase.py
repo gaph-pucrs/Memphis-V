@@ -49,7 +49,17 @@ class Testcase:
 			y = int(peripheral["pe"][2])
 			port = self.__port_code(peripheral["port"])
 			peripherals[peripheral["name"]] = ((x, y), port)
-		
+
+		links = []
+		for link in yaml["hw"]["links"]:
+			param = {}
+			try:
+				for parameter in link["parameters"]:
+					param[str(list(parameter.keys())[0])] = str(list(parameter.values())[0])
+			except:
+				pass
+			links.append(((link["pe"][0], link["pe"][1], link["port"]), (link["trojan"], param)))
+				
 		parameters = {}
 		try:
 			for parameter in yaml["hw"]["parameters"]:
@@ -69,6 +79,7 @@ class Testcase:
 			self.PKG_N_PE_X, 
 			self.PKG_N_PE_Y, 
 			peripherals, 
+			links, 
 			parameters
 		)
 
@@ -85,6 +96,8 @@ class Testcase:
 
 		makedirs(self.base_dir, exist_ok=True)
 		copyfile(self.base, self.file)
+
+		makedirs("{}/link".format(self.base_dir), exist_ok=True)
 
 		self.libs.copy()
 		self.kernel.copy()
