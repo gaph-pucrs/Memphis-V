@@ -137,16 +137,15 @@ void wdo_from_last(wdo_t *window, pe_t *pes, int req_slots)
 			return;
 		}
 
-		/* No window found */
-		if(window->wy <= window->wx){
-			window->wy++;
-		} else {
-			window->wx++;
-		}
-
 		size_t PE_X_CNT;
 		size_t PE_Y_CNT;
 		memphis_get_nprocs(&PE_X_CNT, &PE_Y_CNT);
+
+		/* No window found */
+		if (window->wy <= window->wx && window->wy < PE_Y_CNT)
+			window->wy++;
+		else
+			window->wx++;
 
 		last_x = PE_X_CNT - window->wx;
 		last_y = PE_Y_CNT - window->wy;
