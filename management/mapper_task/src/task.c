@@ -53,28 +53,6 @@ list_t *task_get_preds(task_t *task)
 	return &(task->preds);
 }
 
-list_t *task_get_order(task_t *task, list_t *order)
-{
-	list_entry_t *succ = list_front(&(task->succs));
-	while(succ != NULL){
-		task_t *succ_task = list_get_data(succ);
-		if(list_find(order, succ_task, NULL) == NULL){
-			list_entry_t *pushed = list_push_back(order, succ_task);
-			if(pushed == NULL){
-				/**
-				 * @todo
-				 * Clear remainings
-				 */
-				return NULL;
-			}
-		}
-
-		succ = list_next(succ);
-	}
-
-	return order;
-}
-
 pe_t *task_map(task_t *task, pe_t *pes, wdo_t *window)
 {
 	unsigned cost = -1; 	/* Start at infinite cost */

@@ -85,38 +85,37 @@ task_t *app_get_tasks(app_t *app, size_t *task_cnt)
 
 list_t *app_get_order(app_t *app)
 {
-	const size_t TASK_CNT = app->task_cnt;
+	list_t *order = malloc(sizeof(list_t));	
+	
+	if(order == NULL)
+		return NULL;
 
-	list_t initials;
-	list_init(&initials);
+	list_init(order);
 
 	/* Make an initial tasks list */
-	for(int i = 0; i < TASK_CNT; i++){
+	for(int i = 0; i < app->task_cnt; i++){
 		task_t *task = &(app->tasks[i]);
 		list_t *preds = task_get_preds(task);
 		if(list_empty(preds)){
-			list_entry_t *entry = list_push_back(&initials, task);
+			list_entry_t *entry = list_push_back(order, task);
 			if(entry == NULL){
 				/**
 				 * @todo
 				 * Clear remaining entries
 				 */
-				return NULL;				
+				return NULL;
 			}
 		}
 	}
 
-	list_t *order = malloc(sizeof(list_t));
-	list_init(order);
+	if (list_get_size(order) == app->task_cnt)
+		return order;
 
-	if(order == NULL)
-		return NULL;
-
-	/* The mapping order starts in each initial task */
-	list_entry_t *entry = list_front(&initials);
-	while(entry != NULL){
-		task_t *task = list_get_data(entry);
-		list_entry_t *pushed = list_push_back(order, task);
+	/* Cyclic dependencies*/
+	int unordered_idx = 0;
+	if (list_get_size(order) == 0) {
+		/* Start with task 0 as initial */
+		list_entry_t *pushed = list_push_back(order, &(app->tasks[unordered_idx++]));
 		if(pushed == NULL){
 			/**
 			 * @todo
@@ -124,36 +123,54 @@ list_t *app_get_order(app_t *app)
 			 */
 			return NULL;
 		}
-
-		order = task_get_order(task, order);
-		if(order == NULL)
-			return NULL;
-
-		entry = list_next(entry);
 	}
 
-	/* Solve one or more cyclic dependencies */
-	if(list_get_size(order) == TASK_CNT)
-		return order;
-	
-	/* Solve one or more cyclic dependencies */
-	for(int i = 0; i < TASK_CNT; i++){
-		task_t *task = &(app->tasks[i]);
-		if(list_find(order, task, NULL) != NULL)
-			continue;
+	/* Start ordering by successors of initials */
+	list_entry_t *order_entry = list_front(order);
 
-		list_entry_t *pushed = list_push_back(order, task);
-		if(pushed == NULL){
-			/**
-			 * @todo
-			 * Clear remaining entries
-			 */
-			return NULL;
+	while (true) {
+		/* Continue by ordering by successors of tasks already ordered */
+		while (order_entry != NULL) {
+			task_t *task = list_get_data(order_entry);
+			list_t *succs = task_get_succs(task);
+			list_entry_t *succ_entry = list_front(succs);
+			while (succ_entry != NULL) {
+				task_t *succ_task = list_get_data(succ_entry);
+				if(list_find(order, succ_task, NULL) == NULL){
+					list_entry_t *pushed = list_push_back(order, succ_task);
+					if(pushed == NULL){
+						/**
+						 * @todo
+						 * Clear remaining entries
+						 */
+						return NULL;
+					}
+				}
+				succ_entry = list_next(succ_entry);
+			}
+			order_entry = list_next(order_entry);
 		}
 
-		order = task_get_order(task, order);
-		if(order == NULL)
-			return NULL;
+		/* Check if all tasks are ordered */
+		if (list_get_size(order) == app->task_cnt)
+			break;
+
+		/* Solve one or more cyclic dependencies */
+		while (unordered_idx < app->task_cnt) {
+			task_t *task = &(app->tasks[unordered_idx++]);
+			if(list_find(order, task, NULL) != NULL)
+				continue;
+
+			order_entry = list_push_back(order, task);
+			if(order_entry == NULL){
+				/**
+				 * @todo
+				 * Clear remaining entries
+				 */
+				return NULL;
+			}
+			break;
+		}
 	}
 
 	return order;

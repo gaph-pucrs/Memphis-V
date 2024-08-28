@@ -54,8 +54,6 @@ list_t *task_get_succs(task_t *task);
 
 list_t *task_get_preds(task_t *task);
 
-list_t *task_get_order(task_t *task, list_t *order);
-
 pe_t *task_map(task_t *task, pe_t *pes, wdo_t *window);
 
 int task_get_id(task_t *task);
