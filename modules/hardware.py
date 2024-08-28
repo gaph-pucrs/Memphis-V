@@ -54,10 +54,11 @@ class Hardware:
 			ports[5*(link[0][0] + self.PKG_N_PE_X*link[0][1]) + self.__port_val(link[0][2])] = link[1][0]
 			if link[1][0] == "rs":
 				with open("{}/link/rs{}x{}-{}.cfg".format(self.testcase_path, link[0][0], link[0][1], link[0][2]), "w") as file:
-					file.write("{}\n".format(self.__link_param_or_default(link[1][1], "interval_min",    5)))
-					file.write("{}\n".format(self.__link_param_or_default(link[1][1], "interval_max",   10)))
-					file.write("{}\n".format(self.__link_param_or_default(link[1][1], "cycle_min",    1000)))
-					file.write("{}\n".format(self.__link_param_or_default(link[1][1], "cycle_max",    9999)))
+					file.write("{}\n".format(self.__link_param_or_default(link[1][1], "tick_begin",   500000)))
+					file.write("{}\n".format(self.__link_param_or_default(link[1][1], "interval_min",      2)))
+					file.write("{}\n".format(self.__link_param_or_default(link[1][1], "interval_max",      5)))
+					file.write("{}\n".format(self.__link_param_or_default(link[1][1], "cycle_min",       100)))
+					file.write("{}\n".format(self.__link_param_or_default(link[1][1], "cycle_max",       499)))
 			else:
 				raise Exception("Invalid link type at {}x{}-{}".format(link[0][0], link[0][1], link[0][2]))
 
