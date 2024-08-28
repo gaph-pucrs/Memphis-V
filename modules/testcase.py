@@ -51,14 +51,17 @@ class Testcase:
 			peripherals[peripheral["name"]] = ((x, y), port)
 
 		links = []
-		for link in yaml["hw"]["links"]:
-			param = {}
-			try:
-				for parameter in link["parameters"]:
-					param[str(list(parameter.keys())[0])] = str(list(parameter.values())[0])
-			except:
-				pass
-			links.append(((link["pe"][0], link["pe"][1], link["port"]), (link["trojan"], param)))
+		try:
+			for link in yaml["hw"]["links"]:
+				param = {}
+				try:
+					for parameter in link["parameters"]:
+						param[str(list(parameter.keys())[0])] = str(list(parameter.values())[0])
+				except:
+					pass
+				links.append(((link["pe"][0], link["pe"][1], link["port"]), (link["trojan"], param)))
+		except:
+			pass
 				
 		parameters = {}
 		try:
