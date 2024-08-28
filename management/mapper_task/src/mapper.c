@@ -288,9 +288,9 @@ int map_idx_to_coord(int idx)
 
 int map_xy_to_idx(int x, int y)
 {
-	size_t PE_Y_CNT;
-	memphis_get_nprocs(NULL, &PE_Y_CNT);
-	return x + y*PE_Y_CNT;
+	size_t PE_X_CNT;
+	memphis_get_nprocs(&PE_X_CNT, NULL);
+	return x + y*PE_X_CNT;
 }
 
 unsigned map_manhattan(int a, int b)
