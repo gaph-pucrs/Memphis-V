@@ -58,7 +58,7 @@ class Hardware:
 					file.write("{}\n".format(self.__link_param_or_default(link[1][1], "interval_min",      2)))
 					file.write("{}\n".format(self.__link_param_or_default(link[1][1], "interval_max",      5)))
 					file.write("{}\n".format(self.__link_param_or_default(link[1][1], "cycle_min",       100)))
-					file.write("{}\n".format(self.__link_param_or_default(link[1][1], "cycle_max",       499)))
+					file.write("{}\n".format(self.__link_param_or_default(link[1][1], "cycle_max",       500)))
 			else:
 				raise Exception("Invalid link type at {}x{}-{}".format(link[0][0], link[0][1], link[0][2]))
 
