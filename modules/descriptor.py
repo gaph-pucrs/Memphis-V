@@ -40,6 +40,8 @@ class Descriptor:
 			for cap in observe:
 				if cap == "qos":
 					ttt |= 0x0100
+				elif cap == "sec":
+					ttt |= 0x0200
 				else:
 					print("Management task {} unknown capability {}".format(self.name, cap))
 		except:
