@@ -34,7 +34,7 @@ typedef struct _map {
 
 void map_init(map_t *mapper);
 
-void map_new_app(map_t *mapper, int injector, size_t task_cnt, int *descriptor, int *communication);
+void map_new_app(map_t *mapper, int injector, int hash, size_t task_cnt, int *descriptor, int *communication);
 
 int map_coord_to_idx(int coord);
 

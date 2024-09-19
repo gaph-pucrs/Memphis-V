@@ -228,7 +228,7 @@ void _map_do(map_t *mapper, app_t *app)
 	list_push_back(&(mapper->apps), app);
 }
 
-void map_new_app(map_t *mapper, int injector, size_t task_cnt, int *descriptor, int *communication)
+void map_new_app(map_t *mapper, int injector, int hash, size_t task_cnt, int *descriptor, int *communication)
 {
 	printf("New app received at %u from %x\n", memphis_get_tick(), injector);
 
@@ -240,7 +240,7 @@ void map_new_app(map_t *mapper, int injector, size_t task_cnt, int *descriptor, 
 	}
 
 	// @todo get hash id
-	task_t *tasks = app_init(app, mapper->appid_cnt, -1, injector, task_cnt, descriptor, communication);
+	task_t *tasks = app_init(app, mapper->appid_cnt, hash, injector, task_cnt, descriptor, communication);
 	if(tasks == NULL){
 		puts("FATAL: not enough memory");
 		return;

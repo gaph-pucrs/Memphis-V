@@ -34,7 +34,7 @@ int main()
 
 		switch(message[0]){
 			case NEW_APP:
-				map_new_app(&mapper, message[1], message[2], &message[3], &message[(message[2] << 1) + 3]);
+				map_new_app(&mapper, message[1], message[2], message[3], &message[4], &message[(message[3] << 1) + 4]);
 				break;
 			case TASK_ALLOCATED:
 				map_task_allocated(&mapper, message[1]);
