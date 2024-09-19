@@ -33,7 +33,7 @@ int main()
 
 	oda_t actuator;
 	oda_init(&actuator);
-	oda_request_service(&actuator, ODA_ACT | A_MIGRATION);
+	oda_request_nearest_service(&actuator, ODA_ACT | A_MIGRATION);
 
 	while(true){
 		memphis_receive_any(msg, sizeof(msg));
