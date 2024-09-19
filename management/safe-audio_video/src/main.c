@@ -112,7 +112,7 @@ int main()
 				);
 				float real_latency = msg[6] / 100.0;
 				bool anom = fabs(pred_latency - real_latency) / real_latency > 1.05;
-				printf("anom = %d\n", anom);
+				printf("Anomaly = %d\n", anom);
 				break;
 			default:
 				break;

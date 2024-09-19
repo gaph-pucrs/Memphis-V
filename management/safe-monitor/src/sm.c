@@ -27,8 +27,6 @@ void sm_init(sm_t* sm)
 	oda_request_all_services(&(sm->deciders), ODA_DECIDE | D_SEC);
 }
 
-#include <stdio.h>
-
 int sm_get_models(sm_t *sm)
 {
 	int *prov_msg = malloc(259*sizeof(int));
@@ -58,7 +56,6 @@ int sm_get_models(sm_t *sm)
 			memphis_receive_any(msg, sizeof(msg));
 			if (msg[0] == SEC_SAFE_APP_RESP) {
 				sm->model_ids[i] = msg[1];
-				printf("Decider %d has model hash %d\n", sm->deciders.ids[i], sm->model_ids[i]);
 				break;
 			}
 		}
@@ -69,13 +66,11 @@ int sm_get_models(sm_t *sm)
 
 void sm_monitor(sm_t *sm, unsigned timestamp, unsigned size, unsigned hops, int prod, int cons, unsigned latency)
 {
-	printf("***** MONITORING ******\n");
 	int appid = prod >> 8;
 
 	// Get model hash id and release time for app id
 	sm_hash_t *hash = lru_use(&(sm->hash_ids), &appid, _sm_hash_find);
 	if (hash == NULL) {
-		printf("App %d not found in cache\n", appid);
 		// If not cached, ask mapper
 		int msg[] = {SEC_SAFE_MAP_REQ, appid, getpid()};
 		memphis_send_any(msg, sizeof(msg), 0);
@@ -98,8 +93,6 @@ void sm_monitor(sm_t *sm, unsigned timestamp, unsigned size, unsigned hops, int 
 			return;
 		lru_replace(&(sm->hash_ids), hash);
 	}
-
-	printf("App %d has hash %x and was released at %u\n", appid, hash->hash_id, hash->release_time);
 	
 	int decider_id = -1;
 	for (int i = 0; i < sm->deciders.cnt; i++) {
@@ -112,21 +105,6 @@ void sm_monitor(sm_t *sm, unsigned timestamp, unsigned size, unsigned hops, int 
 	if (decider_id == -1)
 		return;
 
-	printf("App %d has decider %d with hash %x\n", appid, decider_id, sm->model_ids[decider_id]);
-
-	// printf(
-	// 	"%lu,%lu,%lu,%x,%x,%lu\n", 
-	// 	timestamp, 
-	// 	size, 
-	// 	hops, 
-	// 	prod, 
-	// 	cons, 
-	// 	latency
-	// );
-
-	// Assume target application is known
 	uint32_t msg[] = {SEC_INFER, (timestamp - hash->release_time), size, hops, prod & 0xFF, cons & 0xFF, latency};
-
-	// Assume decider is known
 	memphis_send_any(msg, sizeof(msg), decider_id);
 }

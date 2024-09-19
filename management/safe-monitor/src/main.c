@@ -35,7 +35,7 @@ int main()
 		printf("FATAL: Could not fetch deciders. Not enough memory?");
 		exit(1);
 	}
-	printf("Received %d model deciders\n", cnt);
+	printf("Received %d model decider(s)\n", cnt);
 
     mon_announce(MON_SEC);
 

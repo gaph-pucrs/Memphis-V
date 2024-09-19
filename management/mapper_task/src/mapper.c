@@ -538,7 +538,7 @@ void map_request_nearest_service(map_t *mapper, int address, unsigned tag, int r
 
 void map_request_all_services(map_t *mapper, unsigned tag, int requester)
 {
-	printf("Task %d requested all services with tag %x\n", requester, tag);
+	// printf("Task %d requested all services with tag %x\n", requester, tag);
 	/* Search all Management tasks */
 	list_entry_t *entry = list_front(&(mapper->apps));
 	app_t *ma = list_get_data(entry);
@@ -564,7 +564,7 @@ void map_request_all_services(map_t *mapper, unsigned tag, int requester)
 	}
 	message[2] = matches;
 
-	printf("Found %d matche(s)\n", matches);
+	// printf("Found %d match(es)\n", matches);
 
 	if (matches > 0)
 		memphis_send_any(message, (matches + 3)*sizeof(int), requester);
