@@ -5,6 +5,7 @@ from subprocess import run, check_output
 from multiprocessing import cpu_count
 from repository import Repository
 from yaml import safe_load
+from hashlib import blake2s
 
 class Application:
 	def __init__(self, app_name, instance, platform_path, base_path, testcase_path, definitions=None, start_ms=None, mapping=None):
@@ -104,6 +105,7 @@ class Application:
 
 		dep_list, dep_list_len = self.__get_dep_list()
 
+		descr.add(blake2s(self.app_name.encode(), digest_size=4, usedforsecurity=False).hexdigest(), "Application name ({}) hash".format(self.app_name))
 		descr.add("{}".format(len(self.tasks)), "Number of tasks")
 		descr.add("{}".format(dep_list_len), "Graph size")
 
