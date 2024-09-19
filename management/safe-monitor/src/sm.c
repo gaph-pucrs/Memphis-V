@@ -99,7 +99,7 @@ void sm_monitor(sm_t *sm, unsigned timestamp, unsigned size, unsigned hops, int 
 		lru_replace(&(sm->hash_ids), hash);
 	}
 
-	printf("App %d has hash %d and was released at %u\n", appid, hash->hash_id, hash->release_time);
+	printf("App %d has hash %x and was released at %u\n", appid, hash->hash_id, hash->release_time);
 	
 	int decider_id = -1;
 	for (int i = 0; i < sm->deciders.cnt; i++) {
@@ -112,7 +112,7 @@ void sm_monitor(sm_t *sm, unsigned timestamp, unsigned size, unsigned hops, int 
 	if (decider_id == -1)
 		return;
 
-	printf("App %d has decider %d with hash %d\n", appid, decider_id, sm->model_ids[decider_id]);
+	printf("App %d has decider %d with hash %x\n", appid, decider_id, sm->model_ids[decider_id]);
 
 	// printf(
 	// 	"%lu,%lu,%lu,%x,%x,%lu\n", 
