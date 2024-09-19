@@ -50,7 +50,9 @@ void map_task_terminated(map_t *mapper, int id);
 
 void map_task_aborted(map_t *mapper, int id);
 
-void map_request_service(map_t *mapper, int address, unsigned tag, int requester);
+void map_request_nearest_service(map_t *mapper, int address, unsigned tag, int requester);
+
+void map_request_all_services(map_t *mapper, unsigned tag, int requester);
 
 void map_migration_map(map_t *mapper, int id);
 
@@ -59,3 +61,5 @@ void map_task_migrated(map_t *mapper, int id);
 void map_request_finish(map_t *mapper);
 
 void map_pe_halted(map_t *mapper, int address);
+
+void map_app_info(map_t *mapper, int appid, int requester);

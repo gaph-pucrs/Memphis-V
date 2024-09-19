@@ -239,7 +239,8 @@ void map_new_app(map_t *mapper, int injector, size_t task_cnt, int *descriptor, 
 		return;
 	}
 
-	task_t *tasks = app_init(app, mapper->appid_cnt, injector, task_cnt, descriptor, communication);
+	// @todo get hash id
+	task_t *tasks = app_init(app, mapper->appid_cnt, -1, injector, task_cnt, descriptor, communication);
 	if(tasks == NULL){
 		puts("FATAL: not enough memory");
 		return;
@@ -501,7 +502,7 @@ void map_task_aborted(map_t *mapper, int id)
 		_map_verify_pending(mapper);
 }
 
-void map_request_service(map_t *mapper, int address, unsigned tag, int requester)
+void map_request_nearest_service(map_t *mapper, int address, unsigned tag, int requester)
 {
 	int oda = -1;
 	unsigned distance = -1;
@@ -533,6 +534,42 @@ void map_request_service(map_t *mapper, int address, unsigned tag, int requester
 	};
 	
 	memphis_send_any(out_msg, sizeof(out_msg), requester);
+}
+
+void map_request_all_services(map_t *mapper, unsigned tag, int requester)
+{
+	printf("Task %d requested all services with tag %x\n", requester, tag);
+	/* Search all Management tasks */
+	list_entry_t *entry = list_front(&(mapper->apps));
+	app_t *ma = list_get_data(entry);
+	size_t task_cnt;
+	task_t *tasks = app_get_tasks(ma, &task_cnt);
+
+	size_t matches = 0;
+	int *message = malloc(259*sizeof(int));
+	if (message == NULL) {
+		printf("ERROR: Not enough memory\n");
+		return;
+	}
+	
+	message[0] = ALL_SERVICE_PROVIDERS;
+	message[1] = tag;
+	for(int i = 0; i < task_cnt; i++){
+		task_t *task = &(tasks[i]);
+		if((task_get_tag(task) & tag) != tag)
+			continue;
+		
+		message[matches + 3] = task_get_id(task);
+		matches++;
+	}
+	message[2] = matches;
+
+	printf("Found %d matche(s)\n", matches);
+
+	if (matches > 0)
+		memphis_send_any(message, (matches + 3)*sizeof(int), requester);
+
+	free(message);
 }
 
 void map_migration_map(map_t *mapper, int id)
@@ -664,4 +701,18 @@ void map_pe_halted(map_t *mapper, int address)
 	const size_t N_PE = memphis_get_nprocs(NULL, NULL);
 	if(mapper->finished_cnt == N_PE)
 		memphis_halt();
+}
+
+void map_app_info(map_t *mapper, int appid, int requester)
+{
+	app_t *app = _map_find_app(mapper, appid);
+	int hash_id = -1;
+	unsigned release_time = -1;
+	if(app != NULL){
+		hash_id = app_get_hash(app);
+		release_time = app_get_release_time(app);
+	}
+
+	uint32_t ans[] = {SEC_SAFE_MAP_RESP, appid, hash_id, release_time};
+	memphis_send_any(ans, sizeof(ans), requester);
 }
