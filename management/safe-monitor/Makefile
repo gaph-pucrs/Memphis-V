@@ -1,3 +1,3 @@
-TARGET = safe
+TARGET = safe-monitor
 
 include ../common/common.mk
