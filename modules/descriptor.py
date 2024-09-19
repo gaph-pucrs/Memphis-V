@@ -28,6 +28,8 @@ class Descriptor:
 			for cap in decide:
 				if cap == "qos":
 					ttt |= 0x010000
+				elif cap == "sec":
+					ttt |= 0x020000
 				else:
 					print("Management task {} unknown capability {}".format(self.name, cap))
 		except:
