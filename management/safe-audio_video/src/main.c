@@ -20,6 +20,7 @@
 #include <memphis.h>
 #include <memphis/monitor.h>
 #include <memphis/services.h>
+#include <memphis/oda.h>
 
 #include "model.h"
 
@@ -32,8 +33,7 @@ int main()
 		memphis_receive_any(msg, sizeof(msg));
 		switch (msg[0]) {
 			case SEC_SAFE_REQ_APP:
-				// @todo hard-code enum hash
-				uint32_t ans[] = {SEC_SAFE_APP_RESP, 0}; // audio_video hash enumeration
+				uint32_t ans[] = {SEC_SAFE_APP_RESP, SAFE_HASH_audio_video};
 				memphis_send_any(ans, sizeof(ans), msg[1]);
 				break;
 			case SEC_INFER:
