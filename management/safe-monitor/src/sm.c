@@ -34,7 +34,7 @@ int sm_get_models(sm_t *sm)
 		return 0;
 
 	while (true) {
-		memphis_receive_any(prov_msg, 259*sizeof(int));
+		memphis_receive(prov_msg, 259*sizeof(int), 0);
 		if (prov_msg[0] == ALL_SERVICE_PROVIDERS) {
             bool ret = oda_all_service_providers(&(sm->deciders), prov_msg[1], prov_msg[2], &prov_msg[3]);
             free(prov_msg);
@@ -53,7 +53,7 @@ int sm_get_models(sm_t *sm)
 		int msg[] = {SEC_SAFE_REQ_APP, getpid()};
 		memphis_send_any(msg, sizeof(msg), sm->deciders.ids[i]);
 		while (true) {
-			memphis_receive_any(msg, sizeof(msg));
+			memphis_receive(msg, sizeof(msg), sm->deciders.ids[i]);
 			if (msg[0] == SEC_SAFE_APP_RESP) {
 				sm->model_ids[i] = msg[1];
 				break;
@@ -76,7 +76,7 @@ void sm_monitor(sm_t *sm, unsigned timestamp, unsigned size, unsigned hops, int 
 		memphis_send_any(msg, sizeof(msg), 0);
 		while (true) {
 			uint32_t ans[4];
-			memphis_receive_any(ans, sizeof(ans));
+			memphis_receive(ans, sizeof(ans), 0);
 			if (ans[0] == SEC_SAFE_MAP_RESP) {
 				if (ans[1] == appid) {
 					hash = malloc(sizeof(sm_hash_t));

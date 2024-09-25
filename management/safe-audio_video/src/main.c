@@ -34,7 +34,7 @@ int main()
 		switch (msg[0]) {
 			case SEC_SAFE_REQ_APP:
 				uint32_t ans[] = {SEC_SAFE_APP_RESP, SAFE_HASH_audio_video};
-				memphis_send_any(ans, sizeof(ans), msg[1]);
+				memphis_send(ans, sizeof(ans), msg[1]);
 				break;
 			case SEC_INFER:
 				bool prod_0 = false;

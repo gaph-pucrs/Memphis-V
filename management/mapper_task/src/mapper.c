@@ -567,7 +567,7 @@ void map_request_all_services(map_t *mapper, unsigned tag, int requester)
 	// printf("Found %d match(es)\n", matches);
 
 	if (matches > 0)
-		memphis_send_any(message, (matches + 3)*sizeof(int), requester);
+		memphis_send(message, (matches + 3)*sizeof(int), requester);
 
 	free(message);
 }
@@ -714,5 +714,5 @@ void map_app_info(map_t *mapper, int appid, int requester)
 	}
 
 	uint32_t ans[] = {SEC_SAFE_MAP_RESP, appid, hash_id, release_time};
-	memphis_send_any(ans, sizeof(ans), requester);
+	memphis_send(ans, sizeof(ans), requester);
 }
