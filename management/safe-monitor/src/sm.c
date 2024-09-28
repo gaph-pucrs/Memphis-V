@@ -84,7 +84,8 @@ void sm_monitor(sm_t *sm, unsigned timestamp, unsigned size, unsigned hops, int 
 						break;
 					hash->app_id  = appid;
 					hash->hash_id = ans[2];
-					hash->release_time = ans[3];
+					/* @todo This can be overwritten due to LRU policy */
+					hash->release_time = timestamp;
 				}
 				break;
 			}
