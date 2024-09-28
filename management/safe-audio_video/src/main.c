@@ -93,8 +93,11 @@ int main()
 					default:
 						break;
 				}
+				// unsigned then = memphis_get_tick();
+				float timestamp = msg[1] / 100000.0;
+				float real_latency = msg[6] / 100.0;
 				float pred_latency = score(
-					msg[1] / 100.0, 
+					timestamp, 
 					msg[3], 
 					msg[2], 
 					prod_0, 
@@ -110,9 +113,20 @@ int main()
 					cons_4, 
 					cons_5
 				);
-				float real_latency = msg[6] / 100.0;
-				bool anom = fabs(pred_latency - real_latency) / real_latency > 1.05;
-				printf("Anomaly = %d\n", anom);
+				float diff = fabs(real_latency - pred_latency) / pred_latency;
+				bool anom = diff > 0.05;
+				// unsigned now = memphis_get_tick();
+				// printf("Inference in %u us\n", (now - then)/100);
+				// printf("Instance %f,%lu,%lu,%d,%d,%f,%f\n", timestamp, msg[3], msg[2], (int)msg[4], (int)msg[5], real_latency, pred_latency);
+				// printf("Diff %.2f%%\n", diff);
+				if (anom) {
+					printf(
+						"Anomaly @%lu %d->%d\n", 
+						msg[1], 
+						(int)msg[4], 
+						(int)msg[5]
+					);
+				}
 				break;
 			default:
 				break;
