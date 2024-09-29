@@ -28,6 +28,7 @@ int main()
 {
 	printf("SAFE audio_video model started at %d\n", memphis_get_tick());
 
+	int num_inf = 0;
 	while (true) {
 		static uint32_t msg[7];
 		memphis_receive_any(msg, sizeof(msg));
@@ -37,6 +38,7 @@ int main()
 				memphis_send(ans, sizeof(ans), msg[1]);
 				break;
 			case SEC_INFER:
+				num_inf++;
 				bool prod_0 = false;
 				bool prod_1 = false;
 				bool prod_2 = false;
@@ -129,6 +131,7 @@ int main()
 				}
 				break;
 			case TERMINATE_ODA:
+				printf("Exiting after %d inferences\n", num_inf);
 				return 0;
 			default:
 				break;
