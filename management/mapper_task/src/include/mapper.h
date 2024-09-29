@@ -63,3 +63,5 @@ void map_request_finish(map_t *mapper);
 void map_pe_halted(map_t *mapper, int address);
 
 void map_app_info(map_t *mapper, int appid, int requester);
+
+void map_terminate_ma(map_t *mapper);

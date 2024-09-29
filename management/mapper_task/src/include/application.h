@@ -72,3 +72,5 @@ void app_terminated(app_t *app);
 int app_get_hash(app_t *app);
 
 unsigned app_get_release_time(app_t *app);
+
+bool app_has_oda_running(app_t *app, unsigned tag);

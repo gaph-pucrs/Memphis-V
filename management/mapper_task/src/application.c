@@ -266,3 +266,16 @@ unsigned app_get_release_time(app_t *app)
 {
 	return app->release_time;
 }
+
+bool app_has_oda_running(app_t *app, unsigned tag)
+{
+	for(int i = 0; i < app->task_cnt; i++){
+		task_t *task = &(app->tasks[i]);
+		if((task_get_tag(task) & tag) == 0 || !task_is_allocated(task))
+			continue;
+
+		return true;
+	}
+
+	return false;
+}

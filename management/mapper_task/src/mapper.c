@@ -19,6 +19,7 @@
 
 #include <memphis.h>
 #include <memphis/services.h>
+#include <memphis/oda.h>
 
 #include "window.h"
 
@@ -453,6 +454,40 @@ void map_task_terminated(map_t *mapper, int id)
 
 	size_t alloc_cnt = app_rem_allocated(app);
 
+	/* Management task finished, waiting to halt */
+	if (app_get_id(app) == 0) {
+		/* All other management tasks finished */
+		if (alloc_cnt == 1) {
+			memphis_halt();
+			return;
+		}
+		
+		task_t *terminated = app_get_task(app, id);
+		unsigned tag = task_get_tag(terminated);
+		if ((tag & ODA_OBSERVE) != 0) {
+			/* Task that terminated was observer*/
+			if (!app_has_oda_running(app, ODA_OBSERVE)) {
+				/* If no observer is mapped, terminate the next class of ODA */
+				size_t oda_cnt;
+				task_t *odas = app_get_tasks(app, &oda_cnt);
+				if (task_terminate_oda(odas, oda_cnt, ODA_DECIDE))
+					return;
+
+				/* If no deciders present, terminate the actuators */
+				task_terminate_oda(odas, oda_cnt, ODA_ACT);
+			}
+		} else if ((tag & ODA_DECIDE) != 0) {
+			/* Task that terminated was decider*/
+			if (!app_has_oda_running(app, ODA_DECIDE)) {
+				/* If no decider is mapped, terminate the next class of ODA */
+				size_t oda_cnt;
+				task_t *odas = app_get_tasks(app, &oda_cnt);
+				task_terminate_oda(odas, oda_cnt, ODA_ACT);
+			}
+		} /* If deciders are finishing, just wait for them to finish and then halt */
+		return;
+	}
+
 	/* All tasks terminated, terminate app */
 	if(alloc_cnt == 0)
 		_map_terminate_app(mapper, app);
@@ -699,8 +734,8 @@ void map_pe_halted(map_t *mapper, int address)
 	mapper->finished_cnt++;
 
 	const size_t N_PE = memphis_get_nprocs(NULL, NULL);
-	if(mapper->finished_cnt == N_PE)
-		memphis_halt();
+	if (mapper->finished_cnt == N_PE)
+		map_terminate_ma(mapper);
 }
 
 void map_app_info(map_t *mapper, int appid, int requester)
@@ -715,4 +750,30 @@ void map_app_info(map_t *mapper, int appid, int requester)
 
 	uint32_t ans[] = {SEC_SAFE_MAP_RESP, appid, hash_id, release_time};
 	memphis_send(ans, sizeof(ans), requester);
+}
+
+void map_terminate_ma(map_t *mapper)
+{
+	/* Search all Management tasks */
+	list_entry_t *entry = list_front(&(mapper->apps));
+	app_t *ma = list_get_data(entry);
+
+	if (ma->allocated_cnt == 1) {
+		memphis_halt();
+		return;
+	}
+
+	size_t task_cnt;
+	task_t *tasks = app_get_tasks(ma, &task_cnt);
+
+	/* First we need to terminate observers */
+	if (task_terminate_oda(tasks, task_cnt, ODA_OBSERVE))
+		return;
+
+	/* Then we need to terminate deciders */
+	if (task_terminate_oda(tasks, task_cnt, ODA_DECIDE))
+		return;
+
+	/* Then we need to terminate actuators */
+	task_terminate_oda(tasks, task_cnt, ODA_ACT);
 }
