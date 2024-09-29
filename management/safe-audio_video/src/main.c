@@ -128,6 +128,8 @@ int main()
 					);
 				}
 				break;
+			case TERMINATE_ODA:
+				return 0;
 			default:
 				break;
 		}

@@ -46,6 +46,8 @@ int main()
 			case MONITOR:
 				sm_monitor(&sm, msg[1], msg[2], msg[3], msg[4] >> 16, msg[4] & 0xFFFF, msg[5]);
 				break;
+			case TERMINATE_ODA:
+				return 0;
 			default:
 				break;
 		}

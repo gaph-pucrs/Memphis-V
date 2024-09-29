@@ -44,6 +44,10 @@ int main()
 			case SERVICE_PROVIDER:
 				oda_service_provider(&actuator, msg[1], msg[2]);
 				break;
+			case TERMINATE_ODA:
+				return 0;
+			default:
+				break;
 		}
 	}
 
