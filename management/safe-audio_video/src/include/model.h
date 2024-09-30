@@ -1,59 +1,67 @@
-float score(float rel_timestamp, int hops, int size, bool prod_0, bool prod_1, bool prod_2, bool prod_3, bool prod_4, bool prod_6, bool cons_0, bool cons_1, bool cons_2, bool cons_3, bool cons_4, bool cons_5) {
+unsigned score(int rel_timestamp, int hops, int size, bool prod_0, bool prod_1, bool prod_2, bool prod_3, bool prod_4, bool prod_6, bool cons_0, bool cons_1, bool cons_2, bool cons_3, bool cons_4, bool cons_5) {
     float var0;
     if (size < 45) {
-        if (rel_timestamp < 1.47775) {
-            if (rel_timestamp < 0.95765) {
-                if (rel_timestamp < 0.06265) {
+        if (rel_timestamp < 147775) {
+            if (rel_timestamp < 95765) {
+                if (rel_timestamp < 6265) {
                     if (hops < 2) {
-                        var0 = 0.9137001;
+                        var0 = -43.619003;
                     } else {
                         if (hops < 3) {
-                            var0 = 0.9362965;
+                            var0 = -41.358753;
                         } else {
-                            var0 = 0.9597592;
+                            var0 = -39.002754;
                         }
                     }
                 } else {
-                    if (hops < 2) {
-                        var0 = 0.68121743;
-                    } else {
-                        if (hops < 3) {
-                            var0 = 0.7010718;
+                    if (hops < 3) {
+                        if (hops < 2) {
+                            var0 = -66.872765;
                         } else {
-                            var0 = 0.7250962;
+                            var0 = -64.88702;
+                        }
+                    } else {
+                        if (hops < 4) {
+                            var0 = -62.757046;
+                        } else {
+                            var0 = -60.601448;
                         }
                     }
                 }
             } else {
-                if (rel_timestamp < 1.44148) {
+                if (rel_timestamp < 144148) {
                     if (hops < 2) {
-                        if (rel_timestamp < 1.44106) {
-                            var0 = 2.0520105;
+                        if (rel_timestamp < 144106) {
+                            var0 = 70.22454;
                         } else {
-                            var0 = 2.1054044;
+                            var0 = 75.56107;
                         }
                     } else {
-                        var0 = 2.1825333;
+                        var0 = 83.26634;
                     }
                 } else {
                     if (hops < 4) {
-                        var0 = 2.2940402;
+                        if (hops < 3) {
+                            var0 = 91.032234;
+                        } else {
+                            var0 = 95.211296;
+                        }
                     } else {
-                        var0 = 2.400619;
+                        var0 = 105.22473;
                     }
                 }
             }
         } else {
             if (hops < 2) {
-                var0 = 0.6298662;
+                var0 = -72.0127;
             } else {
                 if (hops < 3) {
-                    var0 = 0.65088505;
+                    var0 = -69.910774;
                 } else {
                     if (hops < 4) {
-                        var0 = 0.6718538;
+                        var0 = -67.813095;
                     } else {
-                        var0 = 0.6928003;
+                        var0 = -65.709785;
                     }
                 }
             }
@@ -62,76 +70,88 @@ float score(float rel_timestamp, int hops, int size, bool prod_0, bool prod_1, b
         if (size < 141) {
             if (size < 77) {
                 if (prod_0 != 1) {
-                    if (rel_timestamp < 1.34281) {
-                        if (rel_timestamp < 0.41619) {
-                            var0 = 1.2977107;
+                    if (rel_timestamp < 118677) {
+                        if (rel_timestamp < 41619) {
+                            var0 = -5.22447;
                         } else {
-                            var0 = 1.3516043;
+                            var0 = 0.11964661;
                         }
                     } else {
                         if (hops < 2) {
-                            var0 = 1.3788569;
+                            var0 = 2.8782144;
                         } else {
-                            var0 = 1.4081638;
+                            var0 = 5.7989173;
                         }
                     }
                 } else {
-                    if (rel_timestamp < 0.66052) {
+                    if (rel_timestamp < 66052) {
                         if (hops < 2) {
-                            var0 = 1.5675308;
+                            var0 = 21.764177;
                         } else {
-                            var0 = 1.5979745;
+                            var0 = 24.804907;
                         }
                     } else {
                         if (hops < 2) {
-                            var0 = 1.3240101;
+                            var0 = -2.5984051;
                         } else {
-                            var0 = 1.3538172;
+                            var0 = 0.38210976;
                         }
                     }
                 }
             } else {
-                if (rel_timestamp < 0.66071) {
+                if (rel_timestamp < 66071) {
                     if (hops < 2) {
-                        var0 = 1.6639472;
+                        var0 = 31.405914;
                     } else {
-                        var0 = 1.6910721;
+                        if (hops < 3) {
+                            var0 = 33.492588;
+                        } else {
+                            var0 = 35.754166;
+                        }
                     }
                 } else {
                     if (prod_4 != 1) {
                         if (hops < 3) {
-                            var0 = 1.4335403;
+                            var0 = 8.354175;
                         } else {
-                            var0 = 1.4683088;
+                            var0 = 11.831397;
                         }
                     } else {
-                        if (rel_timestamp < 0.72426) {
-                            var0 = 1.7006215;
+                        if (rel_timestamp < 72426) {
+                            var0 = 35.09926;
                         } else {
-                            var0 = 1.403203;
+                            var0 = 5.3205323;
                         }
                     }
                 }
             }
         } else {
-            if (rel_timestamp < 0.33995) {
+            if (rel_timestamp < 33995) {
                 if (hops < 2) {
-                    var0 = 1.8529431;
+                    var0 = 50.305405;
                 } else {
-                    var0 = 1.882089;
+                    if (hops < 3) {
+                        var0 = 52.34621;
+                    } else {
+                        if (hops < 4) {
+                            var0 = 54.44987;
+                        } else {
+                            var0 = 56.606808;
+                        }
+                    }
                 }
             } else {
                 if (hops < 3) {
                     if (hops < 2) {
-                        var0 = 1.6217209;
+                        var0 = 27.172663;
                     } else {
-                        var0 = 1.6416272;
+                        var0 = 29.163328;
                     }
                 } else {
                     if (hops < 4) {
-                        var0 = 1.6627182;
+                        var0 = 31.273083;
                     } else {
-                        var0 = 1.6845565;
+                        var0 = 33.46346;
                     }
                 }
             }
@@ -139,59 +159,67 @@ float score(float rel_timestamp, int hops, int size, bool prod_0, bool prod_1, b
     }
     float var1;
     if (size < 45) {
-        if (rel_timestamp < 1.47775) {
-            if (rel_timestamp < 0.95765) {
-                if (rel_timestamp < 0.06265) {
+        if (rel_timestamp < 147775) {
+            if (rel_timestamp < 95765) {
+                if (rel_timestamp < 6265) {
                     if (hops < 2) {
-                        var1 = 0.6396124;
+                        var1 = -30.53436;
                     } else {
                         if (hops < 3) {
-                            var1 = 0.6554317;
+                            var1 = -28.952187;
                         } else {
-                            var1 = 0.6718769;
+                            var1 = -27.303778;
                         }
                     }
                 } else {
-                    if (hops < 2) {
-                        var1 = 0.47686055;
-                    } else {
-                        if (hops < 3) {
-                            var1 = 0.49075934;
+                    if (hops < 3) {
+                        if (hops < 2) {
+                            var1 = -46.81175;
                         } else {
-                            var1 = 0.5075846;
+                            var1 = -45.42175;
+                        }
+                    } else {
+                        if (hops < 4) {
+                            var1 = -43.93164;
+                        } else {
+                            var1 = -42.431988;
                         }
                     }
                 }
             } else {
-                if (rel_timestamp < 1.44148) {
+                if (rel_timestamp < 144148) {
                     if (hops < 2) {
-                        if (rel_timestamp < 1.44106) {
-                            var1 = 1.4365145;
+                        if (rel_timestamp < 144106) {
+                            var1 = 49.160847;
                         } else {
-                            var1 = 1.4738795;
+                            var1 = 52.896214;
                         }
                     } else {
-                        var1 = 1.5278364;
+                        var1 = 58.288845;
                     }
                 } else {
                     if (hops < 4) {
-                        var1 = 1.6059297;
+                        if (hops < 3) {
+                            var1 = 63.743572;
+                        } else {
+                            var1 = 66.65312;
+                        }
                     } else {
-                        var1 = 1.681302;
+                        var1 = 73.69539;
                     }
                 }
             }
         } else {
             if (hops < 2) {
-                var1 = 0.44090727;
+                var1 = -50.409;
             } else {
                 if (hops < 3) {
-                    var1 = 0.45562056;
+                    var1 = -48.937656;
                 } else {
                     if (hops < 4) {
-                        var1 = 0.4702999;
+                        var1 = -47.469395;
                     } else {
-                        var1 = 0.48497587;
+                        var1 = -45.998337;
                     }
                 }
             }
@@ -201,75 +229,91 @@ float score(float rel_timestamp, int hops, int size, bool prod_0, bool prod_1, b
             if (size < 77) {
                 if (hops < 3) {
                     if (prod_0 != 1) {
-                        if (rel_timestamp < 1.34281) {
-                            var1 = 0.92617905;
+                        if (rel_timestamp < 134281) {
+                            var1 = -1.8910098;
                         } else {
-                            var1 = 0.9710828;
+                            var1 = 2.6122077;
                         }
                     } else {
-                        if (rel_timestamp < 0.66052) {
-                            var1 = 1.1040173;
+                        if (rel_timestamp < 66052) {
+                            var1 = 15.902889;
                         } else {
-                            var1 = 0.9330011;
+                            var1 = -1.1998297;
                         }
                     }
                 } else {
                     if (prod_0 != 1) {
-                        if (rel_timestamp < 1.34281) {
-                            var1 = 0.9613496;
+                        if (rel_timestamp < 134281) {
+                            var1 = 1.561323;
                         } else {
-                            var1 = 1.0011692;
+                            var1 = 5.6230383;
                         }
                     } else {
-                        if (rel_timestamp < 0.66052) {
-                            var1 = 1.1325661;
+                        if (rel_timestamp < 66052) {
+                            var1 = 18.769173;
                         } else {
-                            var1 = 0.96276385;
+                            var1 = 1.777044;
                         }
                     }
                 }
             } else {
-                if (rel_timestamp < 0.66071) {
-                    if (hops < 3) {
-                        var1 = 1.1707932;
+                if (rel_timestamp < 66071) {
+                    if (hops < 2) {
+                        var1 = 21.984932;
                     } else {
-                        var1 = 1.2000093;
+                        if (hops < 3) {
+                            var1 = 23.445757;
+                        } else {
+                            var1 = 25.030602;
+                        }
                     }
                 } else {
                     if (hops < 2) {
                         if (prod_4 != 1) {
-                            var1 = 0.9935617;
+                            var1 = 4.8563175;
                         } else {
-                            var1 = 0.9650964;
+                            var1 = 2.0099676;
                         }
                     } else {
                         if (prod_4 != 1) {
-                            var1 = 1.0187862;
+                            var1 = 7.3786674;
                         } else {
-                            var1 = 0.9959706;
+                            var1 = 5.0971546;
                         }
                     }
                 }
             }
         } else {
-            if (rel_timestamp < 0.33995) {
-                if (hops < 3) {
-                    var1 = 1.3028517;
+            if (rel_timestamp < 33995) {
+                if (hops < 2) {
+                    var1 = 35.21502;
                 } else {
-                    var1 = 1.3328602;
+                    if (hops < 3) {
+                        var1 = 36.643707;
+                    } else {
+                        if (hops < 4) {
+                            var1 = 38.117825;
+                        } else {
+                            var1 = 39.643406;
+                        }
+                    }
                 }
             } else {
                 if (hops < 3) {
                     if (hops < 2) {
-                        var1 = 1.1352067;
+                        var1 = 19.020899;
                     } else {
-                        var1 = 1.1491412;
+                        var1 = 20.414368;
                     }
                 } else {
                     if (hops < 4) {
-                        var1 = 1.1639074;
+                        if (rel_timestamp < 1236219) {
+                            var1 = 21.8722;
+                        } else {
+                            var1 = 22.230145;
+                        }
                     } else {
-                        var1 = 1.1792188;
+                        var1 = 23.425003;
                     }
                 }
             }
@@ -277,67 +321,67 @@ float score(float rel_timestamp, int hops, int size, bool prod_0, bool prod_1, b
     }
     float var2;
     if (size < 45) {
-        if (rel_timestamp < 1.47775) {
-            if (rel_timestamp < 0.95765) {
-                if (rel_timestamp < 0.06265) {
+        if (rel_timestamp < 147775) {
+            if (rel_timestamp < 95765) {
+                if (rel_timestamp < 6265) {
                     if (hops < 2) {
-                        var2 = 0.44774428;
+                        var2 = -21.374798;
                     } else {
                         if (hops < 3) {
-                            var2 = 0.4588191;
+                            var2 = -20.267279;
                         } else {
-                            var2 = 0.47034568;
+                            var2 = -19.11394;
                         }
                     }
                 } else {
                     if (hops < 3) {
                         if (hops < 2) {
-                            var2 = 0.33380818;
+                            var2 = -32.768795;
                         } else {
-                            var2 = 0.3435378;
+                            var2 = -31.795809;
                         }
                     } else {
                         if (hops < 4) {
-                            var2 = 0.35253623;
+                            var2 = -30.753347;
                         } else {
-                            var2 = 0.37358975;
+                            var2 = -29.71008;
                         }
                     }
                 }
             } else {
-                if (rel_timestamp < 1.44148) {
+                if (rel_timestamp < 144148) {
                     if (hops < 2) {
-                        if (rel_timestamp < 1.44106) {
-                            var2 = 1.0056351;
+                        if (rel_timestamp < 144106) {
+                            var2 = 34.41516;
                         } else {
-                            var2 = 1.0317833;
+                            var2 = 37.02977;
                         }
                     } else {
-                        var2 = 1.0695297;
+                        var2 = 40.803886;
                     }
                 } else {
-                    if (hops < 3) {
-                        var2 = 1.0901929;
-                    } else {
-                        if (hops < 4) {
-                            var2 = 1.1320891;
+                    if (hops < 4) {
+                        if (hops < 3) {
+                            var2 = 44.635204;
                         } else {
-                            var2 = 1.1775197;
+                            var2 = 46.660828;
                         }
+                    } else {
+                        var2 = 51.613445;
                     }
                 }
             }
         } else {
             if (hops < 2) {
-                var2 = 0.30863577;
+                var2 = -35.286377;
             } else {
                 if (hops < 3) {
-                    var2 = 0.31893516;
+                    var2 = -34.25644;
                 } else {
                     if (hops < 4) {
-                        var2 = 0.32921153;
+                        var2 = -33.228737;
                     } else {
-                        var2 = 0.3394941;
+                        var2 = -32.199875;
                     }
                 }
             }
@@ -347,75 +391,99 @@ float score(float rel_timestamp, int hops, int size, bool prod_0, bool prod_1, b
             if (size < 77) {
                 if (hops < 2) {
                     if (prod_0 != 1) {
-                        if (rel_timestamp < 0.34003) {
-                            var2 = 0.6124933;
+                        if (rel_timestamp < 34003) {
+                            var2 = -4.8939514;
                         } else {
-                            var2 = 0.67150927;
+                            var2 = 1.0024401;
                         }
                     } else {
-                        if (rel_timestamp < 0.66052) {
-                            var2 = 0.76613235;
+                        if (rel_timestamp < 66052) {
+                            var2 = 10.46499;
                         } else {
-                            var2 = 0.6469097;
+                            var2 = -1.4589356;
                         }
                     }
                 } else {
                     if (prod_0 != 1) {
-                        if (rel_timestamp < 0.41619) {
-                            var2 = 0.63914394;
+                        if (rel_timestamp < 41619) {
+                            var2 = -2.2237315;
                         } else {
-                            var2 = 0.6896181;
+                            var2 = 2.8100271;
                         }
                     } else {
-                        if (rel_timestamp < 0.66052) {
-                            var2 = 0.7843994;
+                        if (rel_timestamp < 66052) {
+                            var2 = 12.2898;
                         } else {
-                            var2 = 0.6646227;
+                            var2 = 0.31226265;
                         }
                     }
                 }
             } else {
-                if (rel_timestamp < 0.66071) {
+                if (rel_timestamp < 66071) {
                     if (hops < 2) {
-                        var2 = 0.8135957;
+                        var2 = 15.39;
                     } else {
-                        var2 = 0.8301631;
+                        if (hops < 3) {
+                            var2 = 16.412703;
+                        } else {
+                            var2 = 17.523306;
+                        }
                     }
                 } else {
                     if (hops < 3) {
                         if (prod_4 != 1) {
-                            var2 = 0.701699;
+                            var2 = 4.0198913;
                         } else {
-                            var2 = 0.68154883;
+                            var2 = 2.0048645;
                         }
                     } else {
-                        if (rel_timestamp < 0.72426) {
-                            var2 = 0.8435717;
+                        if (rel_timestamp < 72426) {
+                            var2 = 18.219503;
                         } else {
-                            var2 = 0.71848917;
+                            var2 = 5.6989317;
                         }
                     }
                 }
             }
         } else {
-            if (rel_timestamp < 0.33995) {
-                if (hops < 3) {
-                    var2 = 0.91201264;
+            if (rel_timestamp < 33995) {
+                if (hops < 2) {
+                    var2 = 24.65138;
                 } else {
-                    var2 = 0.93306375;
+                    if (hops < 3) {
+                        var2 = 25.651552;
+                    } else {
+                        if (hops < 4) {
+                            var2 = 26.684534;
+                        } else {
+                            var2 = 27.76343;
+                        }
+                    }
                 }
             } else {
                 if (hops < 3) {
                     if (hops < 2) {
-                        var2 = 0.79464614;
+                        if (rel_timestamp < 1303252) {
+                            var2 = 13.307186;
+                        } else {
+                            var2 = 13.458205;
+                        }
                     } else {
-                        var2 = 0.8044003;
+                        if (rel_timestamp < 347064) {
+                            var2 = 14.347842;
+                        } else {
+                            var2 = 14.26937;
+                        }
                     }
                 } else {
                     if (hops < 4) {
-                        var2 = 0.8147384;
+                        if (rel_timestamp < 1236219) {
+                            var2 = 15.310609;
+                        } else {
+                            var2 = 15.562289;
+                        }
                     } else {
-                        var2 = 0.8254736;
+                        var2 = 16.397915;
                     }
                 }
             }
@@ -423,67 +491,67 @@ float score(float rel_timestamp, int hops, int size, bool prod_0, bool prod_1, b
     }
     float var3;
     if (size < 45) {
-        if (rel_timestamp < 1.47775) {
-            if (rel_timestamp < 0.95765) {
-                if (rel_timestamp < 0.06265) {
+        if (rel_timestamp < 147775) {
+            if (rel_timestamp < 95765) {
+                if (rel_timestamp < 6265) {
                     if (hops < 2) {
-                        var3 = 0.31343192;
+                        var3 = -14.962883;
                     } else {
                         if (hops < 4) {
-                            var3 = 0.3229865;
+                            var3 = -14.010139;
                         } else {
-                            var3 = 0.34561485;
+                            var3 = -11.697051;
                         }
                     }
                 } else {
                     if (hops < 3) {
                         if (hops < 2) {
-                            var3 = 0.23366982;
+                            var3 = -22.938557;
                         } else {
-                            var3 = 0.24048091;
+                            var3 = -22.257475;
                         }
                     } else {
                         if (hops < 4) {
-                            var3 = 0.246785;
+                            var3 = -21.52818;
                         } else {
-                            var3 = 0.26158047;
+                            var3 = -20.802433;
                         }
                     }
                 }
             } else {
-                if (rel_timestamp < 1.44148) {
+                if (rel_timestamp < 144148) {
                     if (hops < 2) {
-                        if (rel_timestamp < 1.44106) {
-                            var3 = 0.7039971;
+                        if (rel_timestamp < 144106) {
+                            var3 = 24.09241;
                         } else {
-                            var3 = 0.7222958;
+                            var3 = 25.922533;
                         }
                     } else {
-                        var3 = 0.74870175;
+                        var3 = 28.5639;
                     }
                 } else {
-                    if (hops < 3) {
-                        var3 = 0.7633866;
-                    } else {
-                        if (hops < 4) {
-                            var3 = 0.7925244;
+                    if (hops < 4) {
+                        if (hops < 3) {
+                            var3 = 31.254946;
                         } else {
-                            var3 = 0.8246899;
+                            var3 = 32.66513;
                         }
+                    } else {
+                        var3 = 36.148087;
                     }
                 }
             }
         } else {
             if (hops < 2) {
-                var3 = 0.21604553;
+                var3 = -24.70052;
             } else {
                 if (hops < 3) {
-                    var3 = 0.22325511;
+                    var3 = -23.979565;
                 } else {
                     if (hops < 4) {
-                        var3 = 0.2304492;
+                        var3 = -23.26023;
                     } else {
-                        var3 = 0.23765361;
+                        var3 = -22.540634;
                     }
                 }
             }
@@ -493,83 +561,99 @@ float score(float rel_timestamp, int hops, int size, bool prod_0, bool prod_1, b
             if (size < 77) {
                 if (hops < 3) {
                     if (prod_0 != 1) {
-                        if (rel_timestamp < 1.34281) {
-                            var3 = 0.44972146;
+                        if (rel_timestamp < 134281) {
+                            var3 = -1.3406706;
                         } else {
-                            var3 = 0.47566265;
+                            var3 = 1.2639267;
                         }
                     } else {
-                        if (rel_timestamp < 0.66052) {
-                            var3 = 0.5403102;
+                        if (rel_timestamp < 66052) {
+                            var3 = 7.724564;
                         } else {
-                            var3 = 0.45642447;
+                            var3 = -0.6626268;
                         }
                     }
                 } else {
                     if (hops < 4) {
                         if (prod_0 != 1) {
-                            var3 = 0.48783493;
+                            var3 = 2.4746284;
                         } else {
-                            var3 = 0.47580773;
+                            var3 = 1.2755959;
                         }
                     } else {
                         if (prod_0 != 1) {
-                            var3 = 0.50850374;
+                            var3 = 4.5364165;
                         } else {
-                            var3 = 0.49735585;
+                            var3 = 3.4326952;
                         }
                     }
                 }
             } else {
-                if (rel_timestamp < 0.66071) {
-                    if (hops < 3) {
-                        if (hops < 2) {
-                            var3 = 0.5695372;
-                        } else {
-                            var3 = 0.5772945;
-                        }
+                if (rel_timestamp < 66071) {
+                    if (hops < 2) {
+                        var3 = 10.773379;
                     } else {
-                        var3 = 0.5911099;
+                        if (hops < 4) {
+                            var3 = 11.65161;
+                        } else {
+                            var3 = 14.27854;
+                        }
                     }
                 } else {
                     if (hops < 2) {
                         if (prod_4 != 1) {
-                            var3 = 0.48498455;
+                            var3 = 2.1934571;
                         } else {
-                            var3 = 0.47110492;
+                            var3 = 0.8055232;
                         }
                     } else {
                         if (prod_4 != 1) {
-                            var3 = 0.50080335;
+                            var3 = 3.775292;
                         } else {
-                            var3 = 0.48849323;
+                            var3 = 2.544228;
                         }
                     }
                 }
             }
         } else {
-            if (rel_timestamp < 0.33995) {
+            if (rel_timestamp < 33995) {
                 if (hops < 2) {
-                    var3 = 0.6327012;
+                    var3 = 17.256578;
                 } else {
-                    if (hops < 4) {
-                        var3 = 0.6462602;
+                    if (hops < 3) {
+                        var3 = 17.95675;
                     } else {
-                        var3 = 0.67154825;
+                        if (hops < 4) {
+                            var3 = 18.680613;
+                        } else {
+                            var3 = 19.443544;
+                        }
                     }
                 }
             } else {
                 if (hops < 3) {
                     if (hops < 2) {
-                        var3 = 0.55625325;
+                        if (rel_timestamp < 1303252) {
+                            var3 = 9.315047;
+                        } else {
+                            var3 = 9.421104;
+                        }
                     } else {
-                        var3 = 0.56308126;
+                        if (rel_timestamp < 278737) {
+                            var3 = 10.051728;
+                        } else {
+                            var3 = 9.990079;
+                        }
                     }
                 } else {
                     if (hops < 4) {
-                        var3 = 0.5703192;
+                        if (rel_timestamp < 1236219) {
+                            var3 = 10.717472;
+                        } else {
+                            var3 = 10.89443;
+                        }
                     } else {
-                        var3 = 0.5778458;
+                        var3 = 11.478832;
                     }
                 }
             }
@@ -577,71 +661,71 @@ float score(float rel_timestamp, int hops, int size, bool prod_0, bool prod_1, b
     }
     float var4;
     if (size < 45) {
-        if (rel_timestamp < 1.47775) {
-            if (rel_timestamp < 0.95765) {
-                if (rel_timestamp < 0.06265) {
+        if (rel_timestamp < 147775) {
+            if (rel_timestamp < 95765) {
+                if (rel_timestamp < 6265) {
                     if (hops < 3) {
                         if (hops < 2) {
-                            var4 = 0.21940994;
+                            var4 = -10.4743805;
                         } else {
-                            var4 = 0.22429751;
+                            var4 = -9.984941;
                         }
                     } else {
                         if (hops < 4) {
-                            var4 = 0.22986108;
+                            var4 = -9.429763;
                         } else {
-                            var4 = 0.24205545;
+                            var4 = -8.192168;
                         }
                     }
                 } else {
                     if (hops < 3) {
                         if (hops < 2) {
-                            var4 = 0.16357175;
+                            var4 = -16.057266;
                         } else {
-                            var4 = 0.16833973;
+                            var4 = -15.58052;
                         }
                     } else {
                         if (hops < 4) {
-                            var4 = 0.17275624;
+                            var4 = -15.070315;
                         } else {
-                            var4 = 0.18315366;
+                            var4 = -14.56547;
                         }
                     }
                 }
             } else {
-                if (rel_timestamp < 1.44148) {
+                if (rel_timestamp < 144148) {
                     if (hops < 2) {
-                        if (rel_timestamp < 1.44106) {
-                            var4 = 0.4928347;
+                        if (rel_timestamp < 144106) {
+                            var4 = 16.865944;
                         } else {
-                            var4 = 0.5056402;
+                            var4 = 18.14696;
                         }
                     } else {
-                        var4 = 0.524113;
+                        var4 = 19.995558;
                     }
                 } else {
-                    if (hops < 3) {
-                        var4 = 0.53454673;
-                    } else {
-                        if (hops < 4) {
-                            var4 = 0.55481046;
+                    if (hops < 4) {
+                        if (hops < 3) {
+                            var4 = 21.885675;
                         } else {
-                            var4 = 0.57758135;
+                            var4 = 22.867373;
                         }
+                    } else {
+                        var4 = 25.316744;
                     }
                 }
             }
         } else {
             if (hops < 2) {
-                var4 = 0.15123215;
+                var4 = -17.290396;
             } else {
                 if (hops < 3) {
-                    var4 = 0.15627891;
+                    var4 = -16.785736;
                 } else {
                     if (hops < 4) {
-                        var4 = 0.16131523;
+                        var4 = -16.282242;
                     } else {
-                        var4 = 0.16636285;
+                        var4 = -15.778951;
                     }
                 }
             }
@@ -650,80 +734,100 @@ float score(float rel_timestamp, int hops, int size, bool prod_0, bool prod_1, b
         if (size < 141) {
             if (size < 77) {
                 if (hops < 2) {
-                    if (rel_timestamp < 0.34003) {
-                        var4 = 0.29385477;
+                    if (rel_timestamp < 34003) {
+                        var4 = -3.0237186;
                     } else {
-                        if (rel_timestamp < 0.66052) {
-                            var4 = 0.3742317;
+                        if (rel_timestamp < 66052) {
+                            var4 = 5.0085835;
                         } else {
-                            var4 = 0.32207063;
+                            var4 = -0.2063078;
                         }
                     }
                 } else {
                     if (hops < 3) {
                         if (prod_0 != 1) {
-                            var4 = 0.3342253;
+                            var4 = 1.0099413;
                         } else {
-                            var4 = 0.3261848;
+                            var4 = 0.20491345;
                         }
                     } else {
-                        if (rel_timestamp < 0.66052) {
-                            var4 = 0.36170104;
+                        if (rel_timestamp < 66052) {
+                            var4 = 3.765394;
                         } else {
-                            var4 = 0.33803734;
+                            var4 = 1.3876612;
                         }
                     }
                 }
             } else {
-                if (rel_timestamp < 0.66071) {
+                if (rel_timestamp < 66071) {
                     if (hops < 3) {
                         if (hops < 2) {
-                            var4 = 0.39869022;
+                            var4 = 7.5416346;
                         } else {
-                            var4 = 0.40412265;
+                            var4 = 7.9942;
                         }
                     } else {
-                        var4 = 0.4138213;
+                        if (hops < 4) {
+                            var4 = 8.614927;
+                        } else {
+                            var4 = 10.009947;
+                        }
                     }
                 } else {
                     if (hops < 3) {
-                        if (rel_timestamp < 1.42042) {
-                            var4 = 0.32132357;
+                        if (rel_timestamp < 142042) {
+                            var4 = -0.281031;
                         } else {
-                            var4 = 0.3414619;
+                            var4 = 1.7326303;
                         }
                     } else {
-                        if (rel_timestamp < 0.72426) {
-                            var4 = 0.44313923;
+                        if (rel_timestamp < 72426) {
+                            var4 = 11.898533;
                         } else {
-                            var4 = 0.35388398;
+                            var4 = 2.9748542;
                         }
                     }
                 }
             }
         } else {
-            if (rel_timestamp < 0.33995) {
+            if (rel_timestamp < 33995) {
                 if (hops < 2) {
-                    var4 = 0.44290644;
+                    var4 = 12.080027;
                 } else {
-                    if (hops < 4) {
-                        var4 = 0.4523934;
+                    if (hops < 3) {
+                        var4 = 12.570198;
                     } else {
-                        var4 = 0.47030488;
+                        if (hops < 4) {
+                            var4 = 13.0774355;
+                        } else {
+                            var4 = 13.616883;
+                        }
                     }
                 }
             } else {
                 if (hops < 3) {
                     if (hops < 2) {
-                        var4 = 0.38937798;
+                        if (rel_timestamp < 1234907) {
+                            var4 = 6.5203505;
+                        } else {
+                            var4 = 6.59346;
+                        }
                     } else {
-                        var4 = 0.39415765;
+                        if (rel_timestamp < 1303514) {
+                            var4 = 6.997329;
+                        } else {
+                            var4 = 7.1415477;
+                        }
                     }
                 } else {
                     if (hops < 4) {
-                        var4 = 0.39922506;
+                        if (rel_timestamp < 144106) {
+                            var4 = 7.597587;
+                        } else {
+                            var4 = 7.4983687;
+                        }
                     } else {
-                        var4 = 0.40450218;
+                        var4 = 8.035385;
                     }
                 }
             }
@@ -731,71 +835,71 @@ float score(float rel_timestamp, int hops, int size, bool prod_0, bool prod_1, b
     }
     float var5;
     if (size < 45) {
-        if (rel_timestamp < 1.47775) {
-            if (rel_timestamp < 0.95765) {
-                if (rel_timestamp < 0.06265) {
+        if (rel_timestamp < 147775) {
+            if (rel_timestamp < 95765) {
+                if (rel_timestamp < 6265) {
                     if (hops < 3) {
                         if (hops < 2) {
-                            var5 = 0.15359232;
+                            var5 = -7.3323174;
                         } else {
-                            var5 = 0.15701404;
+                            var5 = -6.989712;
                         }
                     } else {
                         if (hops < 4) {
-                            var5 = 0.16091533;
+                            var5 = -6.601352;
                         } else {
-                            var5 = 0.16952641;
+                            var5 = -5.737482;
                         }
                     }
                 } else {
                     if (hops < 3) {
                         if (hops < 2) {
-                            var5 = 0.11450219;
+                            var5 = -11.240277;
                         } else {
-                            var5 = 0.117839985;
+                            var5 = -10.906569;
                         }
                     } else {
                         if (hops < 4) {
-                            var5 = 0.12093409;
+                            var5 = -10.549633;
                         } else {
-                            var5 = 0.12824075;
+                            var5 = -10.198469;
                         }
                     }
                 }
             } else {
-                if (rel_timestamp < 1.44148) {
+                if (rel_timestamp < 144148) {
                     if (hops < 2) {
-                        if (rel_timestamp < 1.44106) {
-                            var5 = 0.34501;
+                        if (rel_timestamp < 144106) {
+                            var5 = 11.8070345;
                         } else {
-                            var5 = 0.3539714;
+                            var5 = 12.7037;
                         }
                     } else {
-                        var5 = 0.36689425;
+                        var5 = 13.997473;
                     }
                 } else {
-                    if (hops < 3) {
-                        var5 = 0.37430602;
-                    } else {
-                        if (hops < 4) {
-                            var5 = 0.3883977;
+                    if (hops < 4) {
+                        if (hops < 3) {
+                            var5 = 15.325022;
                         } else {
-                            var5 = 0.40451598;
+                            var5 = 16.008411;
                         }
+                    } else {
+                        var5 = 17.730875;
                     }
                 }
             }
         } else {
             if (hops < 2) {
-                var5 = 0.10586273;
+                var5 = -12.103301;
             } else {
                 if (hops < 3) {
-                    var5 = 0.10939552;
+                    var5 = -11.750042;
                 } else {
                     if (hops < 4) {
-                        var5 = 0.11292121;
+                        var5 = -11.39762;
                     } else {
-                        var5 = 0.1164578;
+                        var5 = -11.045619;
                     }
                 }
             }
@@ -803,89 +907,105 @@ float score(float rel_timestamp, int hops, int size, bool prod_0, bool prod_1, b
     } else {
         if (size < 141) {
             if (size < 77) {
-                if (rel_timestamp < 0.41619) {
+                if (rel_timestamp < 41619) {
                     if (hops < 3) {
-                        if (rel_timestamp < 0.34003) {
-                            var5 = 0.20547685;
+                        if (rel_timestamp < 34003) {
+                            var5 = -2.1402278;
                         } else {
-                            var5 = 0.20924142;
+                            var5 = -1.762097;
                         }
                     } else {
                         if (hops < 4) {
-                            var5 = 0.19876856;
+                            var5 = -2.7927759;
                         } else {
-                            var5 = 0.21251543;
+                            var5 = -1.3931348;
                         }
                     }
                 } else {
-                    if (rel_timestamp < 0.66052) {
+                    if (rel_timestamp < 66052) {
                         if (hops < 2) {
-                            var5 = 0.26197135;
+                            var5 = 3.5061255;
                         } else {
-                            var5 = 0.29192054;
+                            var5 = 6.499468;
                         }
                     } else {
                         if (prod_0 != 1) {
-                            var5 = 0.23557773;
+                            var5 = 0.8677768;
                         } else {
-                            var5 = 0.22380322;
+                            var5 = -0.30913243;
                         }
                     }
                 }
             } else {
-                if (rel_timestamp < 0.66071) {
+                if (rel_timestamp < 66071) {
                     if (hops < 3) {
                         if (hops < 2) {
-                            var5 = 0.27909306;
+                            var5 = 5.279334;
                         } else {
-                            var5 = 0.2828973;
+                            var5 = 5.5961666;
                         }
                     } else {
                         if (hops < 4) {
-                            var5 = 0.28812125;
+                            var5 = 6.0311446;
                         } else {
-                            var5 = 0.3092728;
+                            var5 = 7.017463;
                         }
                     }
                 } else {
                     if (hops < 2) {
-                        if (rel_timestamp < 0.73772) {
-                            var5 = 0.19886164;
+                        if (rel_timestamp < 73772) {
+                            var5 = -2.8017344;
                         } else {
-                            var5 = 0.23492743;
+                            var5 = 0.8032318;
                         }
                     } else {
                         if (hops < 4) {
-                            var5 = 0.24306913;
+                            var5 = 1.6173937;
                         } else {
-                            var5 = 0.26671475;
+                            var5 = 3.9821885;
                         }
                     }
                 }
             }
         } else {
-            if (rel_timestamp < 0.33995) {
-                if (hops < 3) {
-                    if (hops < 2) {
-                        var5 = 0.31004542;
-                    } else {
-                        var5 = 0.3147979;
-                    }
+            if (rel_timestamp < 33995) {
+                if (hops < 2) {
+                    var5 = 8.456319;
                 } else {
-                    var5 = 0.32182652;
+                    if (hops < 3) {
+                        var5 = 8.799465;
+                    } else {
+                        if (hops < 4) {
+                            var5 = 9.1549015;
+                        } else {
+                            var5 = 9.5363035;
+                        }
+                    }
                 }
             } else {
                 if (hops < 3) {
                     if (hops < 2) {
-                        var5 = 0.27256507;
+                        if (rel_timestamp < 73772) {
+                            var5 = 4.6200457;
+                        } else {
+                            var5 = 4.5640144;
+                        }
                     } else {
-                        var5 = 0.27591082;
+                        if (rel_timestamp < 483800) {
+                            var5 = 4.9270573;
+                        } else {
+                            var5 = 4.8866625;
+                        }
                     }
                 } else {
                     if (hops < 4) {
-                        var5 = 0.2794586;
+                        if (rel_timestamp < 1236219) {
+                            var5 = 5.249472;
+                        } else {
+                            var5 = 5.377589;
+                        }
                     } else {
-                        var5 = 0.28315845;
+                        var5 = 5.624904;
                     }
                 }
             }
@@ -893,79 +1013,75 @@ float score(float rel_timestamp, int hops, int size, bool prod_0, bool prod_1, b
     }
     float var6;
     if (size < 45) {
-        if (rel_timestamp < 1.47775) {
-            if (rel_timestamp < 0.95765) {
-                if (rel_timestamp < 0.06265) {
+        if (rel_timestamp < 147775) {
+            if (rel_timestamp < 95765) {
+                if (rel_timestamp < 6265) {
                     if (hops < 3) {
                         if (hops < 2) {
-                            var6 = 0.107518375;
+                            var6 = -5.132805;
                         } else {
-                            var6 = 0.10991383;
+                            var6 = -4.892977;
                         }
                     } else {
                         if (hops < 4) {
-                            var6 = 0.112649485;
+                            var6 = -4.621308;
                         } else {
-                            var6 = 0.11872985;
+                            var6 = -4.018312;
                         }
                     }
                 } else {
-                    if (hops < 3) {
-                        if (rel_timestamp < 0.41635) {
-                            var6 = 0.07955664;
-                        } else {
-                            var6 = 0.082283616;
-                        }
+                    if (rel_timestamp < 41635) {
+                        var6 = -7.9277296;
                     } else {
-                        if (hops < 4) {
-                            var6 = 0.08465719;
+                        if (hops < 3) {
+                            var6 = -7.65545;
                         } else {
-                            var6 = 0.08979171;
+                            var6 = -7.353631;
                         }
                     }
                 }
             } else {
-                if (rel_timestamp < 1.44148) {
+                if (rel_timestamp < 144148) {
                     if (hops < 2) {
-                        if (rel_timestamp < 1.44106) {
-                            var6 = 0.2415251;
+                        if (rel_timestamp < 144106) {
+                            var6 = 8.265549;
                         } else {
-                            var6 = 0.24779621;
+                            var6 = 8.89318;
                         }
                     } else {
-                        var6 = 0.2568366;
+                        var6 = 9.798629;
                     }
                 } else {
-                    if (hops < 3) {
-                        var6 = 0.26210055;
-                    } else {
-                        if (hops < 4) {
-                            var6 = 0.2718996;
+                    if (hops < 4) {
+                        if (hops < 3) {
+                            var6 = 10.731054;
                         } else {
-                            var6 = 0.2833076;
+                            var6 = 11.206761;
                         }
+                    } else {
+                        var6 = 12.418022;
                     }
                 }
             }
         } else {
             if (hops < 2) {
-                if (rel_timestamp < 2.16117) {
-                    var6 = 0.0732609;
+                if (rel_timestamp < 216117) {
+                    var6 = -8.555435;
                 } else {
-                    var6 = 0.07415991;
+                    var6 = -8.466742;
                 }
             } else {
                 if (hops < 3) {
-                    if (rel_timestamp < 2.80176) {
-                        var6 = 0.07591053;
+                    if (rel_timestamp < 280176) {
+                        var6 = -8.290767;
                     } else {
-                        var6 = 0.076637365;
+                        var6 = -8.21901;
                     }
                 } else {
                     if (hops < 4) {
-                        var6 = 0.07904522;
+                        var6 = -7.9783754;
                     } else {
-                        var6 = 0.08152313;
+                        var6 = -7.732182;
                     }
                 }
             }
@@ -973,93 +1089,105 @@ float score(float rel_timestamp, int hops, int size, bool prod_0, bool prod_1, b
     } else {
         if (size < 141) {
             if (prod_3 != 1) {
-                if (rel_timestamp < 0.72426) {
-                    if (rel_timestamp < 0.41619) {
+                if (rel_timestamp < 72426) {
+                    if (rel_timestamp < 41619) {
                         if (hops < 3) {
-                            var6 = 0.1445856;
+                            var6 = -1.4238863;
                         } else {
-                            var6 = 0.14042923;
+                            var6 = -1.8281909;
                         }
                     } else {
-                        if (rel_timestamp < 0.66071) {
-                            var6 = 0.19669431;
+                        if (rel_timestamp < 66071) {
+                            var6 = 3.783578;
                         } else {
-                            var6 = 0.31609017;
+                            var6 = 15.717555;
                         }
                     }
                 } else {
                     if (prod_2 != 1) {
                         if (hops < 3) {
-                            var6 = 0.15891999;
+                            var6 = 0.009503042;
                         } else {
-                            var6 = 0.16787542;
+                            var6 = 0.90371835;
                         }
                     } else {
                         if (hops < 2) {
-                            var6 = 0.16484825;
+                            var6 = 0.60223854;
                         } else {
-                            var6 = 0.17230533;
+                            var6 = 1.3479286;
                         }
                     }
                 }
             } else {
-                if (rel_timestamp < 1.42042) {
-                    if (rel_timestamp < 0.73772) {
+                if (rel_timestamp < 142042) {
+                    if (rel_timestamp < 73772) {
                         if (hops < 3) {
-                            var6 = 0.13354805;
+                            var6 = -2.5274718;
                         } else {
-                            var6 = 0.121218294;
+                            var6 = -3.7588656;
                         }
                     } else {
                         if (hops < 2) {
-                            var6 = 0.13354029;
+                            var6 = -2.5273883;
                         } else {
-                            var6 = 0.13870439;
+                            var6 = -2.011379;
                         }
                     }
                 } else {
                     if (hops < 2) {
-                        var6 = 0.1736446;
+                        if (rel_timestamp < 210333) {
+                            var6 = 1.3511436;
+                        } else {
+                            var6 = 1.4895637;
+                        }
                     } else {
                         if (hops < 4) {
-                            var6 = 0.17928028;
+                            var6 = 2.045445;
                         } else {
-                            var6 = 0.19381243;
+                            var6 = 3.4994583;
                         }
                     }
                 }
             }
         } else {
-            if (rel_timestamp < 0.33995) {
-                if (hops < 3) {
-                    if (hops < 2) {
-                        var6 = 0.2170395;
-                    } else {
-                        var6 = 0.22036669;
-                    }
+            if (rel_timestamp < 33995) {
+                if (hops < 2) {
+                    var6 = 5.919638;
                 } else {
-                    if (hops < 4) {
-                        var6 = 0.22400805;
+                    if (hops < 3) {
+                        var6 = 6.1598616;
                     } else {
-                        var6 = 0.2329263;
+                        if (hops < 4) {
+                            var6 = 6.4089212;
+                        } else {
+                            var6 = 6.6785483;
+                        }
                     }
                 }
             } else {
                 if (hops < 3) {
                     if (hops < 2) {
-                        var6 = 0.19079593;
+                        if (rel_timestamp < 1234907) {
+                            var6 = 3.1941268;
+                        } else {
+                            var6 = 3.246494;
+                        }
                     } else {
-                        var6 = 0.19313794;
+                        if (rel_timestamp < 1303514) {
+                            var6 = 3.4275334;
+                        } else {
+                            var6 = 3.533576;
+                        }
                     }
                 } else {
                     if (hops < 4) {
-                        if (rel_timestamp < 12.36219) {
-                            var6 = 0.19543135;
+                        if (rel_timestamp < 144106) {
+                            var6 = 3.7438178;
                         } else {
-                            var6 = 0.19901474;
+                            var6 = 3.6718073;
                         }
                     } else {
-                        var6 = 0.19821586;
+                        var6 = 3.9375381;
                     }
                 }
             }
@@ -1067,83 +1195,83 @@ float score(float rel_timestamp, int hops, int size, bool prod_0, bool prod_1, b
     }
     float var7;
     if (size < 45) {
-        if (rel_timestamp < 1.47775) {
-            if (rel_timestamp < 0.95765) {
-                if (rel_timestamp < 0.06265) {
+        if (rel_timestamp < 147775) {
+            if (rel_timestamp < 95765) {
+                if (rel_timestamp < 6265) {
                     if (hops < 3) {
                         if (hops < 2) {
-                            var7 = 0.07526547;
+                            var7 = -3.5930865;
                         } else {
-                            var7 = 0.07694252;
+                            var7 = -3.4252112;
                         }
                     } else {
                         if (hops < 4) {
-                            var7 = 0.07886079;
+                            var7 = -3.235168;
                         } else {
-                            var7 = 0.08315387;
+                            var7 = -2.8142729;
                         }
                     }
                 } else {
                     if (hops < 2) {
-                        if (rel_timestamp < 0.83952) {
-                            var7 = 0.055039342;
+                        if (rel_timestamp < 83952) {
+                            var7 = -5.6145754;
                         } else {
-                            var7 = 0.05730223;
+                            var7 = -5.387678;
                         }
                     } else {
-                        if (hops < 4) {
-                            var7 = 0.05839767;
+                        if (rel_timestamp < 41635) {
+                            var7 = -5.465883;
                         } else {
-                            var7 = 0.062870435;
+                            var7 = -5.224817;
                         }
                     }
                 }
             } else {
-                if (rel_timestamp < 1.44148) {
+                if (rel_timestamp < 144148) {
                     if (hops < 2) {
-                        if (rel_timestamp < 1.44106) {
-                            var7 = 0.16908015;
+                        if (rel_timestamp < 144106) {
+                            var7 = 5.786311;
                         } else {
-                            var7 = 0.17346877;
+                            var7 = 6.225632;
                         }
                     } else {
-                        var7 = 0.17979309;
+                        var7 = 6.859319;
                     }
                 } else {
-                    if (hops < 3) {
-                        var7 = 0.18353084;
-                    } else {
-                        if (hops < 4) {
-                            var7 = 0.1903446;
+                    if (hops < 4) {
+                        if (hops < 3) {
+                            var7 = 7.514207;
                         } else {
-                            var7 = 0.19841787;
+                            var7 = 7.8453383;
                         }
+                    } else {
+                        var7 = 8.697106;
                     }
                 }
             }
         } else {
             if (hops < 2) {
-                if (rel_timestamp < 4.85131) {
-                    var7 = 0.051604364;
+                if (rel_timestamp < 416828) {
+                    var7 = -5.962588;
                 } else {
-                    var7 = 0.051973257;
+                    var7 = -5.9222484;
                 }
             } else {
                 if (hops < 3) {
-                    if (rel_timestamp < 2.80176) {
-                        var7 = 0.053138822;
+                    if (rel_timestamp < 280176) {
+                        var7 = -5.803695;
                     } else {
-                        var7 = 0.053646322;
+                        var7 = -5.753318;
                     }
                 } else {
                     if (hops < 4) {
-                        if (rel_timestamp < 4.20948) {
-                            var7 = 0.054989714;
+                        if (rel_timestamp < 420948) {
+                            var7 = -5.6187334;
                         } else {
-                            var7 = 0.05544513;
+                            var7 = -5.573529;
                         }
                     } else {
-                        var7 = 0.057068016;
+                        var7 = -5.4127035;
                     }
                 }
             }
@@ -1152,100 +1280,108 @@ float score(float rel_timestamp, int hops, int size, bool prod_0, bool prod_1, b
         if (size < 141) {
             if (prod_0 != 1) {
                 if (hops < 4) {
-                    if (rel_timestamp < 2.08819) {
+                    if (rel_timestamp < 208819) {
                         if (prod_4 != 1) {
-                            var7 = 0.10598317;
+                            var7 = -0.5246204;
                         } else {
-                            var7 = 0.12494481;
+                            var7 = 1.3785471;
                         }
                     } else {
                         if (prod_3 != 1) {
-                            var7 = 0.11588908;
+                            var7 = 0.47187734;
                         } else {
-                            var7 = 0.12388906;
+                            var7 = 1.2709033;
                         }
                     }
                 } else {
-                    if (rel_timestamp < 0.41619) {
-                        var7 = 0.10676062;
+                    if (rel_timestamp < 41619) {
+                        var7 = -0.4279135;
                     } else {
-                        if (rel_timestamp < 0.72426) {
-                            var7 = 0.19154394;
+                        if (rel_timestamp < 72426) {
+                            var7 = 7.733965;
                         } else {
-                            var7 = 0.13322932;
+                            var7 = 2.202953;
                         }
                     }
                 }
             } else {
-                if (rel_timestamp < 0.66052) {
+                if (rel_timestamp < 66052) {
                     if (hops < 3) {
                         if (hops < 2) {
-                            var7 = 0.12438291;
+                            var7 = 1.3194032;
                         } else {
-                            var7 = 0.1379257;
+                            var7 = 2.6755323;
                         }
                     } else {
                         if (hops < 4) {
-                            var7 = 0.15690544;
+                            var7 = 4.568116;
                         } else {
-                            var7 = 0.1717242;
+                            var7 = 6.060266;
                         }
                     }
                 } else {
                     if (hops < 2) {
-                        if (rel_timestamp < 3.82177) {
-                            var7 = 0.10502928;
+                        if (rel_timestamp < 382177) {
+                            var7 = -0.6149983;
                         } else {
-                            var7 = 0.10427469;
+                            var7 = -0.6905738;
                         }
                     } else {
                         if (hops < 4) {
-                            var7 = 0.110377476;
+                            var7 = -0.07986065;
                         } else {
-                            var7 = 0.12510616;
+                            var7 = 1.3936536;
                         }
                     }
                 }
             }
         } else {
-            if (rel_timestamp < 0.33995) {
+            if (rel_timestamp < 33995) {
                 if (hops < 3) {
                     if (hops < 2) {
-                        var7 = 0.15193298;
+                        if (rel_timestamp < 6265) {
+                            var7 = 4.1160455;
+                        } else {
+                            var7 = 4.2401385;
+                        }
                     } else {
-                        var7 = 0.15426245;
+                        var7 = 4.3120656;
                     }
                 } else {
                     if (hops < 4) {
-                        var7 = 0.15681766;
+                        var7 = 4.4865847;
                     } else {
-                        var7 = 0.16312507;
+                        var7 = 4.6771894;
                     }
                 }
             } else {
                 if (hops < 3) {
                     if (hops < 2) {
-                        if (rel_timestamp < 13.03252) {
-                            var7 = 0.13348266;
+                        if (rel_timestamp < 73772) {
+                            var7 = 2.2759757;
                         } else {
-                            var7 = 0.13499284;
+                            var7 = 2.2356987;
                         }
                     } else {
-                        if (rel_timestamp < 3.47064) {
-                            var7 = 0.13577443;
+                        if (rel_timestamp < 278737) {
+                            var7 = 2.4307866;
                         } else {
-                            var7 = 0.13498962;
+                            var7 = 2.3940327;
                         }
                     }
                 } else {
                     if (hops < 4) {
-                        if (rel_timestamp < 12.36219) {
-                            var7 = 0.13680257;
+                        if (rel_timestamp < 1236219) {
+                            var7 = 2.5707185;
                         } else {
-                            var7 = 0.13932103;
+                            var7 = 2.663262;
                         }
                     } else {
-                        var7 = 0.13875452;
+                        if (rel_timestamp < 1236219) {
+                            var7 = 2.7503533;
+                        } else {
+                            var7 = 2.8609304;
+                        }
                     }
                 }
             }
@@ -1253,95 +1389,87 @@ float score(float rel_timestamp, int hops, int size, bool prod_0, bool prod_1, b
     }
     float var8;
     if (size < 45) {
-        if (rel_timestamp < 1.47775) {
-            if (rel_timestamp < 0.95765) {
-                if (rel_timestamp < 0.06265) {
+        if (rel_timestamp < 147775) {
+            if (rel_timestamp < 95765) {
+                if (rel_timestamp < 6265) {
                     if (hops < 3) {
                         if (hops < 2) {
-                            var8 = 0.052687686;
+                            var8 = -2.5152507;
                         } else {
-                            var8 = 0.053861767;
+                            var8 = -2.397739;
                         }
                     } else {
                         if (hops < 4) {
-                            var8 = 0.05520687;
+                            var8 = -2.2647936;
                         } else {
-                            var8 = 0.058237772;
+                            var8 = -1.9710103;
                         }
                     }
                 } else {
                     if (hops < 2) {
-                        if (rel_timestamp < 0.83952) {
-                            var8 = 0.038528584;
+                        if (rel_timestamp < 83952) {
+                            var8 = -3.9303153;
                         } else {
-                            var8 = 0.04011345;
+                            var8 = -3.7715569;
                         }
                     } else {
-                        if (rel_timestamp < 0.41635) {
-                            var8 = 0.03899719;
+                        if (hops < 3) {
+                            var8 = -3.73673;
                         } else {
-                            var8 = 0.041363142;
+                            var8 = -3.5803907;
                         }
                     }
                 }
             } else {
-                if (rel_timestamp < 1.44148) {
+                if (rel_timestamp < 144148) {
                     if (hops < 2) {
-                        if (rel_timestamp < 1.44106) {
-                            var8 = 0.11836489;
+                        if (rel_timestamp < 144106) {
+                            var8 = 4.050718;
                         } else {
-                            var8 = 0.12143614;
+                            var8 = 4.3582234;
                         }
                     } else {
-                        var8 = 0.12586042;
+                        var8 = 4.8017235;
                     }
                 } else {
-                    if (hops < 3) {
-                        var8 = 0.12851395;
-                    } else {
-                        if (hops < 4) {
-                            var8 = 0.13325156;
+                    if (hops < 4) {
+                        if (hops < 3) {
+                            var8 = 5.261675;
                         } else {
-                            var8 = 0.13896424;
+                            var8 = 5.492167;
                         }
+                    } else {
+                        var8 = 6.091129;
                     }
                 }
             }
         } else {
             if (hops < 2) {
-                if (rel_timestamp < 2.80176) {
-                    var8 = 0.035831112;
+                if (rel_timestamp < 280176) {
+                    var8 = -4.197757;
                 } else {
-                    if (rel_timestamp < 2.84424) {
-                        var8 = 0.036722835;
-                    } else {
-                        if (rel_timestamp < 4.16828) {
-                            var8 = 0.03586253;
-                        } else {
-                            var8 = 0.036373932;
-                        }
-                    }
+                    var8 = -4.1478505;
                 }
             } else {
                 if (hops < 3) {
-                    if (rel_timestamp < 2.11885) {
-                        var8 = 0.036551297;
+                    if (rel_timestamp < 420948) {
+                        var8 = -4.04987;
                     } else {
-                        if (rel_timestamp < 4.20948) {
-                            var8 = 0.037370466;
+                        if (rel_timestamp < 489252) {
+                            var8 = -3.9807217;
                         } else {
-                            var8 = 0.037588138;
+                            var8 = -4.027639;
                         }
                     }
                 } else {
                     if (hops < 4) {
-                        if (rel_timestamp < 4.20948) {
-                            var8 = 0.038493518;
+                        if (rel_timestamp < 420948) {
+                            var8 = -3.9331865;
                         } else {
-                            var8 = 0.03881182;
+                            var8 = -3.9014988;
                         }
                     } else {
-                        var8 = 0.03994888;
+                        var8 = -3.7890196;
                     }
                 }
             }
@@ -1351,99 +1479,115 @@ float score(float rel_timestamp, int hops, int size, bool prod_0, bool prod_1, b
             if (hops < 2) {
                 if (prod_0 != 1) {
                     if (prod_4 != 1) {
-                        if (rel_timestamp < 1.42042) {
-                            var8 = 0.0700298;
+                        if (rel_timestamp < 142042) {
+                            var8 = -0.7765552;
                         } else {
-                            var8 = 0.081697844;
+                            var8 = 0.38718575;
                         }
                     } else {
-                        if (rel_timestamp < 0.72426) {
-                            var8 = 0.10077416;
+                        if (rel_timestamp < 72426) {
+                            var8 = 2.335018;
                         } else {
-                            var8 = 0.07430503;
+                            var8 = -0.35239017;
                         }
                     }
                 } else {
-                    if (rel_timestamp < 0.66052) {
-                        var8 = 0.08707109;
-                    } else {
-                        if (rel_timestamp < 3.82177) {
-                            var8 = 0.07352106;
+                    if (rel_timestamp < 66052) {
+                        if (rel_timestamp < 52553) {
+                            var8 = 0.85616016;
                         } else {
-                            var8 = 0.072992444;
+                            var8 = 0.96975845;
+                        }
+                    } else {
+                        if (rel_timestamp < 382177) {
+                            var8 = -0.4305043;
+                        } else {
+                            var8 = -0.48340032;
                         }
                     }
                 }
             } else {
                 if (hops < 4) {
                     if (prod_0 != 1) {
-                        if (rel_timestamp < 0.41619) {
-                            var8 = 0.06844107;
+                        if (rel_timestamp < 41619) {
+                            var8 = -0.9350094;
                         } else {
-                            var8 = 0.083953895;
+                            var8 = 0.612513;
                         }
                     } else {
-                        if (rel_timestamp < 0.66052) {
-                            var8 = 0.100819886;
+                        if (rel_timestamp < 66052) {
+                            var8 = 2.298012;
                         } else {
-                            var8 = 0.077264376;
+                            var8 = -0.055901367;
                         }
                     }
                 } else {
-                    if (rel_timestamp < 0.72426) {
-                        if (rel_timestamp < 0.41619) {
-                            var8 = 0.07477134;
+                    if (rel_timestamp < 72426) {
+                        if (rel_timestamp < 41619) {
+                            var8 = -0.29969403;
                         } else {
-                            var8 = 0.12732092;
+                            var8 = 4.8365808;
                         }
                     } else {
-                        if (rel_timestamp < 1.42042) {
-                            var8 = 0.08114079;
+                        if (rel_timestamp < 142042) {
+                            var8 = 0.2900375;
                         } else {
-                            var8 = 0.092991054;
+                            var8 = 1.5185832;
                         }
                     }
                 }
             }
         } else {
-            if (rel_timestamp < 0.33995) {
+            if (rel_timestamp < 33995) {
                 if (hops < 3) {
                     if (hops < 2) {
-                        var8 = 0.10635677;
+                        if (rel_timestamp < 6265) {
+                            var8 = 2.8813674;
+                        } else {
+                            var8 = 2.9685764;
+                        }
                     } else {
-                        var8 = 0.10798767;
+                        if (rel_timestamp < 6265) {
+                            var8 = 2.972742;
+                        } else {
+                            var8 = 3.0478961;
+                        }
                     }
                 } else {
                     if (hops < 4) {
-                        var8 = 0.109780855;
+                        var8 = 3.1408536;
                     } else {
-                        var8 = 0.11424129;
+                        var8 = 3.275574;
                     }
                 }
             } else {
                 if (hops < 3) {
                     if (hops < 2) {
-                        if (rel_timestamp < 13.03252) {
-                            var8 = 0.093438104;
+                        if (rel_timestamp < 1303252) {
+                            var8 = 1.5645578;
                         } else {
-                            var8 = 0.094498485;
+                            var8 = 1.6035556;
                         }
                     } else {
-                        if (rel_timestamp < 2.78737) {
-                            var8 = 0.095124416;
+                        if (rel_timestamp < 1303514) {
+                            var8 = 1.678662;
                         } else {
-                            var8 = 0.09450782;
+                            var8 = 1.7555329;
                         }
                     }
                 } else {
                     if (hops < 4) {
-                        if (rel_timestamp < 12.36219) {
-                            var8 = 0.09576217;
+                        if (rel_timestamp < 211885) {
+                            var8 = 1.8426744;
                         } else {
-                            var8 = 0.09753225;
+                            var8 = 1.7954676;
                         }
                     } else {
-                        var8 = 0.09713062;
+                        if (rel_timestamp < 1167138) {
+                            var8 = 1.9221014;
+                        } else {
+                            var8 = 1.9830856;
+                        }
                     }
                 }
             }
@@ -1451,99 +1595,99 @@ float score(float rel_timestamp, int hops, int size, bool prod_0, bool prod_1, b
     }
     float var9;
     if (size < 45) {
-        if (rel_timestamp < 1.47775) {
-            if (rel_timestamp < 0.95765) {
-                if (rel_timestamp < 0.06265) {
+        if (rel_timestamp < 147775) {
+            if (rel_timestamp < 95765) {
+                if (rel_timestamp < 6265) {
                     if (hops < 3) {
                         if (hops < 2) {
-                            var9 = 0.036882676;
+                            var9 = -1.7607344;
                         } else {
-                            var9 = 0.037704602;
+                            var9 = -1.67848;
                         }
                     } else {
                         if (hops < 4) {
-                            var9 = 0.03864785;
+                            var9 = -1.585477;
                         } else {
-                            var9 = 0.040787514;
+                            var9 = -1.380421;
                         }
                     }
                 } else {
-                    if (hops < 3) {
-                        if (rel_timestamp < 0.83981) {
-                            var9 = 0.02788932;
+                    if (hops < 2) {
+                        if (rel_timestamp < 83952) {
+                            var9 = -2.7512927;
                         } else {
-                            var9 = 0.025766369;
+                            var9 = -2.6402178;
                         }
                     } else {
                         if (hops < 4) {
-                            var9 = 0.029336758;
+                            var9 = -2.5908246;
                         } else {
-                            var9 = 0.031619184;
+                            var9 = -2.2960503;
                         }
                     }
                 }
             } else {
-                if (rel_timestamp < 1.44148) {
+                if (rel_timestamp < 144148) {
                     if (hops < 2) {
-                        if (rel_timestamp < 1.44106) {
-                            var9 = 0.08286163;
+                        if (rel_timestamp < 144106) {
+                            var9 = 2.8357136;
                         } else {
-                            var9 = 0.085010886;
+                            var9 = 3.0509589;
                         }
                     } else {
-                        var9 = 0.08810601;
+                        if (hops < 3) {
+                            var9 = 3.3592937;
+                        } else {
+                            var9 = 4.257934;
+                        }
                     }
                 } else {
                     if (hops < 4) {
                         if (hops < 3) {
-                            var9 = 0.08998945;
+                            var9 = 3.6843915;
                         } else {
-                            var9 = 0.09328336;
+                            var9 = 3.844811;
                         }
                     } else {
-                        var9 = 0.097325124;
+                        var9 = 4.2659955;
                     }
                 }
             }
         } else {
             if (hops < 2) {
-                if (rel_timestamp < 2.80176) {
-                    var9 = 0.025082504;
-                } else {
-                    if (rel_timestamp < 2.84424) {
-                        if (rel_timestamp < 2.80287) {
-                            var9 = 0.025546594;
+                if (rel_timestamp < 485131) {
+                    if (rel_timestamp < 284424) {
+                        if (rel_timestamp < 280176) {
+                            var9 = -2.9385192;
                         } else {
-                            var9 = 0.026345622;
+                            var9 = -2.863826;
                         }
                     } else {
-                        if (rel_timestamp < 3.48605) {
-                            var9 = 0.025006428;
+                        if (rel_timestamp < 348605) {
+                            var9 = -2.959719;
                         } else {
-                            var9 = 0.02545629;
+                            var9 = -2.9230585;
                         }
                     }
+                } else {
+                    var9 = -2.8995905;
                 }
             } else {
                 if (hops < 3) {
-                    if (rel_timestamp < 2.11885) {
-                        var9 = 0.025590304;
+                    if (rel_timestamp < 211885) {
+                        var9 = -2.9103112;
                     } else {
-                        if (rel_timestamp < 4.20948) {
-                            var9 = 0.026159588;
-                        } else {
-                            var9 = 0.026311783;
-                        }
+                        var9 = -2.820004;
                     }
                 } else {
                     if (hops < 4) {
-                        if (rel_timestamp < 2.11885) {
-                            var9 = 0.025783274;
+                        if (rel_timestamp < 211885) {
+                            var9 = -2.8614664;
                         } else {
-                            var9 = 0.027122762;
+                            var9 = -2.7356877;
                         }
                     } else {
-                        var9 = 0.0279651;
+                        var9 = -2.6523957;
                     }
                 }
             }
@@ -1553,103 +1697,115 @@ float score(float rel_timestamp, int hops, int size, bool prod_0, bool prod_1, b
             if (hops < 2) {
                 if (prod_3 != 1) {
                     if (prod_2 != 1) {
-                        if (rel_timestamp < 0.72426) {
-                            var9 = 0.0597863;
+                        if (rel_timestamp < 72426) {
+                            var9 = 0.5399177;
                         } else {
-                            var9 = 0.0526638;
+                            var9 = -0.18138427;
                         }
                     } else {
-                        if (rel_timestamp < 0.83952) {
-                            var9 = 0.06792962;
+                        if (rel_timestamp < 83952) {
+                            var9 = 1.3461956;
                         } else {
-                            var9 = 0.05599319;
+                            var9 = 0.15145695;
                         }
                     }
                 } else {
-                    if (rel_timestamp < 1.42042) {
-                        if (rel_timestamp < 0.73772) {
-                            var9 = 0.043104984;
+                    if (rel_timestamp < 142042) {
+                        if (rel_timestamp < 73772) {
+                            var9 = -1.1368439;
                         } else {
-                            var9 = 0.04068202;
+                            var9 = -1.3789176;
                         }
                     } else {
-                        if (rel_timestamp < 2.08819) {
-                            var9 = 0.06361985;
+                        if (rel_timestamp < 208819) {
+                            var9 = 0.95764226;
                         } else {
-                            var9 = 0.05989073;
+                            var9 = 0.5410328;
                         }
                     }
                 }
             } else {
                 if (prod_0 != 1) {
                     if (prod_4 != 1) {
-                        if (rel_timestamp < 1.42042) {
-                            var9 = 0.04857012;
+                        if (rel_timestamp < 142042) {
+                            var9 = -0.60480183;
                         } else {
-                            var9 = 0.06119731;
+                            var9 = 0.6734859;
                         }
                     } else {
-                        if (rel_timestamp < 0.72426) {
-                            var9 = 0.09124404;
+                        if (rel_timestamp < 72426) {
+                            var9 = 3.6489332;
                         } else {
-                            var9 = 0.054222394;
+                            var9 = -0.025514226;
                         }
                     }
                 } else {
-                    if (rel_timestamp < 0.66052) {
+                    if (rel_timestamp < 66052) {
                         if (hops < 3) {
-                            var9 = 0.06630812;
+                            var9 = 1.1835883;
                         } else {
-                            var9 = 0.079952285;
+                            var9 = 2.5475562;
                         }
                     } else {
                         if (hops < 4) {
-                            var9 = 0.054085154;
+                            var9 = -0.03912896;
                         } else {
-                            var9 = 0.0598681;
+                            var9 = 0.5394348;
                         }
                     }
                 }
             }
         } else {
-            if (rel_timestamp < 0.33995) {
+            if (rel_timestamp < 33995) {
                 if (hops < 3) {
-                    if (rel_timestamp < 0.06265) {
-                        var9 = 0.074489765;
+                    if (hops < 2) {
+                        if (rel_timestamp < 6265) {
+                            var9 = 2.0170546;
+                        } else {
+                            var9 = 2.0783365;
+                        }
                     } else {
-                        var9 = 0.07575973;
+                        if (rel_timestamp < 6265) {
+                            var9 = 2.0811222;
+                        } else {
+                            var9 = 2.1336527;
+                        }
                     }
                 } else {
                     if (hops < 4) {
-                        var9 = 0.076852515;
+                        var9 = 2.1987617;
                     } else {
-                        var9 = 0.08000657;
+                        var9 = 2.2939804;
                     }
                 }
             } else {
                 if (hops < 3) {
                     if (hops < 2) {
-                        if (rel_timestamp < 12.34907) {
-                            var9 = 0.065404885;
+                        if (rel_timestamp < 73772) {
+                            var9 = 1.1238977;
                         } else {
-                            var9 = 0.06613573;
+                            var9 = 1.0950094;
                         }
                     } else {
-                        if (rel_timestamp < 13.03514) {
-                            var9 = 0.06619819;
+                        if (rel_timestamp < 553328) {
+                            var9 = 1.1913427;
                         } else {
-                            var9 = 0.067640826;
+                            var9 = 1.166359;
                         }
                     }
                 } else {
                     if (hops < 4) {
-                        if (rel_timestamp < 1.44106) {
-                            var9 = 0.06798766;
+                        if (rel_timestamp < 1236219) {
+                            var9 = 1.2585093;
                         } else {
-                            var9 = 0.066994734;
+                            var9 = 1.3258792;
                         }
                     } else {
-                        var9 = 0.06799307;
+                        if (rel_timestamp < 280176) {
+                            var9 = 1.3813447;
+                        } else {
+                            var9 = 1.342471;
+                        }
                     }
                 }
             }
@@ -1657,111 +1813,115 @@ float score(float rel_timestamp, int hops, int size, bool prod_0, bool prod_1, b
     }
     float var10;
     if (size < 45) {
-        if (rel_timestamp < 1.47775) {
-            if (rel_timestamp < 0.95765) {
-                if (rel_timestamp < 0.06265) {
+        if (rel_timestamp < 147775) {
+            if (rel_timestamp < 95765) {
+                if (rel_timestamp < 6265) {
                     if (hops < 3) {
                         if (hops < 2) {
-                            var10 = 0.025818786;
+                            var10 = -1.2325548;
                         } else {
-                            var10 = 0.02639416;
+                            var10 = -1.1749831;
                         }
                     } else {
                         if (hops < 4) {
-                            var10 = 0.02705559;
+                            var10 = -1.1099194;
                         } else {
-                            var10 = 0.028566035;
+                            var10 = -0.9667909;
                         }
                     }
                 } else {
-                    if (hops < 2) {
-                        if (rel_timestamp < 0.83952) {
-                            var10 = 0.018604493;
+                    if (hops < 3) {
+                        if (rel_timestamp < 83981) {
+                            var10 = -1.8580476;
                         } else {
-                            var10 = 0.019714888;
+                            var10 = -2.0820029;
                         }
                     } else {
-                        if (rel_timestamp < 0.41635) {
-                            var10 = 0.018935153;
+                        if (rel_timestamp < 52553) {
+                            var10 = -1.8120674;
                         } else {
-                            var10 = 0.020419847;
+                            var10 = -1.6691562;
                         }
                     }
                 }
             } else {
-                if (rel_timestamp < 1.44148) {
+                if (rel_timestamp < 144148) {
                     if (hops < 2) {
-                        if (rel_timestamp < 1.44106) {
-                            var10 = 0.058007527;
+                        if (rel_timestamp < 144106) {
+                            var10 = 1.9851534;
                         } else {
-                            var10 = 0.059511483;
+                            var10 = 2.1358097;
                         }
                     } else {
-                        var10 = 0.061676715;
+                        if (hops < 3) {
+                            var10 = 2.351597;
+                        } else {
+                            var10 = 3.0444224;
+                        }
                     }
                 } else {
                     if (hops < 4) {
                         if (hops < 3) {
-                            var10 = 0.06301332;
+                            var10 = 2.5799255;
                         } else {
-                            var10 = 0.06530351;
+                            var10 = 2.6915853;
                         }
                     } else {
-                        var10 = 0.06816275;
+                        var10 = 2.9877417;
                     }
                 }
             }
         } else {
             if (hops < 2) {
-                if (rel_timestamp < 8.94784) {
-                    if (rel_timestamp < 2.11885) {
-                        var10 = 0.01695076;
-                    } else {
-                        if (rel_timestamp < 6.25841) {
-                            var10 = 0.017787049;
+                if (rel_timestamp < 485131) {
+                    if (rel_timestamp < 284424) {
+                        if (rel_timestamp < 280287) {
+                            var10 = -2.043712;
                         } else {
-                            var10 = 0.017659605;
+                            var10 = -1.9391072;
+                        }
+                    } else {
+                        if (rel_timestamp < 348605) {
+                            var10 = -2.071886;
+                        } else {
+                            var10 = -2.0461876;
                         }
                     }
                 } else {
-                    if (rel_timestamp < 11.72146) {
-                        if (rel_timestamp < 11.68152) {
-                            var10 = 0.017866524;
+                    if (rel_timestamp < 1172146) {
+                        if (rel_timestamp < 1168152) {
+                            var10 = -2.0312998;
                         } else {
-                            var10 = 0.018481487;
+                            var10 = -1.9643095;
                         }
                     } else {
-                        if (rel_timestamp < 12.36219) {
-                            var10 = 0.015965424;
+                        if (rel_timestamp < 1236219) {
+                            var10 = -2.2103968;
                         } else {
-                            var10 = 0.017698862;
+                            var10 = -2.0427783;
                         }
                     }
                 }
             } else {
                 if (hops < 3) {
-                    if (rel_timestamp < 4.20948) {
-                        if (rel_timestamp < 3.52734) {
-                            var10 = 0.018372728;
-                        } else {
-                            var10 = 0.01804439;
-                        }
+                    if (rel_timestamp < 211885) {
+                        var10 = -2.0375676;
                     } else {
-                        if (rel_timestamp < 4.89252) {
-                            var10 = 0.018844012;
+                        if (rel_timestamp < 420948) {
+                            var10 = -1.9846066;
                         } else {
-                            var10 = 0.018379427;
+                            var10 = -1.9706486;
                         }
                     }
                 } else {
                     if (hops < 4) {
-                        if (rel_timestamp < 4.20948) {
-                            var10 = 0.018821433;
+                        if (rel_timestamp < 420948) {
+                            var10 = -1.9314917;
                         } else {
-                            var10 = 0.019031724;
+                            var10 = -1.910376;
                         }
                     } else {
-                        var10 = 0.019576212;
+                        var10 = -1.8567343;
                     }
                 }
             }
@@ -1770,100 +1930,116 @@ float score(float rel_timestamp, int hops, int size, bool prod_0, bool prod_1, b
         if (size < 141) {
             if (hops < 3) {
                 if (prod_3 != 1) {
-                    if (rel_timestamp < 0.83952) {
+                    if (rel_timestamp < 83952) {
                         if (prod_1 != 1) {
-                            var10 = 0.05058937;
+                            var10 = 1.2506403;
                         } else {
-                            var10 = 0.03355498;
+                            var10 = -0.44726455;
                         }
                     } else {
                         if (prod_2 != 1) {
-                            var10 = 0.03750962;
+                            var10 = -0.06276258;
                         } else {
-                            var10 = 0.040065195;
+                            var10 = 0.19284414;
                         }
                     }
                 } else {
-                    if (rel_timestamp < 1.42042) {
+                    if (rel_timestamp < 142042) {
                         if (hops < 2) {
-                            var10 = 0.029327715;
+                            var10 = -0.8805863;
                         } else {
-                            var10 = 0.022898335;
+                            var10 = -1.5177666;
                         }
                     } else {
                         if (hops < 2) {
-                            var10 = 0.041948244;
+                            var10 = 0.38145489;
                         } else {
-                            var10 = 0.043639258;
+                            var10 = 0.5502866;
                         }
                     }
                 }
             } else {
                 if (prod_0 != 1) {
-                    if (rel_timestamp < 2.08819) {
+                    if (rel_timestamp < 208819) {
                         if (prod_3 != 1) {
-                            var10 = 0.042567525;
+                            var10 = 0.42078376;
                         } else {
-                            var10 = 0.017843356;
+                            var10 = -2.0220437;
                         }
                     } else {
                         if (prod_4 != 1) {
-                            var10 = 0.04551643;
+                            var10 = 0.7396942;
                         } else {
-                            var10 = 0.04059576;
+                            var10 = 0.24641426;
                         }
                     }
                 } else {
-                    if (rel_timestamp < 0.66052) {
+                    if (rel_timestamp < 66052) {
                         if (hops < 4) {
-                            var10 = 0.0556204;
+                            var10 = 1.7445186;
                         } else {
-                            var10 = 0.058157522;
+                            var10 = 2.0316477;
                         }
                     } else {
                         if (hops < 4) {
-                            var10 = 0.037480883;
+                            var10 = -0.06456707;
                         } else {
-                            var10 = 0.0419087;
+                            var10 = 0.37761614;
                         }
                     }
                 }
             }
         } else {
-            if (rel_timestamp < 0.33995) {
-                if (hops < 2) {
-                    var10 = 0.0520229;
+            if (rel_timestamp < 33995) {
+                if (hops < 3) {
+                    if (hops < 2) {
+                        if (rel_timestamp < 6265) {
+                            var10 = 1.4120097;
+                        } else {
+                            var10 = 1.4550754;
+                        }
+                    } else {
+                        if (rel_timestamp < 6265) {
+                            var10 = 1.4569241;
+                        } else {
+                            var10 = 1.4936435;
+                        }
+                    }
                 } else {
                     if (hops < 4) {
-                        var10 = 0.053275835;
+                        var10 = 1.5392423;
                     } else {
-                        var10 = 0.056030937;
+                        var10 = 1.606534;
                     }
                 }
             } else {
                 if (hops < 3) {
                     if (hops < 2) {
-                        if (rel_timestamp < 0.73772) {
-                            var10 = 0.046341352;
+                        if (rel_timestamp < 1234907) {
+                            var10 = 0.76614195;
                         } else {
-                            var10 = 0.045781024;
+                            var10 = 0.793225;
                         }
                     } else {
-                        if (rel_timestamp < 4.838) {
-                            var10 = 0.046627983;
+                        if (rel_timestamp < 1303514) {
+                            var10 = 0.82189363;
                         } else {
-                            var10 = 0.046223916;
+                            var10 = 0.87907064;
                         }
                     }
                 } else {
-                    if (rel_timestamp < 12.36219) {
-                        if (rel_timestamp < 2.11885) {
-                            var10 = 0.047501866;
+                    if (hops < 4) {
+                        if (rel_timestamp < 76438) {
+                            var10 = 0.93957955;
                         } else {
-                            var10 = 0.0468892;
+                            var10 = 0.88033503;
                         }
                     } else {
-                        var10 = 0.048251916;
+                        if (rel_timestamp < 1167138) {
+                            var10 = 0.9399994;
+                        } else {
+                            var10 = 0.9858979;
+                        }
                     }
                 }
             }
@@ -1871,102 +2047,118 @@ float score(float rel_timestamp, int hops, int size, bool prod_0, bool prod_1, b
     }
     float var11;
     if (size < 45) {
-        if (rel_timestamp < 1.47775) {
-            if (rel_timestamp < 0.95765) {
-                if (rel_timestamp < 0.06265) {
+        if (rel_timestamp < 147775) {
+            if (rel_timestamp < 95765) {
+                if (rel_timestamp < 6265) {
                     if (hops < 3) {
                         if (hops < 2) {
-                            var11 = 0.01807377;
+                            var11 = -0.8628217;
                         } else {
-                            var11 = 0.018476602;
+                            var11 = -0.82251716;
                         }
                     } else {
                         if (hops < 4) {
-                            var11 = 0.018940415;
+                            var11 = -0.77700275;
                         } else {
-                            var11 = 0.020006536;
+                            var11 = -0.6771017;
                         }
                     }
                 } else {
-                    if (hops < 3) {
-                        if (rel_timestamp < 0.83981) {
-                            var11 = 0.013674541;
+                    if (hops < 2) {
+                        if (rel_timestamp < 83952) {
+                            var11 = -1.3685787;
                         } else {
-                            var11 = 0.0119165825;
+                            var11 = -1.2908792;
                         }
                     } else {
-                        if (rel_timestamp < 0.52553) {
-                            var11 = 0.013906873;
+                        if (rel_timestamp < 41635) {
+                            var11 = -1.3712304;
                         } else {
-                            var11 = 0.0153359845;
+                            var11 = -1.2353735;
                         }
                     }
                 }
             } else {
-                if (rel_timestamp < 1.44148) {
+                if (rel_timestamp < 144148) {
                     if (hops < 2) {
-                        if (rel_timestamp < 1.44106) {
-                            var11 = 0.040608242;
+                        if (rel_timestamp < 144106) {
+                            var11 = 1.3897066;
                         } else {
-                            var11 = 0.041660715;
+                            var11 = 1.4951667;
                         }
                     } else {
-                        var11 = 0.043175552;
+                        if (hops < 3) {
+                            var11 = 1.6461781;
+                        } else {
+                            var11 = 2.1767588;
+                        }
                     }
                 } else {
                     if (hops < 4) {
                         if (hops < 3) {
-                            var11 = 0.0441238;
+                            var11 = 1.806534;
                         } else {
-                            var11 = 0.045716085;
+                            var11 = 1.8842558;
                         }
                     } else {
-                        var11 = 0.047738533;
+                        var11 = 2.0925035;
                     }
                 }
             }
         } else {
             if (hops < 2) {
-                if (rel_timestamp < 2.16117) {
-                    var11 = 0.012216858;
-                } else {
-                    if (rel_timestamp < 4.85131) {
-                        if (rel_timestamp < 2.84424) {
-                            var11 = 0.01261852;
+                if (rel_timestamp < 894784) {
+                    if (rel_timestamp < 211885) {
+                        var11 = -1.501837;
+                    } else {
+                        if (rel_timestamp < 625841) {
+                            var11 = -1.4234099;
                         } else {
-                            var11 = 0.012302059;
+                            var11 = -1.4375563;
+                        }
+                    }
+                } else {
+                    if (rel_timestamp < 1172146) {
+                        if (rel_timestamp < 1168152) {
+                            var11 = -1.4168841;
+                        } else {
+                            var11 = -1.3751035;
                         }
                     } else {
-                        if (rel_timestamp < 5.57547) {
-                            var11 = 0.012654072;
+                        if (rel_timestamp < 1236219) {
+                            var11 = -1.5483329;
                         } else {
-                            var11 = 0.012465707;
+                            var11 = -1.429995;
                         }
                     }
                 }
             } else {
                 if (hops < 3) {
-                    if (rel_timestamp < 2.11885) {
-                        var11 = 0.012406618;
-                    } else {
-                        if (rel_timestamp < 12.36456) {
-                            var11 = 0.012883599;
+                    if (rel_timestamp < 280176) {
+                        if (rel_timestamp < 211885) {
+                            var11 = -1.4265418;
                         } else {
-                            var11 = 0.01261223;
+                            var11 = -1.3943499;
+                        }
+                    } else {
+                        if (rel_timestamp < 1236456) {
+                            var11 = -1.3801212;
+                        } else {
+                            var11 = -1.4069438;
                         }
                     }
                 } else {
                     if (hops < 4) {
-                        if (rel_timestamp < 2.11885) {
-                            var11 = 0.0124223;
+                        if (rel_timestamp < 826493) {
+                            var11 = -1.347276;
                         } else {
-                            var11 = 0.013291987;
+                            var11 = -1.3323673;
                         }
                     } else {
-                        if (rel_timestamp < 11.72146) {
-                            var11 = 0.013738549;
+                        if (rel_timestamp < 1172146) {
+                            var11 = -1.2962683;
                         } else {
-                            var11 = 0.013166024;
+                            var11 = -1.3505147;
                         }
                     }
                 }
@@ -1977,99 +2169,111 @@ float score(float rel_timestamp, int hops, int size, bool prod_0, bool prod_1, b
             if (hops < 4) {
                 if (prod_0 != 1) {
                     if (prod_4 != 1) {
-                        if (rel_timestamp < 0.76457) {
-                            var11 = 0.019289035;
+                        if (rel_timestamp < 76457) {
+                            var11 = -0.7342822;
                         } else {
-                            var11 = 0.029069006;
+                            var11 = 0.2372434;
                         }
                     } else {
-                        if (rel_timestamp < 0.72426) {
-                            var11 = 0.0442498;
+                        if (rel_timestamp < 72426) {
+                            var11 = 1.7593809;
                         } else {
-                            var11 = 0.025558677;
+                            var11 = -0.11349896;
                         }
                     }
                 } else {
                     if (hops < 2) {
-                        if (rel_timestamp < 0.66052) {
-                            var11 = 0.027841907;
+                        if (rel_timestamp < 66052) {
+                            var11 = 0.10945973;
                         } else {
-                            var11 = 0.024140662;
+                            var11 = -0.25538754;
                         }
                     } else {
-                        if (rel_timestamp < 0.66052) {
-                            var11 = 0.033711836;
+                        if (rel_timestamp < 66052) {
+                            var11 = 0.69969493;
                         } else {
-                            var11 = 0.026609583;
+                            var11 = -0.00838637;
                         }
                     }
                 }
             } else {
                 if (prod_0 != 1) {
-                    if (rel_timestamp < 0.66071) {
-                        if (rel_timestamp < 0.41619) {
-                            var11 = 0.025058953;
+                    if (rel_timestamp < 66071) {
+                        if (rel_timestamp < 41619) {
+                            var11 = -0.15475906;
                         } else {
-                            var11 = 0.0226852;
+                            var11 = -1.186138;
                         }
                     } else {
-                        if (rel_timestamp < 0.72426) {
-                            var11 = 0.07257977;
+                        if (rel_timestamp < 72426) {
+                            var11 = 4.720945;
                         } else {
-                            var11 = 0.03499049;
+                            var11 = 0.82864934;
                         }
                     }
                 } else {
-                    if (rel_timestamp < 0.66052) {
-                        var11 = 0.040730625;
+                    if (rel_timestamp < 66052) {
+                        var11 = 1.4228547;
                     } else {
-                        if (rel_timestamp < 1.77851) {
-                            var11 = 0.0319079;
+                        if (rel_timestamp < 177851) {
+                            var11 = 0.52867556;
                         } else {
-                            var11 = 0.029032204;
+                            var11 = 0.2332028;
                         }
                     }
                 }
             }
         } else {
-            if (rel_timestamp < 0.33995) {
-                if (hops < 3) {
-                    if (rel_timestamp < 0.06265) {
-                        var11 = 0.036416396;
+            if (rel_timestamp < 33995) {
+                if (rel_timestamp < 6265) {
+                    if (hops < 2) {
+                        var11 = 0.9884583;
                     } else {
-                        var11 = 0.037157156;
+                        var11 = 1.0219945;
                     }
                 } else {
-                    if (hops < 4) {
-                        var11 = 0.037820987;
+                    if (hops < 3) {
+                        if (hops < 2) {
+                            var11 = 1.018714;
+                        } else {
+                            var11 = 1.0456116;
+                        }
                     } else {
-                        var11 = 0.03924016;
+                        if (hops < 4) {
+                            var11 = 1.0818471;
+                        } else {
+                            var11 = 1.1251111;
+                        }
                     }
                 }
             } else {
                 if (hops < 3) {
                     if (hops < 2) {
-                        if (rel_timestamp < 12.34907) {
-                            var11 = 0.032039892;
+                        if (rel_timestamp < 142042) {
+                            var11 = 0.55457014;
                         } else {
-                            var11 = 0.03256338;
+                            var11 = 0.5360408;
                         }
                     } else {
-                        if (rel_timestamp < 13.03514) {
-                            var11 = 0.03242542;
+                        if (rel_timestamp < 483800) {
+                            var11 = 0.5886459;
                         } else {
-                            var11 = 0.033485975;
+                            var11 = 0.5696842;
                         }
                     }
                 } else {
                     if (hops < 4) {
-                        if (rel_timestamp < 12.36219) {
-                            var11 = 0.032805193;
+                        if (rel_timestamp < 1236219) {
+                            var11 = 0.61588967;
                         } else {
-                            var11 = 0.033709966;
+                            var11 = 0.66414475;
                         }
                     } else {
-                        var11 = 0.033479776;
+                        if (rel_timestamp < 280176) {
+                            var11 = 0.68513095;
+                        } else {
+                            var11 = 0.655688;
+                        }
                     }
                 }
             }
@@ -2077,118 +2281,114 @@ float score(float rel_timestamp, int hops, int size, bool prod_0, bool prod_1, b
     }
     float var12;
     if (size < 45) {
-        if (rel_timestamp < 1.47775) {
-            if (rel_timestamp < 0.95765) {
-                if (rel_timestamp < 0.06265) {
+        if (rel_timestamp < 147775) {
+            if (rel_timestamp < 95765) {
+                if (rel_timestamp < 6265) {
                     if (hops < 3) {
                         if (hops < 2) {
-                            var12 = 0.012652072;
+                            var12 = -0.6039957;
                         } else {
-                            var12 = 0.0129341325;
+                            var12 = -0.57578546;
                         }
                     } else {
                         if (hops < 4) {
-                            var12 = 0.013259313;
+                            var12 = -0.5439427;
                         } else {
-                            var12 = 0.014011851;
+                            var12 = -0.47421864;
                         }
                     }
                 } else {
-                    if (hops < 2) {
-                        if (rel_timestamp < 0.83952) {
-                            var12 = 0.008921413;
+                    if (hops < 4) {
+                        if (hops < 2) {
+                            var12 = -0.93797237;
                         } else {
-                            var12 = 0.009699191;
+                            var12 = -0.88630646;
                         }
                     } else {
-                        if (hops < 4) {
-                            var12 = 0.009896312;
+                        if (rel_timestamp < 52553) {
+                            var12 = -0.67111075;
                         } else {
-                            var12 = 0.011633129;
+                            var12 = -0.7588065;
                         }
                     }
                 }
             } else {
-                if (hops < 3) {
+                if (rel_timestamp < 144148) {
                     if (hops < 2) {
-                        if (rel_timestamp < 1.44106) {
-                            var12 = 0.028427841;
+                        if (rel_timestamp < 144106) {
+                            var12 = 0.9728663;
                         } else {
-                            var12 = 0.029164393;
+                            var12 = 1.0466819;
                         }
                     } else {
-                        var12 = 0.030283557;
+                        if (hops < 3) {
+                            var12 = 1.1523721;
+                        } else {
+                            var12 = 1.5563828;
+                        }
                     }
                 } else {
                     if (hops < 4) {
-                        if (rel_timestamp < 1.44148) {
-                            var12 = 0.03935899;
+                        if (hops < 3) {
+                            var12 = 1.2649953;
                         } else {
-                            var12 = 0.032003704;
+                            var12 = 1.3190757;
                         }
                     } else {
-                        var12 = 0.033434387;
+                        var12 = 1.465502;
                     }
                 }
             }
         } else {
             if (hops < 2) {
-                if (rel_timestamp < 6.94135) {
-                    if (rel_timestamp < 6.25841) {
-                        if (rel_timestamp < 5.53435) {
-                            var12 = 0.008664831;
-                        } else {
-                            var12 = 0.008885298;
-                        }
+                if (rel_timestamp < 216117) {
+                    if (rel_timestamp < 211885) {
+                        var12 = -1.0517312;
                     } else {
-                        if (rel_timestamp < 6.89909) {
-                            var12 = 0.007906328;
-                        } else {
-                            var12 = 0.008429919;
-                        }
+                        var12 = -1.0145332;
                     }
                 } else {
-                    if (rel_timestamp < 11.72146) {
-                        if (rel_timestamp < 11.68152) {
-                            var12 = 0.008753022;
+                    if (rel_timestamp < 284424) {
+                        if (rel_timestamp < 280287) {
+                            var12 = -0.9843177;
                         } else {
-                            var12 = 0.009198622;
+                            var12 = -0.9308444;
                         }
                     } else {
-                        if (rel_timestamp < 12.36219) {
-                            var12 = 0.0074496106;
+                        if (rel_timestamp < 416828) {
+                            var12 = -1.0199912;
                         } else {
-                            var12 = 0.0086502945;
+                            var12 = -0.9944159;
                         }
                     }
                 }
             } else {
                 if (hops < 3) {
-                    if (rel_timestamp < 2.80176) {
-                        if (rel_timestamp < 2.11885) {
-                            var12 = 0.008686129;
+                    if (rel_timestamp < 420948) {
+                        if (rel_timestamp < 352734) {
+                            var12 = -0.96647835;
                         } else {
-                            var12 = 0.008885608;
+                            var12 = -1.001662;
                         }
                     } else {
-                        if (rel_timestamp < 6.25841) {
-                            var12 = 0.00908372;
+                        if (rel_timestamp < 489252) {
+                            var12 = -0.93553656;
                         } else {
-                            var12 = 0.008985773;
+                            var12 = -0.96784914;
                         }
                     }
                 } else {
                     if (hops < 4) {
-                        if (rel_timestamp < 8.26493) {
-                            var12 = 0.009238708;
+                        if (rel_timestamp < 1172146) {
+                            var12 = -0.936802;
                         } else {
-                            var12 = 0.009383516;
+                            var12 = -0.96697325;
                         }
                     } else {
-                        if (rel_timestamp < 4.20948) {
-                            var12 = 0.009350991;
+                        if (rel_timestamp < 420948) {
+                            var12 = -0.9336365;
                         } else {
-                            var12 = 0.009673015;
+                            var12 = -0.9018854;
                         }
                     }
                 }
@@ -2200,115 +2400,118 @@ float score(float rel_timestamp, int hops, int size, bool prod_0, bool prod_1, b
                 if (hops < 2) {
                     if (prod_3 != 1) {
                         if (prod_0 != 1) {
-                            var12 = 0.018426482;
+                            var12 = -0.025654351;
                         } else {
-                            var12 = 0.017028099;
+                            var12 = -0.16599718;
                         }
                     } else {
-                        if (rel_timestamp < 1.42042) {
-                            var12 = 0.013276323;
+                        if (rel_timestamp < 142042) {
+                            var12 = -0.54186434;
                         } else {
-                            var12 = 0.020643162;
+                            var12 = 0.1958417;
                         }
                     }
                 } else {
                     if (prod_4 != 1) {
-                        if (rel_timestamp < 0.73772) {
-                            var12 = 0.015639257;
+                        if (rel_timestamp < 73772) {
+                            var12 = -0.30465582;
                         } else {
-                            var12 = 0.020132788;
+                            var12 = 0.14486745;
                         }
                     } else {
-                        if (rel_timestamp < 0.72426) {
-                            var12 = 0.03179234;
+                        if (rel_timestamp < 72426) {
+                            var12 = 1.3115802;
                         } else {
-                            var12 = 0.017741332;
+                            var12 = -0.094544664;
                         }
                     }
                 }
             } else {
                 if (hops < 4) {
-                    if (prod_0 != 1) {
-                        if (rel_timestamp < 2.08819) {
-                            var12 = 0.017314903;
+                    if (rel_timestamp < 208819) {
+                        if (prod_3 != 1) {
+                            var12 = 0.20192361;
                         } else {
-                            var12 = 0.021872139;
+                            var12 = -1.4820276;
                         }
                     } else {
-                        if (rel_timestamp < 0.66052) {
-                            var12 = 0.02882562;
+                        if (prod_3 != 1) {
+                            var12 = 0.14911896;
                         } else {
-                            var12 = 0.01825399;
+                            var12 = 0.6113347;
                         }
                     }
                 } else {
                     if (prod_0 != 1) {
-                        if (rel_timestamp < 0.66071) {
-                            var12 = 0.01714154;
+                        if (rel_timestamp < 66071) {
+                            var12 = -0.2949789;
                         } else {
-                            var12 = 0.024723569;
+                            var12 = 0.6038267;
                         }
                     } else {
-                        if (rel_timestamp < 0.66052) {
-                            var12 = 0.028525723;
+                        if (rel_timestamp < 66052) {
+                            var12 = 0.99649674;
                         } else {
-                            var12 = 0.020536907;
+                            var12 = 0.18504533;
                         }
                     }
                 }
             }
         } else {
-            if (rel_timestamp < 0.33995) {
+            if (rel_timestamp < 33995) {
                 if (hops < 3) {
                     if (hops < 2) {
-                        if (rel_timestamp < 0.06265) {
-                            var12 = 0.025299547;
+                        if (rel_timestamp < 6265) {
+                            var12 = 0.6919503;
                         } else {
-                            var12 = 0.025941657;
+                            var12 = 0.71320593;
                         }
                     } else {
-                        var12 = 0.025978073;
+                        if (rel_timestamp < 6265) {
+                            var12 = 0.7134224;
+                        } else {
+                            var12 = 0.73197824;
+                        }
                     }
                 } else {
                     if (hops < 4) {
-                        var12 = 0.02647677;
+                        var12 = 0.7548464;
                     } else {
-                        var12 = 0.027480977;
+                        var12 = 0.7879449;
                     }
                 }
             } else {
                 if (hops < 3) {
                     if (hops < 2) {
-                        if (rel_timestamp < 0.73772) {
-                            var12 = 0.022828825;
+                        if (rel_timestamp < 1303252) {
+                            var12 = 0.3751342;
                         } else {
-                            var12 = 0.022426033;
+                            var12 = 0.3953124;
                         }
                     } else {
-                        if (rel_timestamp < 2.78737) {
-                            var12 = 0.023013169;
+                        if (rel_timestamp < 73772) {
+                            var12 = 0.32982653;
                         } else {
-                            var12 = 0.022645392;
+                            var12 = 0.40487054;
                         }
                     }
                 } else {
                     if (hops < 4) {
-                        if (rel_timestamp < 1.44106) {
-                            var12 = 0.023503305;
+                        if (rel_timestamp < 280176) {
+                            var12 = 0.45401013;
                         } else {
-                            var12 = 0.022937685;
+                            var12 = 0.42727077;
                         }
                     } else {
-                        if (rel_timestamp < 11.67138) {
-                            var12 = 0.02336223;
+                        if (rel_timestamp < 1236219) {
+                            var12 = 0.4604644;
                         } else {
-                            var12 = 0.023969445;
+                            var12 = 0.51508904;
                         }
                     }
                 }
             }
         }
     }
-    return 0.5 + var0 + var1 + var2 + var3 + var4 + var5 + var6 + var7 + var8 + var9 + var10 + var11 + var12;
+    return 500.0 + var0 + var1 + var2 + var3 + var4 + var5 + var6 + var7 + var8 + var9 + var10 + var11 + var12;
 }
-
