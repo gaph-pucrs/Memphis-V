@@ -106,6 +106,6 @@ void sm_monitor(sm_t *sm, unsigned timestamp, unsigned size, unsigned hops, int 
 	if (decider_id == -1)
 		return;
 
-	uint32_t msg[] = {SEC_INFER, (timestamp - hash->release_time), size, hops, prod & 0xFF, cons & 0xFF, latency};
+	uint32_t msg[] = {SEC_INFER, (timestamp - hash->release_time), size, hops, prod & 0xFF, cons & 0xFF, latency, timestamp};
 	memphis_send_any(msg, sizeof(msg), decider_id);
 }

@@ -31,7 +31,7 @@ int main()
 	unsigned num_inf = 0;
 	unsigned time = 0;
 	while (true) {
-		static uint32_t msg[7];
+		static uint32_t msg[8];
 		memphis_receive_any(msg, sizeof(msg));
 		switch (msg[0]) {
 			case SEC_SAFE_REQ_APP:
@@ -66,11 +66,12 @@ int main()
 				// printf("Diff %.2f%%\n", diff);
 				if (anom) {
 					printf(
-						"AD\t%d\t%lu\t%d\t%d\n", 
+						"AD\t%d\t%lu\t%d\t%d\t%lu\n", 
 						num_inf, 
 						msg[1], 
 						(int)msg[4], 
-						(int)msg[5]
+						(int)msg[5],
+						now - (msg[7] - (msg[6]>>1))
 					);
 				}
 				num_inf++;
