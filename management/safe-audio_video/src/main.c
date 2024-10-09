@@ -26,12 +26,12 @@
 
 int main()
 {
-	printf("SAFE audio_video model started at %d\n", memphis_get_tick());
+	// printf("SAFE audio_video model started at %d\n", memphis_get_tick());
 
 	unsigned num_inf = 0;
 	unsigned time = 0;
 	while (true) {
-		static uint32_t msg[7];
+		static uint32_t msg[8];
 		memphis_receive_any(msg, sizeof(msg));
 		switch (msg[0]) {
 			case SEC_SAFE_REQ_APP:
@@ -39,9 +39,8 @@ int main()
 				memphis_send(ans, sizeof(ans), msg[1]);
 				break;
 			case SEC_INFER:
-				num_inf++;
-				bool prod[6] = {};
-				bool cons[6] = {};
+				bool prod[7] = {};
+				bool cons[7] = {};
 				prod[msg[4]] = true;
 				cons[msg[5]] = true;
 				unsigned then = memphis_get_tick();
@@ -63,7 +62,7 @@ int main()
 					cons[5]
 				);
 				unsigned diff = abs(msg[6] - pred_latency)*1000 / pred_latency;
-				bool anom = diff > 50;
+				bool anom = diff > 350;
 				unsigned now = memphis_get_tick();
 				time += (now-then);
 				// printf("Inference in %u us\n", (now - then)/100);
@@ -71,15 +70,18 @@ int main()
 				// printf("Diff %.2f%%\n", diff);
 				if (anom) {
 					printf(
-						"Anomaly @%lu %d->%d\n", 
+						"AD\t%d\t%lu\t%d\t%d\t%lu\n", 
+						num_inf, 
 						msg[1], 
 						(int)msg[4], 
-						(int)msg[5]
+						(int)msg[5],
+						now - (msg[7] - (msg[6]>>1))
 					);
 				}
+				num_inf++;
 				break;
 			case TERMINATE_ODA:
-				printf("Exiting after %d inferences that took ~%u ticks\n", num_inf, time/num_inf);
+				printf("IT\t%d\t%u\n", num_inf, time/num_inf);
 				return 0;
 			default:
 				break;
