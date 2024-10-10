@@ -57,8 +57,8 @@ int main()
 					cons[2],
 					cons[3]
 				);
-				unsigned diff = abs(msg[6] - pred_latency)*1000 / pred_latency;
-				bool anom = diff > 200; // 20%
+				int diff = (int)(msg[6] - pred_latency)*1000 / (int)pred_latency;
+				bool anom = diff > 200;
 				unsigned now = memphis_get_tick();
 				time += (now-then);
 				// printf("Inference in %u us\n", (now - then)/100);

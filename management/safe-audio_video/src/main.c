@@ -61,7 +61,7 @@ int main()
 					cons[4], 
 					cons[5]
 				);
-				unsigned diff = abs(msg[6] - pred_latency)*1000 / pred_latency;
+				int diff = (int)(msg[6] - pred_latency)*1000 / (int)pred_latency;
 				bool anom = diff > 350;
 				unsigned now = memphis_get_tick();
 				time += (now-then);
