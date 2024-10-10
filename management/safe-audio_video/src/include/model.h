@@ -1,4 +1,4 @@
-float score(int rel_timestamp, int hops, int size, bool prod_0, bool prod_1, bool prod_2, bool prod_3, bool prod_4, bool prod_6, bool cons_0, bool cons_1, bool cons_2, bool cons_3, bool cons_4, bool cons_5) {
+unsigned score(int rel_timestamp, int hops, int size, bool prod_0, bool prod_1, bool prod_2, bool prod_3, bool prod_4, bool prod_6, bool cons_0, bool cons_1, bool cons_2, bool cons_3, bool cons_4, bool cons_5) {
     float var0;
     if (size >= 37) {
         if (size >= 109) {
