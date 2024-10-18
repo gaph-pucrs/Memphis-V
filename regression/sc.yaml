@@ -1,0 +1,19 @@
+management:                 # Management application properties
+  - task: mapper_task       # The first in this list should ALWAYS be mapper_task
+    static_mapping: [3,3]   # All management task should have static mapping defined
+apps:                       # Application properties
+  - name: aes
+  - name: audio_video
+  - name: communication
+  - name: communication2
+  - name: dijkstra
+  - name: dtw
+  - name: fixe_base_test_16
+  - name: map_reduce
+  - name: mpeg
+  - name: MPEG4
+  - name: MWD
+  - name: prod_cons
+  - name: synthetic
+  - name: synthetic1
+  - name: VOPD

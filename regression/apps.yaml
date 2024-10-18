@@ -1,0 +1,16 @@
+apps:
+  - name: aes
+  - name: audio_video
+  - name: communication
+  - name: communication2
+  - name: dijkstra
+  - name: dtw
+  - name: fixe_base_test_16
+  - name: map_reduce
+  - name: mpeg
+  - name: MPEG4
+  - name: MWD
+  - name: prod_cons
+  - name: synthetic
+  - name: synthetic1
+  - name: VOPD
