@@ -1,0 +1,14 @@
+management:                 # Management application properties
+  - task: mapper_task       # Required: the first management task should be mapper_task
+    static_mapping: [0,0]   # Required: map mapper_task to 0x0
+  - task: migration_task    # Optional: migration_task is a QoS decider for real-time applications
+    static_mapping: [0,1]   # Required: all management tasks should be statically mapped
+  - task: rt_monitor        # Optional: rt_monitor is a QoS observer for real-time applications
+    static_mapping: [1,0]   # Required: all management tasks should be statically mapped
+apps:                       # Application properties
+  - name: cnn
+    static_mapping:         # Optional: static mapping (default is dynamic)
+      p1_0: [0,2]
+      p1_1: [1,1]
+      p1_2: [2,2]
+      p2:   [1,2]

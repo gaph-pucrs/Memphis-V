@@ -1,0 +1,4 @@
+apps:                     # Application properties
+  - name: cnn             # Add application "cnn"
+    definitions:          # Optional: list of definitions to customize your instance
+      - INFERENCES: 1     # Optional: this defines INFERENCES

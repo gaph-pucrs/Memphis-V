@@ -1,0 +1,10 @@
+ctg:
+  p1_0:
+    successors:
+      - "p2"
+  p1_1:
+    successors:
+      - "p2"
+  p1_2:
+    successors:
+      - "p2"
