@@ -26,7 +26,7 @@ INCMUTILS = $(DIRMUTILS)/src/include
 HDRMUTILS = $(wildcard $(DIRMUTILS)/*.h) $(wildcard $(DIRMUTILS)/**/*.h)
 LIBMUTILS = $(DIRMUTILS)/libmutils.a
 
-CFLAGS	+= -march=rv32imac -mabi=ilp32 -Os -fdata-sections -ffunction-sections -flto -Wall -std=c17 -I$(SRCDIR) -I$(INCMUTILS) -I$(INCMEMPHIS)
+CFLAGS	+= -march=rv32imac -mabi=ilp32 -Os -fdata-sections -ffunction-sections -flto -Wall -std=c23 -I$(SRCDIR) -I$(INCMUTILS) -I$(INCMEMPHIS)
 LDFLAGS += -L$(DIRMEMPHIS) -L$(DIRMUTILS) --specs=nano.specs -T $(DIRMEMPHIS)/memphis.ld -Wl,--gc-sections,-flto -u _getpid -march=rv32imac -mabi=ilp32 -lmemphis -lmutils
 
 all: $(TARGETS) $(ELFS) #$(LSTS)
