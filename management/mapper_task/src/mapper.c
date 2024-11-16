@@ -19,6 +19,7 @@
 
 #include <memphis.h>
 #include <memphis/services.h>
+#include <memphis/oda.h>
 
 #include "window.h"
 
@@ -228,7 +229,7 @@ void _map_do(map_t *mapper, app_t *app)
 	list_push_back(&(mapper->apps), app);
 }
 
-void map_new_app(map_t *mapper, int injector, size_t task_cnt, int *descriptor, int *communication)
+void map_new_app(map_t *mapper, int injector, int hash, size_t task_cnt, int *descriptor, int *communication)
 {
 	printf("New app received at %u from %x\n", memphis_get_tick(), injector);
 
@@ -239,7 +240,8 @@ void map_new_app(map_t *mapper, int injector, size_t task_cnt, int *descriptor, 
 		return;
 	}
 
-	task_t *tasks = app_init(app, mapper->appid_cnt, injector, task_cnt, descriptor, communication);
+	// @todo get hash id
+	task_t *tasks = app_init(app, mapper->appid_cnt, hash, injector, task_cnt, descriptor, communication);
 	if(tasks == NULL){
 		puts("FATAL: not enough memory");
 		return;
@@ -452,6 +454,40 @@ void map_task_terminated(map_t *mapper, int id)
 
 	size_t alloc_cnt = app_rem_allocated(app);
 
+	/* Management task finished, waiting to halt */
+	if (app_get_id(app) == 0) {
+		/* All other management tasks finished */
+		if (alloc_cnt == 1) {
+			memphis_halt();
+			return;
+		}
+		
+		task_t *terminated = app_get_task(app, id);
+		unsigned tag = task_get_tag(terminated);
+		if ((tag & ODA_OBSERVE) != 0) {
+			/* Task that terminated was observer*/
+			if (!app_has_oda_running(app, ODA_OBSERVE)) {
+				/* If no observer is mapped, terminate the next class of ODA */
+				size_t oda_cnt;
+				task_t *odas = app_get_tasks(app, &oda_cnt);
+				if (task_terminate_oda(odas, oda_cnt, ODA_DECIDE))
+					return;
+
+				/* If no deciders present, terminate the actuators */
+				task_terminate_oda(odas, oda_cnt, ODA_ACT);
+			}
+		} else if ((tag & ODA_DECIDE) != 0) {
+			/* Task that terminated was decider*/
+			if (!app_has_oda_running(app, ODA_DECIDE)) {
+				/* If no decider is mapped, terminate the next class of ODA */
+				size_t oda_cnt;
+				task_t *odas = app_get_tasks(app, &oda_cnt);
+				task_terminate_oda(odas, oda_cnt, ODA_ACT);
+			}
+		} /* If deciders are finishing, just wait for them to finish and then halt */
+		return;
+	}
+
 	/* All tasks terminated, terminate app */
 	if(alloc_cnt == 0)
 		_map_terminate_app(mapper, app);
@@ -501,7 +537,7 @@ void map_task_aborted(map_t *mapper, int id)
 		_map_verify_pending(mapper);
 }
 
-void map_request_service(map_t *mapper, int address, unsigned tag, int requester)
+void map_request_nearest_service(map_t *mapper, int address, unsigned tag, int requester)
 {
 	int oda = -1;
 	unsigned distance = -1;
@@ -533,6 +569,42 @@ void map_request_service(map_t *mapper, int address, unsigned tag, int requester
 	};
 	
 	memphis_send_any(out_msg, sizeof(out_msg), requester);
+}
+
+void map_request_all_services(map_t *mapper, unsigned tag, int requester)
+{
+	// printf("Task %d requested all services with tag %x\n", requester, tag);
+	/* Search all Management tasks */
+	list_entry_t *entry = list_front(&(mapper->apps));
+	app_t *ma = list_get_data(entry);
+	size_t task_cnt;
+	task_t *tasks = app_get_tasks(ma, &task_cnt);
+
+	size_t matches = 0;
+	int *message = malloc(259*sizeof(int));
+	if (message == NULL) {
+		printf("ERROR: Not enough memory\n");
+		return;
+	}
+	
+	message[0] = ALL_SERVICE_PROVIDERS;
+	message[1] = tag;
+	for(int i = 0; i < task_cnt; i++){
+		task_t *task = &(tasks[i]);
+		if((task_get_tag(task) & tag) != tag)
+			continue;
+		
+		message[matches + 3] = task_get_id(task);
+		matches++;
+	}
+	message[2] = matches;
+
+	// printf("Found %d match(es)\n", matches);
+
+	if (matches > 0)
+		memphis_send(message, (matches + 3)*sizeof(int), requester);
+
+	free(message);
 }
 
 void map_migration_map(map_t *mapper, int id)
@@ -662,6 +734,46 @@ void map_pe_halted(map_t *mapper, int address)
 	mapper->finished_cnt++;
 
 	const size_t N_PE = memphis_get_nprocs(NULL, NULL);
-	if(mapper->finished_cnt == N_PE)
+	if (mapper->finished_cnt == N_PE)
+		map_terminate_ma(mapper);
+}
+
+void map_app_info(map_t *mapper, int appid, int requester)
+{
+	app_t *app = _map_find_app(mapper, appid);
+	int hash_id = -1;
+	unsigned release_time = -1;
+	if(app != NULL){
+		hash_id = app_get_hash(app);
+		release_time = app_get_release_time(app);
+	}
+
+	uint32_t ans[] = {SEC_SAFE_MAP_RESP, appid, hash_id, release_time};
+	memphis_send(ans, sizeof(ans), requester);
+}
+
+void map_terminate_ma(map_t *mapper)
+{
+	/* Search all Management tasks */
+	list_entry_t *entry = list_front(&(mapper->apps));
+	app_t *ma = list_get_data(entry);
+
+	if (ma->allocated_cnt == 1) {
 		memphis_halt();
+		return;
+	}
+
+	size_t task_cnt;
+	task_t *tasks = app_get_tasks(ma, &task_cnt);
+
+	/* First we need to terminate observers */
+	if (task_terminate_oda(tasks, task_cnt, ODA_OBSERVE))
+		return;
+
+	/* Then we need to terminate deciders */
+	if (task_terminate_oda(tasks, task_cnt, ODA_DECIDE))
+		return;
+
+	/* Then we need to terminate actuators */
+	task_terminate_oda(tasks, task_cnt, ODA_ACT);
 }

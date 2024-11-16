@@ -28,7 +28,7 @@ int main()
 
 	oda_t decider;
 	oda_init(&decider);
-	oda_request_service(&decider, ODA_DECIDE | D_QOS);
+	oda_request_nearest_service(&decider, ODA_DECIDE | D_QOS);
 
 	while(true){
 		int msg[3];
@@ -54,6 +54,7 @@ int main()
 	mon_announce(MON_QOS);
 
 	while(true){
+		/* @todo Update to wait for TERMINATE_ODA */
 		memphis_real_time(MON_INTERVAL_QOS, MON_INTERVAL_QOS, 0);	/* Repeat this task every ms */
 		for(int i = 0; i < slots; i++){
 			if(qos_table[i].task != -1){

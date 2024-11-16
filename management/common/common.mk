@@ -8,12 +8,12 @@ HEADERS = $(wildcard $(INCDIR)/*.h)
 
 DIRMEMPHIS = ../../libmemphis
 INCMEMPHIS = $(DIRMEMPHIS)/src/include
-HDRMEMPHIS = $(wildcard $(DIRMEMPHIS)/*.h) $(wildcard $(DIRMEMPHIS)/**/*.h)
+HDRMEMPHIS = $(wildcard $(DIRMEMPHIS)/src/include/*.h) $(wildcard $(DIRMEMPHIS)/src/include/memphis/*.h)
 LIBMEMPHIS = $(DIRMEMPHIS)/libmemphis.a
 
 DIRMUTILS = ../../libmutils
 INCMUTILS = $(DIRMUTILS)/src/include
-HDRMUTILS = $(wildcard $(DIRMUTILS)/*.h) $(wildcard $(DIRMUTILS)/**/*.h)
+HDRMUTILS = $(wildcard $(DIRMUTILS)/src/include/mutils/*.h)
 LIBMUTILS = $(DIRMUTILS)/libmutils.a
 
 CC = riscv64-elf-gcc

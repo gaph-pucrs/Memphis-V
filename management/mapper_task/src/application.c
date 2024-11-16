@@ -20,12 +20,14 @@
 
 #include "mapper.h"
 
-task_t *app_init(app_t *app, int id, int injector, size_t task_cnt, int *descriptor, int *communication)
+task_t *app_init(app_t *app, int id, int hash, int injector, size_t task_cnt, int *descriptor, int *communication)
 {
 	app->id = id;
+	app->hash = hash;
 	app->injector = injector;
 	app->task_cnt = task_cnt;
 	app->allocated_cnt = 0;
+	app->release_time = -1;
 	app->failed_cnt = 0;
 	app->has_static = false;
 	app->score = 0;
@@ -189,6 +191,7 @@ unsigned app_allocated(app_t *app)
 
 void app_mapping_complete(app_t *app)
 {
+	app->release_time = memphis_get_tick();
 	int out_msg = APP_MAPPING_COMPLETE;
 	memphis_send_any(&out_msg, sizeof(out_msg), app->injector);
 
@@ -252,4 +255,27 @@ task_t *app_get_task(app_t *app, int taskid)
 void app_terminated(app_t *app)
 {
 	memphis_br_send_all(app->id, APP_TERMINATED);
+}
+
+int app_get_hash(app_t *app)
+{
+	return app->hash;
+}
+
+unsigned app_get_release_time(app_t *app)
+{
+	return app->release_time;
+}
+
+bool app_has_oda_running(app_t *app, unsigned tag)
+{
+	for(int i = 0; i < app->task_cnt; i++){
+		task_t *task = &(app->tasks[i]);
+		if((task_get_tag(task) & tag) == 0 || !task_is_allocated(task))
+			continue;
+
+		return true;
+	}
+
+	return false;
 }

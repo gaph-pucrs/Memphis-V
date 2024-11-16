@@ -69,3 +69,5 @@ bool task_is_migrating(task_t *task);
 unsigned task_get_tag(task_t *task);
 
 list_entry_t *task_migrate(task_t *task, pe_t *pe);
+
+bool task_terminate_oda(task_t *tasks, size_t task_cnt, unsigned tag);

@@ -34,7 +34,7 @@ int main()
 
 		switch(message[0]){
 			case NEW_APP:
-				map_new_app(&mapper, message[1], message[2], &message[3], &message[(message[2] << 1) + 3]);
+				map_new_app(&mapper, message[1], message[2], message[3], &message[4], &message[(message[3] << 1) + 4]);
 				break;
 			case TASK_ALLOCATED:
 				map_task_allocated(&mapper, message[1]);
@@ -45,8 +45,11 @@ int main()
 			case TASK_ABORTED:
 				map_task_aborted(&mapper, message[1]);
 				break;
-			case REQUEST_SERVICE:
-				map_request_service(&mapper, message[1], message[2], message[3]);
+			case REQUEST_NEAREST_SERVICE:
+				map_request_nearest_service(&mapper, message[1], message[2], message[3]);
+				break;
+			case REQUEST_ALL_SERVICES:
+				map_request_all_services(&mapper, message[1], message[2]);
 				break;
 			case TASK_MIGRATION_MAP:
 				map_migration_map(&mapper, message[1]);
@@ -59,6 +62,9 @@ int main()
 				break;
 			case PE_HALTED:
 				map_pe_halted(&mapper, message[1]);
+				break;
+			case SEC_SAFE_MAP_REQ:
+				map_app_info(&mapper, message[1], message[2]);
 				break;
 			default:
 				printf("Invalid service %x\n", message[0]);

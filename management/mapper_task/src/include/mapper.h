@@ -34,7 +34,7 @@ typedef struct _map {
 
 void map_init(map_t *mapper);
 
-void map_new_app(map_t *mapper, int injector, size_t task_cnt, int *descriptor, int *communication);
+void map_new_app(map_t *mapper, int injector, int hash, size_t task_cnt, int *descriptor, int *communication);
 
 int map_coord_to_idx(int coord);
 
@@ -50,7 +50,9 @@ void map_task_terminated(map_t *mapper, int id);
 
 void map_task_aborted(map_t *mapper, int id);
 
-void map_request_service(map_t *mapper, int address, unsigned tag, int requester);
+void map_request_nearest_service(map_t *mapper, int address, unsigned tag, int requester);
+
+void map_request_all_services(map_t *mapper, unsigned tag, int requester);
 
 void map_migration_map(map_t *mapper, int id);
 
@@ -59,3 +61,7 @@ void map_task_migrated(map_t *mapper, int id);
 void map_request_finish(map_t *mapper);
 
 void map_pe_halted(map_t *mapper, int address);
+
+void map_app_info(map_t *mapper, int appid, int requester);
+
+void map_terminate_ma(map_t *mapper);

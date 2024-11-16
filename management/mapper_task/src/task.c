@@ -1,6 +1,7 @@
 #include "task.h"
 
 #include <memphis.h>
+#include <memphis/services.h>
 
 #include "mapper.h"
 #include "window.h"
@@ -165,4 +166,20 @@ list_entry_t *task_migrate(task_t *task, pe_t *pe)
 	task->status = TASK_STATUS_MIGRATING;
 	pe_add_pending(pe);
 	return pe_task_push_back(pe, task);
+}
+
+bool task_terminate_oda(task_t *tasks, size_t task_cnt, unsigned tag)
+{
+	bool terminated = false;
+	for(int i = 0; i < task_cnt; i++){
+		task_t *task = &(tasks[i]);
+		if((task->tag & tag) == 0)
+			continue;
+
+		int msg[] = {TERMINATE_ODA};
+		memphis_send_any(msg, sizeof(msg), task_get_id(task));
+		terminated = true;
+	}
+
+	return terminated;
 }
