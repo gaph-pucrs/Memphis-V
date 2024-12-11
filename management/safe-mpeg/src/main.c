@@ -22,7 +22,7 @@
 #include <memphis/services.h>
 #include <memphis/oda.h>
 
-#include "model.h"
+int model(int rel_timestamp, int hops, int size, bool prod_0, bool prod_1, bool prod_2, bool prod_4, bool cons_0, bool cons_1, bool cons_2, bool cons_3);
 
 int main()
 {
@@ -44,7 +44,7 @@ int main()
 				prod[msg[4]] = true;
 				cons[msg[5]] = true;
 				unsigned then = memphis_get_tick();
-				unsigned pred_latency = score(
+				unsigned pred_latency = model(
 					msg[1], 
 					msg[3], 
 					msg[2],

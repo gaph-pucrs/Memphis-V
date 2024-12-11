@@ -22,7 +22,7 @@
 #include <memphis/services.h>
 #include <memphis/oda.h>
 
-#include "model.h"
+int model(int rel_timestamp, int hops, int size, bool prod_0, bool prod_1, bool prod_2, bool prod_3, bool prod_4, bool prod_6, bool cons_0, bool cons_1, bool cons_2, bool cons_3, bool cons_4, bool cons_5);
 
 int main()
 {
@@ -44,7 +44,7 @@ int main()
 				prod[msg[4]] = true;
 				cons[msg[5]] = true;
 				unsigned then = memphis_get_tick();
-				unsigned pred_latency = score(
+				unsigned pred_latency = model(
 					msg[1], 
 					msg[3], 
 					msg[2], 
@@ -62,7 +62,7 @@ int main()
 					cons[5]
 				);
 				int diff = (int)(msg[6] - pred_latency)*1000 / (int)pred_latency;
-				bool anom = diff > 350;
+				bool anom = diff > 200;
 				unsigned now = memphis_get_tick();
 				time += (now-then);
 				// printf("Inference in %u us\n", (now - then)/100);
