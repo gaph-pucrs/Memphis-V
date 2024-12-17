@@ -22,7 +22,7 @@
 #include <memphis/services.h>
 #include <memphis/oda.h>
 
-int model(int rel_timestamp, int hops, int size, bool prod_0, bool prod_1, bool prod_2, bool prod_4, bool cons_0, bool cons_1, bool cons_2, bool cons_3);
+int model(int rel_timestamp, int hops, int size, int prod, int cons);
 
 int main()
 {
@@ -39,23 +39,13 @@ int main()
 				memphis_send(ans, sizeof(ans), msg[1]);
 				break;
 			case SEC_INFER:
-				bool prod[5] = {};
-				bool cons[5] = {};
-				prod[msg[4]] = true;
-				cons[msg[5]] = true;
 				unsigned then = memphis_get_tick();
 				unsigned pred_latency = model(
 					msg[1], 
 					msg[3], 
 					msg[2],
-					prod[0],
-					prod[1],
-					prod[2],
-					prod[4],
-					cons[0],
-					cons[1],
-					cons[2],
-					cons[3]
+					msg[4],
+					msg[5]
 				);
 				int diff = (int)(msg[6] - pred_latency)*1000 / (int)pred_latency;
 				bool anom = diff > 200;
