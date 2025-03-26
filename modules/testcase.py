@@ -55,8 +55,7 @@ class Testcase:
 			for link in yaml["hw"]["links"]:
 				param = {}
 				try:
-					for parameter in link["parameters"]:
-						param[str(list(parameter.keys())[0])] = str(list(parameter.values())[0])
+					param = link["parameters"]
 				except:
 					pass
 				links.append(((link["pe"][0], link["pe"][1], link["port"]), (link["trojan"], param)))
