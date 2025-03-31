@@ -53,12 +53,7 @@ class Testcase:
 		links = []
 		try:
 			for link in yaml["hw"]["links"]:
-				param = {}
-				try:
-					param = link["parameters"]
-				except:
-					pass
-				links.append(((link["pe"][0], link["pe"][1], link["port"]), (link["trojan"], param)))
+				links.append(((link["pe"][0], link["pe"][1], link["port"]), link["trojan"]))
 		except:
 			pass
 				
@@ -98,8 +93,6 @@ class Testcase:
 
 		makedirs(self.base_dir, exist_ok=True)
 		copyfile(self.base, self.file)
-
-		makedirs("{}/link".format(self.base_dir), exist_ok=True)
 
 		self.libs.copy()
 		self.kernel.copy()

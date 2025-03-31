@@ -43,6 +43,18 @@ class Scenario:
 		for task in yaml["management"]:
 			self.ma_tasks.append(task)
 
+		self.links = []
+		try:
+			for link in yaml["links"]:
+				param = {}
+				try:
+					param = link["parameters"]
+				except:
+					pass
+				self.links.append(((link["pe"][0], link["pe"][1], link["port"]), (link["trojan"], param)))
+		except:
+			pass
+
 		apps_dir = "{}/applications".format(testcase_path)
 		self.applications = []
 
@@ -90,6 +102,7 @@ class Scenario:
 		makedirs("{}/debug/dmni".format(self.base_dir),      exist_ok=True)
 		makedirs("{}/debug/safe".format(self.base_dir),      exist_ok=True)
 		makedirs("{}/log".format(self.base_dir),		     exist_ok=True)
+		makedirs("{}/link".format(self.base_dir), 			 exist_ok=True)
 
 		copyfile("{}/Phivers/sim/sim.mk".format(self.testcase_path), "{}/sim.mk".format(self.base_dir))
 		copyfile(self.base, self.file)
@@ -104,6 +117,8 @@ class Scenario:
 		print("Building scenario...")
 
 		self.__generate_ma_descr(repodebug)
+
+		self.__generate_link_cfg()
 
 		self.__generate_ma_start(repodebug)
 		self.__generate_app_start(repodebug)
@@ -169,6 +184,23 @@ class Scenario:
 
 		if repodebug:
 			start.write_debug("{}/ma_start_debug.txt".format(self.base_dir))
+
+	def __generate_link_cfg(self):
+		for link in self.links:
+			if link[1][0] == "rs":
+				with open("{}/link/rs{}x{}-{}.cfg".format(self.base_dir, link[0][0], link[0][1], link[0][2]), "w") as file:
+					file.write("{}\n".format(self.__link_param_or_default(link[1][1], "tick_begin",   250000)))
+					file.write("{}\n".format(self.__link_param_or_default(link[1][1], "cycle_min",       240)))
+					file.write("{}\n".format(self.__link_param_or_default(link[1][1], "cycle_max",       352)))
+					file.write("{}\n".format(self.__link_param_or_default(link[1][1], "chance",		      25)))
+			else:
+				raise Exception("Invalid link type at {}x{}-{}".format(link[0][0], link[0][1], link[0][2]))
+
+	def __link_param_or_default(self, dict, key, default):
+		try:
+			return dict[key]
+		except:
+			return default
 
 	def __generate_ma_descr(self, repodebug):
 		descr = Repository()
