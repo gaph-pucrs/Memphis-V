@@ -194,6 +194,9 @@ class Scenario:
 					file.write("{}\n".format(self.__link_param_or_default(link[1][1], "cycle_min",       240)))
 					file.write("{}\n".format(self.__link_param_or_default(link[1][1], "cycle_max",       352)))
 					file.write("{}\n".format(self.__link_param_or_default(link[1][1], "chance",		      25)))
+					file.write("{}\n".format(self.__link_param_or_default(link[1][1], "filter_app",       -1)))
+					file.write("{}\n".format(self.__link_param_or_default(link[1][1], "filter_prod",      -1)))
+					file.write("{}\n".format(self.__link_param_or_default(link[1][1], "filter_cons",      -1)))
 			else:
 				raise Exception("Invalid link type at {}x{}-{}".format(link[0][0], link[0][1], link[0][2]))
 
