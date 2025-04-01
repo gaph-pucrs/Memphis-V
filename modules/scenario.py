@@ -101,6 +101,7 @@ class Scenario:
 		makedirs("{}/debug/cpu".format(self.base_dir),       exist_ok=True)
 		makedirs("{}/debug/dmni".format(self.base_dir),      exist_ok=True)
 		makedirs("{}/debug/safe".format(self.base_dir),      exist_ok=True)
+		makedirs("{}/debug/link".format(self.base_dir),      exist_ok=True)
 		makedirs("{}/log".format(self.base_dir),		     exist_ok=True)
 		makedirs("{}/link".format(self.base_dir), 			 exist_ok=True)
 
