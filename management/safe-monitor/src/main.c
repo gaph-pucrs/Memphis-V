@@ -40,11 +40,15 @@ int main()
     mon_announce(MON_SEC);
 
 	while(true){
-		static uint32_t msg[6];
+		static uint32_t msg[5];
         memphis_receive_any(msg, sizeof(msg));
 		switch (msg[0]) {
 			case MONITOR:
-				sm_monitor(&sm, msg[1], msg[2], msg[3], msg[4] >> 16, msg[4] & 0xFFFF, msg[5]);
+				// 1 - snd_time
+				// 2 - size hops
+				// 3 - edge
+				// 4 - latency
+				sm_monitor(&sm, msg[1], msg[2], msg[3], msg[4]);
 				break;
 			case TERMINATE_ODA:
 				return 0;

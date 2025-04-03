@@ -64,9 +64,9 @@ int sm_get_models(sm_t *sm)
     return sm->deciders.cnt;
 }
 
-void sm_monitor(sm_t *sm, unsigned timestamp, unsigned size, unsigned hops, int prod, int cons, unsigned latency)
+void sm_monitor(sm_t *sm, unsigned timestamp, unsigned size_hops, int edge, unsigned latency)
 {
-	int appid = prod >> 8;
+	int appid = edge >> 24;
 
 	// Get model hash id and release time for app id
 	sm_hash_t *hash = lru_use(&(sm->hash_ids), &appid, _sm_hash_find);
@@ -106,6 +106,7 @@ void sm_monitor(sm_t *sm, unsigned timestamp, unsigned size, unsigned hops, int 
 	if (decider_id == -1)
 		return;
 
-	uint32_t msg[] = {SEC_INFER, (timestamp - hash->release_time), size, hops, prod & 0xFF, cons & 0xFF, latency, timestamp};
+											/* rel_time */
+	uint32_t msg[] = {SEC_INFER, timestamp, (timestamp - hash->release_time), size_hops, edge, latency};
 	memphis_send_any(msg, sizeof(msg), decider_id);
 }

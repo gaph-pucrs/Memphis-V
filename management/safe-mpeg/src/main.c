@@ -29,10 +29,8 @@ int main()
 {
 	// printf("SAFE mpeg model started at %d\n", memphis_get_tick());
 
-	unsigned num_inf = 0;
-	unsigned time = 0;
 	while (true) {
-		static uint32_t msg[8];
+		static uint32_t msg[6];
 		memphis_receive_any(msg, sizeof(msg));
 		switch (msg[0]) {
 			case SEC_SAFE_REQ_APP:
@@ -40,27 +38,26 @@ int main()
 				memphis_send(ans, sizeof(ans), msg[1]);
 				break;
 			case SEC_INFER:
+				unsigned snd_time = msg[1];
+				// 2 - rel_time
+				// 3 - size hops
+				// 4 - edge
+				// 5 - latency
 				unsigned then = memphis_get_tick();
 				unsigned pred_latency = model(
-					msg[1], 
-					msg[3], 
-					msg[2],
-					msg[4],
-					msg[5]
+					msg[2], 
+					msg[3] & 0xFFFF, 
+					msg[3] >> 16,
+					msg[4] >> 16,
+					msg[4] & 0xFFFF
 				);
-				int diff = (int)(msg[6] - pred_latency)*1000 / (int)pred_latency;
-				bool anom = diff > 200;
+				int diff = (int)(msg[5] - pred_latency)*1000 / (int)pred_latency;
+				bool mal_pred = diff > 200;
 				unsigned now = memphis_get_tick();
-				time += (now-then);
-				// printf("Inference in %u us\n", (now - then)/100);
-				// printf("Instance %u,%lu,%lu,%d,%d,%u,%u\n", msg[1], msg[3], msg[2], (int)msg[4], (int)msg[5], msg[6], pred_latency);
-				// printf("Diff %.2f%%\n", diff);
-				safe_log(msg[1], now - (msg[7] - (msg[6]>>1)), msg[4], msg[5], anom);
-
-				num_inf++;
+				if (mal_pred)
+					safe_log(snd_time, now, msg[4], (now - then));
 				break;
 			case TERMINATE_ODA:
-				printf("IT\t%d\t%u\n", num_inf, time/num_inf);
 				return 0;
 			default:
 				break;

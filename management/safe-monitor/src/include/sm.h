@@ -13,4 +13,4 @@ void sm_init(sm_t *sm);
 
 int sm_get_models(sm_t *sm);
 
-void sm_monitor(sm_t *sm, unsigned timestamp, unsigned size, unsigned hops, int prod, int cons, unsigned latency);
+void sm_monitor(sm_t *sm, unsigned timestamp, unsigned size_hops, int edge, unsigned latency);
