@@ -8,7 +8,7 @@
  * 
  * @date October 2024
  * 
- * @brief SAFE (Security Anomaly Forecasting Engine) -- mpeg model
+ * @brief SAFE (Security Anomaly Forecasting Engine)
  */
 
 #include <stdbool.h>
@@ -23,7 +23,11 @@
 #include <memphis/oda.h>
 #include <memphis/safe.h>
 
-int model(int rel_timestamp, int hops, int size, int prod, int cons);
+#include "model.h"
+
+#define THRESHOLD 0.05
+#define DIFF_MULT 1000
+#define THRE_MULT (int)(THRESHOLD*DIFF_MULT)
 
 int main()
 {
@@ -51,11 +55,11 @@ int main()
 					msg[4] >> 16,
 					msg[4] & 0xFFFF
 				);
-				int diff = (int)(msg[5] - pred_latency)*1000 / (int)pred_latency;
-				bool mal_pred = diff > 200;
+				int diff = (int)(msg[5] - pred_latency)*DIFF_MULT / (int)pred_latency;
+				bool mal_pred = diff > THRE_MULT;
 				unsigned now = memphis_get_tick();
 				if (mal_pred)
-					safe_log(snd_time, now, msg[4], (now - then));
+					safe_log(snd_time, now, msg[4], (now - then), pred_latency);
 				break;
 			case TERMINATE_ODA:
 				return 0;
