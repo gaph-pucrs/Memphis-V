@@ -27,7 +27,7 @@ typedef struct _app {
 	
 	task_t *tasks;
 
-	float score;
+	unsigned score;
 	bool has_static;
 } app_t;
 
@@ -43,7 +43,7 @@ task_t *app_get_tasks(app_t *app, size_t *task_cnt);
 
 list_t *app_get_order(app_t *app);
 
-void app_set_score(app_t *app, float score);
+void app_set_score(app_t *app, unsigned score);
 
 unsigned app_allocated(app_t *app);
 

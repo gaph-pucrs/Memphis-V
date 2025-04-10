@@ -204,11 +204,10 @@ void _map_do(map_t *mapper, app_t *app)
 		}
 	}
 
-	/* Single precision is enough */
-	float score = (edges > 0) ? ((float)cost / (float)edges) : 0; /* Careful with division by zero */
+	unsigned score = (edges * 100) / cost;
 	
 	/* Printf with 2 decimal places and avoid linking to float printf */
-	printf("Mapped with score %u.%u at %u\n", (int)score, (int)((int)(score*100.0) - ((int)score)*100), memphis_get_tick());
+	printf("Mapped with score %u %% at %u\n", score, memphis_get_tick());
 
 	app_set_score(app, score);
 

@@ -178,7 +178,7 @@ list_t *app_get_order(app_t *app)
 	return order;
 }
 
-void app_set_score(app_t *app, float score)
+void app_set_score(app_t *app, unsigned score)
 {
 	app->score = score;
 }
