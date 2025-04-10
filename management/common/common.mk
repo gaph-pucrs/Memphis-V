@@ -1,4 +1,6 @@
-BLUE  =\033[0;34m
+TARGET = $(notdir $(CURDIR))
+
+BLUE =\033[0;34m
 NC   =\033[0m # No Color
 
 CONFIG = config.yaml
