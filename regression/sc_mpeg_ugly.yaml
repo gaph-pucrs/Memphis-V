@@ -1,0 +1,27 @@
+management:                 # Management application properties
+  - task: mapper_task       # The first in this list should ALWAYS be mapper_task
+    static_mapping: [3,3]   # All management task should have static mapping defined
+  - task: safe-monitor
+    static_mapping: [2,2]
+  - task: safe-mpeg
+    static_mapping: [1,1]
+apps:                       # Application properties
+  - name: prod_cons
+    static_mapping:
+      prod: [0,1]
+      cons: [0,2]
+  - name: prod_cons
+    static_mapping:
+      prod: [1,3]
+      cons: [3,2]
+  - name: prod_cons
+    static_mapping:
+      prod: [1,2]
+      cons: [2,1]
+  - name: mpeg
+    static_mapping:
+      start:  [0,0]
+      ivlc:   [0,3]
+      iquant: [2,3]
+      idct:   [0,2]
+      print:  [3,1]

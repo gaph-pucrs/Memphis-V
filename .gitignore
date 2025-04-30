@@ -6,4 +6,4 @@
 *.map
 *.txt
 *.lst
-regression/tc
+regression/*/*
