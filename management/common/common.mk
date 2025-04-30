@@ -25,8 +25,8 @@ SIZE    = riscv64-elf-size
 READELF = riscv64-elf-readelf
 HEXDUMP = hexdump -v -e '1/4 "%08x" "\n"'
 
-CFLAGS	+= -march=rv32imac -mabi=ilp32 -Os -fdata-sections -ffunction-sections -flto -Wall -std=c23 -I$(INCDIR) -I$(INCMEMPHIS) -I$(INCMUTILS)
-LDFLAGS += -L$(DIRMEMPHIS) -L$(DIRMUTILS) --specs=nano.specs -T $(DIRMEMPHIS)/memphis.ld -Wl,--gc-sections,-flto -u _getpid -march=rv32imac -mabi=ilp32 -lmemphis -lmutils
+CFLAGS	+= -march=rv32imac_zicntr_zicsr_zihpm -mabi=ilp32 -Os -fdata-sections -ffunction-sections -flto -Wall -std=c23 -I$(INCDIR) -I$(INCMEMPHIS) -I$(INCMUTILS)
+LDFLAGS += -L$(DIRMEMPHIS) -L$(DIRMUTILS) --specs=nano.specs -T $(DIRMEMPHIS)/memphis.ld -Wl,--gc-sections,-flto -u _getpid -march=rv32imac_zicntr_zicsr_zihpm -mabi=ilp32 -lmemphis -lmutils
 
 SRC = $(wildcard $(SRCDIR)/*.c)
 OBJ = $(patsubst %.c, %.o, $(SRC))
