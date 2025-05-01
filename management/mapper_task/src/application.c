@@ -196,7 +196,7 @@ void app_mapping_complete(app_t *app)
 	memphis_send_any(&out_msg, sizeof(out_msg), app->injector);
 
 	if(app->id == 0)
-		memphis_br_send_all(0, RELEASE_PERIPHERAL);
+		memphis_br_send(RELEASE_PERIPHERAL, 0);
 }
 
 int app_get_injector(app_t *app)
@@ -254,7 +254,7 @@ task_t *app_get_task(app_t *app, int taskid)
 
 void app_terminated(app_t *app)
 {
-	memphis_br_send_all(app->id, APP_TERMINATED);
+	memphis_br_send(APP_TERMINATED, app->id);
 }
 
 int app_get_hash(app_t *app)
