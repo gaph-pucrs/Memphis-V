@@ -38,32 +38,33 @@ int main()
 	}
 	// printf("Received service provider %d\n", decider.id);
 
-	size_t slots;
-	mon_t *qos_table = mon_create(&slots);
+	// size_t slots;
+	// mon_t *qos_table = mon_create(&slots);
 
-	if(qos_table == NULL){
-		puts("FATAL: not enough memory for QOS table");
-		exit(errno);
-	}
+	// if(qos_table == NULL){
+	// 	puts("FATAL: not enough memory for QOS table");
+	// 	exit(errno);
+	// }
 
-	if(mon_set_dmni(qos_table, MON_QOS) != 0){
+	// if(mon_set_dmni(qos_table, MON_QOS) != 0){
+	if (true) {
 		puts("FATAL: Unable to set DMNI table. Exiting.");
 		exit(errno);
 	}
 
 	mon_announce(MON_QOS);
 
-	while(true){
-		/* @todo Update to wait for TERMINATE_ODA */
-		memphis_real_time(MON_INTERVAL_QOS, MON_INTERVAL_QOS, 0);	/* Repeat this task every ms */
-		for(int i = 0; i < slots; i++){
-			if(qos_table[i].task != -1){
-				// printf("Task %X has timing of %d\n", qos_table[i].task, qos_table[i].value);
-				rt_check(&decider, qos_table[i].task, qos_table[i].value);
-				qos_table[i].task = -1;
-			}
-		}
-	}
+	// while(true){
+	// 	/* @todo Update to wait for TERMINATE_ODA */
+	// 	memphis_real_time(MON_INTERVAL_QOS, MON_INTERVAL_QOS, 0);	/* Repeat this task every ms */
+	// 	for(int i = 0; i < slots; i++){
+	// 		if(qos_table[i].task != -1){
+	// 			// printf("Task %X has timing of %d\n", qos_table[i].task, qos_table[i].value);
+	// 			rt_check(&decider, qos_table[i].task, qos_table[i].value);
+	// 			qos_table[i].task = -1;
+	// 		}
+	// 	}
+	// }
 
 	return 0;
 }
