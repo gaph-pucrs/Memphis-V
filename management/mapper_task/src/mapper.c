@@ -204,7 +204,7 @@ void _map_do(map_t *mapper, app_t *app)
 		}
 	}
 
-	unsigned score = (edges * 100) / cost;
+	unsigned score = cost > 0 ? (edges * 100) / cost : 100;
 	
 	/* Printf with 2 decimal places and avoid linking to float printf */
 	printf("Mapped with score %u %% at %u\n", score, memphis_get_tick());
@@ -418,7 +418,7 @@ void _map_terminate_app(map_t *mapper, app_t *app)
 
 	if(mapper->finished && list_get_size(&(mapper->apps)) == 1){
 		/* Broadcast a request for a termination procedure */
-		memphis_br_send_all((memphis_get_addr() << 16) | getpid(), HALT_PE);
+		memphis_br_send(HALT_PE, getpid());
 	}
 }
 
@@ -454,7 +454,7 @@ void map_task_terminated(map_t *mapper, int id)
 	size_t alloc_cnt = app_rem_allocated(app);
 
 	/* Management task finished, waiting to halt */
-	if (app_get_id(app) == 0) {
+	if (app_get_id(app) == 0 && mapper->finished) {
 		/* All other management tasks finished */
 		if (alloc_cnt == 1) {
 			memphis_halt();
@@ -521,8 +521,11 @@ void map_task_aborted(map_t *mapper, int id)
 				/* Task is running and needs to be aborted */
 				pe_t *pe = task_is_migrating(task) ? task_get_old_pe(task) : task_get_pe(task);
 				int addr = pe_get_addr(pe);
-				uint32_t payload = appid_shift | i;
-				memphis_br_send_tgt(payload, addr, ABORT_TASK);
+				uint32_t payload[] = {
+					ABORT_TASK,
+					(appid_shift | i)
+				};
+				memphis_send_any(payload, sizeof(payload), MEMPHIS_KERNEL_MSG | addr);
 
 				/* End task */
 				_map_release_resources(mapper, task);
@@ -600,8 +603,7 @@ void map_request_all_services(map_t *mapper, unsigned tag, int requester)
 
 	// printf("Found %d match(es)\n", matches);
 
-	if (matches > 0)
-		memphis_send(message, (matches + 3)*sizeof(int), requester);
+	memphis_send(message, (matches + 3)*sizeof(int), requester);
 
 	free(message);
 }
@@ -691,10 +693,11 @@ void map_migration_map(map_t *mapper, int id)
 	mapper->slots--;
 
 	/* Migrate the task */
-	uint32_t payload = 0;
-	payload |= (addr << 16);
-	payload |= (id & 0xFFFF);
-	memphis_br_send_tgt(payload, pe_get_addr(old_pe), TASK_MIGRATION);
+	uint32_t payload[] = {
+		TASK_MIGRATION,
+		(addr << 16) | (id & 0xFFFF)
+	};
+	memphis_send_any(payload, sizeof(payload), MEMPHIS_KERNEL_MSG | pe_get_addr(old_pe));
 }
 
 void map_task_migrated(map_t *mapper, int id)

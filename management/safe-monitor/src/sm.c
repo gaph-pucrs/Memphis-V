@@ -36,7 +36,9 @@ int sm_get_models(sm_t *sm)
 	while (true) {
 		memphis_receive(prov_msg, 259*sizeof(int), 0);
 		if (prov_msg[0] == ALL_SERVICE_PROVIDERS) {
-            bool ret = oda_all_service_providers(&(sm->deciders), prov_msg[1], prov_msg[2], &prov_msg[3]);
+			bool ret = false;
+			if (prov_msg[2] > 0)
+            	ret = oda_all_service_providers(&(sm->deciders), prov_msg[1], prov_msg[2], &prov_msg[3]);
             free(prov_msg);
             prov_msg = NULL;
             if (!ret)

@@ -32,7 +32,7 @@ int main()
 	sm_init(&sm);
 	int cnt = sm_get_models(&sm);
 	if (cnt == 0) {
-		printf("FATAL: Could not fetch deciders. Not enough memory?");
+		printf("FATAL: Could not fetch deciders.\n");
 		exit(1);
 	}
 	printf("Received %d model decider(s)\n", cnt);
