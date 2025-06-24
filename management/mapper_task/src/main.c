@@ -15,6 +15,7 @@
 
 #include <memphis.h>
 #include <memphis/services.h>
+#include <memphis/messaging.h>
 
 #include "mapper.h"
 
@@ -28,46 +29,54 @@ int main()
 	static map_t mapper;
 	map_init(&mapper);
 
-	while(true){
-		static int message[MSG_FLITS];
+	while (true) {
+		static int32_t message[MSG_FLITS];
 		memphis_receive_any(message, MSG_BYTES);
-
-		switch(message[0]){
+		uint8_t service = (message[0] >> 16) & 0xFF;
+		switch (service) {
 			case NEW_APP:
-				map_new_app(&mapper, message[1], message[2], message[3], &message[4], &message[(message[3] << 1) + 4]);
+				memphis_new_app_t *new_app = (memphis_new_app_t*)message;
+				int32_t *descriptor = (((void*)new_app) + sizeof(memphis_new_app_t));
+				int32_t *communication = &descriptor[new_app->task_cnt * MAP_DESCR_ENTRY_LEN];
+				map_new_app(
+					&mapper, 
+					new_app, 
+					descriptor,
+					communication
+				);
 				break;
 			case TASK_ALLOCATED:
-				map_task_allocated(&mapper, message[1]);
+				map_task_allocated(&mapper, (memphis_info_t*)message);
 				break;
 			case TASK_TERMINATED:
-				map_task_terminated(&mapper, message[1]);
+				map_task_terminated(&mapper, (memphis_info_t*)message);
 				break;
 			case TASK_ABORTED:
-				map_task_aborted(&mapper, message[1]);
-				break;
-			case REQUEST_NEAREST_SERVICE:
-				map_request_nearest_service(&mapper, message[1], message[2], message[3]);
-				break;
-			case REQUEST_ALL_SERVICES:
-				map_request_all_services(&mapper, message[1], message[2]);
+				map_task_aborted(&mapper, (memphis_info_t*)message);
 				break;
 			case TASK_MIGRATION_MAP:
-				map_migration_map(&mapper, message[1]);
+				map_migration_map(&mapper, (memphis_info_t*)message);
 				break;
 			case TASK_MIGRATED:
-				map_task_migrated(&mapper, message[1]);
+				map_task_migrated(&mapper, (memphis_info_t*)message);
 				break;
 			case REQUEST_FINISH:
 				map_request_finish(&mapper);
 				break;
 			case PE_HALTED:
-				map_pe_halted(&mapper, message[1]);
+				map_pe_halted(&mapper, (memphis_info_t*)message);
+				break;
+			case REQUEST_NEAREST_SERVICE:
+				map_request_nearest_service(&mapper, (oda_provider_t*)message);
+				break;
+			case REQUEST_ALL_SERVICES:
+				map_request_all_services(&mapper, (oda_provider_t*)message);
 				break;
 			case SEC_SAFE_MAP_REQ:
-				map_app_info(&mapper, message[1], message[2]);
+				map_app_info(&mapper, (memphis_info_t*)message);
 				break;
 			default:
-				printf("Invalid service %x\n", message[0]);
+				printf("Invalid service %lx\n", message[0]);
 				break;
 		}
 	}

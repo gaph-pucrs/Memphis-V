@@ -20,35 +20,39 @@
 #include <memphis.h>
 #include <memphis/monitor.h>
 #include <memphis/services.h>
+#include <memphis/safe.h>
+#include <memphis/messaging.h>
 #include <memphis/oda.h>
 
 #include <sm.h>
 
 int main()
 {
-	static sm_t sm;
 	printf("SAFE monitor started at %d\n", memphis_get_tick());
 
+	static oda_list_t deciders;
+	oda_list_init(&deciders);
+	int ret = oda_request_all_services(&deciders, ODA_DECIDE | D_SEC);
+	if (ret != 0)
+		return ret;
+
+	printf("Received %d model decider(s)\n", deciders.cnt);
+
+	static sm_t sm;
 	sm_init(&sm);
-	int cnt = sm_get_models(&sm);
-	if (cnt == 0) {
-		printf("FATAL: Could not fetch deciders.\n");
-		exit(1);
-	}
-	printf("Received %d model decider(s)\n", cnt);
+	ret = sm_get_models(&sm, &deciders);
+	if (ret != 0)
+		return ret;
 
     mon_announce(MON_SEC);
 
 	while(true){
-		static uint32_t msg[5];
-        memphis_receive_any(msg, sizeof(msg));
-		switch (msg[0]) {
-			case MONITOR:
-				// 1 - snd_time
-				// 2 - size hops
-				// 3 - edge
-				// 4 - latency
-				sm_monitor(&sm, msg[1], msg[2], msg[3], msg[4]);
+		static memphis_sec_monitor_t message;
+        memphis_receive_any(&message, sizeof(memphis_sec_monitor_t));
+		switch (message.service) {
+			case SEC_MONITOR:
+				if (sm_monitor(&sm, &deciders, &message) > 0)
+					return 0;
 				break;
 			case TERMINATE_ODA:
 				return 0;

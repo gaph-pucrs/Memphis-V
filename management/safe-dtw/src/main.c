@@ -32,15 +32,15 @@ int main()
 	safe_t dtw;
 	safe_init(&dtw, SAFE_HASH_dtw, model, 0.1);
 
-	while (true) {
-		static uint32_t msg[6];
-		memphis_receive_any(msg, sizeof(msg));
-		switch (msg[0]) {
+		while (true) {
+		static safe_infer_t message;
+		memphis_receive_any(&message, sizeof(safe_infer_t));
+		switch (message.service) {
 			case SEC_SAFE_REQ_APP:
-				safe_app_response(&dtw, msg[1]);
+				safe_app_response(&dtw, (memphis_info_t*)&message);
 				break;
 			case SEC_INFER:
-				safe_infer(&dtw, msg[1], msg[2], msg[3], msg[4], msg[5]);
+				safe_infer(&dtw, &message);
 				break;
 			case TERMINATE_ODA:
 				return 0;

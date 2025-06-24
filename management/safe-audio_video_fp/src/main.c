@@ -33,14 +33,14 @@ int main()
 	safe_fp_init(&audio_video, SAFE_HASH_audio_video, model, 0.061);
 
 	while (true) {
-		static uint32_t msg[6];
-		memphis_receive_any(msg, sizeof(msg));
-		switch (msg[0]) {
+		static safe_infer_t message;
+		memphis_receive_any(&message, sizeof(safe_infer_t));
+		switch (message.service) {
 			case SEC_SAFE_REQ_APP:
-				safe_fp_app_response(&audio_video, msg[1]);
+				safe_fp_app_response(&audio_video, (memphis_info_t*)&message);
 				break;
 			case SEC_INFER:
-				safe_fp_infer(&audio_video, msg[1], msg[2], msg[3], msg[4], msg[5]);
+				safe_fp_infer(&audio_video, &message);
 				break;
 			case TERMINATE_ODA:
 				return 0;

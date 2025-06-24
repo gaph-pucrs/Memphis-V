@@ -33,14 +33,14 @@ int main()
 	safe_init(&dijkstra, SAFE_HASH_dijkstra, model, 0.053);
 
 	while (true) {
-		static uint32_t msg[6];
-		memphis_receive_any(msg, sizeof(msg));
-		switch (msg[0]) {
+		static safe_infer_t message;
+		memphis_receive_any(&message, sizeof(safe_infer_t));
+		switch (message.service) {
 			case SEC_SAFE_REQ_APP:
-				safe_app_response(&dijkstra, msg[1]);
+				safe_app_response(&dijkstra, (memphis_info_t*)&message);
 				break;
 			case SEC_INFER:
-				safe_infer(&dijkstra, msg[1], msg[2], msg[3], msg[4], msg[5]);
+				safe_infer(&dijkstra, &message);
 				break;
 			case TERMINATE_ODA:
 				return 0;

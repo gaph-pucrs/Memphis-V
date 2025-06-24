@@ -4,111 +4,124 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <unistd.h>
+#include <stdio.h>
 
 #include <memphis.h>
+#include <memphis/safe.h>
 #include <memphis/services.h>
+#include <memphis/messaging.h>
 
 typedef struct _sm_hash {
-	int      app_id;
 	int      hash_id;
 	unsigned release_time;
+	uint8_t  app_id;
 } sm_hash_t;
 
 bool _sm_hash_find(void *data, void* cmpval)
 {
-	return ((sm_hash_t*)data)->app_id == *((int*)cmpval);
+	return ((sm_hash_t*)data)->app_id == *((uint8_t*)cmpval);
 }
 
 void sm_init(sm_t* sm)
 {
-	oda_list_init(&(sm->deciders));
 	lru_init(&(sm->hash_ids), 8);
 	sm->model_ids = NULL;
-	oda_request_all_services(&(sm->deciders), ODA_DECIDE | D_SEC);
 }
 
-int sm_get_models(sm_t *sm)
+int sm_get_models(sm_t *sm, oda_list_t *servers)
 {
-	int *prov_msg = malloc(259*sizeof(int));
-	if (prov_msg == NULL)
-		return 0;
-
-	while (true) {
-		memphis_receive(prov_msg, 259*sizeof(int), 0);
-		if (prov_msg[0] == ALL_SERVICE_PROVIDERS) {
-			bool ret = false;
-			if (prov_msg[2] > 0)
-            	ret = oda_all_service_providers(&(sm->deciders), prov_msg[1], prov_msg[2], &prov_msg[3]);
-            free(prov_msg);
-            prov_msg = NULL;
-            if (!ret)
-                return 0;
-            break;
-        }
-	}
-
-	sm->model_ids = malloc(sm->deciders.cnt * sizeof(int));
+	sm->model_ids = malloc(servers->cnt * sizeof(int32_t));
 	if (sm->model_ids == NULL)
-		return 0;
+		return -ENOMEM;
 
-	for (int i = 0; i < sm->deciders.cnt; i++) {
-		int msg[] = {SEC_SAFE_REQ_APP, getpid()};
-		memphis_send_any(msg, sizeof(msg), sm->deciders.ids[i]);
-		while (true) {
-			memphis_receive(msg, sizeof(msg), sm->deciders.ids[i]);
-			if (msg[0] == SEC_SAFE_APP_RESP) {
-				sm->model_ids[i] = msg[1];
-				break;
-			}
-		}
+	for (int i = 0; i < servers->cnt; i++) {
+		memphis_info_t info;
+		info.service = SEC_SAFE_REQ_APP;
+		info.task    = getpid();
+		memphis_send_any(&info, sizeof(memphis_info_t), servers->ids[i]);
+
+		oda_provider_t provider;
+		memphis_receive_any(&provider, sizeof(oda_provider_t));
+		if (provider.service == TERMINATE_ODA)
+			return 1;
+		
+		if (provider.service != SEC_SAFE_APP_RESP)
+			return -EINVAL;
+
+		sm->model_ids[i] = provider.tag;
 	}
 
-    return sm->deciders.cnt;
+    return 0;
 }
 
-void sm_monitor(sm_t *sm, unsigned timestamp, unsigned size_hops, int edge, unsigned latency)
+int sm_monitor(sm_t *sm, oda_list_t *servers, memphis_sec_monitor_t *message)
 {
-	int appid = edge >> 24;
-
 	// Get model hash id and release time for app id
-	sm_hash_t *hash = lru_use(&(sm->hash_ids), &appid, _sm_hash_find);
+	sm_hash_t *hash = lru_use(&(sm->hash_ids), &(message->app), _sm_hash_find);
 	if (hash == NULL) {
 		// If not cached, ask mapper
-		int msg[] = {SEC_SAFE_MAP_REQ, appid, getpid()};
-		memphis_send_any(msg, sizeof(msg), 0);
+		memphis_info_t info;
+		info.task    = getpid();
+		info.service = SEC_SAFE_MAP_REQ;
+		info.appid   = message->app;
+		memphis_send_any(&info, sizeof(memphis_info_t), 0);
+
+		oda_provider_t provider;
 		while (true) {
-			uint32_t ans[4];
-			memphis_receive(ans, sizeof(ans), 0);
-			if (ans[0] == SEC_SAFE_MAP_RESP) {
-				if (ans[1] == appid) {
-					hash = malloc(sizeof(sm_hash_t));
-					if (hash == NULL)
-						break;
-					hash->app_id  = appid;
-					hash->hash_id = ans[2];
-					/* @todo This can be overwritten due to LRU policy */
-					hash->release_time = timestamp;
-				}
-				break;
+			memphis_receive_any(&provider, sizeof(oda_provider_t));
+			if (provider.service == TERMINATE_ODA)
+				return 1;
+
+			if (provider.service == SEC_MONITOR) {
+				/**
+				 * @todo
+				 * Allow recursion
+				 */
+				continue;
 			}
+
+			if (provider.service != SEC_SAFE_MAP_RESP)
+				return -EINVAL;
+
+			hash = malloc(sizeof(sm_hash_t));
+			if (hash == NULL)
+				return -ENOMEM;
+
+			hash->app_id  = message->app;
+			hash->hash_id = provider.tag;
+			
+			/**
+			 * @todo 
+			 * This can be overwritten due to LRU policy
+			 */
+			hash->release_time = message->timestamp;
+			break;
 		}
-		if (hash == NULL)
-			return;
+
 		lru_replace(&(sm->hash_ids), hash);
 	}
 	
 	int decider_id = -1;
-	for (int i = 0; i < sm->deciders.cnt; i++) {
+	for (int i = 0; i < servers->cnt; i++) {
 		if (hash->hash_id == sm->model_ids[i]) {
-			decider_id = sm->deciders.ids[i];
+			decider_id = servers->ids[i];
 			break;
 		}
 	}
 
 	if (decider_id == -1)
-		return;
+		return -ENODATA;
 
-											/* rel_time */
-	uint32_t msg[] = {SEC_INFER, timestamp, (timestamp - hash->release_time)/100, size_hops, edge, latency};
-	memphis_send_any(msg, sizeof(msg), decider_id);
+	safe_infer_t infer;
+	infer.prod      = message->prod;
+	infer.cons	  	= message->cons;
+	infer.service   = SEC_INFER;
+	infer.app       = message->app;
+	infer.hops      = message->hops;
+	infer.timestamp = message->timestamp;
+	infer.rel_time  = (message->timestamp - hash->release_time)/100;
+	infer.size      = message->size;
+	infer.latency   = message->latency;
+	memphis_send_any(&infer, sizeof(safe_infer_t), decider_id);
+	return 0;
 }

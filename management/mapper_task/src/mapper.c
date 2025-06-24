@@ -19,6 +19,7 @@
 
 #include <memphis.h>
 #include <memphis/services.h>
+#include <memphis/messaging.h>
 #include <memphis/oda.h>
 
 #include "window.h"
@@ -170,20 +171,26 @@ void _map_do(map_t *mapper, app_t *app)
 	}
 
 	/* Send allocation message */
-	size_t out_size = (task_cnt + 2) << 2;
-	int *out_msg = malloc(out_size);
-	out_msg[0] = APP_ALLOCATION_REQUEST;
-	out_msg[1] = app_get_id(app);
-	int *payload = &(out_msg[2]);
-	for(int i = 0; i < task_cnt; i++){
+	const size_t msg_size = sizeof(memphis_info_t) + (task_cnt * sizeof(int));
+	memphis_info_t *payload = malloc(msg_size);
+	if (payload == NULL) {
+		puts("FATAL: not enough memory");
+		return;
+	}
+	payload->service = APP_ALLOCATION_REQUEST;
+	payload->appid   = app_get_id(app);
+
+	int32_t *location = (((void*)payload) + sizeof(memphis_info_t));
+
+	for (int i = 0; i < task_cnt; i++) {
 		pe_t *pe = task_get_pe(&tasks[i]);
-		payload[i] = pe_get_addr(pe);
+		location[i] = pe_get_addr(pe);
 	}
 
-	memphis_send_any(out_msg, out_size, app_get_injector(app));
+	memphis_send_any(payload, msg_size, app_get_injector(app));
 
-	free(out_msg);
-	out_msg = NULL;
+	free(payload);
+	payload = NULL;
 
 	/* Now compute the mapping score */
 	unsigned edges = 0;
@@ -228,9 +235,9 @@ void _map_do(map_t *mapper, app_t *app)
 	list_push_back(&(mapper->apps), app);
 }
 
-void map_new_app(map_t *mapper, int injector, int hash, size_t task_cnt, int *descriptor, int *communication)
+void map_new_app(map_t *mapper, memphis_new_app_t *packet, int32_t *descriptor, int32_t *communication)
 {
-	printf("New app received at %u from %x\n", memphis_get_tick(), injector);
+	printf("New app received at %u from %lx with %d tasks\n", memphis_get_tick(), packet->source, packet->task_cnt);
 
 	app_t *app = malloc(sizeof(app_t));
 
@@ -240,7 +247,7 @@ void map_new_app(map_t *mapper, int injector, int hash, size_t task_cnt, int *de
 	}
 
 	// @todo get hash id
-	task_t *tasks = app_init(app, mapper->appid_cnt, hash, injector, task_cnt, descriptor, communication);
+	task_t *tasks = app_init(app, mapper->appid_cnt, packet->hash, packet->source, packet->task_cnt, (int*)descriptor, (int*)communication);
 	if(tasks == NULL){
 		puts("FATAL: not enough memory");
 		return;
@@ -249,7 +256,7 @@ void map_new_app(map_t *mapper, int injector, int hash, size_t task_cnt, int *de
 	/* Search for statically mapped tasks */
 	unsigned failed_cnt = 0;
 	bool has_static = false;
-	for(int i = 0; i < task_cnt; i++){
+	for(int i = 0; i < packet->task_cnt; i++){
 		int pe_addr = descriptor[i * MAP_DESCR_ENTRY_LEN];
 		if(pe_addr != -1){
 			int pe_idx = map_coord_to_idx(pe_addr);
@@ -261,7 +268,7 @@ void map_new_app(map_t *mapper, int injector, int hash, size_t task_cnt, int *de
 	app_set_has_static(app, has_static);
 
 	/* Check if it will be mapped now or later */
-	if(task_cnt > mapper->slots || failed_cnt > 0){
+	if(packet->task_cnt > mapper->slots || failed_cnt > 0){
 		puts("No available slots");
 
 		app_set_failed(app, failed_cnt);
@@ -317,11 +324,11 @@ app_t *_map_find_app(map_t *mapper, int appid)
 	return list_get_data(entry);
 }
 
-void map_task_allocated(map_t *mapper, int id)
+void map_task_allocated(map_t *mapper, memphis_info_t *info)
 {
-	printf("Received task allocated from id %d\n", id);
+	printf("Received task allocated from id %d\n", info->task);
 
-	const int appid = id >> 8;
+	const int appid = info->task >> 8;
 	app_t *app = _map_find_app(mapper, appid);
 
 	if(app == NULL){
@@ -339,12 +346,16 @@ void map_task_allocated(map_t *mapper, int id)
 	printf("Sending TASK_RELEASE at time %d for app %d\n", memphis_get_tick(), appid);
 
 	/* Assemble and send task release */
-	const size_t msg_size = (task_cnt + 3) << 2;
-	int *out_msg = malloc(msg_size);
+	const size_t msg_size = sizeof(memphis_info_t) + (task_cnt * sizeof(int));
+	memphis_info_t *payload = malloc(msg_size);
+	if (payload == NULL) {
+		puts("FATAL: not enough memory");
+		return;
+	}
+	payload->service  = TASK_RELEASE;
+	payload->task_cnt = task_cnt;
 
-	out_msg[0] = TASK_RELEASE;
-	// out_msg[1] = appid_shift | i;
-	out_msg[2] = task_cnt;
+	int32_t *location = (int32_t*)&((uint8_t*)payload)[sizeof(memphis_info_t)];
 
 	for(int i = 0; i < task_cnt; i++){
 		task_t *task = &(tasks[i]);
@@ -354,20 +365,20 @@ void map_task_allocated(map_t *mapper, int id)
 
 		pe_t *pe = task_get_pe(task);
 		int addr = pe_get_addr(pe);
-		out_msg[i + 3] = addr;
+		location[i] = addr;
 	}
 
 	const int appid_shift = appid << 8;
-	for(int i = 0; i < task_cnt; i++){
+	for (int i = 0; i < task_cnt; i++) {
 		/* Tell kernel to populate the proper task by sending the ID */
-		out_msg[1] = appid_shift | i;
+		payload->task = appid_shift | i;
 
 		/* Send message directed to kernel at task address */
-		memphis_send_any(out_msg, msg_size, MEMPHIS_KERNEL_MSG | out_msg[i + 3]);
+		memphis_send_any(payload, msg_size, MEMPHIS_KERNEL_MSG | location[i]);
 	}
 
-	free(out_msg);
-	out_msg = NULL;
+	free(payload);
+	payload = NULL;
 
 	app_mapping_complete(app);
 	mapper->appid_cnt++;
@@ -416,7 +427,7 @@ void _map_terminate_app(map_t *mapper, app_t *app)
 	list_remove(&(mapper->apps), entry);
 	free(app);
 
-	if(mapper->finished && list_get_size(&(mapper->apps)) == 1){
+	if (mapper->finished && list_get_size(&(mapper->apps)) == 1) {
 		/* Broadcast a request for a termination procedure */
 		memphis_br_send(HALT_PE, getpid());
 	}
@@ -440,11 +451,11 @@ void _map_verify_pending(map_t *mapper)
 	mapper->pending = NULL;
 }
 
-void map_task_terminated(map_t *mapper, int id)
+void map_task_terminated(map_t *mapper, memphis_info_t *info)
 {
-	printf("Received task terminated from id %d at time %d\n", id, memphis_get_tick());
+	printf("Received task terminated from id %d at time %d\n", info->task, memphis_get_tick());
 
-	app_t *app = _map_terminate_task(mapper, id);
+	app_t *app = _map_terminate_task(mapper, info->task);
 
 	if(app == NULL){
 		puts("WARNING: task no found. Ignoring.");
@@ -461,7 +472,7 @@ void map_task_terminated(map_t *mapper, int id)
 			return;
 		}
 		
-		task_t *terminated = app_get_task(app, id);
+		task_t *terminated = app_get_task(app, info->task);
 		unsigned tag = task_get_tag(terminated);
 		if ((tag & ODA_OBSERVE) != 0) {
 			/* Task that terminated was observer*/
@@ -495,11 +506,11 @@ void map_task_terminated(map_t *mapper, int id)
 		_map_verify_pending(mapper);
 }
 
-void map_task_aborted(map_t *mapper, int id)
+void map_task_aborted(map_t *mapper, memphis_info_t *info)
 {
-	printf("Received task aborted from id %d at time %d\n", id, memphis_get_tick());
+	printf("Received task aborted from id %d at time %d\n", info->task, memphis_get_tick());
 
-	app_t *app = _map_terminate_task(mapper, id);
+	app_t *app = _map_terminate_task(mapper, info->task);
 
 	if(app == NULL){
 		puts("WARNING: task no found. Ignoring.");
@@ -521,11 +532,10 @@ void map_task_aborted(map_t *mapper, int id)
 				/* Task is running and needs to be aborted */
 				pe_t *pe = task_is_migrating(task) ? task_get_old_pe(task) : task_get_pe(task);
 				int addr = pe_get_addr(pe);
-				uint32_t payload[] = {
-					ABORT_TASK,
-					(appid_shift | i)
-				};
-				memphis_send_any(payload, sizeof(payload), MEMPHIS_KERNEL_MSG | addr);
+				memphis_info_t payload;
+				payload.service = ABORT_TASK;
+				payload.task = (appid_shift | i);
+				memphis_send_any(&payload, sizeof(memphis_info_t), MEMPHIS_KERNEL_MSG | addr);
 
 				/* End task */
 				_map_release_resources(mapper, task);
@@ -539,7 +549,7 @@ void map_task_aborted(map_t *mapper, int id)
 		_map_verify_pending(mapper);
 }
 
-void map_request_nearest_service(map_t *mapper, int address, unsigned tag, int requester)
+void map_request_nearest_service(map_t *mapper, oda_provider_t *packet)
 {
 	int oda = -1;
 	unsigned distance = -1;
@@ -553,29 +563,28 @@ void map_request_nearest_service(map_t *mapper, int address, unsigned tag, int r
 
 	for(int i = 0; i < task_cnt; i++){
 		task_t *task = &(tasks[i]);
-		if((task_get_tag(task) & tag) != tag)
+		if((task_get_tag(task) & packet->tag) != packet->tag)
 			continue;
 
 		pe_t *pe = task_get_pe(task);
-		unsigned d = map_manhattan(address, pe_get_addr(pe));
+		unsigned d = map_manhattan(packet->addr, pe_get_addr(pe));
 		if(d < distance){
 			distance = d;
 			oda = i;
 		}
 	}
+
+	oda_provider_t provider;
+	provider.service = SERVICE_PROVIDER;
+	provider.id  	 = oda;
+	provider.tag 	 = packet->tag;
 	
-	int out_msg[] = {
-		SERVICE_PROVIDER, 
-		tag, 
-		oda
-	};
-	
-	memphis_send_any(out_msg, sizeof(out_msg), requester);
+	memphis_send_any(&provider, sizeof(oda_provider_t), packet->id);
 }
 
-void map_request_all_services(map_t *mapper, unsigned tag, int requester)
+void map_request_all_services(map_t *mapper, oda_provider_t *packet)
 {
-	// printf("Task %d requested all services with tag %x\n", requester, tag);
+	// printf("Task %d requested all services with tag %x\n", packet->id, packet->tag);
 	/* Search all Management tasks */
 	list_entry_t *entry = list_front(&(mapper->apps));
 	app_t *ma = list_get_data(entry);
@@ -583,36 +592,39 @@ void map_request_all_services(map_t *mapper, unsigned tag, int requester)
 	task_t *tasks = app_get_tasks(ma, &task_cnt);
 
 	size_t matches = 0;
-	int *message = malloc(259*sizeof(int));
-	if (message == NULL) {
-		printf("ERROR: Not enough memory\n");
-		return;
-	}
-	
-	message[0] = ALL_SERVICE_PROVIDERS;
-	message[1] = tag;
-	for(int i = 0; i < task_cnt; i++){
+	for (int i = 0; i < task_cnt; i++) {
 		task_t *task = &(tasks[i]);
-		if((task_get_tag(task) & tag) != tag)
-			continue;
-		
-		message[matches + 3] = task_get_id(task);
+		if((task_get_tag(task) & packet->tag) != packet->tag)
+			continue;		
 		matches++;
 	}
-	message[2] = matches;
 
-	// printf("Found %d match(es)\n", matches);
+	const size_t msg_size = sizeof(oda_provider_t) + matches*sizeof(int32_t);
+	oda_provider_t *provider = malloc(msg_size);
+	provider->service = ALL_SERVICE_PROVIDERS;
+	provider->tag     = packet->tag;
+	provider->matches = matches;
 
-	memphis_send(message, (matches + 3)*sizeof(int), requester);
+	int32_t *message = (((void*)provider) + sizeof(oda_provider_t));
 
-	free(message);
+	size_t pos = 0;
+	for (int i = 0; i < task_cnt; i++) {
+		task_t *task = &(tasks[i]);
+		if((task_get_tag(task) & packet->tag) != packet->tag)
+			continue;
+		message[pos++] = task_get_id(task);
+	}	
+
+	memphis_send_any(provider, msg_size, packet->id);
+
+	free(provider);
 }
 
-void map_migration_map(map_t *mapper, int id)
+void map_migration_map(map_t *mapper, memphis_info_t *info)
 {
-	printf("Received migration request to task id %d at time %d\n", id, memphis_get_tick());
+	printf("Received migration request to task id %d at time %d\n", info->task, memphis_get_tick());
 
-	const int appid = id >> 8;
+	const int appid = info->task >> 8;
 	app_t *app = _map_find_app(mapper, appid);
 	
 	if(app == NULL){
@@ -620,7 +632,7 @@ void map_migration_map(map_t *mapper, int id)
 		return;
 	}
 
-	const int taskid = id & 0xFF;
+	const int taskid = info->task & 0xFF;
 	task_t *task = app_get_task(app, taskid);
 
 	if(task == NULL || !task_is_allocated(task)){
@@ -693,24 +705,24 @@ void map_migration_map(map_t *mapper, int id)
 	mapper->slots--;
 
 	/* Migrate the task */
-	uint32_t payload[] = {
-		TASK_MIGRATION,
-		(addr << 16) | (id & 0xFFFF)
-	};
-	memphis_send_any(payload, sizeof(payload), MEMPHIS_KERNEL_MSG | pe_get_addr(old_pe));
+	memphis_task_migration_t payload;
+	payload.service = TASK_MIGRATION;
+	payload.task 	= info->task;
+	payload.address = addr;
+	memphis_send_any(&payload, sizeof(memphis_task_migration_t), MEMPHIS_KERNEL_MSG | pe_get_addr(old_pe));
 }
 
-void map_task_migrated(map_t *mapper, int id)
+void map_task_migrated(map_t *mapper, memphis_info_t *info)
 {
-	printf("Received migration completed to task id %d at time %d\n", id, memphis_get_tick());
+	printf("Received migration completed to task id %d at time %d\n", info->task, memphis_get_tick());
 
-	app_t *app = _map_find_app(mapper, id >> 8);
+	app_t *app = _map_find_app(mapper, info->task >> 8);
 	if(app == NULL){
 		puts("WARNING: App not found. Ignoring.");
 		return;
 	}
 
-	task_t *task = app_get_task(app, id & 0xFF);
+	task_t *task = app_get_task(app, info->task & 0xFF);
 	if(task == NULL){
 		puts("WARNING: Task not found. Ignoring.");
 		return;
@@ -727,31 +739,44 @@ void map_task_migrated(map_t *mapper, int id)
 
 void map_request_finish(map_t *mapper)
 {
-	// printf("AppInjector signalized finish\n");
+	printf("AppInjector signalized finish\n");
 	mapper->finished = true;
+	if(mapper->finished && list_get_size(&(mapper->apps)) == 1){
+		/* Broadcast a request for a termination procedure */
+		memphis_br_send(HALT_PE, getpid());
+	}
 }
 
-void map_pe_halted(map_t *mapper, int address)
+void map_pe_halted(map_t *mapper, memphis_info_t *info)
 {
+	printf("PE %x halted\n", info->addr);
 	mapper->finished_cnt++;
 
 	const size_t N_PE = memphis_get_nprocs(NULL, NULL);
+	printf("Total halts: %d/%d\n", mapper->finished_cnt, N_PE);
 	if (mapper->finished_cnt == N_PE)
 		map_terminate_ma(mapper);
 }
 
-void map_app_info(map_t *mapper, int appid, int requester)
+void map_app_info(map_t *mapper, memphis_info_t *info)
 {
-	app_t *app = _map_find_app(mapper, appid);
+	app_t *app = _map_find_app(mapper, info->appid);
 	int hash_id = -1;
-	unsigned release_time = -1;
+	// unsigned release_time = -1;
 	if(app != NULL){
 		hash_id = app_get_hash(app);
-		release_time = app_get_release_time(app);
+		// release_time = app_get_release_time(app);
 	}
 
-	uint32_t ans[] = {SEC_SAFE_MAP_RESP, appid, hash_id, release_time};
-	memphis_send(ans, sizeof(ans), requester);
+	oda_provider_t provider;
+	provider.service = SEC_SAFE_MAP_RESP;
+	provider.id      = info->appid;
+	provider.tag     = hash_id;
+	/**
+	 * @todo
+	 * Maybe send also release_time?
+	 */
+	memphis_send_any(&provider, sizeof(oda_provider_t), info->task);
 }
 
 void map_terminate_ma(map_t *mapper)

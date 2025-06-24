@@ -192,7 +192,7 @@ unsigned app_allocated(app_t *app)
 void app_mapping_complete(app_t *app)
 {
 	app->release_time = memphis_get_tick();
-	int out_msg = APP_MAPPING_COMPLETE;
+	int out_msg = (APP_MAPPING_COMPLETE << 16);
 	memphis_send_any(&out_msg, sizeof(out_msg), app->injector);
 
 	if(app->id == 0)

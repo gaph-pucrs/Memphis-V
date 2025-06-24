@@ -12,37 +12,37 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
 
 #include <memphis.h>
 #include <memphis/services.h>
 
-#include "migration.h"
+#include <migration.h>
 
 #define MSG_LEN 3
 
 int main()
 {
-	static int msg[MSG_LEN];
-
 	printf("Migration started at %d\n", memphis_get_tick());
-	
-	size_t pe_cnt = memphis_get_nprocs(NULL, NULL);
 
+	static oda_t actuator;
+	oda_init(&actuator);
+	int ret = oda_request_nearest_service(&actuator, ODA_ACT | A_MIGRATION);
+	if (ret != 0)
+		return ret;
+
+	printf("Received service provider %d\n", actuator.id);
+
+	size_t pe_cnt = memphis_get_nprocs(NULL, NULL);
 	lru_t tasks;
 	lru_init(&tasks, pe_cnt);
 
-	oda_t actuator;
-	oda_init(&actuator);
-	oda_request_nearest_service(&actuator, ODA_ACT | A_MIGRATION);
-
-	while(true){
-		memphis_receive_any(msg, sizeof(msg));
-		switch(msg[0]){
-			case OBSERVE_PACKET:
-				mt_check_rt(&tasks, &actuator, msg[1], msg[2]);
-				break;
-			case SERVICE_PROVIDER:
-				oda_service_provider(&actuator, msg[1], msg[2]);
+	while (true) {
+		static qos_analyze_t message;
+		memphis_receive_any(&message, sizeof(qos_analyze_t));
+		switch (message.service) {
+			case QOS_ANALYZE:
+				mt_check_rt(&tasks, &actuator, &message);
 				break;
 			case TERMINATE_ODA:
 				return 0;

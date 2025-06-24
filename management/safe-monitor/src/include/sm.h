@@ -2,15 +2,15 @@
 
 #include <mutils/lru.h>
 #include <memphis/oda.h>
+#include <memphis/messaging.h>
 
 typedef struct _sm {
-    oda_list_t deciders;
     lru_t hash_ids;
     int *model_ids;
 } sm_t;
 
 void sm_init(sm_t *sm);
 
-int sm_get_models(sm_t *sm);
+int sm_get_models(sm_t *sm, oda_list_t *servers);
 
-void sm_monitor(sm_t *sm, unsigned timestamp, unsigned size_hops, int edge, unsigned latency);
+int sm_monitor(sm_t *sm, oda_list_t *servers, memphis_sec_monitor_t *message);

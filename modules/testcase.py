@@ -150,7 +150,7 @@ class Testcase:
 			with open("{}/debug/services.cfg".format(self.base_dir), "w") as cfg:
 				for line in services:
 					words = line.split()
-					if "#define" in words and len(words) > 2:
+					if len(words) > 2 and "#define" in words:
 						key = words[1]
 						value = 0
 						value = int(words[2], base=16)
@@ -159,8 +159,8 @@ class Testcase:
 				services.close()
 
 				cfg.write("\n")
-				cfg.write("$TASK_ALLOCATION_SERVICE 40 23\n")
-				cfg.write("$TASK_TERMINATED_SERVICE 70 23\n")
+				cfg.write("$TASK_ALLOCATION_SERVICE 42 23\n")
+				cfg.write("$TASK_TERMINATED_SERVICE 06 23\n")
 
 	def __create_cpu(self):
 		with open("{}/debug/cpu.cfg".format(self.base_dir), "w") as cfg:

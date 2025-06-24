@@ -17,54 +17,39 @@
 #include <errno.h>
 
 #include <memphis.h>
+#include <memphis/messaging.h>
 #include <memphis/monitor.h>
 #include <memphis/services.h>
 
-#include "rt.h"
+#include <rt.h>
 
 int main()
 {
 	printf("Real-time monitor started at %d\n", memphis_get_tick());
 
-	oda_t decider;
+	static oda_t decider;
 	oda_init(&decider);
-	oda_request_nearest_service(&decider, ODA_DECIDE | D_QOS);
+	int ret = oda_request_nearest_service(&decider, ODA_DECIDE | D_QOS);
+	if (ret != 0)
+		return ret;
 
-	while(true){
-		int msg[3];
-		memphis_receive_any(msg, sizeof(msg));
-		if(msg[0] == SERVICE_PROVIDER && oda_service_provider(&decider, msg[1], msg[2]))
-			break;
-	}
-	// printf("Received service provider %d\n", decider.id);
-
-	// size_t slots;
-	// mon_t *qos_table = mon_create(&slots);
-
-	// if(qos_table == NULL){
-	// 	puts("FATAL: not enough memory for QOS table");
-	// 	exit(errno);
-	// }
-
-	// if(mon_set_dmni(qos_table, MON_QOS) != 0){
-	if (true) {
-		puts("FATAL: Unable to set DMNI table. Exiting.");
-		exit(errno);
-	}
+	printf("Received service provider %d\n", decider.id);
 
 	mon_announce(MON_QOS);
 
-	// while(true){
-	// 	/* @todo Update to wait for TERMINATE_ODA */
-	// 	memphis_real_time(MON_INTERVAL_QOS, MON_INTERVAL_QOS, 0);	/* Repeat this task every ms */
-	// 	for(int i = 0; i < slots; i++){
-	// 		if(qos_table[i].task != -1){
-	// 			// printf("Task %X has timing of %d\n", qos_table[i].task, qos_table[i].value);
-	// 			rt_check(&decider, qos_table[i].task, qos_table[i].value);
-	// 			qos_table[i].task = -1;
-	// 		}
-	// 	}
-	// }
+	while (true) {
+		static memphis_qos_monitor_t message;
+		memphis_receive_any(&message, sizeof(memphis_qos_monitor_t));
+		switch (message.service) {
+			case QOS_MONITOR:
+				rt_check(&decider, &message);
+				break;
+			case TERMINATE_ODA:
+				return 0;
+			default:
+				break;
+		}
+	}
 
 	return 0;
 }

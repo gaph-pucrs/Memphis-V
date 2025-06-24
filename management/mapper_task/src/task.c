@@ -176,8 +176,8 @@ bool task_terminate_oda(task_t *tasks, size_t task_cnt, unsigned tag)
 		if((task->tag & tag) == 0)
 			continue;
 
-		int msg[] = {TERMINATE_ODA};
-		memphis_send_any(msg, sizeof(msg), task_get_id(task));
+		uint32_t msg = (TERMINATE_ODA << 16);
+		memphis_send_any(&msg, sizeof(msg), task_get_id(task));
 		terminated = true;
 	}
 
