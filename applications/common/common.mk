@@ -42,7 +42,7 @@ $(SRCDIR)/%.txt: $(SRCDIR)/i%.bin $(SRCDIR)/d%.bin $(SRCDIR)/%.elf
 
 $(SRCDIR)/d%.bin: $(SRCDIR)/%.elf
 	@printf "${GREEN}Generating binary %s ...${NC}\n" "$@"
-	@$(OBJCOPY) -j .rodata -j .eh_frame -j .init_array -j .fini_array -j .data -j .sdata -O binary $< $@
+	@$(OBJCOPY) -j .data -O binary $< $@
 
 $(SRCDIR)/i%.bin: $(SRCDIR)/%.elf
 	@printf "${GREEN}Generating binary %s ...${NC}\n" "$@"
