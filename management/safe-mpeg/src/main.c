@@ -30,7 +30,7 @@ int main()
 	// printf("SAFE mpeg model started at %d\n", memphis_get_tick());
 
 	safe_t mpeg;
-	safe_init(&mpeg, SAFE_HASH_mpeg, model, 0.057);
+	safe_init(&mpeg, SAFE_HASH_mpeg, model, 0.075);
 
 	while (true) {
 		static safe_infer_t message;
