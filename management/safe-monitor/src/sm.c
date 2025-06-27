@@ -66,21 +66,18 @@ int sm_monitor(sm_t *sm, oda_list_t *servers, memphis_sec_monitor_t *message)
 		info.appid   = message->app;
 		memphis_send_any(&info, sizeof(memphis_info_t), 0);
 
-		oda_provider_t provider;
+		oda_provider_t *provider = malloc(sizeof(safe_infer_t));
 		while (true) {
-			memphis_receive_any(&provider, sizeof(oda_provider_t));
-			if (provider.service == TERMINATE_ODA)
+			memphis_receive_any(provider, sizeof(safe_infer_t));
+			if (provider->service == TERMINATE_ODA)
 				return 1;
 
-			if (provider.service == SEC_MONITOR) {
-				/**
-				 * @todo
-				 * Allow recursion
-				 */
+			if (provider->service == SEC_MONITOR) {
+				sm_monitor(sm, servers, (memphis_sec_monitor_t*)provider);
 				continue;
 			}
 
-			if (provider.service != SEC_SAFE_MAP_RESP)
+			if (provider->service != SEC_SAFE_MAP_RESP)
 				return -EINVAL;
 
 			hash = malloc(sizeof(sm_hash_t));
@@ -88,7 +85,7 @@ int sm_monitor(sm_t *sm, oda_list_t *servers, memphis_sec_monitor_t *message)
 				return -ENOMEM;
 
 			hash->app_id  = message->app;
-			hash->hash_id = provider.tag;
+			hash->hash_id = provider->tag;
 			
 			/**
 			 * @todo 
@@ -97,6 +94,8 @@ int sm_monitor(sm_t *sm, oda_list_t *servers, memphis_sec_monitor_t *message)
 			hash->release_time = message->timestamp;
 			break;
 		}
+		free(provider);
+		provider = NULL;
 
 		lru_replace(&(sm->hash_ids), hash);
 	}
