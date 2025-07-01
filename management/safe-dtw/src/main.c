@@ -30,7 +30,7 @@ int main()
 	// printf("SAFE dtw model started at %d\n", memphis_get_tick());
 
 	safe_t dtw;
-	safe_init(&dtw, SAFE_HASH_dtw, model, 0.1);
+	safe_init(&dtw, SAFE_HASH_dtw, model, 0.05);
 
 		while (true) {
 		static safe_infer_t message;
