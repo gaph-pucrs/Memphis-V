@@ -26,6 +26,7 @@ void sm_init(sm_t* sm)
 {
 	lru_init(&(sm->hash_ids), 8);
 	sm->model_ids = NULL;
+	sm->monitored_cnt = 0;
 }
 
 int sm_get_models(sm_t *sm, oda_list_t *servers)
@@ -56,6 +57,7 @@ int sm_get_models(sm_t *sm, oda_list_t *servers)
 
 int sm_monitor(sm_t *sm, oda_list_t *servers, memphis_sec_monitor_t *message)
 {
+	sm->monitored_cnt++;
 	// Get model hash id and release time for app id
 	sm_hash_t *hash = lru_use(&(sm->hash_ids), &(message->app), _sm_hash_find);
 	if (hash == NULL) {
@@ -123,4 +125,9 @@ int sm_monitor(sm_t *sm, oda_list_t *servers, memphis_sec_monitor_t *message)
 	infer.latency   = message->latency;
 	memphis_send_any(&infer, sizeof(safe_infer_t), decider_id);
 	return 0;
+}
+
+int sm_getmonitored(sm_t *sm)
+{
+	return sm->monitored_cnt;
 }

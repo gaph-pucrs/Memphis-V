@@ -44,8 +44,9 @@ int main()
 	if (ret != 0)
 		return ret;
 
-	ret = memphis_mkfifo(sizeof(memphis_sec_monitor_t) - sizeof(uint32_t), 8);
-	printf("Mkfifo returned %d\n", ret);
+	ret = memphis_mkfifo(sizeof(memphis_sec_monitor_t), 128);
+	if (ret != 0)
+		return ret;
 
     mon_announce(MON_SEC);
 
@@ -58,6 +59,7 @@ int main()
 					return 0;
 				break;
 			case TERMINATE_ODA:
+				printf("Monitored %d messages\n", sm_getmonitored(&sm));
 				return 0;
 			default:
 				break;
