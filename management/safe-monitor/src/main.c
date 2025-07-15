@@ -55,8 +55,10 @@ int main()
         memphis_receive_any(&message, sizeof(memphis_sec_monitor_t));
 		switch (message.service) {
 			case SEC_MONITOR:
-				if (sm_monitor(&sm, &deciders, &message) > 0)
-					return 0;
+				sm_monitor(&sm, &deciders, &message);
+				break;
+			case SEC_SAFE_MAP_RESP:
+				sm_replace(&sm, &deciders, (oda_provider_t*)&message);
 				break;
 			case TERMINATE_ODA:
 				printf("Monitored %d messages\n", sm_getmonitored(&sm));
