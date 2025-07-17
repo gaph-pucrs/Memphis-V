@@ -16709,5 +16709,441 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 			}
 		}
 	}
-	return (12800 + w0 + w1 + w2 + w3 + w4 + w5 + w6 + w7 + w8 + w9 + w10 + w11 + w12 + w13 + w14 + w15 + w16 + w17 + w18 + w19 + w20 + w21 + w22 + w23 + w24 + w25 + w26 + w27 + w28 + w29 + w30 + w31 + w32 + w33 + w34 + w35 + w36 + w37 + w38 + w39 + w40 + w41 + w42 + w43 + w44 + w45 + w46 + w47 + w48 + w49 + w50 + w51 + w52 + w53 + w54 + w55 + w56 + w57 + w58 + w59 + w60 + w61 + w62 + w63 + w64 + w65 + w66 + w67 + w68 + w69 + w70 + w71 + w72 + w73 + w74 + w75 + w76 + w77 + w78 + w79 + w80 + w81 + w82 + w83 + w84 + w85 + w86 + w87 + w88 + w89 + w90 + w91) >> 8;
+	int w92;
+	if (rel_time < 8266) {
+		if (rel_time < 8087) {
+			if (prod != 1) {
+				if (rel_time < 7791) {
+					if (rel_time < 7691) {
+						if (rel_time < 7318) {
+							w92 = 0;
+						} else {
+							w92 = 48;
+						}
+					} else {
+						if (rel_time < 7749) {
+							w92 = -130;
+						} else {
+							w92 = -68;
+						}
+					}
+				} else {
+					if (prod != 4) {
+						if (prod != 2) {
+							w92 = 122;
+						} else {
+							w92 = 11;
+						}
+					} else {
+						if (rel_time < 7879) {
+							w92 = -188;
+						} else {
+							w92 = -67;
+						}
+					}
+				}
+			} else {
+				if (rel_time < 7215) {
+					if (rel_time < 6940) {
+						if (rel_time < 6077) {
+							w92 = 6;
+						} else {
+							w92 = -53;
+						}
+					} else {
+						if (rel_time < 7171) {
+							w92 = 245;
+						} else {
+							w92 = 111;
+						}
+					}
+				} else {
+					if (rel_time < 7503) {
+						if (hops < 2) {
+							w92 = -186;
+						} else {
+							w92 = -224;
+						}
+					} else {
+						if (rel_time < 7791) {
+							w92 = 93;
+						} else {
+							w92 = -105;
+						}
+					}
+				}
+			}
+		} else {
+			if (prod != 4) {
+				if (prod != 2) {
+					if (rel_time < 8168) {
+						if (rel_time < 8126) {
+							w92 = -116;
+						} else {
+							w92 = -323;
+						}
+					} else {
+						if (hops < 2) {
+							w92 = -110;
+						} else {
+							w92 = -76;
+						}
+					}
+				} else {
+					w92 = 192;
+				}
+			} else {
+				if (rel_time < 8168) {
+					if (hops < 2) {
+						w92 = 76;
+					} else {
+						if (hops < 5) {
+							w92 = 59;
+						} else {
+							w92 = -12;
+						}
+					}
+				} else {
+					if (hops < 5) {
+						if (hops < 4) {
+							w92 = 114;
+						} else {
+							w92 = 130;
+						}
+					} else {
+						w92 = 107;
+					}
+				}
+			}
+		}
+	} else {
+		if (rel_time < 8443) {
+			if (prod != 2) {
+				if (prod != 0) {
+					if (prod != 4) {
+						if (rel_time < 8397) {
+							w92 = 192;
+						} else {
+							w92 = 124;
+						}
+					} else {
+						w92 = -209;
+					}
+				} else {
+					if (hops < 2) {
+						w92 = -132;
+					} else {
+						if (hops < 4) {
+							w92 = -97;
+						} else {
+							w92 = -107;
+						}
+					}
+				}
+			} else {
+				if (rel_time < 8353) {
+					if (hops < 3) {
+						if (hops < 2) {
+							w92 = -144;
+						} else {
+							w92 = -122;
+						}
+					} else {
+						w92 = -93;
+					}
+				} else {
+					if (hops < 2) {
+						w92 = -106;
+					} else {
+						if (hops < 5) {
+							w92 = -87;
+						} else {
+							w92 = -104;
+						}
+					}
+				}
+			}
+		} else {
+			if (rel_time < 8599) {
+				if (prod != 0) {
+					if (hops < 4) {
+						if (rel_time < 8465) {
+							w92 = -68;
+						} else {
+							w92 = -97;
+						}
+					} else {
+						if (rel_time < 8558) {
+							w92 = -51;
+						} else {
+							w92 = 86;
+						}
+					}
+				} else {
+					if (hops < 3) {
+						if (hops < 2) {
+							w92 = 14;
+						} else {
+							w92 = -6;
+						}
+					} else {
+						if (hops < 4) {
+							w92 = 51;
+						} else {
+							w92 = 1;
+						}
+					}
+				}
+			} else {
+				if (rel_time < 8897) {
+					if (prod != 3) {
+						if (prod != 0) {
+							w92 = 76;
+						} else {
+							w92 = -26;
+						}
+					} else {
+						if (rel_time < 8686) {
+							w92 = -130;
+						} else {
+							w92 = -83;
+						}
+					}
+				} else {
+					if (rel_time < 8935) {
+						if (prod != 1) {
+							w92 = -102;
+						} else {
+							w92 = 350;
+						}
+					} else {
+						if (rel_time < 8975) {
+							w92 = 34;
+						} else {
+							w92 = 0;
+						}
+					}
+				}
+			}
+		}
+	}
+	int w93;
+	if (prod != 1) {
+		if (rel_time < 6089) {
+			if (rel_time < 5988) {
+				if (prod != 4) {
+					if (rel_time < 5798) {
+						if (rel_time < 5557) {
+							w93 = -1;
+						} else {
+							w93 = 89;
+						}
+					} else {
+						if (prod != 2) {
+							w93 = -138;
+						} else {
+							w93 = 59;
+						}
+					}
+				} else {
+					if (rel_time < 5702) {
+						if (rel_time < 4284) {
+							w93 = 63;
+						} else {
+							w93 = -32;
+						}
+					} else {
+						if (rel_time < 5889) {
+							w93 = 191;
+						} else {
+							w93 = 117;
+						}
+					}
+				}
+			} else {
+				if (rel_time < 6077) {
+					if (rel_time < 6033) {
+						if (hops < 2) {
+							w93 = -183;
+						} else {
+							w93 = -143;
+						}
+					} else {
+						if (hops < 2) {
+							w93 = -318;
+						} else {
+							w93 = -230;
+						}
+					}
+				} else {
+					if (hops < 2) {
+						w93 = -75;
+					} else {
+						if (hops < 5) {
+							w93 = -46;
+						} else {
+							w93 = -94;
+						}
+					}
+				}
+			}
+		} else {
+			if (rel_time < 6409) {
+				if (prod != 4) {
+					if (rel_time < 6364) {
+						if (rel_time < 6132) {
+							w93 = 89;
+						} else {
+							w93 = 233;
+						}
+					} else {
+						if (prod != 2) {
+							w93 = -339;
+						} else {
+							w93 = 103;
+						}
+					}
+				} else {
+					if (hops < 5) {
+						if (hops < 4) {
+							w93 = -165;
+						} else {
+							w93 = -198;
+						}
+					} else {
+						if (rel_time < 6175) {
+							w93 = -190;
+						} else {
+							w93 = -277;
+						}
+					}
+				}
+			} else {
+				if (rel_time < 6651) {
+					if (prod != 4) {
+						if (hops < 5) {
+							w93 = -74;
+						} else {
+							w93 = -250;
+						}
+					} else {
+						if (rel_time < 6454) {
+							w93 = 312;
+						} else {
+							w93 = 52;
+						}
+					}
+				} else {
+					if (rel_time < 6940) {
+						if (prod != 4) {
+							w93 = 64;
+						} else {
+							w93 = -52;
+						}
+					} else {
+						if (rel_time < 7260) {
+							w93 = -58;
+						} else {
+							w93 = 3;
+						}
+					}
+				}
+			}
+		}
+	} else {
+		if (rel_time < 3507) {
+			if (hops < 2) {
+				if (rel_time < 3462) {
+					w93 = -35;
+				} else {
+					w93 = -30;
+				}
+			} else {
+				if (rel_time < 3462) {
+					if (hops < 3) {
+						w93 = -75;
+					} else {
+						if (hops < 4) {
+							w93 = -224;
+						} else {
+							w93 = -333;
+						}
+					}
+				} else {
+					if (hops < 3) {
+						w93 = -74;
+					} else {
+						if (hops < 4) {
+							w93 = -16;
+						} else {
+							w93 = -54;
+						}
+					}
+				}
+			}
+		} else {
+			if (rel_time < 4947) {
+				if (rel_time < 4090) {
+					if (rel_time < 3807) {
+						if (rel_time < 3761) {
+							w93 = 17;
+						} else {
+							w93 = 98;
+						}
+					} else {
+						if (hops < 2) {
+							w93 = -67;
+						} else {
+							w93 = -111;
+						}
+					}
+				} else {
+					if (rel_time < 4375) {
+						if (hops < 5) {
+							w93 = 135;
+						} else {
+							w93 = 47;
+						}
+					} else {
+						if (rel_time < 4660) {
+							w93 = -68;
+						} else {
+							w93 = 90;
+						}
+					}
+				}
+			} else {
+				if (rel_time < 5226) {
+					if (rel_time < 5181) {
+						if (hops < 2) {
+							w93 = -238;
+						} else {
+							w93 = -271;
+						}
+					} else {
+						if (hops < 5) {
+							w93 = -138;
+						} else {
+							w93 = -8;
+						}
+					}
+				} else {
+					if (rel_time < 5512) {
+						if (hops < 2) {
+							w93 = 88;
+						} else {
+							w93 = 114;
+						}
+					} else {
+						if (rel_time < 5798) {
+							w93 = -83;
+						} else {
+							w93 = -3;
+						}
+					}
+				}
+			}
+		}
+	}
+	return (12800 + w0 + w1 + w2 + w3 + w4 + w5 + w6 + w7 + w8 + w9 + w10 + w11 + w12 + w13 + w14 + w15 + w16 + w17 + w18 + w19 + w20 + w21 + w22 + w23 + w24 + w25 + w26 + w27 + w28 + w29 + w30 + w31 + w32 + w33 + w34 + w35 + w36 + w37 + w38 + w39 + w40 + w41 + w42 + w43 + w44 + w45 + w46 + w47 + w48 + w49 + w50 + w51 + w52 + w53 + w54 + w55 + w56 + w57 + w58 + w59 + w60 + w61 + w62 + w63 + w64 + w65 + w66 + w67 + w68 + w69 + w70 + w71 + w72 + w73 + w74 + w75 + w76 + w77 + w78 + w79 + w80 + w81 + w82 + w83 + w84 + w85 + w86 + w87 + w88 + w89 + w90 + w91 + w92 + w93) >> 8;
 }
