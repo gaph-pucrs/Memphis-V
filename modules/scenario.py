@@ -191,8 +191,8 @@ class Scenario:
 			if link[1][0] == "rs":
 				with open("{}/link/rs{}x{}-{}.cfg".format(self.base_dir, link[0][0], link[0][1], link[0][2]), "w") as file:
 					file.write("{}\n".format(self.__link_param_or_default(link[1][1], "tick_begin",   250000)))
-					file.write("{}\n".format(self.__link_param_or_default(link[1][1], "cycle_min",       192)))
-					file.write("{}\n".format(self.__link_param_or_default(link[1][1], "cycle_max",       256)))
+					file.write("{}\n".format(self.__link_param_or_default(link[1][1], "cycle_min",        40)))
+					file.write("{}\n".format(self.__link_param_or_default(link[1][1], "cycle_max",        64)))
 					file.write("{}\n".format(self.__link_param_or_default(link[1][1], "chance",		      25)))
 					file.write("{}\n".format(self.__link_param_or_default(link[1][1], "filter_app",       -1)))
 					file.write("{}\n".format(self.__link_param_or_default(link[1][1], "filter_prod",      -1)))
