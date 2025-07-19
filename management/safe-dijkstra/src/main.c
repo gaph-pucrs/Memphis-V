@@ -30,7 +30,7 @@ int main()
 	// printf("SAFE dijkstra model started at %d\n", memphis_get_tick());
 
 	safe_t dijkstra;
-	safe_init(&dijkstra, SAFE_HASH_dijkstra, model, 24);
+	safe_init(&dijkstra, SAFE_HASH_dijkstra, model, 26);
 
 	while (true) {
 		static safe_infer_t message;

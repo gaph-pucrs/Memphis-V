@@ -104,7 +104,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						if (rel_time < 3159) {
 							w0 = -22751;
 						} else {
-							w0 = -21600;
+							w0 = -21601;
 						}
 					} else {
 						w0 = -21767;
@@ -262,7 +262,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						if (hops < 5) {
 							w1 = -6567;
 						} else {
-							w1 = -5469;
+							w1 = -5470;
 						}
 					}
 				}
@@ -344,7 +344,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 				} else {
 					if (hops < 4) {
 						if (hops < 2) {
-							w1 = 14386;
+							w1 = 14387;
 						} else {
 							w1 = 15244;
 						}
@@ -438,7 +438,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 				} else {
 					if (cons != 3) {
 						if (rel_time < 3342) {
-							w2 = -4558;
+							w2 = -4559;
 						} else {
 							w2 = -4955;
 						}
@@ -494,7 +494,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						if (hops < 2) {
 							w2 = -5361;
 						} else {
-							w2 = -5093;
+							w2 = -5094;
 						}
 					} else {
 						if (rel_time < 1730) {
@@ -527,7 +527,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 							w2 = -6339;
 						}
 					} else {
-						w2 = -4165;
+						w2 = -4166;
 					}
 				}
 			}
@@ -552,13 +552,13 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 				} else {
 					if (hops < 4) {
 						if (hops < 2) {
-							w2 = 7200;
+							w2 = 7201;
 						} else {
 							w2 = 7627;
 						}
 					} else {
 						if (hops < 5) {
-							w2 = 7943;
+							w2 = 7944;
 						} else {
 							w2 = 8837;
 						}
@@ -604,7 +604,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						if (hops < 3) {
 							w2 = -3916;
 						} else {
-							w2 = -6199;
+							w2 = -6200;
 						}
 					}
 				} else {
@@ -724,7 +724,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 				if (rel_time < 3187) {
 					if (hops < 4) {
 						if (hops < 2) {
-							w3 = -991;
+							w3 = -992;
 						} else {
 							w3 = -839;
 						}
@@ -732,7 +732,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						if (hops < 5) {
 							w3 = -545;
 						} else {
-							w3 = -208;
+							w3 = -209;
 						}
 					}
 				} else {
@@ -766,7 +766,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						}
 					} else {
 						if (rel_time < 3244) {
-							w3 = -274;
+							w3 = -275;
 						} else {
 							w3 = -592;
 						}
@@ -782,13 +782,13 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						if (rel_time < 297) {
 							w3 = 4235;
 						} else {
-							w3 = 3491;
+							w3 = 3492;
 						}
 					} else {
 						if (hops < 5) {
 							w3 = 4494;
 						} else {
-							w3 = 5408;
+							w3 = 5409;
 						}
 					}
 				} else {
@@ -863,7 +863,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 			} else {
 				if (rel_time < 4136) {
 					if (prod != 2) {
-						w3 = -949;
+						w3 = -953;
 					} else {
 						if (hops < 3) {
 							w3 = 2858;
@@ -876,7 +876,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						if (hops < 3) {
 							w3 = -980;
 						} else {
-							w3 = -756;
+							w3 = -757;
 						}
 					} else {
 						if (hops < 3) {
@@ -916,9 +916,9 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						}
 					} else {
 						if (hops < 4) {
-							w4 = -1087;
+							w4 = -1088;
 						} else {
-							w4 = -624;
+							w4 = -625;
 						}
 					}
 				}
@@ -926,7 +926,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 				if (rel_time < 1529) {
 					if (cons != 2) {
 						if (hops < 4) {
-							w4 = 1529;
+							w4 = 1530;
 						} else {
 							w4 = 1977;
 						}
@@ -957,7 +957,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 			if (rel_time < 1730) {
 				if (rel_time < 1615) {
 					if (hops < 4) {
-						w4 = -4411;
+						w4 = -4412;
 					} else {
 						w4 = -3965;
 					}
@@ -966,7 +966,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						if (hops < 4) {
 							w4 = -2294;
 						} else {
-							w4 = -2012;
+							w4 = -2013;
 						}
 					} else {
 						if (hops < 4) {
@@ -988,7 +988,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						if (hops < 4) {
 							w4 = -600;
 						} else {
-							w4 = -127;
+							w4 = -128;
 						}
 					}
 				} else {
@@ -1022,7 +1022,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						if (hops < 5) {
 							w4 = 2656;
 						} else {
-							w4 = 3031;
+							w4 = 3032;
 						}
 					}
 				} else {
@@ -1210,7 +1210,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						}
 					} else {
 						if (rel_time < 2386) {
-							w5 = 2133;
+							w5 = 2134;
 						} else {
 							w5 = 631;
 						}
@@ -1236,13 +1236,13 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						if (hops < 5) {
 							w5 = 419;
 						} else {
-							w5 = 727;
+							w5 = 728;
 						}
 					} else {
 						if (hops < 5) {
 							w5 = 486;
 						} else {
-							w5 = 245;
+							w5 = 246;
 						}
 					}
 				} else {
@@ -1440,7 +1440,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 				} else {
 					if (hops < 4) {
 						if (hops < 2) {
-							w6 = 542;
+							w6 = 543;
 						} else {
 							w6 = 691;
 						}
@@ -1536,7 +1536,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						if (prod != 0) {
 							w6 = -1295;
 						} else {
-							w6 = 1643;
+							w6 = 1645;
 						}
 					} else {
 						if (rel_time < 4569) {
@@ -1572,7 +1572,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						}
 					} else {
 						if (rel_time < 569) {
-							w6 = 2321;
+							w6 = 2322;
 						} else {
 							w6 = 1495;
 						}
@@ -1645,12 +1645,12 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 					if (cons != 2) {
 						w7 = 1306;
 					} else {
-						w7 = 271;
+						w7 = 272;
 					}
 				} else {
 					if (rel_time < 2587) {
 						if (cons != 3) {
-							w7 = -458;
+							w7 = -459;
 						} else {
 							w7 = -2298;
 						}
@@ -1706,7 +1706,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						if (hops < 5) {
 							w7 = -1607;
 						} else {
-							w7 = -1317;
+							w7 = -1318;
 						}
 					}
 				} else {
@@ -1802,7 +1802,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						if (hops < 5) {
 							w7 = 741;
 						} else {
-							w7 = 1229;
+							w7 = 1230;
 						}
 					}
 				} else {
@@ -1828,7 +1828,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						}
 					}
 				} else {
-					w7 = 1302;
+					w7 = 1303;
 				}
 			}
 		}
@@ -1934,21 +1934,21 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						if (rel_time < 1444) {
 							w8 = -273;
 						} else {
-							w8 = 249;
+							w8 = 250;
 						}
 					} else {
-						w8 = -658;
+						w8 = -659;
 					}
 				} else {
 					if (rel_time < 2159) {
 						if (rel_time < 2016) {
 							w8 = 169;
 						} else {
-							w8 = 498;
+							w8 = 499;
 						}
 					} else {
 						if (rel_time < 2301) {
-							w8 = -459;
+							w8 = -460;
 						} else {
 							w8 = 64;
 						}
@@ -1970,7 +1970,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						if (prod != 0) {
 							w8 = -1384;
 						} else {
-							w8 = 1409;
+							w8 = 1411;
 						}
 					}
 				} else {
@@ -2002,10 +2002,10 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 		} else {
 			if (rel_time < 10052) {
 				if (prod != 1) {
-					w8 = -1510;
+					w8 = -1512;
 				} else {
 					if (hops < 2) {
-						w8 = 2341;
+						w8 = 2342;
 					} else {
 						if (hops < 3) {
 							w8 = 2541;
@@ -2026,7 +2026,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						if (prod != 4) {
 							w8 = 982;
 						} else {
-							w8 = -413;
+							w8 = -414;
 						}
 					}
 				} else {
@@ -2038,7 +2038,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						}
 					} else {
 						if (hops < 2) {
-							w8 = -1608;
+							w8 = -1609;
 						} else {
 							w8 = -1766;
 						}
@@ -2067,7 +2067,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 					}
 				} else {
 					if (prod != 3) {
-						w9 = 1426;
+						w9 = 1427;
 					} else {
 						w9 = -2356;
 					}
@@ -2106,12 +2106,12 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 		} else {
 			if (prod != 3) {
 				if (hops < 2) {
-					w9 = 1139;
+					w9 = 1140;
 				} else {
 					if (hops < 3) {
-						w9 = 927;
+						w9 = 928;
 					} else {
-						w9 = 1177;
+						w9 = 1180;
 					}
 				}
 			} else {
@@ -2123,7 +2123,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 							w9 = -1650;
 						}
 					} else {
-						w9 = -1371;
+						w9 = -1372;
 					}
 				} else {
 					w9 = -1738;
@@ -2139,7 +2139,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 			}
 		} else {
 			if (hops < 4) {
-				w9 = 838;
+				w9 = 839;
 			} else {
 				w9 = 989;
 			}
@@ -2154,7 +2154,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						if (rel_time < 6364) {
 							w10 = -82;
 						} else {
-							w10 = 574;
+							w10 = 575;
 						}
 					} else {
 						if (prod != 3) {
@@ -2168,7 +2168,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 				}
 			} else {
 				if (prod != 0) {
-					w10 = 1335;
+					w10 = 1341;
 				} else {
 					w10 = -1564;
 				}
@@ -2178,7 +2178,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 				if (prod != 0) {
 					w10 = 2263;
 				} else {
-					w10 = -1491;
+					w10 = -1492;
 				}
 			} else {
 				if (rel_time < 6651) {
@@ -2218,7 +2218,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						if (rel_time < 230) {
 							w10 = 137;
 						} else {
-							w10 = 710;
+							w10 = 711;
 						}
 					}
 				} else {
@@ -2232,7 +2232,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						if (hops < 5) {
 							w10 = -335;
 						} else {
-							w10 = -628;
+							w10 = -629;
 						}
 					}
 				}
@@ -2256,13 +2256,13 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						if (hops < 3) {
 							w10 = -381;
 						} else {
-							w10 = -896;
+							w10 = -897;
 						}
 					} else {
 						if (hops < 5) {
 							w10 = -86;
 						} else {
-							w10 = 382;
+							w10 = 383;
 						}
 					}
 				}
@@ -2294,7 +2294,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						if (hops < 4) {
 							w10 = -1499;
 						} else {
-							w10 = -1033;
+							w10 = -1034;
 						}
 					}
 				}
@@ -2358,9 +2358,13 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 				}
 			} else {
 				if (prod != 2) {
-					w11 = -2424;
+					w11 = -2425;
 				} else {
-					w11 = 1468;
+					if (hops < 4) {
+						w11 = 1453;
+					} else {
+						w11 = 1525;
+					}
 				}
 			}
 		} else {
@@ -2371,7 +2375,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 			if (prod != 3) {
 				w11 = 1439;
 			} else {
-				w11 = -2345;
+				w11 = -2346;
 			}
 		} else {
 			if (prod != 1) {
@@ -2438,7 +2442,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						}
 					} else {
 						if (prod != 3) {
-							w12 = 1487;
+							w12 = 1488;
 						} else {
 							w12 = -2344;
 						}
@@ -2470,7 +2474,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						w12 = 2407;
 					}
 				} else {
-					w12 = -1415;
+					w12 = -1416;
 				}
 			} else {
 				if (prod != 3) {
@@ -2512,7 +2516,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						if (hops < 5) {
 							w12 = -35;
 						} else {
-							w12 = -93;
+							w12 = -94;
 						}
 					}
 				}
@@ -2524,7 +2528,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						if (hops < 3) {
 							w12 = 470;
 						} else {
-							w12 = 610;
+							w12 = 611;
 						}
 					}
 				} else {
@@ -2594,7 +2598,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						}
 					} else {
 						if (hops < 2) {
-							w13 = 1605;
+							w13 = 1606;
 						} else {
 							w13 = 1526;
 						}
@@ -2613,7 +2617,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 			}
 		} else {
 			if (prod != 0) {
-				w13 = 2349;
+				w13 = 2350;
 			} else {
 				if (hops < 2) {
 					w13 = -1500;
@@ -2624,7 +2628,11 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 		}
 	} else {
 		if (rel_time < 4901) {
-			w13 = 2402;
+			if (hops < 2) {
+				w13 = 2335;
+			} else {
+				w13 = 2437;
+			}
 		} else {
 			if (rel_time < 4947) {
 				if (prod != 1) {
@@ -2702,7 +2710,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						}
 					}
 				} else {
-					w14 = -2236;
+					w14 = -2237;
 				}
 			}
 		} else {
@@ -2798,9 +2806,9 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 		} else {
 			if (hops < 2) {
 				if (rel_time < 10257) {
-					w14 = 771;
+					w14 = 772;
 				} else {
-					w14 = 980;
+					w14 = 981;
 				}
 			} else {
 				if (hops < 4) {
@@ -2843,9 +2851,9 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 			} else {
 				if (prod != 0) {
 					if (hops < 2) {
-						w15 = 707;
+						w15 = 710;
 					} else {
-						w15 = 1437;
+						w15 = 1440;
 					}
 				} else {
 					if (hops < 2) {
@@ -2861,13 +2869,13 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 					if (hops < 2) {
 						w15 = 1127;
 					} else {
-						w15 = 2394;
+						w15 = 2395;
 					}
 				} else {
 					if (hops < 2) {
 						w15 = -801;
 					} else {
-						w15 = -1488;
+						w15 = -1489;
 					}
 				}
 			} else {
@@ -2890,7 +2898,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						if (hops < 2) {
 							w15 = -2000;
 						} else {
-							w15 = -2373;
+							w15 = -2374;
 						}
 					} else {
 						if (rel_time < 6941) {
@@ -2914,7 +2922,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						}
 					} else {
 						if (cons != 1) {
-							w15 = 92;
+							w15 = 91;
 						} else {
 							w15 = 351;
 						}
@@ -2946,9 +2954,9 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						}
 					} else {
 						if (hops < 5) {
-							w15 = 803;
+							w15 = 804;
 						} else {
-							w15 = 1275;
+							w15 = 1276;
 						}
 					}
 				}
@@ -2993,14 +3001,14 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 							w15 = -1391;
 						}
 					} else {
-						w15 = 1786;
+						w15 = 1787;
 					}
 				} else {
 					if (rel_time < 8973) {
 						w15 = -1881;
 					} else {
 						if (rel_time < 9246) {
-							w15 = 795;
+							w15 = 767;
 						} else {
 							w15 = -237;
 						}
@@ -3088,7 +3096,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						if (hops < 5) {
 							w16 = 234;
 						} else {
-							w16 = 657;
+							w16 = 658;
 						}
 					}
 				}
@@ -3106,7 +3114,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 				} else {
 					if (rel_time < 2044) {
 						if (hops < 4) {
-							w16 = 607;
+							w16 = 608;
 						} else {
 							w16 = 700;
 						}
@@ -3134,7 +3142,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						if (hops < 4) {
 							w16 = -424;
 						} else {
-							w16 = -581;
+							w16 = -582;
 						}
 					}
 				} else {
@@ -3148,7 +3156,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						if (hops < 5) {
 							w16 = 573;
 						} else {
-							w16 = 508;
+							w16 = 509;
 						}
 					}
 				}
@@ -3181,12 +3189,12 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 			} else {
 				if (hops < 5) {
 					if (hops < 4) {
-						w16 = 253;
+						w16 = 254;
 					} else {
 						w16 = 279;
 					}
 				} else {
-					w16 = 334;
+					w16 = 335;
 				}
 			}
 		}
@@ -3211,12 +3219,12 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 					}
 				} else {
 					if (prod != 2) {
-						w17 = -1459;
+						w17 = -1460;
 					} else {
 						if (hops < 4) {
-							w17 = 716;
+							w17 = 724;
 						} else {
-							w17 = 396;
+							w17 = 382;
 						}
 					}
 				}
@@ -3248,7 +3256,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						if (hops < 2) {
 							w17 = -766;
 						} else {
-							w17 = -660;
+							w17 = -661;
 						}
 					} else {
 						if (hops < 2) {
@@ -3264,7 +3272,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						if (rel_time < 9741) {
 							w17 = -120;
 						} else {
-							w17 = 764;
+							w17 = 763;
 						}
 					} else {
 						if (rel_time < 10157) {
@@ -3298,13 +3306,13 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						if (rel_time < 372) {
 							w17 = 58;
 						} else {
-							w17 = 157;
+							w17 = 158;
 						}
 					} else {
 						if (cons != 3) {
 							w17 = 339;
 						} else {
-							w17 = 90;
+							w17 = 91;
 						}
 					}
 				} else {
@@ -3312,19 +3320,19 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 				}
 			} else {
 				if (rel_time < 777) {
-					w17 = 979;
+					w17 = 980;
 				} else {
 					if (cons != 1) {
 						if (rel_time < 1055) {
-							w17 = 421;
+							w17 = 420;
 						} else {
 							w17 = 165;
 						}
 					} else {
 						if (rel_time < 1009) {
-							w17 = 57;
+							w17 = 58;
 						} else {
-							w17 = 927;
+							w17 = 928;
 						}
 					}
 				}
@@ -3339,14 +3347,14 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 							w17 = -132;
 						}
 					} else {
-						w17 = 2567;
+						w17 = 2568;
 					}
 				} else {
 					if (rel_time < 5136) {
-						w17 = -1242;
+						w17 = -1243;
 					} else {
 						if (rel_time < 5181) {
-							w17 = 1548;
+							w17 = 1549;
 						} else {
 							w17 = 36;
 						}
@@ -3361,7 +3369,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 							w17 = -806;
 						}
 					} else {
-						w17 = 631;
+						w17 = 632;
 					}
 				} else {
 					w17 = -707;
@@ -3390,7 +3398,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 				} else {
 					if (prod != 1) {
 						if (hops < 2) {
-							w18 = -1618;
+							w18 = -1619;
 						} else {
 							w18 = -1433;
 						}
@@ -3408,7 +3416,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 				} else {
 					if (hops < 4) {
 						if (hops < 2) {
-							w18 = -1575;
+							w18 = -1576;
 						} else {
 							w18 = -1434;
 						}
@@ -3424,7 +3432,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 				if (hops < 2) {
 					w18 = 2051;
 				} else {
-					w18 = 2158;
+					w18 = 2159;
 				}
 			}
 		}
@@ -3546,7 +3554,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 				if (hops < 5) {
 					w19 = -115;
 				} else {
-					w19 = 113;
+					w19 = 114;
 				}
 			}
 		} else {
@@ -3647,7 +3655,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 					}
 				} else {
 					if (rel_time < 5317) {
-						w20 = 856;
+						w20 = 857;
 					} else {
 						if (hops < 2) {
 							w20 = 631;
@@ -3685,7 +3693,15 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 					}
 				}
 			} else {
-				w20 = -983;
+				if (hops < 2) {
+					w20 = -1008;
+				} else {
+					if (hops < 3) {
+						w20 = -944;
+					} else {
+						w20 = -988;
+					}
+				}
 			}
 		}
 	} else {
@@ -3697,7 +3713,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 					w20 = -2258;
 				}
 			} else {
-				w20 = 1556;
+				w20 = 1557;
 			}
 		} else {
 			if (rel_time < 5889) {
@@ -3724,7 +3740,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						}
 					} else {
 						if (rel_time < 6077) {
-							w20 = -2630;
+							w20 = -2632;
 						} else {
 							w20 = -1480;
 						}
@@ -3901,7 +3917,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 					if (hops < 5) {
 						w21 = 449;
 					} else {
-						w21 = 549;
+						w21 = 550;
 					}
 				}
 			}
@@ -3971,7 +3987,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 					if (prod != 0) {
 						w22 = 1058;
 					} else {
-						w22 = -1996;
+						w22 = -1997;
 					}
 				}
 			} else {
@@ -3979,7 +3995,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 					w22 = 2604;
 				} else {
 					if (hops < 2) {
-						w22 = -1326;
+						w22 = -1327;
 					} else {
 						w22 = -1203;
 					}
@@ -4013,16 +4029,16 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 					if (hops < 2) {
 						w22 = 1449;
 					} else {
-						w22 = 1545;
+						w22 = 1546;
 					}
 				} else {
 					if (hops < 4) {
-						w22 = -2077;
+						w22 = -2078;
 					} else {
 						if (hops < 5) {
 							w22 = -1131;
 						} else {
-							w22 = -919;
+							w22 = -920;
 						}
 					}
 				}
@@ -4101,7 +4117,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 							w23 = -1527;
 						}
 					} else {
-						w23 = 1497;
+						w23 = 1498;
 					}
 				} else {
 					w23 = 2362;
@@ -4193,7 +4209,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 					if (hops < 5) {
 						w23 = 702;
 					} else {
-						w23 = 630;
+						w23 = 631;
 					}
 				}
 			}
@@ -4287,7 +4303,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 					}
 				} else {
 					if (hops < 2) {
-						w24 = -1019;
+						w24 = -1020;
 					} else {
 						if (hops < 4) {
 							w24 = -630;
@@ -4307,7 +4323,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 							w24 = 307;
 						}
 					} else {
-						w24 = 82;
+						w24 = 83;
 					}
 				} else {
 					if (hops < 4) {
@@ -4466,7 +4482,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						}
 					} else {
 						if (rel_time < 3159) {
-							w25 = -183;
+							w25 = -182;
 						} else {
 							w25 = 54;
 						}
@@ -4490,7 +4506,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 				} else {
 					if (prod != 3) {
 						if (hops < 5) {
-							w25 = 187;
+							w25 = 188;
 						} else {
 							w25 = 547;
 						}
@@ -4590,7 +4606,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						if (hops < 5) {
 							w25 = 1489;
 						} else {
-							w25 = 911;
+							w25 = 912;
 						}
 					}
 				}
@@ -4618,12 +4634,12 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						if (hops < 3) {
 							w25 = 526;
 						} else {
-							w25 = 465;
+							w25 = 466;
 						}
 					}
 				} else {
 					if (hops < 5) {
-						w25 = 1028;
+						w25 = 1029;
 					} else {
 						w25 = 765;
 					}
@@ -4638,7 +4654,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						if (hops < 5) {
 							w25 = 204;
 						} else {
-							w25 = 91;
+							w25 = 92;
 						}
 					}
 				}
@@ -4719,7 +4735,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 					}
 				} else {
 					if (rel_time < 6941) {
-						w26 = -2457;
+						w26 = -2458;
 					} else {
 						w26 = -1141;
 					}
@@ -4768,7 +4784,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						}
 					} else {
 						if (rel_time < 8067) {
-							w26 = 2598;
+							w26 = 2599;
 						} else {
 							w26 = 1123;
 						}
@@ -4778,7 +4794,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						if (hops < 2) {
 							w26 = -790;
 						} else {
-							w26 = -712;
+							w26 = -713;
 						}
 					} else {
 						w26 = -357;
@@ -4799,7 +4815,11 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 			if (rel_time < 8973) {
 				if (hops < 4) {
 					if (hops < 2) {
-						w26 = -1000;
+						if (rel_time < 8933) {
+							w26 = -989;
+						} else {
+							w26 = -1099;
+						}
 					} else {
 						if (rel_time < 8933) {
 							w26 = -927;
@@ -4812,9 +4832,9 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						w26 = -472;
 					} else {
 						if (hops < 5) {
-							w26 = -567;
+							w26 = -568;
 						} else {
-							w26 = -462;
+							w26 = -463;
 						}
 					}
 				}
@@ -4824,13 +4844,13 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						if (rel_time < 9203) {
 							w26 = 574;
 						} else {
-							w26 = 477;
+							w26 = 481;
 						}
 					} else {
 						if (hops < 5) {
-							w26 = 317;
+							w26 = 310;
 						} else {
-							w26 = 466;
+							w26 = 452;
 						}
 					}
 				} else {
@@ -4860,7 +4880,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						if (prod != 3) {
 							w27 = -3;
 						} else {
-							w27 = -467;
+							w27 = -466;
 						}
 					} else {
 						if (prod != 4) {
@@ -4871,10 +4891,10 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 					}
 				} else {
 					if (rel_time < 4090) {
-						w27 = 3010;
+						w27 = 3012;
 					} else {
 						if (prod != 2) {
-							w27 = -819;
+							w27 = -821;
 						} else {
 							w27 = 530;
 						}
@@ -4919,7 +4939,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 							w27 = 1196;
 						}
 					} else {
-						w27 = 1924;
+						w27 = 1925;
 					}
 				}
 			} else {
@@ -4981,9 +5001,13 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 			} else {
 				if (rel_time < 8597) {
 					if (hops < 4) {
-						w27 = -744;
+						if (hops < 3) {
+							w27 = -753;
+						} else {
+							w27 = -702;
+						}
 					} else {
-						w27 = -817;
+						w27 = -818;
 					}
 				} else {
 					w27 = -1006;
@@ -4992,7 +5016,11 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 		} else {
 			if (rel_time < 8933) {
 				if (rel_time < 8873) {
-					w27 = 1327;
+					if (hops < 2) {
+						w27 = 1248;
+					} else {
+						w27 = 1413;
+					}
 				} else {
 					if (hops < 2) {
 						w27 = 940;
@@ -5006,7 +5034,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 				}
 			} else {
 				if (rel_time < 9160) {
-					w27 = -1866;
+					w27 = -1867;
 				} else {
 					if (rel_time < 10052) {
 						if (rel_time < 9781) {
@@ -5040,7 +5068,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						if (rel_time < 8873) {
 							w28 = -607;
 						} else {
-							w28 = -449;
+							w28 = -451;
 						}
 					}
 				} else {
@@ -5048,7 +5076,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						if (prod != 2) {
 							w28 = 769;
 						} else {
-							w28 = -411;
+							w28 = -403;
 						}
 					} else {
 						if (rel_time < 9246) {
@@ -5081,7 +5109,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 							w28 = 274;
 						}
 					} else {
-						w28 = 638;
+						w28 = 639;
 					}
 				}
 			}
@@ -5089,7 +5117,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 			if (rel_time < 10335) {
 				if (rel_time < 10296) {
 					if (hops < 2) {
-						w28 = 483;
+						w28 = 484;
 					} else {
 						if (hops < 4) {
 							w28 = 303;
@@ -5101,7 +5129,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 					if (hops < 2) {
 						w28 = 722;
 					} else {
-						w28 = 591;
+						w28 = 592;
 					}
 				}
 			} else {
@@ -5110,7 +5138,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						if (hops < 4) {
 							w28 = -5;
 						} else {
-							w28 = 120;
+							w28 = 121;
 						}
 					} else {
 						if (hops < 4) {
@@ -5122,15 +5150,15 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 				} else {
 					if (rel_time < 10374) {
 						if (hops < 2) {
-							w28 = -460;
+							w28 = -461;
 						} else {
-							w28 = -585;
+							w28 = -586;
 						}
 					} else {
 						if (hops < 5) {
 							w28 = -103;
 						} else {
-							w28 = -261;
+							w28 = -262;
 						}
 					}
 				}
@@ -5158,7 +5186,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						w28 = 73;
 					} else {
 						if (hops < 4) {
-							w28 = -370;
+							w28 = -371;
 						} else {
 							w28 = -759;
 						}
@@ -5180,7 +5208,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						}
 					}
 				} else {
-					w28 = 1201;
+					w28 = 1202;
 				}
 			}
 		} else {
@@ -5198,16 +5226,16 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 				if (rel_time < 4947) {
 					if (hops < 4) {
 						if (hops < 2) {
-							w28 = 669;
+							w28 = 698;
 						} else {
-							w28 = 761;
+							w28 = 746;
 						}
 					} else {
-						w28 = 611;
+						w28 = 600;
 					}
 				} else {
 					if (rel_time < 5181) {
-						w28 = -2665;
+						w28 = -2666;
 					} else {
 						if (rel_time < 5226) {
 							w28 = -537;
@@ -5260,7 +5288,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						w29 = -438;
 					}
 				} else {
-					w29 = -1053;
+					w29 = -1054;
 				}
 			}
 		} else {
@@ -5274,9 +5302,9 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						}
 					} else {
 						if (hops < 2) {
-							w29 = 1359;
+							w29 = 1360;
 						} else {
-							w29 = 1548;
+							w29 = 1549;
 						}
 					}
 				} else {
@@ -5287,7 +5315,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 							w29 = -181;
 						}
 					} else {
-						w29 = -792;
+						w29 = -793;
 					}
 				}
 			} else {
@@ -5368,7 +5396,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						if (rel_time < 7709) {
 							w29 = -645;
 						} else {
-							w29 = -460;
+							w29 = -461;
 						}
 					} else {
 						if (hops < 3) {
@@ -5388,7 +5416,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						if (hops < 2) {
 							w29 = -1212;
 						} else {
-							w29 = -1099;
+							w29 = -1100;
 						}
 					}
 				}
@@ -5494,7 +5522,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						if (rel_time < 1958) {
 							w30 = -152;
 						} else {
-							w30 = -10;
+							w30 = -9;
 						}
 					}
 				}
@@ -5512,7 +5540,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						}
 					} else {
 						if (prod != 2) {
-							w30 = 1664;
+							w30 = 1667;
 						} else {
 							w30 = -642;
 						}
@@ -5542,7 +5570,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 		} else {
 			if (rel_time < 6454) {
 				if (prod != 3) {
-					w30 = 632;
+					w30 = 633;
 				} else {
 					if (hops < 4) {
 						w30 = -903;
@@ -5568,7 +5596,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 				} else {
 					if (rel_time < 7879) {
 						if (prod != 1) {
-							w30 = 20;
+							w30 = 21;
 						} else {
 							w30 = 764;
 						}
@@ -5636,13 +5664,13 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						if (hops < 2) {
 							w31 = 79;
 						} else {
-							w31 = 20;
+							w31 = 21;
 						}
 					} else {
 						if (hops < 5) {
 							w31 = 528;
 						} else {
-							w31 = 31;
+							w31 = 32;
 						}
 					}
 				}
@@ -5690,7 +5718,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						if (hops < 4) {
 							w31 = 608;
 						} else {
-							w31 = 889;
+							w31 = 890;
 						}
 					}
 				} else {
@@ -5756,7 +5784,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						if (hops < 5) {
 							w31 = 30;
 						} else {
-							w31 = 11;
+							w31 = 12;
 						}
 					}
 				}
@@ -5842,7 +5870,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						if (rel_time < 7028) {
 							w32 = 657;
 						} else {
-							w32 = 155;
+							w32 = 156;
 						}
 					}
 				}
@@ -5854,10 +5882,14 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						if (hops < 2) {
 							w32 = 600;
 						} else {
-							w32 = 681;
+							w32 = 682;
 						}
 					} else {
-						w32 = 587;
+						if (hops < 4) {
+							w32 = 605;
+						} else {
+							w32 = 568;
+						}
 					}
 				}
 			}
@@ -5868,7 +5900,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						if (prod != 3) {
 							w32 = -635;
 						} else {
-							w32 = 1310;
+							w32 = 1314;
 						}
 					} else {
 						if (hops < 4) {
@@ -5926,7 +5958,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 				if (rel_time < 4991) {
 					if (rel_time < 4706) {
 						if (rel_time < 4660) {
-							w32 = -101;
+							w32 = -100;
 						} else {
 							w32 = 734;
 						}
@@ -5939,7 +5971,11 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 					}
 				} else {
 					if (rel_time < 5226) {
-						w32 = 829;
+						if (hops < 2) {
+							w32 = 876;
+						} else {
+							w32 = 763;
+						}
 					} else {
 						if (hops < 2) {
 							w32 = 222;
@@ -5949,14 +5985,10 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 					}
 				}
 			} else {
-				if (hops < 2) {
-					w32 = -564;
+				if (hops < 5) {
+					w32 = -541;
 				} else {
-					if (hops < 3) {
-						w32 = -507;
-					} else {
-						w32 = -551;
-					}
+					w32 = -593;
 				}
 			}
 		} else {
@@ -5978,7 +6010,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 				} else {
 					if (hops < 2) {
 						if (rel_time < 6364) {
-							w32 = 1502;
+							w32 = 1503;
 						} else {
 							w32 = 1223;
 						}
@@ -5996,7 +6028,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						if (hops < 3) {
 							w32 = -486;
 						} else {
-							w32 = -520;
+							w32 = -521;
 						}
 					} else {
 						w32 = -1038;
@@ -6012,7 +6044,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						if (rel_time < 7260) {
 							w32 = -815;
 						} else {
-							w32 = 103;
+							w32 = 104;
 						}
 					}
 				}
@@ -6040,27 +6072,31 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 				} else {
 					if (prod != 1) {
 						if (hops < 4) {
-							w33 = -343;
+							w33 = -344;
 						} else {
-							w33 = -110;
+							w33 = -109;
 						}
 					} else {
-						w33 = 336;
+						if (hops < 2) {
+							w33 = 244;
+						} else {
+							w33 = 346;
+						}
 					}
 				}
 			} else {
 				if (prod != 3) {
 					if (rel_time < 8973) {
 						if (hops < 4) {
-							w33 = -428;
+							w33 = -416;
 						} else {
-							w33 = -158;
+							w33 = -162;
 						}
 					} else {
 						if (hops < 2) {
 							w33 = -532;
 						} else {
-							w33 = -480;
+							w33 = -481;
 						}
 					}
 				} else {
@@ -6106,7 +6142,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						if (hops < 5) {
 							w33 = 115;
 						} else {
-							w33 = 353;
+							w33 = 354;
 						}
 					}
 				}
@@ -6130,7 +6166,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						if (prod != 0) {
 							w33 = -111;
 						} else {
-							w33 = 1196;
+							w33 = 1197;
 						}
 					} else {
 						if (prod != 2) {
@@ -6188,7 +6224,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						}
 					} else {
 						if (rel_time < 5317) {
-							w34 = 275;
+							w34 = 276;
 						} else {
 							w34 = 136;
 						}
@@ -6204,7 +6240,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						}
 					} else {
 						if (hops < 2) {
-							w34 = -1043;
+							w34 = -1044;
 						} else {
 							w34 = -904;
 						}
@@ -6214,7 +6250,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						w34 = -435;
 					} else {
 						if (hops < 4) {
-							w34 = -316;
+							w34 = -317;
 						} else {
 							w34 = -353;
 						}
@@ -6292,7 +6328,7 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						}
 					} else {
 						if (rel_time < 4090) {
-							w34 = 1586;
+							w34 = 1587;
 						} else {
 							w34 = 316;
 						}
@@ -6308,23 +6344,23 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 						if (rel_time < 4706) {
 							w34 = 250;
 						} else {
-							w34 = -55;
+							w34 = -54;
 						}
 					}
 				}
 			} else {
-				if (hops < 5) {
+				if (rel_time < 5512) {
+					w34 = -261;
+				} else {
 					if (hops < 2) {
-						w34 = -283;
+						w34 = -292;
 					} else {
-						if (rel_time < 5512) {
-							w34 = -250;
+						if (hops < 5) {
+							w34 = -271;
 						} else {
-							w34 = -269;
+							w34 = -299;
 						}
 					}
-				} else {
-					w34 = -322;
 				}
 			}
 		} else {
@@ -6362,15 +6398,15 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 				if (rel_time < 8973) {
 					if (hops < 4) {
 						if (rel_time < 8933) {
-							w34 = -171;
+							w34 = -172;
 						} else {
-							w34 = -215;
+							w34 = -209;
 						}
 					} else {
-						if (hops < 5) {
-							w34 = -74;
+						if (rel_time < 8933) {
+							w34 = -54;
 						} else {
-							w34 = -44;
+							w34 = -81;
 						}
 					}
 				} else {
@@ -6391,2967 +6427,5 @@ int model(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const
 			}
 		}
 	}
-	int w35;
-	if (prod != 4) {
-		if (rel_time < 9404) {
-			if (rel_time < 8642) {
-				if (rel_time < 8397) {
-					if (rel_time < 8085) {
-						if (rel_time < 7791) {
-							w35 = -5;
-						} else {
-							w35 = 192;
-						}
-					} else {
-						if (prod != 1) {
-							w35 = -293;
-						} else {
-							w35 = 180;
-						}
-					}
-				} else {
-					if (prod != 1) {
-						if (rel_time < 8443) {
-							w35 = 459;
-						} else {
-							w35 = 292;
-						}
-					} else {
-						if (rel_time < 8597) {
-							w35 = -152;
-						} else {
-							w35 = -262;
-						}
-					}
-				}
-			} else {
-				if (rel_time < 8827) {
-					if (prod != 2) {
-						if (rel_time < 8729) {
-							w35 = -789;
-						} else {
-							w35 = -715;
-						}
-					} else {
-						if (hops < 4) {
-							w35 = 298;
-						} else {
-							w35 = -126;
-						}
-					}
-				} else {
-					if (rel_time < 9117) {
-						if (prod != 3) {
-							w35 = 12;
-						} else {
-							w35 = 324;
-						}
-					} else {
-						if (prod != 2) {
-							w35 = -152;
-						} else {
-							w35 = 38;
-						}
-					}
-				}
-			}
-		} else {
-			if (rel_time < 9703) {
-				if (prod != 2) {
-					if (hops < 4) {
-						if (prod != 0) {
-							w35 = 328;
-						} else {
-							w35 = 60;
-						}
-					} else {
-						if (rel_time < 9579) {
-							w35 = -91;
-						} else {
-							w35 = 152;
-						}
-					}
-				} else {
-					if (hops < 5) {
-						if (rel_time < 9493) {
-							w35 = -36;
-						} else {
-							w35 = -110;
-						}
-					} else {
-						w35 = -422;
-					}
-				}
-			} else {
-				if (rel_time < 9967) {
-					if (prod != 2) {
-						if (rel_time < 9741) {
-							w35 = 40;
-						} else {
-							w35 = -318;
-						}
-					} else {
-						if (hops < 5) {
-							w35 = 113;
-						} else {
-							w35 = 636;
-						}
-					}
-				} else {
-					if (prod != 2) {
-						if (rel_time < 10257) {
-							w35 = 123;
-						} else {
-							w35 = -36;
-						}
-					} else {
-						if (rel_time < 10117) {
-							w35 = -141;
-						} else {
-							w35 = 44;
-						}
-					}
-				}
-			}
-		}
-	} else {
-		if (rel_time < 7977) {
-			if (rel_time < 7691) {
-				if (rel_time < 7414) {
-					if (rel_time < 7127) {
-						if (rel_time < 4566) {
-							w35 = -55;
-						} else {
-							w35 = 88;
-						}
-					} else {
-						if (hops < 3) {
-							w35 = -289;
-						} else {
-							w35 = -340;
-						}
-					}
-				} else {
-					if (hops < 2) {
-						w35 = 350;
-					} else {
-						if (hops < 3) {
-							w35 = 260;
-						} else {
-							w35 = 287;
-						}
-					}
-				}
-			} else {
-				if (rel_time < 7879) {
-					if (hops < 2) {
-						w35 = -836;
-					} else {
-						w35 = -779;
-					}
-				} else {
-					if (hops < 2) {
-						w35 = -692;
-					} else {
-						if (hops < 3) {
-							w35 = -354;
-						} else {
-							w35 = -489;
-						}
-					}
-				}
-			}
-		} else {
-			if (rel_time < 8266) {
-				if (rel_time < 8166) {
-					if (hops < 3) {
-						if (hops < 2) {
-							w35 = 316;
-						} else {
-							w35 = 264;
-						}
-					} else {
-						if (hops < 5) {
-							w35 = 347;
-						} else {
-							w35 = 182;
-						}
-					}
-				} else {
-					w35 = 1052;
-				}
-			} else {
-				if (rel_time < 8557) {
-					if (rel_time < 8443) {
-						w35 = -1303;
-					} else {
-						if (rel_time < 8462) {
-							w35 = -297;
-						} else {
-							w35 = -625;
-						}
-					}
-				} else {
-					if (rel_time < 8729) {
-						w35 = 1573;
-					} else {
-						if (rel_time < 8827) {
-							w35 = 233;
-						} else {
-							w35 = -22;
-						}
-					}
-				}
-			}
-		}
-	}
-	int w36;
-	if (hops < 5) {
-		if (hops < 3) {
-			if (rel_time < 1243) {
-				if (hops < 2) {
-					if (rel_time < 1100) {
-						if (rel_time < 868) {
-							w36 = 17;
-						} else {
-							w36 = -196;
-						}
-					} else {
-						if (cons != 1) {
-							w36 = 136;
-						} else {
-							w36 = -88;
-						}
-					}
-				} else {
-					if (rel_time < 503) {
-						if (rel_time < 438) {
-							w36 = 43;
-						} else {
-							w36 = -212;
-						}
-					} else {
-						if (cons != 0) {
-							w36 = 195;
-						} else {
-							w36 = 13;
-						}
-					}
-				}
-			} else {
-				if (rel_time < 1416) {
-					if (cons != 3) {
-						if (cons != 2) {
-							w36 = -105;
-						} else {
-							w36 = 36;
-						}
-					} else {
-						if (hops < 2) {
-							w36 = -264;
-						} else {
-							w36 = -304;
-						}
-					}
-				} else {
-					if (rel_time < 1559) {
-						if (cons != 3) {
-							w36 = 59;
-						} else {
-							w36 = 356;
-						}
-					} else {
-						if (rel_time < 1702) {
-							w36 = -126;
-						} else {
-							w36 = 2;
-						}
-					}
-				}
-			}
-		} else {
-			if (rel_time < 1786) {
-				if (rel_time < 1644) {
-					if (hops < 4) {
-						if (rel_time < 1416) {
-							w36 = -129;
-						} else {
-							w36 = 73;
-						}
-					} else {
-						if (cons != 3) {
-							w36 = -2;
-						} else {
-							w36 = 123;
-						}
-					}
-				} else {
-					if (rel_time < 1730) {
-						if (cons != 4) {
-							w36 = -338;
-						} else {
-							w36 = -136;
-						}
-					} else {
-						if (hops < 4) {
-							w36 = 1;
-						} else {
-							w36 = -96;
-						}
-					}
-				}
-			} else {
-				if (rel_time < 1873) {
-					if (rel_time < 1844) {
-						if (rel_time < 1815) {
-							w36 = 206;
-						} else {
-							w36 = 134;
-						}
-					} else {
-						if (hops < 4) {
-							w36 = 262;
-						} else {
-							w36 = 309;
-						}
-					}
-				} else {
-					if (rel_time < 1901) {
-						if (hops < 4) {
-							w36 = -368;
-						} else {
-							w36 = -325;
-						}
-					} else {
-						if (rel_time < 2159) {
-							w36 = 69;
-						} else {
-							w36 = -5;
-						}
-					}
-				}
-			}
-		}
-	} else {
-		if (rel_time < 4615) {
-			if (rel_time < 4566) {
-				if (rel_time < 4466) {
-					if (rel_time < 4420) {
-						if (prod != 4) {
-							w36 = 37;
-						} else {
-							w36 = 317;
-						}
-					} else {
-						w36 = 920;
-					}
-				} else {
-					w36 = -528;
-				}
-			} else {
-				if (prod != 0) {
-					w36 = -585;
-				} else {
-					if (rel_time < 4569) {
-						w36 = 832;
-					} else {
-						w36 = 1768;
-					}
-				}
-			}
-		} else {
-			if (rel_time < 4660) {
-				w36 = -527;
-			} else {
-				if (rel_time < 7260) {
-					if (rel_time < 6564) {
-						if (rel_time < 6131) {
-							w36 = -59;
-						} else {
-							w36 = 215;
-						}
-					} else {
-						if (rel_time < 6607) {
-							w36 = -1390;
-						} else {
-							w36 = -95;
-						}
-					}
-				} else {
-					if (rel_time < 7879) {
-						if (rel_time < 7835) {
-							w36 = 68;
-						} else {
-							w36 = 822;
-						}
-					} else {
-						if (rel_time < 8166) {
-							w36 = -153;
-						} else {
-							w36 = 28;
-						}
-					}
-				}
-			}
-		}
-	}
-	int w37;
-	if (rel_time < 10416) {
-		if (rel_time < 438) {
-			if (cons != 1) {
-				if (hops < 4) {
-					if (hops < 3) {
-						if (rel_time < 372) {
-							w37 = 4;
-						} else {
-							w37 = 25;
-						}
-					} else {
-						if (rel_time < 372) {
-							w37 = 84;
-						} else {
-							w37 = 42;
-						}
-					}
-				} else {
-					if (rel_time < 372) {
-						if (rel_time < 297) {
-							w37 = -11;
-						} else {
-							w37 = -54;
-						}
-					} else {
-						if (hops < 5) {
-							w37 = 58;
-						} else {
-							w37 = -23;
-						}
-					}
-				}
-			} else {
-				if (hops < 2) {
-					w37 = 64;
-				} else {
-					if (hops < 5) {
-						if (hops < 3) {
-							w37 = 101;
-						} else {
-							w37 = 129;
-						}
-					} else {
-						w37 = 7;
-					}
-				}
-			}
-		} else {
-			if (rel_time < 503) {
-				if (hops < 4) {
-					if (hops < 3) {
-						if (hops < 2) {
-							w37 = -263;
-						} else {
-							w37 = -106;
-						}
-					} else {
-						w37 = -432;
-					}
-				} else {
-					if (hops < 5) {
-						w37 = -65;
-					} else {
-						w37 = 30;
-					}
-				}
-			} else {
-				if (rel_time < 868) {
-					if (rel_time < 822) {
-						if (cons != 1) {
-							w37 = -74;
-						} else {
-							w37 = 304;
-						}
-					} else {
-						if (hops < 2) {
-							w37 = 511;
-						} else {
-							w37 = 201;
-						}
-					}
-				} else {
-					if (rel_time < 918) {
-						if (hops < 3) {
-							w37 = -87;
-						} else {
-							w37 = -233;
-						}
-					} else {
-						if (rel_time < 964) {
-							w37 = 117;
-						} else {
-							w37 = -1;
-						}
-					}
-				}
-			}
-		}
-	} else {
-		if (hops < 4) {
-			w37 = 76;
-		} else {
-			w37 = 92;
-		}
-	}
-	int w38;
-	if (cons != 0) {
-		if (rel_time < 777) {
-			if (rel_time < 635) {
-				if (cons != 2) {
-					if (rel_time < 372) {
-						if (rel_time < 163) {
-							w38 = 47;
-						} else {
-							w38 = 11;
-						}
-					} else {
-						if (hops < 3) {
-							w38 = -34;
-						} else {
-							w38 = -156;
-						}
-					}
-				} else {
-					if (rel_time < 230) {
-						if (hops < 5) {
-							w38 = 8;
-						} else {
-							w38 = -45;
-						}
-					} else {
-						if (hops < 2) {
-							w38 = 186;
-						} else {
-							w38 = 67;
-						}
-					}
-				}
-			} else {
-				if (hops < 3) {
-					if (rel_time < 686) {
-						if (hops < 2) {
-							w38 = 65;
-						} else {
-							w38 = 215;
-						}
-					} else {
-						if (hops < 2) {
-							w38 = 350;
-						} else {
-							w38 = 121;
-						}
-					}
-				} else {
-					if (rel_time < 686) {
-						if (hops < 4) {
-							w38 = 35;
-						} else {
-							w38 = 194;
-						}
-					} else {
-						if (hops < 4) {
-							w38 = 117;
-						} else {
-							w38 = -114;
-						}
-					}
-				}
-			}
-		} else {
-			if (rel_time < 822) {
-				if (hops < 2) {
-					w38 = -492;
-				} else {
-					if (hops < 4) {
-						if (hops < 3) {
-							w38 = -120;
-						} else {
-							w38 = -217;
-						}
-					} else {
-						w38 = 110;
-					}
-				}
-			} else {
-				if (rel_time < 868) {
-					if (hops < 3) {
-						if (hops < 2) {
-							w38 = 256;
-						} else {
-							w38 = 183;
-						}
-					} else {
-						if (hops < 4) {
-							w38 = -153;
-						} else {
-							w38 = 231;
-						}
-					}
-				} else {
-					if (rel_time < 1009) {
-						if (hops < 4) {
-							w38 = -158;
-						} else {
-							w38 = -4;
-						}
-					} else {
-						if (rel_time < 1243) {
-							w38 = 58;
-						} else {
-							w38 = 0;
-						}
-					}
-				}
-			}
-		}
-	} else {
-		if (rel_time < 1873) {
-			if (rel_time < 1730) {
-				if (rel_time < 1158) {
-					if (rel_time < 438) {
-						if (rel_time < 63) {
-							w38 = 1;
-						} else {
-							w38 = 15;
-						}
-					} else {
-						if (rel_time < 731) {
-							w38 = -142;
-						} else {
-							w38 = -18;
-						}
-					}
-				} else {
-					if (rel_time < 1301) {
-						if (hops < 3) {
-							w38 = 9;
-						} else {
-							w38 = 205;
-						}
-					} else {
-						if (hops < 5) {
-							w38 = 3;
-						} else {
-							w38 = -207;
-						}
-					}
-				}
-			} else {
-				if (hops < 2) {
-					w38 = 61;
-				} else {
-					if (hops < 3) {
-						w38 = 207;
-					} else {
-						if (hops < 4) {
-							w38 = 132;
-						} else {
-							w38 = 158;
-						}
-					}
-				}
-			}
-		} else {
-			if (rel_time < 2301) {
-				if (hops < 3) {
-					if (rel_time < 2159) {
-						if (rel_time < 2016) {
-							w38 = -164;
-						} else {
-							w38 = -27;
-						}
-					} else {
-						if (hops < 2) {
-							w38 = -135;
-						} else {
-							w38 = -233;
-						}
-					}
-				} else {
-					if (rel_time < 2159) {
-						if (hops < 4) {
-							w38 = 99;
-						} else {
-							w38 = -85;
-						}
-					} else {
-						if (hops < 4) {
-							w38 = -174;
-						} else {
-							w38 = 2;
-						}
-					}
-				}
-			} else {
-				if (rel_time < 2444) {
-					if (hops < 5) {
-						if (hops < 2) {
-							w38 = 158;
-						} else {
-							w38 = 121;
-						}
-					} else {
-						w38 = -60;
-					}
-				} else {
-					if (rel_time < 2587) {
-						if (hops < 3) {
-							w38 = -264;
-						} else {
-							w38 = -102;
-						}
-					} else {
-						if (rel_time < 2730) {
-							w38 = 102;
-						} else {
-							w38 = -32;
-						}
-					}
-				}
-			}
-		}
-	}
-	int w39;
-	if (rel_time < 1730) {
-		if (rel_time < 1644) {
-			if (rel_time < 1444) {
-				if (rel_time < 1301) {
-					if (hops < 4) {
-						if (hops < 3) {
-							w39 = 10;
-						} else {
-							w39 = -57;
-						}
-					} else {
-						if (cons != 3) {
-							w39 = 19;
-						} else {
-							w39 = 101;
-						}
-					}
-				} else {
-					if (cons != 3) {
-						if (rel_time < 1329) {
-							w39 = -116;
-						} else {
-							w39 = -17;
-						}
-					} else {
-						if (hops < 3) {
-							w39 = -141;
-						} else {
-							w39 = -305;
-						}
-					}
-				}
-			} else {
-				if (cons != 3) {
-					if (rel_time < 1587) {
-						if (hops < 3) {
-							w39 = 50;
-						} else {
-							w39 = 17;
-						}
-					} else {
-						if (hops < 3) {
-							w39 = 9;
-						} else {
-							w39 = -101;
-						}
-					}
-				} else {
-					if (hops < 3) {
-						if (hops < 2) {
-							w39 = 169;
-						} else {
-							w39 = 190;
-						}
-					} else {
-						if (hops < 4) {
-							w39 = 303;
-						} else {
-							w39 = 254;
-						}
-					}
-				}
-			}
-		} else {
-			if (rel_time < 1672) {
-				if (hops < 5) {
-					if (hops < 3) {
-						w39 = -287;
-					} else {
-						if (hops < 4) {
-							w39 = -188;
-						} else {
-							w39 = -248;
-						}
-					}
-				} else {
-					w39 = -456;
-				}
-			} else {
-				if (rel_time < 1702) {
-					if (hops < 3) {
-						w39 = -106;
-					} else {
-						if (hops < 4) {
-							w39 = -56;
-						} else {
-							w39 = -84;
-						}
-					}
-				} else {
-					if (hops < 3) {
-						if (hops < 2) {
-							w39 = -74;
-						} else {
-							w39 = 74;
-						}
-					} else {
-						if (hops < 5) {
-							w39 = -123;
-						} else {
-							w39 = 43;
-						}
-					}
-				}
-			}
-		}
-	} else {
-		if (rel_time < 1873) {
-			if (cons != 3) {
-				if (cons != 2) {
-					if (hops < 5) {
-						if (hops < 3) {
-							w39 = 84;
-						} else {
-							w39 = 40;
-						}
-					} else {
-						if (rel_time < 1844) {
-							w39 = 236;
-						} else {
-							w39 = 85;
-						}
-					}
-				} else {
-					if (hops < 2) {
-						w39 = -39;
-					} else {
-						if (hops < 3) {
-							w39 = -2;
-						} else {
-							w39 = -19;
-						}
-					}
-				}
-			} else {
-				if (hops < 3) {
-					w39 = 261;
-				} else {
-					if (hops < 5) {
-						if (hops < 4) {
-							w39 = 130;
-						} else {
-							w39 = 65;
-						}
-					} else {
-						w39 = 269;
-					}
-				}
-			}
-		} else {
-			if (rel_time < 1901) {
-				if (hops < 3) {
-					w39 = -331;
-				} else {
-					if (hops < 5) {
-						if (hops < 4) {
-							w39 = -184;
-						} else {
-							w39 = -162;
-						}
-					} else {
-						w39 = -323;
-					}
-				}
-			} else {
-				if (rel_time < 2101) {
-					if (cons != 1) {
-						if (rel_time < 2072) {
-							w39 = -35;
-						} else {
-							w39 = 256;
-						}
-					} else {
-						if (hops < 3) {
-							w39 = 283;
-						} else {
-							w39 = 249;
-						}
-					}
-				} else {
-					if (rel_time < 2243) {
-						if (rel_time < 2215) {
-							w39 = -37;
-						} else {
-							w39 = -279;
-						}
-					} else {
-						if (rel_time < 2444) {
-							w39 = 91;
-						} else {
-							w39 = -2;
-						}
-					}
-				}
-			}
-		}
-	}
-	int w40;
-	if (rel_time < 2587) {
-		if (rel_time < 2444) {
-			if (rel_time < 2301) {
-				if (rel_time < 2159) {
-					if (rel_time < 2072) {
-						if (rel_time < 2044) {
-							w40 = 1;
-						} else {
-							w40 = -167;
-						}
-					} else {
-						if (rel_time < 2101) {
-							w40 = 128;
-						} else {
-							w40 = 39;
-						}
-					}
-				} else {
-					if (cons != 4) {
-						if (cons != 2) {
-							w40 = -154;
-						} else {
-							w40 = 52;
-						}
-					} else {
-						if (hops < 4) {
-							w40 = 45;
-						} else {
-							w40 = 224;
-						}
-					}
-				}
-			} else {
-				if (cons != 2) {
-					if (rel_time < 2386) {
-						if (hops < 4) {
-							w40 = 222;
-						} else {
-							w40 = 44;
-						}
-					} else {
-						if (hops < 4) {
-							w40 = 48;
-						} else {
-							w40 = -48;
-						}
-					}
-				} else {
-					if (hops < 4) {
-						if (hops < 3) {
-							w40 = -44;
-						} else {
-							w40 = -52;
-						}
-					} else {
-						if (hops < 5) {
-							w40 = -201;
-						} else {
-							w40 = -256;
-						}
-					}
-				}
-			}
-		} else {
-			if (hops < 4) {
-				if (cons != 3) {
-					if (cons != 2) {
-						if (hops < 2) {
-							w40 = -113;
-						} else {
-							w40 = -223;
-						}
-					} else {
-						if (hops < 2) {
-							w40 = -4;
-						} else {
-							w40 = -41;
-						}
-					}
-				} else {
-					if (hops < 2) {
-						w40 = -307;
-					} else {
-						w40 = -442;
-					}
-				}
-			} else {
-				if (rel_time < 2472) {
-					w40 = -100;
-				} else {
-					if (rel_time < 2529) {
-						if (hops < 5) {
-							w40 = 195;
-						} else {
-							w40 = 260;
-						}
-					} else {
-						if (hops < 5) {
-							w40 = 13;
-						} else {
-							w40 = -5;
-						}
-					}
-				}
-			}
-		}
-	} else {
-		if (rel_time < 2616) {
-			if (hops < 4) {
-				if (hops < 2) {
-					w40 = 417;
-				} else {
-					w40 = 538;
-				}
-			} else {
-				w40 = 42;
-			}
-		} else {
-			if (rel_time < 2644) {
-				if (hops < 4) {
-					if (hops < 2) {
-						w40 = -334;
-					} else {
-						if (hops < 3) {
-							w40 = -74;
-						} else {
-							w40 = -97;
-						}
-					}
-				} else {
-					w40 = -1058;
-				}
-			} else {
-				if (rel_time < 2702) {
-					if (hops < 4) {
-						if (hops < 2) {
-							w40 = 129;
-						} else {
-							w40 = 375;
-						}
-					} else {
-						if (rel_time < 2672) {
-							w40 = -495;
-						} else {
-							w40 = 172;
-						}
-					}
-				} else {
-					if (rel_time < 2758) {
-						if (rel_time < 2730) {
-							w40 = 52;
-						} else {
-							w40 = -341;
-						}
-					} else {
-						if (rel_time < 2787) {
-							w40 = 349;
-						} else {
-							w40 = 1;
-						}
-					}
-				}
-			}
-		}
-	}
-	int w41;
-	if (rel_time < 3598) {
-		if (prod != 3) {
-			if (prod != 1) {
-				if (rel_time < 3016) {
-					if (rel_time < 2873) {
-						if (rel_time < 2787) {
-							w41 = -1;
-						} else {
-							w41 = -117;
-						}
-					} else {
-						if (hops < 4) {
-							w41 = 56;
-						} else {
-							w41 = 355;
-						}
-					}
-				} else {
-					if (rel_time < 3101) {
-						if (cons != 2) {
-							w41 = -194;
-						} else {
-							w41 = -75;
-						}
-					} else {
-						if (cons != 4) {
-							w41 = 49;
-						} else {
-							w41 = -118;
-						}
-					}
-				}
-			} else {
-				if (hops < 3) {
-					if (hops < 2) {
-						if (rel_time < 3462) {
-							w41 = 324;
-						} else {
-							w41 = -135;
-						}
-					} else {
-						if (rel_time < 3462) {
-							w41 = -219;
-						} else {
-							w41 = -1170;
-						}
-					}
-				} else {
-					if (rel_time < 3462) {
-						w41 = -2670;
-					} else {
-						if (hops < 4) {
-							w41 = 573;
-						} else {
-							w41 = 295;
-						}
-					}
-				}
-			}
-		} else {
-			if (hops < 3) {
-				if (hops < 2) {
-					w41 = -212;
-				} else {
-					if (rel_time < 3553) {
-						w41 = 263;
-					} else {
-						w41 = 299;
-					}
-				}
-			} else {
-				if (hops < 4) {
-					w41 = -1394;
-				} else {
-					if (hops < 5) {
-						w41 = -71;
-					} else {
-						if (rel_time < 3553) {
-							w41 = 103;
-						} else {
-							w41 = 38;
-						}
-					}
-				}
-			}
-		}
-	} else {
-		if (rel_time < 3898) {
-			if (prod != 3) {
-				if (rel_time < 3852) {
-					if (prod != 1) {
-						if (rel_time < 3715) {
-							w41 = 118;
-						} else {
-							w41 = -97;
-						}
-					} else {
-						if (hops < 2) {
-							w41 = -94;
-						} else {
-							w41 = 375;
-						}
-					}
-				} else {
-					if (hops < 2) {
-						w41 = -2167;
-					} else {
-						w41 = -1570;
-					}
-				}
-			} else {
-				if (hops < 2) {
-					if (rel_time < 3852) {
-						w41 = 675;
-					} else {
-						w41 = 280;
-					}
-				} else {
-					if (hops < 4) {
-						if (rel_time < 3852) {
-							w41 = 983;
-						} else {
-							w41 = 581;
-						}
-					} else {
-						if (hops < 5) {
-							w41 = 282;
-						} else {
-							w41 = 193;
-						}
-					}
-				}
-			}
-		} else {
-			if (rel_time < 4284) {
-				if (prod != 2) {
-					if (prod != 4) {
-						if (rel_time < 4138) {
-							w41 = -82;
-						} else {
-							w41 = -657;
-						}
-					} else {
-						if (rel_time < 3998) {
-							w41 = -92;
-						} else {
-							w41 = 208;
-						}
-					}
-				} else {
-					if (hops < 4) {
-						if (rel_time < 4090) {
-							w41 = 810;
-						} else {
-							w41 = 214;
-						}
-					} else {
-						if (hops < 5) {
-							w41 = -72;
-						} else {
-							w41 = -20;
-						}
-					}
-				}
-			} else {
-				if (rel_time < 4466) {
-					if (prod != 3) {
-						if (prod != 1) {
-							w41 = -230;
-						} else {
-							w41 = 416;
-						}
-					} else {
-						if (rel_time < 4420) {
-							w41 = 1854;
-						} else {
-							w41 = 637;
-						}
-					}
-				} else {
-					if (rel_time < 4751) {
-						if (prod != 0) {
-							w41 = -213;
-						} else {
-							w41 = 535;
-						}
-					} else {
-						if (rel_time < 4851) {
-							w41 = 300;
-						} else {
-							w41 = -2;
-						}
-					}
-				}
-			}
-		}
-	}
-	int w42;
-	if (prod != 2) {
-		if (rel_time < 5602) {
-			if (rel_time < 5422) {
-				if (rel_time < 5181) {
-					if (rel_time < 4896) {
-						if (rel_time < 4851) {
-							w42 = 0;
-						} else {
-							w42 = -253;
-						}
-					} else {
-						if (prod != 4) {
-							w42 = 234;
-						} else {
-							w42 = -322;
-						}
-					}
-				} else {
-					if (prod != 4) {
-						if (rel_time < 5226) {
-							w42 = -107;
-						} else {
-							w42 = -237;
-						}
-					} else {
-						if (hops < 2) {
-							w42 = 49;
-						} else {
-							w42 = 19;
-						}
-					}
-				}
-			} else {
-				if (prod != 1) {
-					if (prod != 3) {
-						if (rel_time < 5467) {
-							w42 = -171;
-						} else {
-							w42 = -538;
-						}
-					} else {
-						if (rel_time < 5557) {
-							w42 = 320;
-						} else {
-							w42 = 234;
-						}
-					}
-				} else {
-					if (hops < 4) {
-						if (hops < 2) {
-							w42 = 453;
-						} else {
-							w42 = 523;
-						}
-					} else {
-						w42 = 350;
-					}
-				}
-			}
-		} else {
-			if (rel_time < 5844) {
-				if (prod != 0) {
-					if (prod != 1) {
-						if (rel_time < 5702) {
-							w42 = -155;
-						} else {
-							w42 = -230;
-						}
-					} else {
-						if (hops < 4) {
-							w42 = -359;
-						} else {
-							w42 = -419;
-						}
-					}
-				} else {
-					if (rel_time < 5710) {
-						if (hops < 4) {
-							w42 = 110;
-						} else {
-							w42 = 90;
-						}
-					} else {
-						w42 = 522;
-					}
-				}
-			} else {
-				if (rel_time < 6131) {
-					if (prod != 0) {
-						if (prod != 3) {
-							w42 = 462;
-						} else {
-							w42 = -142;
-						}
-					} else {
-						if (hops < 2) {
-							w42 = -586;
-						} else {
-							w42 = -526;
-						}
-					}
-				} else {
-					if (rel_time < 6454) {
-						if (prod != 0) {
-							w42 = -264;
-						} else {
-							w42 = 501;
-						}
-					} else {
-						if (rel_time < 6740) {
-							w42 = 113;
-						} else {
-							w42 = -11;
-						}
-					}
-				}
-			}
-		}
-	} else {
-		if (rel_time < 6409) {
-			if (rel_time < 6123) {
-				if (rel_time < 5844) {
-					if (rel_time < 5557) {
-						if (rel_time < 5272) {
-							w42 = 15;
-						} else {
-							w42 = -130;
-						}
-					} else {
-						if (hops < 3) {
-							w42 = 313;
-						} else {
-							w42 = 298;
-						}
-					}
-				} else {
-					if (rel_time < 6077) {
-						w42 = -1011;
-					} else {
-						if (hops < 2) {
-							w42 = -369;
-						} else {
-							w42 = -161;
-						}
-					}
-				}
-			} else {
-				if (hops < 2) {
-					if (rel_time < 6364) {
-						w42 = 740;
-					} else {
-						w42 = 599;
-					}
-				} else {
-					if (rel_time < 6364) {
-						w42 = 553;
-					} else {
-						if (hops < 5) {
-							w42 = 372;
-						} else {
-							w42 = 290;
-						}
-					}
-				}
-			}
-		} else {
-			if (rel_time < 6695) {
-				if (hops < 4) {
-					if (rel_time < 6651) {
-						w42 = -269;
-					} else {
-						if (hops < 3) {
-							w42 = -228;
-						} else {
-							w42 = -263;
-						}
-					}
-				} else {
-					if (hops < 5) {
-						w42 = -539;
-					} else {
-						w42 = -447;
-					}
-				}
-			} else {
-				if (rel_time < 6984) {
-					if (hops < 4) {
-						if (hops < 2) {
-							w42 = 310;
-						} else {
-							w42 = 224;
-						}
-					} else {
-						if (rel_time < 6941) {
-							w42 = 783;
-						} else {
-							w42 = 171;
-						}
-					}
-				} else {
-					if (rel_time < 7260) {
-						if (hops < 3) {
-							w42 = -404;
-						} else {
-							w42 = -437;
-						}
-					} else {
-						if (rel_time < 7547) {
-							w42 = 360;
-						} else {
-							w42 = 1;
-						}
-					}
-				}
-			}
-		}
-	}
-	int w43;
-	if (prod != 1) {
-		if (rel_time < 7791) {
-			if (rel_time < 7691) {
-				if (rel_time < 6466) {
-					if (rel_time < 6275) {
-						if (rel_time < 5844) {
-							w43 = 4;
-						} else {
-							w43 = -51;
-						}
-					} else {
-						if (rel_time < 6364) {
-							w43 = 537;
-						} else {
-							w43 = 12;
-						}
-					}
-				} else {
-					if (rel_time < 6651) {
-						if (hops < 4) {
-							w43 = -119;
-						} else {
-							w43 = -661;
-						}
-					} else {
-						if (prod != 3) {
-							w43 = 18;
-						} else {
-							w43 = -88;
-						}
-					}
-				}
-			} else {
-				if (rel_time < 7749) {
-					if (hops < 4) {
-						if (hops < 2) {
-							w43 = -158;
-						} else {
-							w43 = -109;
-						}
-					} else {
-						if (rel_time < 7709) {
-							w43 = -199;
-						} else {
-							w43 = -101;
-						}
-					}
-				} else {
-					if (hops < 2) {
-						w43 = -322;
-					} else {
-						if (hops < 3) {
-							w43 = -245;
-						} else {
-							w43 = -303;
-						}
-					}
-				}
-			}
-		} else {
-			if (rel_time < 8085) {
-				if (prod != 4) {
-					if (prod != 3) {
-						if (rel_time < 7835) {
-							w43 = -394;
-						} else {
-							w43 = 227;
-						}
-					} else {
-						if (rel_time < 7835) {
-							w43 = 360;
-						} else {
-							w43 = 790;
-						}
-					}
-				} else {
-					if (rel_time < 7879) {
-						if (hops < 2) {
-							w43 = -412;
-						} else {
-							w43 = -382;
-						}
-					} else {
-						if (hops < 2) {
-							w43 = -340;
-						} else {
-							w43 = -208;
-						}
-					}
-				}
-			} else {
-				if (rel_time < 8126) {
-					if (prod != 2) {
-						if (hops < 3) {
-							w43 = -225;
-						} else {
-							w43 = -181;
-						}
-					} else {
-						if (hops < 3) {
-							w43 = 334;
-						} else {
-							w43 = 498;
-						}
-					}
-				} else {
-					if (prod != 4) {
-						if (rel_time < 8310) {
-							w43 = -342;
-						} else {
-							w43 = 8;
-						}
-					} else {
-						if (rel_time < 8266) {
-							w43 = 314;
-						} else {
-							w43 = 7;
-						}
-					}
-				}
-			}
-		}
-	} else {
-		if (rel_time < 5226) {
-			if (rel_time < 4375) {
-				if (rel_time < 4090) {
-					if (hops < 4) {
-						if (hops < 3) {
-							w43 = -61;
-						} else {
-							w43 = 259;
-						}
-					} else {
-						if (rel_time < 3761) {
-							w43 = 86;
-						} else {
-							w43 = -315;
-						}
-					}
-				} else {
-					if (hops < 4) {
-						if (rel_time < 4329) {
-							w43 = 326;
-						} else {
-							w43 = 63;
-						}
-					} else {
-						if (hops < 5) {
-							w43 = 408;
-						} else {
-							w43 = 342;
-						}
-					}
-				}
-			} else {
-				if (rel_time < 4660) {
-					if (hops < 5) {
-						if (rel_time < 4615) {
-							w43 = -494;
-						} else {
-							w43 = -392;
-						}
-					} else {
-						w43 = -165;
-					}
-				} else {
-					if (rel_time < 4947) {
-						if (rel_time < 4896) {
-							w43 = 608;
-						} else {
-							w43 = 14;
-						}
-					} else {
-						if (rel_time < 5181) {
-							w43 = -1673;
-						} else {
-							w43 = -54;
-						}
-					}
-				}
-			}
-		} else {
-			if (rel_time < 6033) {
-				if (rel_time < 5798) {
-					if (rel_time < 5512) {
-						if (hops < 4) {
-							w43 = 248;
-						} else {
-							w43 = 175;
-						}
-					} else {
-						if (hops < 4) {
-							w43 = -180;
-						} else {
-							w43 = -210;
-						}
-					}
-				} else {
-					w43 = 1687;
-				}
-			} else {
-				if (rel_time < 6320) {
-					if (rel_time < 6077) {
-						if (hops < 4) {
-							w43 = 9;
-						} else {
-							w43 = -121;
-						}
-					} else {
-						if (hops < 2) {
-							w43 = -1015;
-						} else {
-							w43 = -435;
-						}
-					}
-				} else {
-					if (rel_time < 6651) {
-						if (hops < 2) {
-							w43 = -124;
-						} else {
-							w43 = 400;
-						}
-					} else {
-						if (rel_time < 6885) {
-							w43 = -1922;
-						} else {
-							w43 = -4;
-						}
-					}
-				}
-			}
-		}
-	}
-	int w44;
-	if (prod != 4) {
-		if (rel_time < 8873) {
-			if (rel_time < 8642) {
-				if (rel_time < 8310) {
-					if (rel_time < 7977) {
-						if (rel_time < 7709) {
-							w44 = -4;
-						} else {
-							w44 = 148;
-						}
-					} else {
-						if (prod != 2) {
-							w44 = -161;
-						} else {
-							w44 = 151;
-						}
-					}
-				} else {
-					if (prod != 3) {
-						if (prod != 1) {
-							w44 = 102;
-						} else {
-							w44 = -21;
-						}
-					} else {
-						if (rel_time < 8397) {
-							w44 = 595;
-						} else {
-							w44 = 233;
-						}
-					}
-				}
-			} else {
-				if (prod != 3) {
-					if (prod != 1) {
-						if (rel_time < 8686) {
-							w44 = 72;
-						} else {
-							w44 = -187;
-						}
-					} else {
-						if (hops < 2) {
-							w44 = 553;
-						} else {
-							w44 = 708;
-						}
-					}
-				} else {
-					if (hops < 2) {
-						if (rel_time < 8686) {
-							w44 = -390;
-						} else {
-							w44 = -359;
-						}
-					} else {
-						w44 = -399;
-					}
-				}
-			}
-		} else {
-			if (rel_time < 8894) {
-				if (hops < 2) {
-					w44 = 164;
-				} else {
-					if (hops < 3) {
-						w44 = 197;
-					} else {
-						w44 = 173;
-					}
-				}
-			} else {
-				if (rel_time < 9117) {
-					if (prod != 2) {
-						if (rel_time < 8973) {
-							w44 = 80;
-						} else {
-							w44 = 204;
-						}
-					} else {
-						if (hops < 4) {
-							w44 = -97;
-						} else {
-							w44 = -43;
-						}
-					}
-				} else {
-					if (rel_time < 9404) {
-						if (rel_time < 9269) {
-							w44 = -23;
-						} else {
-							w44 = -193;
-						}
-					} else {
-						if (rel_time < 9741) {
-							w44 = 54;
-						} else {
-							w44 = -3;
-						}
-					}
-				}
-			}
-		}
-	} else {
-		if (rel_time < 4851) {
-			if (rel_time < 4566) {
-				if (rel_time < 4284) {
-					if (rel_time < 3998) {
-						if (hops < 3) {
-							w44 = 0;
-						} else {
-							w44 = -122;
-						}
-					} else {
-						if (hops < 4) {
-							w44 = 34;
-						} else {
-							w44 = 396;
-						}
-					}
-				} else {
-					if (rel_time < 4466) {
-						w44 = -772;
-					} else {
-						if (hops < 4) {
-							w44 = 3;
-						} else {
-							w44 = -323;
-						}
-					}
-				}
-			} else {
-				if (rel_time < 4751) {
-					if (hops < 2) {
-						w44 = 977;
-					} else {
-						w44 = 869;
-					}
-				} else {
-					if (hops < 2) {
-						w44 = 440;
-					} else {
-						if (hops < 3) {
-							w44 = 354;
-						} else {
-							w44 = 382;
-						}
-					}
-				}
-			}
-		} else {
-			if (rel_time < 5136) {
-				if (hops < 2) {
-					w44 = -226;
-				} else {
-					if (hops < 5) {
-						if (hops < 3) {
-							w44 = -135;
-						} else {
-							w44 = -153;
-						}
-					} else {
-						w44 = 23;
-					}
-				}
-			} else {
-				if (hops < 2) {
-					if (rel_time < 9404) {
-						if (rel_time < 8557) {
-							w44 = -39;
-						} else {
-							w44 = 122;
-						}
-					} else {
-						if (rel_time < 9579) {
-							w44 = -2349;
-						} else {
-							w44 = -10;
-						}
-					}
-				} else {
-					if (rel_time < 6564) {
-						if (rel_time < 6275) {
-							w44 = 11;
-						} else {
-							w44 = 268;
-						}
-					} else {
-						if (rel_time < 6839) {
-							w44 = -187;
-						} else {
-							w44 = 23;
-						}
-					}
-				}
-			}
-		}
-	}
-	int w45;
-	if (cons != 4) {
-		if (rel_time < 3159) {
-			if (rel_time < 3016) {
-				if (rel_time < 2929) {
-					if (rel_time < 2901) {
-						if (rel_time < 2873) {
-							w45 = -9;
-						} else {
-							w45 = 179;
-						}
-					} else {
-						if (hops < 4) {
-							w45 = -174;
-						} else {
-							w45 = 113;
-						}
-					}
-				} else {
-					if (rel_time < 2958) {
-						if (hops < 5) {
-							w45 = 216;
-						} else {
-							w45 = 34;
-						}
-					} else {
-						if (hops < 4) {
-							w45 = 3;
-						} else {
-							w45 = 66;
-						}
-					}
-				}
-			} else {
-				if (hops < 4) {
-					if (hops < 3) {
-						if (cons != 3) {
-							w45 = -16;
-						} else {
-							w45 = -74;
-						}
-					} else {
-						if (cons != 2) {
-							w45 = -120;
-						} else {
-							w45 = -40;
-						}
-					}
-				} else {
-					if (hops < 5) {
-						if (rel_time < 3044) {
-							w45 = -408;
-						} else {
-							w45 = -227;
-						}
-					} else {
-						if (rel_time < 3044) {
-							w45 = 409;
-						} else {
-							w45 = -209;
-						}
-					}
-				}
-			}
-		} else {
-			if (rel_time < 3187) {
-				if (hops < 5) {
-					if (hops < 4) {
-						if (hops < 2) {
-							w45 = 376;
-						} else {
-							w45 = 210;
-						}
-					} else {
-						w45 = 578;
-					}
-				} else {
-					w45 = -76;
-				}
-			} else {
-				if (cons != 1) {
-					if (rel_time < 3342) {
-						if (rel_time < 3215) {
-							w45 = -122;
-						} else {
-							w45 = 137;
-						}
-					} else {
-						if (rel_time < 3598) {
-							w45 = -58;
-						} else {
-							w45 = 2;
-						}
-					}
-				} else {
-					if (hops < 4) {
-						if (hops < 2) {
-							w45 = -121;
-						} else {
-							w45 = -172;
-						}
-					} else {
-						if (hops < 5) {
-							w45 = -436;
-						} else {
-							w45 = -8;
-						}
-					}
-				}
-			}
-		}
-	} else {
-		if (rel_time < 3130) {
-			if (rel_time < 1844) {
-				if (rel_time < 1130) {
-					if (rel_time < 918) {
-						if (hops < 2) {
-							w45 = -21;
-						} else {
-							w45 = 39;
-						}
-					} else {
-						if (hops < 3) {
-							w45 = 184;
-						} else {
-							w45 = 85;
-						}
-					}
-				} else {
-					if (rel_time < 1273) {
-						if (hops < 2) {
-							w45 = 23;
-						} else {
-							w45 = -117;
-						}
-					} else {
-						if (hops < 2) {
-							w45 = -51;
-						} else {
-							w45 = 4;
-						}
-					}
-				}
-			} else {
-				if (rel_time < 1987) {
-					if (hops < 5) {
-						if (hops < 2) {
-							w45 = 224;
-						} else {
-							w45 = 166;
-						}
-					} else {
-						w45 = 318;
-					}
-				} else {
-					if (rel_time < 2559) {
-						if (rel_time < 2416) {
-							w45 = 29;
-						} else {
-							w45 = -74;
-						}
-					} else {
-						if (rel_time < 2845) {
-							w45 = 74;
-						} else {
-							w45 = 18;
-						}
-					}
-				}
-			}
-		} else {
-			if (rel_time < 3273) {
-				if (hops < 4) {
-					if (hops < 2) {
-						w45 = -201;
-					} else {
-						if (hops < 3) {
-							w45 = -242;
-						} else {
-							w45 = -268;
-						}
-					}
-				} else {
-					if (hops < 5) {
-						w45 = -11;
-					} else {
-						w45 = -40;
-					}
-				}
-			} else {
-				if (hops < 2) {
-					w45 = -120;
-				} else {
-					if (hops < 5) {
-						if (hops < 3) {
-							w45 = 29;
-						} else {
-							w45 = 9;
-						}
-					} else {
-						w45 = 141;
-					}
-				}
-			}
-		}
-	}
-	int w46;
-	if (rel_time < 7414) {
-		if (rel_time < 7260) {
-			if (rel_time < 7215) {
-				if (rel_time < 7171) {
-					if (rel_time < 6984) {
-						if (prod != 1) {
-							w46 = 4;
-						} else {
-							w46 = -23;
-						}
-					} else {
-						if (prod != 3) {
-							w46 = 22;
-						} else {
-							w46 = -889;
-						}
-					}
-				} else {
-					if (prod != 1) {
-						w46 = -195;
-					} else {
-						if (hops < 2) {
-							w46 = 266;
-						} else {
-							w46 = 298;
-						}
-					}
-				}
-			} else {
-				if (prod != 2) {
-					w46 = 310;
-				} else {
-					if (hops < 2) {
-						w46 = -230;
-					} else {
-						if (hops < 3) {
-							w46 = -193;
-						} else {
-							w46 = -227;
-						}
-					}
-				}
-			}
-		} else {
-			if (prod != 4) {
-				if (rel_time < 7318) {
-					if (rel_time < 7278) {
-						if (hops < 4) {
-							w46 = 312;
-						} else {
-							w46 = 263;
-						}
-					} else {
-						w46 = 746;
-					}
-				} else {
-					if (hops < 2) {
-						w46 = 231;
-					} else {
-						if (hops < 4) {
-							w46 = 209;
-						} else {
-							w46 = 181;
-						}
-					}
-				}
-			} else {
-				if (hops < 3) {
-					if (hops < 2) {
-						w46 = -159;
-					} else {
-						if (rel_time < 7318) {
-							w46 = -128;
-						} else {
-							w46 = -94;
-						}
-					}
-				} else {
-					if (hops < 5) {
-						if (hops < 4) {
-							w46 = -170;
-						} else {
-							w46 = -191;
-						}
-					} else {
-						w46 = -234;
-					}
-				}
-			}
-		}
-	} else {
-		if (rel_time < 7591) {
-			if (prod != 2) {
-				if (prod != 0) {
-					if (rel_time < 7459) {
-						if (hops < 4) {
-							w46 = -616;
-						} else {
-							w46 = -838;
-						}
-					} else {
-						if (prod != 4) {
-							w46 = -338;
-						} else {
-							w46 = 156;
-						}
-					}
-				} else {
-					if (hops < 2) {
-						w46 = 492;
-					} else {
-						if (hops < 5) {
-							w46 = 423;
-						} else {
-							w46 = 480;
-						}
-					}
-				}
-			} else {
-				if (hops < 2) {
-					w46 = 219;
-				} else {
-					if (hops < 4) {
-						if (rel_time < 7503) {
-							w46 = 107;
-						} else {
-							w46 = 146;
-						}
-					} else {
-						if (hops < 5) {
-							w46 = 186;
-						} else {
-							w46 = 237;
-						}
-					}
-				}
-			}
-		} else {
-			if (rel_time < 7749) {
-				if (prod != 0) {
-					if (hops < 2) {
-						if (rel_time < 7691) {
-							w46 = 189;
-						} else {
-							w46 = 418;
-						}
-					} else {
-						if (rel_time < 7691) {
-							w46 = 123;
-						} else {
-							w46 = 75;
-						}
-					}
-				} else {
-					if (rel_time < 7691) {
-						if (hops < 2) {
-							w46 = -194;
-						} else {
-							w46 = -121;
-						}
-					} else {
-						if (hops < 3) {
-							w46 = -58;
-						} else {
-							w46 = -92;
-						}
-					}
-				}
-			} else {
-				if (rel_time < 8067) {
-					if (prod != 3) {
-						if (prod != 0) {
-							w46 = -197;
-						} else {
-							w46 = 116;
-						}
-					} else {
-						if (rel_time < 7835) {
-							w46 = 105;
-						} else {
-							w46 = 320;
-						}
-					}
-				} else {
-					if (rel_time < 8443) {
-						if (prod != 1) {
-							w46 = 18;
-						} else {
-							w46 = 141;
-						}
-					} else {
-						if (rel_time < 8462) {
-							w46 = -147;
-						} else {
-							w46 = 4;
-						}
-					}
-				}
-			}
-		}
-	}
-	int w47;
-	if (prod != 4) {
-		if (rel_time < 10078) {
-			if (rel_time < 9741) {
-				if (rel_time < 9579) {
-					if (rel_time < 7414) {
-						if (rel_time < 7260) {
-							w47 = -1;
-						} else {
-							w47 = 133;
-						}
-					} else {
-						if (rel_time < 7691) {
-							w47 = -84;
-						} else {
-							w47 = -5;
-						}
-					}
-				} else {
-					if (prod != 0) {
-						if (hops < 4) {
-							w47 = -87;
-						} else {
-							w47 = 326;
-						}
-					} else {
-						if (rel_time < 9703) {
-							w47 = 110;
-						} else {
-							w47 = 565;
-						}
-					}
-				}
-			} else {
-				if (prod != 0) {
-					if (prod != 3) {
-						if (rel_time < 10052) {
-							w47 = 77;
-						} else {
-							w47 = -42;
-						}
-					} else {
-						if (hops < 2) {
-							w47 = -198;
-						} else {
-							w47 = -87;
-						}
-					}
-				} else {
-					if (hops < 4) {
-						if (hops < 2) {
-							w47 = -229;
-						} else {
-							w47 = -166;
-						}
-					} else {
-						if (hops < 5) {
-							w47 = -313;
-						} else {
-							w47 = -361;
-						}
-					}
-				}
-			}
-		} else {
-			if (prod != 0) {
-				if (rel_time < 10157) {
-					if (prod != 2) {
-						if (hops < 5) {
-							w47 = 122;
-						} else {
-							w47 = 251;
-						}
-					} else {
-						w47 = -293;
-					}
-				} else {
-					if (rel_time < 10296) {
-						if (hops < 2) {
-							w47 = -59;
-						} else {
-							w47 = -217;
-						}
-					} else {
-						if (rel_time < 10335) {
-							w47 = 29;
-						} else {
-							w47 = -41;
-						}
-					}
-				}
-			} else {
-				if (rel_time < 10257) {
-					if (hops < 2) {
-						w47 = 161;
-					} else {
-						if (hops < 4) {
-							w47 = 80;
-						} else {
-							w47 = 168;
-						}
-					}
-				} else {
-					if (hops < 2) {
-						w47 = 277;
-					} else {
-						if (hops < 3) {
-							w47 = 149;
-						} else {
-							w47 = 219;
-						}
-					}
-				}
-			}
-		}
-	} else {
-		if (rel_time < 9967) {
-			if (rel_time < 9676) {
-				if (rel_time < 9404) {
-					if (rel_time < 9117) {
-						if (rel_time < 8827) {
-							w47 = 21;
-						} else {
-							w47 = -254;
-						}
-					} else {
-						if (hops < 4) {
-							w47 = 191;
-						} else {
-							w47 = 533;
-						}
-					}
-				} else {
-					if (rel_time < 9579) {
-						if (hops < 2) {
-							w47 = -1185;
-						} else {
-							w47 = -2202;
-						}
-					} else {
-						if (hops < 2) {
-							w47 = -143;
-						} else {
-							w47 = -19;
-						}
-					}
-				}
-			} else {
-				if (rel_time < 9869) {
-					if (hops < 4) {
-						w47 = 404;
-					} else {
-						w47 = 837;
-					}
-				} else {
-					if (hops < 4) {
-						if (hops < 3) {
-							w47 = 158;
-						} else {
-							w47 = 110;
-						}
-					} else {
-						if (hops < 5) {
-							w47 = 47;
-						} else {
-							w47 = -71;
-						}
-					}
-				}
-			}
-		} else {
-			if (rel_time < 10257) {
-				if (hops < 2) {
-					if (rel_time < 10157) {
-						w47 = -216;
-					} else {
-						w47 = -281;
-					}
-				} else {
-					if (hops < 3) {
-						if (rel_time < 10157) {
-							w47 = -57;
-						} else {
-							w47 = -125;
-						}
-					} else {
-						if (rel_time < 10157) {
-							w47 = -158;
-						} else {
-							w47 = -240;
-						}
-					}
-				}
-			} else {
-				if (rel_time < 10416) {
-					if (hops < 2) {
-						w47 = 203;
-					} else {
-						if (hops < 3) {
-							w47 = 116;
-						} else {
-							w47 = 200;
-						}
-					}
-				} else {
-					if (hops < 2) {
-						w47 = 48;
-					} else {
-						if (hops < 3) {
-							w47 = 19;
-						} else {
-							w47 = 34;
-						}
-					}
-				}
-			}
-		}
-	}
-	int w48;
-	if (rel_time < 4991) {
-		if (rel_time < 4660) {
-			if (rel_time < 4420) {
-				if (rel_time < 4138) {
-					if (rel_time < 3761) {
-						if (prod != 3) {
-							w48 = -2;
-						} else {
-							w48 = -104;
-						}
-					} else {
-						if (hops < 2) {
-							w48 = 138;
-						} else {
-							w48 = -11;
-						}
-					}
-				} else {
-					if (prod != 3) {
-						if (prod != 1) {
-							w48 = -57;
-						} else {
-							w48 = 117;
-						}
-					} else {
-						if (rel_time < 4184) {
-							w48 = -696;
-						} else {
-							w48 = 928;
-						}
-					}
-				}
-			} else {
-				if (prod != 1) {
-					if (rel_time < 4569) {
-						if (prod != 3) {
-							w48 = -79;
-						} else {
-							w48 = 316;
-						}
-					} else {
-						if (rel_time < 4615) {
-							w48 = 1360;
-						} else {
-							w48 = 120;
-						}
-					}
-				} else {
-					if (hops < 5) {
-						if (hops < 2) {
-							w48 = -179;
-						} else {
-							w48 = -245;
-						}
-					} else {
-						if (rel_time < 4615) {
-							w48 = -125;
-						} else {
-							w48 = -64;
-						}
-					}
-				}
-			}
-		} else {
-			if (prod != 4) {
-				if (prod != 1) {
-					if (prod != 2) {
-						if (rel_time < 4851) {
-							w48 = -532;
-						} else {
-							w48 = -107;
-						}
-					} else {
-						if (rel_time < 4706) {
-							w48 = 345;
-						} else {
-							w48 = -202;
-						}
-					}
-				} else {
-					if (rel_time < 4896) {
-						w48 = 319;
-					} else {
-						if (hops < 4) {
-							w48 = 30;
-						} else {
-							w48 = -19;
-						}
-					}
-				}
-			} else {
-				if (rel_time < 4751) {
-					if (hops < 2) {
-						w48 = 476;
-					} else {
-						if (hops < 3) {
-							w48 = 396;
-						} else {
-							w48 = 479;
-						}
-					}
-				} else {
-					if (hops < 2) {
-						w48 = 207;
-					} else {
-						if (hops < 5) {
-							w48 = 169;
-						} else {
-							w48 = 208;
-						}
-					}
-				}
-			}
-		}
-	} else {
-		if (rel_time < 5036) {
-			if (prod != 3) {
-				if (hops < 2) {
-					w48 = -124;
-				} else {
-					if (hops < 3) {
-						w48 = -91;
-					} else {
-						if (hops < 4) {
-							w48 = -64;
-						} else {
-							w48 = -89;
-						}
-					}
-				}
-			} else {
-				if (hops < 5) {
-					w48 = 1308;
-				} else {
-					w48 = 112;
-				}
-			}
-		} else {
-			if (rel_time < 5272) {
-				if (prod != 0) {
-					if (rel_time < 5181) {
-						if (rel_time < 5136) {
-							w48 = -92;
-						} else {
-							w48 = -825;
-						}
-					} else {
-						if (prod != 2) {
-							w48 = -21;
-						} else {
-							w48 = 140;
-						}
-					}
-				} else {
-					if (hops < 5) {
-						if (hops < 2) {
-							w48 = 376;
-						} else {
-							w48 = 324;
-						}
-					} else {
-						w48 = -430;
-					}
-				}
-			} else {
-				if (rel_time < 5317) {
-					if (prod != 3) {
-						if (hops < 2) {
-							w48 = 135;
-						} else {
-							w48 = 2;
-						}
-					} else {
-						if (hops < 2) {
-							w48 = -109;
-						} else {
-							w48 = -160;
-						}
-					}
-				} else {
-					if (prod != 0) {
-						if (rel_time < 7215) {
-							w48 = 21;
-						} else {
-							w48 = -3;
-						}
-					} else {
-						if (rel_time < 7171) {
-							w48 = -72;
-						} else {
-							w48 = 7;
-						}
-					}
-				}
-			}
-		}
-	}
-	int w49;
-	if (rel_time < 8166) {
-		if (rel_time < 7977) {
-			if (prod != 1) {
-				if (rel_time < 7028) {
-					if (rel_time < 6695) {
-						if (rel_time < 6564) {
-							w49 = 1;
-						} else {
-							w49 = -180;
-						}
-					} else {
-						if (hops < 4) {
-							w49 = 37;
-						} else {
-							w49 = 165;
-						}
-					}
-				} else {
-					if (rel_time < 7215) {
-						if (prod != 0) {
-							w49 = -70;
-						} else {
-							w49 = -245;
-						}
-					} else {
-						if (rel_time < 7260) {
-							w49 = -82;
-						} else {
-							w49 = -2;
-						}
-					}
-				}
-			} else {
-				if (rel_time < 7749) {
-					if (rel_time < 6941) {
-						if (rel_time < 6651) {
-							w49 = 10;
-						} else {
-							w49 = -238;
-						}
-					} else {
-						if (rel_time < 7171) {
-							w49 = 600;
-						} else {
-							w49 = 9;
-						}
-					}
-				} else {
-					if (hops < 2) {
-						w49 = 885;
-					} else {
-						if (hops < 3) {
-							w49 = 623;
-						} else {
-							w49 = 498;
-						}
-					}
-				}
-			}
-		} else {
-			if (prod != 1) {
-				if (prod != 3) {
-					if (rel_time < 8067) {
-						if (rel_time < 8021) {
-							w49 = 59;
-						} else {
-							w49 = 504;
-						}
-					} else {
-						if (hops < 4) {
-							w49 = 1;
-						} else {
-							w49 = 86;
-						}
-					}
-				} else {
-					if (rel_time < 8126) {
-						if (hops < 5) {
-							w49 = -32;
-						} else {
-							w49 = 56;
-						}
-					} else {
-						if (hops < 4) {
-							w49 = -379;
-						} else {
-							w49 = -313;
-						}
-					}
-				}
-			} else {
-				if (rel_time < 8021) {
-					w49 = -691;
-				} else {
-					if (hops < 3) {
-						if (hops < 2) {
-							w49 = -234;
-						} else {
-							w49 = -270;
-						}
-					} else {
-						if (hops < 4) {
-							w49 = -200;
-						} else {
-							w49 = -169;
-						}
-					}
-				}
-			}
-		}
-	} else {
-		if (rel_time < 8266) {
-			if (prod != 0) {
-				if (hops < 3) {
-					if (hops < 2) {
-						w49 = 370;
-					} else {
-						w49 = 303;
-					}
-				} else {
-					if (hops < 5) {
-						w49 = 375;
-					} else {
-						w49 = 325;
-					}
-				}
-			} else {
-				if (hops < 2) {
-					w49 = -60;
-				} else {
-					if (hops < 4) {
-						w49 = 35;
-					} else {
-						w49 = 87;
-					}
-				}
-			}
-		} else {
-			if (prod != 1) {
-				if (rel_time < 8310) {
-					if (hops < 2) {
-						w49 = -173;
-					} else {
-						if (hops < 5) {
-							w49 = -117;
-						} else {
-							w49 = -183;
-						}
-					}
-				} else {
-					if (rel_time < 8827) {
-						if (prod != 3) {
-							w49 = 45;
-						} else {
-							w49 = -29;
-						}
-					} else {
-						if (rel_time < 8933) {
-							w49 = -60;
-						} else {
-							w49 = -1;
-						}
-					}
-				}
-			} else {
-				if (rel_time < 10052) {
-					if (rel_time < 9781) {
-						if (rel_time < 9741) {
-							w49 = 20;
-						} else {
-							w49 = -296;
-						}
-					} else {
-						if (rel_time < 10009) {
-							w49 = 1172;
-						} else {
-							w49 = 26;
-						}
-					}
-				} else {
-					if (hops < 4) {
-						if (hops < 2) {
-							w49 = 0;
-						} else {
-							w49 = -118;
-						}
-					} else {
-						if (hops < 5) {
-							w49 = 44;
-						} else {
-							w49 = -4;
-						}
-					}
-				}
-			}
-		}
-	}
-	return (172309 + w0 + w1 + w2 + w3 + w4 + w5 + w6 + w7 + w8 + w9 + w10 + w11 + w12 + w13 + w14 + w15 + w16 + w17 + w18 + w19 + w20 + w21 + w22 + w23 + w24 + w25 + w26 + w27 + w28 + w29 + w30 + w31 + w32 + w33 + w34 + w35 + w36 + w37 + w38 + w39 + w40 + w41 + w42 + w43 + w44 + w45 + w46 + w47 + w48 + w49) >> 8;
+	return (172309 + w0 + w1 + w2 + w3 + w4 + w5 + w6 + w7 + w8 + w9 + w10 + w11 + w12 + w13 + w14 + w15 + w16 + w17 + w18 + w19 + w20 + w21 + w22 + w23 + w24 + w25 + w26 + w27 + w28 + w29 + w30 + w31 + w32 + w33 + w34) >> 8;
 }
