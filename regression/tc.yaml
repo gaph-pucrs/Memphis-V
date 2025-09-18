@@ -4,7 +4,7 @@ simulation:
 hw:                         # Hardware properties
   page_size_inst_KB: 64     # Size of each memory page (maximum task size)
   page_size_data_KB: 64     # Size of each memory page (maximum task size)
-  tasks_per_PE: 1           # Maximum number of tasks in the same PE (will define memory size)
+  tasks_per_PE: 2           # Maximum number of tasks in the same PE (will define memory size)
   mpsoc_dimension: [4,4]    # Dimension of the many-core
   Peripherals:              # Attached peripherals
     - name: APP_INJ         # Mandatory Application Injector peripheral
