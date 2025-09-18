@@ -135,6 +135,7 @@ int sm_monitor(sm_t *sm, oda_list_t *servers, memphis_sec_monitor_t *message)
 	infer.rel_time  = (message->timestamp - hash->release_time)/100;
 	infer.size      = message->size;
 	infer.latency   = message->latency;
+	// printf("S\n");
 	memphis_send_any(&infer, sizeof(safe_infer_t), decider_id);
 	sm->monitored_cnt++;
 	return 0;

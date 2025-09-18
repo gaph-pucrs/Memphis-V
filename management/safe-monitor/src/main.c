@@ -52,9 +52,11 @@ int main()
 
 	while(true){
 		static memphis_sec_monitor_t message;
+		// printf("R\n");
         memphis_receive_any(&message, sizeof(memphis_sec_monitor_t));
 		switch (message.service) {
 			case SEC_MONITOR:
+				// printf("M\n");
 				sm_monitor(&sm, &deciders, &message);
 				break;
 			case SEC_SAFE_MAP_RESP:
