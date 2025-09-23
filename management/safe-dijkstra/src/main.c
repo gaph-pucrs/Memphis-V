@@ -23,14 +23,16 @@
 #include <memphis/oda.h>
 #include <memphis/safe.h>
 
-#include "model.h"
+#include "bolt.h"
+#include "lin.h"
+#include "avg.h"
 
 int main()
 {
 	// printf("SAFE dijkstra model started at %d\n", memphis_get_tick());
 
 	safe_t dijkstra;
-	safe_init(&dijkstra, SAFE_HASH_dijkstra, model, 26);
+	safe_init(&dijkstra, SAFE_HASH_dijkstra, lin, 30);
 
 	while (true) {
 		static safe_infer_t message;

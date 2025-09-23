@@ -23,14 +23,16 @@
 #include <memphis/oda.h>
 #include <memphis/safe.h>
 
-#include "model.h"
+#include "bolt.h"
+#include "lin.h"
+#include "avg.h"
 
 int main()
 {
 	// printf("SAFE audio_video model started at %d\n", memphis_get_tick());
 
 	safe_t audio_video;
-	safe_init(&audio_video, SAFE_HASH_audio_video, model, 40);
+	safe_init(&audio_video, SAFE_HASH_audio_video, bolt, 50);
 
 	while (true) {
 		static safe_infer_t message;

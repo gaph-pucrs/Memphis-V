@@ -23,14 +23,16 @@
 #include <memphis/oda.h>
 #include <memphis/safe.h>
 
-#include "model.h"
+#include "bolt.h"
+#include "lin.h"
+#include "avg.h"
 
 int main()
 {
 	// printf("SAFE dtw model started at %d\n", memphis_get_tick());
 
 	safe_t dtw;
-	safe_init(&dtw, SAFE_HASH_dtw, model, 45);
+	safe_init(&dtw, SAFE_HASH_dtw, bolt, 50);
 
 		while (true) {
 		static safe_infer_t message;
