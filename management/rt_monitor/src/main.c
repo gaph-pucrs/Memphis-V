@@ -35,6 +35,10 @@ int main()
 
 	printf("Received service provider %d\n", decider.id);
 
+	ret = memphis_mkfifo(sizeof(memphis_qos_monitor_t), 128);
+	if (ret != 0)
+		return ret;
+
 	mon_announce(MON_QOS);
 
 	while (true) {
