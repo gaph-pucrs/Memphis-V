@@ -8,22 +8,22 @@ int lin(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const u
     float prod_weight;
     switch (prod) {
         case 0:
-            prod_weight = -6.59481823e+01;
+            prod_weight = -6.78149120e+01;
             break;
         case 1:
-            prod_weight = -3.29948289e-01;
+            prod_weight = 1.04277926e+00;
             break;
         case 2:
-            prod_weight = 1.19534438e+00;
+            prod_weight = 1.17123972e-01;
             break;
         case 3:
-            prod_weight = -4.21666645e-01;
+            prod_weight = -6.52366764e-01;
             break;
         case 4:
-            prod_weight = -4.95729974e-01;
+            prod_weight = -5.56500907e-01;
             break;
         case 5:
-            prod_weight = 6.60001828e+01;
+            prod_weight = 6.78638765e+01;
             break;
         default:
             prod_weight = 0;
@@ -33,24 +33,24 @@ int lin(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const u
     float cons_weight;
     switch (cons) {
         case 1:
-            cons_weight = -1.80984292e+01;
+            cons_weight = -1.77036922e+01;
             break;
         case 2:
-            cons_weight = 1.32532084e+01;
+            cons_weight = 1.23622322e+01;
             break;
         case 3:
-            cons_weight = -8.28728417e+00;
+            cons_weight = -7.98877974e+00;
             break;
         case 4:
-            cons_weight = 1.31845054e+01;
+            cons_weight = 1.33792041e+01;
             break;
         case 5:
-            cons_weight = -5.20005255e-02;
+            cons_weight = -4.89644347e-02;
             break;
         default:
             cons_weight = 0;
             break;
     }
 
-    return 121.61150962 + 2.88275520e-04 * rel_time + 7.02838581e+00 * hops + 6.24006306e+00 * size + prod_weight + cons_weight;
+    return 121.61150962 + 2.05319126e-04 * rel_time + 1.07723211e+01 * hops + 5.87573216e+00 * size + prod_weight + cons_weight;
 }
