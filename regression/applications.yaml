@@ -1,0 +1,6 @@
+apps:
+  - name: prod_cons
+    instance: custom # Optional
+    definitions:     # Optional
+      - PROD_CONS_MSG_SIZE: 64    
+      - PROD_CONS_ITERATIONS: 100

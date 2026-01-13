@@ -1,0 +1,7 @@
+management:
+  - task: mapper_task
+    static_mapping: [0,0]
+apps:
+  - name: prod_cons
+    instance: custom
+
