@@ -1,0 +1,5 @@
+apps:
+  - name: prod_cons
+  - name: mpeg
+  - name: mpeg_rt
+  - name: dijkstra
