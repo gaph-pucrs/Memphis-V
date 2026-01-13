@@ -23,14 +23,14 @@
 #include <memphis/oda.h>
 #include <memphis/safe_fp.h>
 
-#include "model.h"
+#include "bolt.h"
 
 int main()
 {
 	// printf("SAFE mpeg model started at %d\n", memphis_get_tick());
 
 	safe_fp_t mpeg;
-	safe_fp_init(&mpeg, SAFE_HASH_mpeg, model, 0.057);
+	safe_fp_init(&mpeg, SAFE_HASH_mpeg, bolt, 50.0);
 
 	while (true) {
 		static safe_infer_t message;
