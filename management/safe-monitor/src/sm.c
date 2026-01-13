@@ -28,7 +28,7 @@ bool _sm_hash_find(void *data, void* cmpval)
 	return ((sm_hash_t*)data)->app_id == *((uint8_t*)cmpval);
 }
 
-int _sm_replace_lru(sm_t *sm, memphis_sec_monitor_t *front, uint32_t tag)
+int _sm_replace_lru(sm_t *sm, memphis_sec_monitor_t *front, uint32_t tag, uint32_t start)
 {
 	if (front == NULL)
 		return -EINVAL;
@@ -39,13 +39,9 @@ int _sm_replace_lru(sm_t *sm, memphis_sec_monitor_t *front, uint32_t tag)
 
 	hash->app_id  = front->app;
 	hash->hash_id = tag;
-	/**
-	 * @todo 
-	 * This can be overwritten due to LRU policy
-	 */
-	hash->release_time = front->timestamp;
+	hash->release_time = start;
 
-	printf("Replacing LRU with app %u\n", front->app);
+	// printf("Replacing LRU with app %u\n", front->app);
 
 	/* Replace entry */
 	hash = lru_replace(&(sm->hash_ids), hash);
@@ -152,7 +148,10 @@ int sm_replace(sm_t *sm, oda_list_t *servers, oda_provider_t *provider)
 	if (entry == NULL)
 		return -EINVAL;
 
-	uint8_t app = _sm_replace_lru(sm, list_get_data(entry), provider->tag);
+	uint32_t *start_time = (((void*)provider)+sizeof(oda_provider_t));
+	uint8_t app = _sm_replace_lru(sm, list_get_data(entry), provider->tag, *start_time);
+
+	// printf("Replaced app with start time %lu\n", *start_time);
 
 	while (entry != NULL) {
 		sm_monitor(sm, servers, list_get_data(entry));
