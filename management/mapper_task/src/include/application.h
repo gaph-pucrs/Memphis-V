@@ -13,6 +13,8 @@
 
 #pragma once
 
+#include <stdint.h>
+
 #include "task.h"
 
 typedef struct _app {
@@ -47,7 +49,7 @@ void app_set_score(app_t *app, unsigned score);
 
 unsigned app_allocated(app_t *app);
 
-void app_mapping_complete(app_t *app);
+void app_mapping_complete(app_t *app, uint32_t release_time);
 
 int app_get_injector(app_t *app);
 

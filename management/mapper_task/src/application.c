@@ -189,9 +189,9 @@ unsigned app_allocated(app_t *app)
 	return app->allocated_cnt;
 }
 
-void app_mapping_complete(app_t *app)
+void app_mapping_complete(app_t *app, uint32_t release_time)
 {
-	app->release_time = memphis_get_tick();
+	app->release_time = release_time;
 	int out_msg = (APP_MAPPING_COMPLETE << 16);
 	memphis_send_any(&out_msg, sizeof(out_msg), app->injector);
 

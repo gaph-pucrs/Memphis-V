@@ -226,7 +226,7 @@ void _map_do(map_t *mapper, app_t *app)
 		/* Check if mapper task is the only MA task */
 		if(allocated == task_cnt){
 			/* Then finish mapping */
-			app_mapping_complete(app);
+			app_mapping_complete(app, 0);
 			mapper->appid_cnt++;
 		}
 	}
@@ -343,7 +343,7 @@ void map_task_allocated(map_t *mapper, memphis_info_t *info)
 		return;
 
 	/* All tasks allocated, send task release */
-	printf("Sending TASK_RELEASE at time %d for app %d\n", memphis_get_tick(), appid);
+	printf("Sending TASK_RELEASE for app %d\n", appid);
 
 	/* Assemble and send task release */
 	const size_t msg_size = sizeof(memphis_info_t) + (task_cnt * sizeof(int));
@@ -368,6 +368,7 @@ void map_task_allocated(map_t *mapper, memphis_info_t *info)
 		location[i] = addr;
 	}
 
+	uint32_t release_time = memphis_get_tick();
 	const int appid_shift = appid << 8;
 	for (int i = 0; i < task_cnt; i++) {
 		/* Tell kernel to populate the proper task by sending the ID */
@@ -377,10 +378,12 @@ void map_task_allocated(map_t *mapper, memphis_info_t *info)
 		memphis_send_any(payload, msg_size, MEMPHIS_KERNEL_MSG | location[i]);
 	}
 
+	printf("App %d started at %lu\n", appid, release_time);
+
 	free(payload);
 	payload = NULL;
 
-	app_mapping_complete(app);
+	app_mapping_complete(app, release_time);
 	mapper->appid_cnt++;
 }
 
@@ -762,21 +765,19 @@ void map_app_info(map_t *mapper, memphis_info_t *info)
 {
 	app_t *app = _map_find_app(mapper, info->appid);
 	int hash_id = -1;
-	// unsigned release_time = -1;
+	unsigned release_time = -1;
 	if(app != NULL){
 		hash_id = app_get_hash(app);
-		// release_time = app_get_release_time(app);
+		release_time = app_get_release_time(app);
 	}
 
-	oda_provider_t provider;
-	provider.service = SEC_SAFE_MAP_RESP;
-	provider.id      = info->appid;
-	provider.tag     = hash_id;
-	/**
-	 * @todo
-	 * Maybe send also release_time?
-	 */
-	memphis_send_any(&provider, sizeof(oda_provider_t), info->task);
+	oda_provider_t *provider = malloc(sizeof(oda_provider_t)+sizeof(uint32_t));
+	provider->service = SEC_SAFE_MAP_RESP;
+	provider->id      = info->appid;
+	provider->tag     = hash_id;
+	uint32_t* start_ptr = (((void*)provider)+sizeof(oda_provider_t));
+	*start_ptr = release_time;
+	memphis_send_any(provider, sizeof(oda_provider_t)+sizeof(uint32_t), info->task);
 }
 
 void map_terminate_ma(map_t *mapper)
