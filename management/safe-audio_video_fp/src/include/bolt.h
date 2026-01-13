@@ -8,144 +8,144 @@ float bolt(const uint16_t rel_time, const uint8_t hops, const uint8_t size, cons
 	float w0;
 	if (size < 133) {
 		if (size < 37) {
-			if (rel_time < 65) {
+			if (rel_time < 497) {
 				if (hops < 3) {
-					w0 = -102.093185;
+					w0 = -84.404854;
 				} else {
-					w0 = -96.323975;
+					w0 = -79.735466;
 				}
 			} else {
 				if (hops < 3) {
-					if (rel_time < 1338) {
-						if (rel_time < 969) {
-							w0 = -71.103455;
+					if (rel_time < 1770) {
+						if (rel_time < 1402) {
+							w0 = -58.88926;
 						} else {
-							w0 = -88.04663;
+							w0 = -72.48805;
 						}
 					} else {
 						if (hops < 2) {
-							w0 = -71.27733;
+							w0 = -59.408356;
 						} else {
-							w0 = -68.017876;
+							w0 = -56.626717;
 						}
 					}
 				} else {
-					if (rel_time < 1338) {
-						if (rel_time < 969) {
-							w0 = -65.23628;
+					if (rel_time < 1770) {
+						if (rel_time < 1402) {
+							w0 = -54.18321;
 						} else {
-							w0 = -82.046196;
+							w0 = -67.718254;
 						}
 					} else {
 						if (hops < 4) {
-							w0 = -64.74449;
+							w0 = -53.500904;
 						} else {
-							w0 = -61.211643;
+							w0 = -50.91394;
 						}
 					}
 				}
 			}
 		} else {
 			if (prod != 1) {
-				if (rel_time < 669) {
+				if (rel_time < 1101) {
 					if (hops < 3) {
-						if (rel_time < 583) {
-							w0 = 41.16328;
+						if (rel_time < 1015) {
+							w0 = 32.55972;
 						} else {
-							w0 = 46.261005;
+							w0 = 36.742508;
 						}
 					} else {
-						if (rel_time < 583) {
-							w0 = 47.344025;
+						if (rel_time < 1015) {
+							w0 = 37.543877;
 						} else {
-							w0 = 52.27106;
+							w0 = 41.4202;
 						}
 					}
 				} else {
 					if (size < 69) {
-						if (rel_time < 11417) {
-							w0 = 6.288279;
+						if (rel_time < 11853) {
+							w0 = 5.480315;
 						} else {
-							w0 = 67.4922;
+							w0 = 54.43799;
 						}
 					} else {
 						if (hops < 3) {
-							w0 = -5.769432;
+							w0 = -4.233586;
 						} else {
-							w0 = 0.24573274;
+							w0 = 0.5929658;
 						}
 					}
 				}
 			} else {
-				if (rel_time < 422) {
+				if (rel_time < 854) {
 					if (hops < 3) {
 						if (hops < 2) {
-							w0 = 28.384724;
+							w0 = 22.434624;
 						} else {
-							w0 = 31.860056;
+							w0 = 25.02102;
 						}
 					} else {
 						if (hops < 4) {
-							w0 = 35.59986;
+							w0 = 28.091726;
 						} else {
-							w0 = 38.70116;
+							w0 = 30.861917;
 						}
 					}
 				} else {
-					if (rel_time < 1805) {
+					if (rel_time < 2238) {
 						if (hops < 3) {
-							w0 = -18.778599;
+							w0 = -14.829386;
 						} else {
-							w0 = -10.231335;
+							w0 = -8.228064;
 						}
 					} else {
 						if (hops < 3) {
-							w0 = -33.74805;
+							w0 = -26.51975;
 						} else {
-							w0 = -27.82994;
+							w0 = -21.747036;
 						}
 					}
 				}
 			}
 		}
 	} else {
-		if (rel_time < 336) {
+		if (rel_time < 768) {
 			if (hops < 3) {
-				w0 = 129.25163;
+				w0 = 103.073204;
 			} else {
-				w0 = 135.27734;
+				w0 = 107.648964;
 			}
 		} else {
 			if (hops < 3) {
-				if (rel_time < 1311) {
+				if (rel_time < 1743) {
 					if (hops < 2) {
-						w0 = 90.259834;
+						w0 = 72.62134;
 					} else {
-						w0 = 93.850784;
+						w0 = 75.46273;
 					}
 				} else {
-					if (rel_time < 11071) {
+					if (rel_time < 11495) {
 						if (hops < 2) {
-							w0 = 82.4165;
+							w0 = 66.149704;
 						} else {
-							w0 = 85.70228;
+							w0 = 68.893845;
 						}
 					} else {
-						w0 = 92.1504;
+						w0 = 74.13503;
 					}
 				}
 			} else {
-				if (rel_time < 1311) {
-					w0 = 98.542336;
+				if (rel_time < 1743) {
+					w0 = 79.066154;
 				} else {
-					if (rel_time < 11071) {
+					if (rel_time < 11512) {
 						if (hops < 4) {
-							w0 = 89.59705;
+							w0 = 71.72625;
 						} else {
-							w0 = 92.87046;
+							w0 = 74.87744;
 						}
 					} else {
-						w0 = 98.46919;
+						w0 = 78.8698;
 					}
 				}
 			}
@@ -154,159 +154,159 @@ float bolt(const uint16_t rel_time, const uint8_t hops, const uint8_t size, cons
 	float w1;
 	if (size < 133) {
 		if (size < 37) {
-			if (rel_time < 65) {
+			if (rel_time < 497) {
 				if (hops < 2) {
-					w1 = -53.010513;
+					w1 = -52.06861;
 				} else {
 					if (hops < 4) {
-						w1 = -49.27652;
+						w1 = -49.102493;
 					} else {
-						w1 = -45.391666;
+						w1 = -45.458508;
 					}
 				}
 			} else {
 				if (hops < 3) {
-					if (rel_time < 1338) {
-						if (rel_time < 969) {
-							w1 = -35.558804;
+					if (rel_time < 1770) {
+						if (rel_time < 1402) {
+							w1 = -35.33821;
 						} else {
-							w1 = -44.040833;
+							w1 = -43.504326;
 						}
 					} else {
 						if (hops < 2) {
-							w1 = -35.640602;
+							w1 = -35.646297;
 						} else {
-							w1 = -34.010487;
+							w1 = -33.977062;
 						}
 					}
 				} else {
-					if (rel_time < 1338) {
-						if (rel_time < 969) {
-							w1 = -32.628876;
+					if (rel_time < 1770) {
+						if (rel_time < 1402) {
+							w1 = -32.5171;
 						} else {
-							w1 = -41.050068;
+							w1 = -40.648884;
 						}
 					} else {
 						if (hops < 4) {
-							w1 = -32.374012;
+							w1 = -32.101727;
 						} else {
-							w1 = -30.610855;
+							w1 = -30.551651;
 						}
 					}
 				}
 			}
 		} else {
 			if (prod != 1) {
-				if (rel_time < 669) {
+				if (rel_time < 1101) {
 					if (hops < 2) {
-						if (rel_time < 583) {
-							w1 = 18.68199;
+						if (rel_time < 1015) {
+							w1 = 18.008924;
 						} else {
-							w1 = 21.313368;
+							w1 = 20.580345;
 						}
 					} else {
 						if (hops < 4) {
-							w1 = 24.174215;
+							w1 = 22.88566;
 						} else {
-							w1 = 27.83489;
+							w1 = 26.297064;
 						}
 					}
 				} else {
 					if (size < 69) {
-						if (rel_time < 11417) {
-							w1 = 3.1441877;
+						if (rel_time < 11853) {
+							w1 = 3.288231;
 						} else {
-							w1 = 33.754475;
+							w1 = 32.668194;
 						}
 					} else {
 						if (hops < 2) {
-							w1 = -4.811073;
+							w1 = -4.059045;
 						} else {
-							w1 = -0.52257484;
+							w1 = -0.39537808;
 						}
 					}
 				}
 			} else {
-				if (rel_time < 422) {
+				if (rel_time < 854) {
 					if (hops < 3) {
 						if (hops < 2) {
-							w1 = 14.20468;
+							w1 = 13.468561;
 						} else {
-							w1 = 15.9417715;
+							w1 = 15.020081;
 						}
 					} else {
 						if (hops < 4) {
-							w1 = 17.815332;
+							w1 = 16.86476;
 						} else {
-							w1 = 19.402874;
+							w1 = 18.549042;
 						}
 					}
 				} else {
-					if (rel_time < 1805) {
-						if (rel_time < 852) {
-							w1 = -12.72013;
+					if (rel_time < 2238) {
+						if (rel_time < 1285) {
+							w1 = -10.947172;
 						} else {
-							w1 = -5.3022404;
+							w1 = -5.6044497;
 						}
 					} else {
 						if (hops < 2) {
-							w1 = -18.77107;
+							w1 = -17.41948;
 						} else {
-							w1 = -14.549987;
+							w1 = -13.779185;
 						}
 					}
 				}
 			}
 		}
 	} else {
-		if (rel_time < 336) {
+		if (rel_time < 768) {
 			if (hops < 2) {
-				w1 = 62.87127;
+				w1 = 60.21301;
 			} else {
-				if (hops < 4) {
-					w1 = 66.43539;
-				} else {
-					w1 = 70.23032;
-				}
+				w1 = 64.01926;
 			}
 		} else {
 			if (hops < 3) {
-				if (rel_time < 1311) {
+				if (rel_time < 1743) {
 					if (hops < 2) {
-						w1 = 45.149414;
+						w1 = 43.585316;
 					} else {
-						w1 = 46.942894;
+						w1 = 45.289104;
 					}
 				} else {
-					if (rel_time < 11662) {
+					if (rel_time < 11495) {
 						if (hops < 2) {
-							w1 = 41.389854;
+							w1 = 39.691235;
 						} else {
-							w1 = 42.85314;
+							w1 = 41.33761;
 						}
 					} else {
-						w1 = 47.674362;
+						if (rel_time < 12101) {
+							w1 = 42.950054;
+						} else {
+							w1 = 45.818382;
+						}
 					}
 				}
 			} else {
-				if (rel_time < 1311) {
+				if (rel_time < 1743) {
 					if (hops < 4) {
-						w1 = 48.443825;
+						w1 = 46.675125;
 					} else {
-						w1 = 51.62268;
+						w1 = 49.70137;
 					}
 				} else {
-					if (rel_time < 11071) {
+					if (rel_time < 11512) {
 						if (hops < 4) {
-							w1 = 44.800995;
+							w1 = 43.03729;
 						} else {
-							w1 = 46.44249;
+							w1 = 44.931263;
 						}
 					} else {
 						if (hops < 4) {
-							w1 = 48.466545;
+							w1 = 46.538387;
 						} else {
-							w1 = 51.4159;
+							w1 = 49.617943;
 						}
 					}
 				}
@@ -316,159 +316,163 @@ float bolt(const uint16_t rel_time, const uint8_t hops, const uint8_t size, cons
 	float w2;
 	if (size < 133) {
 		if (size < 37) {
-			if (rel_time < 65) {
+			if (rel_time < 497) {
 				if (hops < 2) {
-					w2 = -26.528393;
+					w2 = -31.259266;
 				} else {
 					if (hops < 4) {
-						w2 = -24.648079;
+						w2 = -29.469374;
 					} else {
-						w2 = -22.755562;
+						w2 = -27.321974;
 					}
 				}
 			} else {
-				if (hops < 2) {
-					if (rel_time < 1338) {
-						if (rel_time < 540) {
-							w2 = -17.22319;
+				if (hops < 3) {
+					if (rel_time < 1770) {
+						if (rel_time < 972) {
+							w2 = -19.205812;
 						} else {
-							w2 = -22.944832;
+							w2 = -24.658255;
 						}
 					} else {
-						if (rel_time < 8667) {
-							w2 = -17.948141;
+						if (hops < 2) {
+							w2 = -21.38855;
 						} else {
-							w2 = -17.436798;
+							w2 = -20.38686;
 						}
 					}
 				} else {
-					if (rel_time < 540) {
-						if (hops < 4) {
-							w2 = -14.214881;
+					if (rel_time < 1770) {
+						if (rel_time < 972) {
+							w2 = -17.541883;
 						} else {
-							w2 = -10.734967;
+							w2 = -22.944818;
 						}
 					} else {
-						if (rel_time < 1338) {
-							w2 = -19.66018;
+						if (hops < 4) {
+							w2 = -19.261745;
 						} else {
-							w2 = -16.46045;
+							w2 = -18.332972;
 						}
 					}
 				}
 			}
 		} else {
 			if (prod != 1) {
-				if (rel_time < 669) {
-					if (rel_time < 583) {
-						if (hops < 4) {
-							w2 = 10.105682;
+				if (rel_time < 1101) {
+					if (rel_time < 1015) {
+						if (hops < 3) {
+							w2 = 11.295569;
 						} else {
-							w2 = 12.367137;
+							w2 = 13.046224;
 						}
 					} else {
 						if (hops < 2) {
-							w2 = 10.6613245;
+							w2 = 12.351783;
 						} else {
-							w2 = 13.135843;
+							w2 = 14.795888;
 						}
 					}
 				} else {
-					if (hops < 4) {
-						if (size < 69) {
-							w2 = 1.7129139;
+					if (size < 69) {
+						if (rel_time < 11853) {
+							w2 = 1.9729661;
 						} else {
-							w2 = -1.2819645;
+							w2 = 19.604147;
 						}
 					} else {
-						if (size < 69) {
-							w2 = 8.696157;
+						if (hops < 4) {
+							w2 = -1.2348512;
 						} else {
-							w2 = 3.0560176;
+							w2 = 2.6546683;
 						}
 					}
 				}
 			} else {
-				if (rel_time < 422) {
+				if (rel_time < 854) {
 					if (hops < 3) {
 						if (hops < 2) {
-							w2 = 7.1085143;
+							w2 = 8.085811;
 						} else {
-							w2 = 7.9767594;
+							w2 = 9.016524;
 						}
 					} else {
 						if (hops < 4) {
-							w2 = 8.915383;
+							w2 = 10.124702;
 						} else {
-							w2 = 9.727649;
+							w2 = 11.148609;
 						}
 					}
 				} else {
-					if (rel_time < 1264) {
-						if (rel_time < 852) {
-							w2 = -6.36163;
+					if (rel_time < 1697) {
+						if (rel_time < 1285) {
+							w2 = -6.5694003;
 						} else {
-							w2 = 2.7405264;
+							w2 = 0.3804818;
 						}
 					} else {
 						if (hops < 4) {
-							w2 = -8.277719;
+							w2 = -9.1498;
 						} else {
-							w2 = -4.020665;
+							w2 = -5.3532553;
 						}
 					}
 				}
 			}
 		}
 	} else {
-		if (rel_time < 336) {
-			if (hops < 2) {
-				w2 = 31.462776;
-			} else {
-				if (hops < 4) {
-					w2 = 33.231117;
+		if (rel_time < 768) {
+			if (hops < 4) {
+				if (hops < 2) {
+					w2 = 36.14855;
 				} else {
-					w2 = 35.20294;
+					w2 = 37.952923;
 				}
+			} else {
+				w2 = 41.29119;
 			}
 		} else {
 			if (hops < 3) {
-				if (rel_time < 1311) {
+				if (rel_time < 1743) {
 					if (hops < 2) {
-						w2 = 22.58446;
+						w2 = 26.158695;
 					} else {
-						w2 = 23.480206;
+						w2 = 27.180328;
 					}
 				} else {
-					if (rel_time < 11071) {
+					if (rel_time < 11495) {
 						if (hops < 2) {
-							w2 = 20.516674;
+							w2 = 23.815603;
 						} else {
-							w2 = 21.427565;
+							w2 = 24.803358;
 						}
 					} else {
-						w2 = 23.720814;
+						if (rel_time < 12101) {
+							w2 = 25.784824;
+						} else {
+							w2 = 27.504942;
+						}
 					}
 				}
 			} else {
-				if (rel_time < 1311) {
+				if (rel_time < 1743) {
 					if (hops < 4) {
-						w2 = 24.232567;
+						w2 = 28.01309;
 					} else {
-						w2 = 25.843643;
+						w2 = 29.846283;
 					}
 				} else {
-					if (rel_time < 11071) {
+					if (rel_time < 11512) {
 						if (hops < 4) {
-							w2 = 22.401714;
+							w2 = 25.823292;
 						} else {
-							w2 = 23.224873;
+							w2 = 26.96163;
 						}
 					} else {
 						if (hops < 4) {
-							w2 = 24.254599;
+							w2 = 27.938993;
 						} else {
-							w2 = 25.772223;
+							w2 = 29.821533;
 						}
 					}
 				}
@@ -478,151 +482,163 @@ float bolt(const uint16_t rel_time, const uint8_t hops, const uint8_t size, cons
 	float w3;
 	if (size < 133) {
 		if (size < 37) {
-			if (rel_time < 65) {
-				if (hops < 2) {
-					w3 = -13.275776;
-				} else {
-					if (hops < 4) {
-						w3 = -12.328955;
+			if (rel_time < 497) {
+				if (hops < 3) {
+					if (hops < 2) {
+						w3 = -18.766417;
 					} else {
-						w3 = -11.407725;
+						w3 = -18.030455;
 					}
+				} else {
+					w3 = -17.048193;
 				}
 			} else {
-				if (hops < 4) {
-					if (rel_time < 1338) {
-						if (rel_time < 540) {
-							w3 = -7.5854235;
+				if (hops < 2) {
+					if (rel_time < 1770) {
+						if (rel_time < 1402) {
+							w3 = -13.94474;
 						} else {
-							w3 = -10.604677;
+							w3 = -17.620077;
 						}
 					} else {
-						if (hops < 3) {
-							w3 = -8.838122;
+						if (rel_time < 9103) {
+							w3 = -12.936464;
 						} else {
-							w3 = -7.958112;
+							w3 = -12.5222435;
 						}
 					}
 				} else {
-					if (rel_time < 540) {
-						w3 = -5.3816;
-					} else {
-						if (rel_time < 969) {
-							w3 = -6.5597057;
+					if (hops < 4) {
+						if (rel_time < 1770) {
+							w3 = -12.927112;
 						} else {
-							w3 = -7.142626;
+							w3 = -11.92924;
+						}
+					} else {
+						if (rel_time < 972) {
+							w3 = -8.249126;
+						} else {
+							w3 = -11.056809;
 						}
 					}
 				}
 			}
 		} else {
 			if (prod != 1) {
-				if (rel_time < 767) {
-					if (hops < 3) {
-						if (cons != 5) {
-							w3 = 5.7104464;
+				if (rel_time < 1199) {
+					if (rel_time < 1101) {
+						if (hops < 3) {
+							w3 = 7.497474;
 						} else {
-							w3 = 4.664451;
+							w3 = 8.909907;
 						}
 					} else {
-						if (cons != 5) {
-							w3 = 7.042001;
+						if (hops < 2) {
+							w3 = 2.5830493;
 						} else {
-							w3 = 5.9061623;
+							w3 = 4.556552;
 						}
 					}
 				} else {
-					if (hops < 2) {
-						if (rel_time < 1194) {
-							w3 = -11.423014;
+					if (hops < 3) {
+						if (hops < 2) {
+							w3 = -1.9187971;
 						} else {
-							w3 = -1.925102;
+							w3 = -0.19387291;
 						}
 					} else {
 						if (size < 69) {
-							w3 = 2.7334347;
+							w3 = 4.705903;
 						} else {
-							w3 = -0.0041317656;
+							w3 = 0.5401933;
 						}
 					}
 				}
 			} else {
-				if (rel_time < 422) {
+				if (rel_time < 854) {
 					if (hops < 3) {
 						if (hops < 2) {
-							w3 = 3.5573368;
+							w3 = 4.8542914;
 						} else {
-							w3 = 3.9913259;
+							w3 = 5.4125957;
 						}
 					} else {
 						if (hops < 4) {
-							w3 = 4.4615374;
+							w3 = 6.078331;
 						} else {
-							w3 = 4.876963;
+							w3 = 6.7006845;
 						}
 					}
 				} else {
 					if (hops < 2) {
-						if (rel_time < 1805) {
-							w3 = -6.3023057;
+						if (rel_time < 2238) {
+							w3 = -6.1887116;
 						} else {
-							w3 = -5.24742;
+							w3 = -6.7923465;
 						}
 					} else {
-						if (rel_time < 1264) {
-							w3 = 1.2270288;
+						if (rel_time < 1697) {
+							w3 = -0.04769199;
 						} else {
-							w3 = -3.3948271;
+							w3 = -4.687792;
 						}
 					}
 				}
 			}
 		}
 	} else {
-		if (rel_time < 336) {
-			if (hops < 3) {
-				w3 = 16.072786;
+		if (rel_time < 768) {
+			if (hops < 4) {
+				if (hops < 2) {
+					w3 = 21.70158;
+				} else {
+					w3 = 22.77786;
+				}
 			} else {
-				w3 = 17.132448;
+				w3 = 24.816954;
 			}
 		} else {
 			if (hops < 3) {
-				if (rel_time < 1311) {
+				if (rel_time < 1743) {
 					if (hops < 2) {
-						w3 = 11.297101;
+						w3 = 15.699727;
 					} else {
-						w3 = 11.744469;
+						w3 = 16.312311;
 					}
 				} else {
-					if (rel_time < 11071) {
+					if (rel_time < 11495) {
 						if (hops < 2) {
-							w3 = 10.258897;
+							w3 = 14.28987;
 						} else {
-							w3 = 10.714288;
+							w3 = 14.882491;
 						}
 					} else {
-						w3 = 11.865147;
+						if (rel_time < 12101) {
+							w3 = 15.479767;
+						} else {
+							w3 = 16.511312;
+						}
 					}
 				}
 			} else {
-				if (rel_time < 1311) {
+				if (rel_time < 1743) {
 					if (hops < 4) {
-						w3 = 12.121631;
+						w3 = 16.812674;
 					} else {
-						w3 = 12.938002;
+						w3 = 17.923044;
 					}
 				} else {
-					if (rel_time < 11071) {
+					if (rel_time < 11512) {
 						if (hops < 4) {
-							w3 = 11.201465;
+							w3 = 15.494525;
 						} else {
-							w3 = 11.6142645;
+							w3 = 16.178717;
 						}
 					} else {
 						if (hops < 4) {
-							w3 = 12.137986;
+							w3 = 16.772993;
 						} else {
-							w3 = 12.918329;
+							w3 = 17.92343;
 						}
 					}
 				}
@@ -632,159 +648,171 @@ float bolt(const uint16_t rel_time, const uint8_t hops, const uint8_t size, cons
 	float w4;
 	if (size < 133) {
 		if (size < 37) {
-			if (rel_time < 65) {
+			if (rel_time < 497) {
 				if (hops < 3) {
 					if (hops < 2) {
-						w4 = -6.643674;
+						w4 = -11.266372;
 					} else {
-						w4 = -6.3061094;
-					}
-				} else {
-					w4 = -5.9298234;
-				}
-			} else {
-				if (hops < 2) {
-					if (rel_time < 1338) {
-						if (rel_time < 853) {
-							w4 = -4.9836364;
-						} else {
-							w4 = -7.216181;
-						}
-					} else {
-						if (rel_time < 8056) {
-							w4 = -4.574992;
-						} else {
-							w4 = -4.3111563;
-						}
+						w4 = -10.823523;
 					}
 				} else {
 					if (hops < 4) {
-						if (rel_time < 853) {
-							w4 = -3.4004402;
+						w4 = -10.43637;
+					} else {
+						w4 = -9.619643;
+					}
+				}
+			} else {
+				if (hops < 3) {
+					if (rel_time < 972) {
+						if (hops < 2) {
+							w4 = -7.318242;
 						} else {
-							w4 = -4.283151;
+							w4 = -5.20779;
 						}
 					} else {
-						if (rel_time < 540) {
-							w4 = -2.697885;
+						if (rel_time < 1770) {
+							w4 = -9.106598;
 						} else {
-							w4 = -3.5566018;
+							w4 = -7.5704546;
+						}
+					}
+				} else {
+					if (rel_time < 1770) {
+						if (rel_time < 1402) {
+							w4 = -6.5865426;
+						} else {
+							w4 = -10.252566;
+						}
+					} else {
+						if (hops < 4) {
+							w4 = -6.7860484;
+						} else {
+							w4 = -6.5789604;
 						}
 					}
 				}
 			}
 		} else {
-			if (hops < 3) {
-				if (rel_time < 767) {
-					if (hops < 2) {
-						if (prod != 4) {
-							w4 = 1.9227684;
+			if (prod != 1) {
+				if (rel_time < 1199) {
+					if (rel_time < 1101) {
+						if (rel_time < 1015) {
+							w4 = 3.9679563;
 						} else {
-							w4 = 2.6051044;
+							w4 = 5.247212;
 						}
 					} else {
-						if (rel_time < 422) {
-							w4 = 1.99713;
+						if (hops < 3) {
+							w4 = 1.8617772;
 						} else {
-							w4 = 2.9946506;
+							w4 = 3.2775865;
 						}
 					}
 				} else {
-					if (rel_time < 11747) {
-						if (size < 69) {
-							w4 = -2.0097923;
+					if (hops < 3) {
+						if (rel_time < 1627) {
+							w4 = -6.2827067;
 						} else {
-							w4 = -0.6550567;
+							w4 = -0.51779515;
 						}
 					} else {
 						if (size < 69) {
-							w4 = 13.257299;
+							w4 = 2.8235943;
 						} else {
-							w4 = -0.6464261;
+							w4 = 0.32410693;
 						}
 					}
 				}
 			} else {
-				if (prod != 0) {
-					if (rel_time < 1407) {
-						if (rel_time < 767) {
-							w4 = 3.092496;
+				if (rel_time < 854) {
+					if (hops < 3) {
+						if (hops < 2) {
+							w4 = 2.9142537;
 						} else {
-							w4 = 1.2699653;
+							w4 = 3.24917;
 						}
 					} else {
-						if (size < 69) {
-							w4 = -1.33729;
+						if (hops < 4) {
+							w4 = 3.6491132;
 						} else {
-							w4 = 0.36461908;
+							w4 = 4.0273366;
 						}
 					}
 				} else {
-					if (rel_time < 11417) {
-						if (rel_time < 1654) {
-							w4 = -3.080289;
+					if (hops < 3) {
+						if (rel_time < 2238) {
+							w4 = -2.4134293;
 						} else {
-							w4 = 3.1462314;
+							w4 = -3.8043354;
 						}
 					} else {
-						w4 = 17.784567;
+						if (rel_time < 2238) {
+							w4 = 0.5714325;
+						} else {
+							w4 = -2.3829505;
+						}
 					}
 				}
 			}
 		}
 	} else {
-		if (rel_time < 336) {
-			if (hops < 2) {
-				w4 = 7.71551;
+		if (rel_time < 768) {
+			if (hops < 3) {
+				w4 = 13.232791;
 			} else {
 				if (hops < 4) {
-					w4 = 8.346323;
+					w4 = 13.961177;
 				} else {
-					w4 = 9.100666;
+					w4 = 14.915558;
 				}
 			}
 		} else {
 			if (hops < 3) {
-				if (rel_time < 1311) {
-					if (rel_time < 669) {
-						w4 = 5.5130486;
+				if (rel_time < 1743) {
+					if (hops < 2) {
+						w4 = 9.42255;
 					} else {
-						w4 = 5.846187;
+						w4 = 9.789861;
 					}
 				} else {
-					if (rel_time < 11071) {
+					if (rel_time < 11495) {
 						if (hops < 2) {
-							w4 = 5.1297183;
+							w4 = 8.574236;
 						} else {
-							w4 = 5.3573904;
+							w4 = 8.92977;
 						}
 					} else {
-						if (rel_time < 11662) {
-							w4 = 5.7672615;
+						if (rel_time < 12101) {
+							w4 = 9.293206;
 						} else {
-							w4 = 6.075195;
+							w4 = 9.911806;
 						}
 					}
 				}
 			} else {
-				if (rel_time < 1311) {
+				if (rel_time < 1743) {
 					if (hops < 4) {
-						w4 = 6.0634775;
+						if (rel_time < 1163) {
+							w4 = 10.308799;
+						} else {
+							w4 = 9.863516;
+						}
 					} else {
-						w4 = 6.4771037;
+						w4 = 10.76301;
 					}
 				} else {
-					if (rel_time < 11071) {
+					if (rel_time < 11512) {
 						if (hops < 4) {
-							w4 = 5.6010346;
+							w4 = 9.297055;
 						} else {
-							w4 = 5.8080454;
+							w4 = 9.708269;
 						}
 					} else {
 						if (hops < 4) {
-							w4 = 6.0743284;
+							w4 = 10.069542;
 						} else {
-							w4 = 6.4753103;
+							w4 = 10.772405;
 						}
 					}
 				}
@@ -794,179 +822,175 @@ float bolt(const uint16_t rel_time, const uint8_t hops, const uint8_t size, cons
 	float w5;
 	if (size < 133) {
 		if (size < 37) {
-			if (rel_time < 1338) {
-				if (rel_time < 969) {
-					if (rel_time < 65) {
-						if (hops < 3) {
-							w5 = -3.2338517;
-						} else {
-							w5 = -2.9668677;
-						}
+			if (rel_time < 497) {
+				if (hops < 3) {
+					if (hops < 2) {
+						w5 = -6.763744;
 					} else {
-						if (hops < 2) {
-							w5 = -2.4929028;
-						} else {
-							w5 = -1.8240815;
-						}
+						w5 = -6.4972663;
 					}
 				} else {
 					if (hops < 4) {
-						if (hops < 3) {
-							w5 = -3.3455756;
-						} else {
-							w5 = -4.1256666;
-						}
+						w5 = -6.265539;
 					} else {
-						w5 = -2.8023293;
+						w5 = -5.7817087;
 					}
 				}
 			} else {
-				if (hops < 3) {
-					if (rel_time < 9278) {
-						if (hops < 2) {
-							w5 = -2.2791488;
+				if (hops < 2) {
+					if (rel_time < 1770) {
+						if (rel_time < 972) {
+							w5 = -4.39349;
 						} else {
-							w5 = -2.2465103;
+							w5 = -6.358891;
 						}
 					} else {
-						w5 = -2.0929878;
+						if (rel_time < 7880) {
+							w5 = -4.7692013;
+						} else {
+							w5 = -4.511207;
+						}
 					}
 				} else {
-					if (rel_time < 8667) {
-						if (rel_time < 8631) {
-							w5 = -1.7064867;
+					if (rel_time < 972) {
+						if (hops < 4) {
+							w5 = -3.3000703;
 						} else {
-							w5 = -1.6208862;
+							w5 = -2.3301437;
 						}
 					} else {
-						if (hops < 4) {
-							w5 = -2.235565;
+						if (rel_time < 1770) {
+							w5 = -5.0874553;
 						} else {
-							w5 = -1.8483291;
+							w5 = -4.227379;
 						}
 					}
 				}
 			}
 		} else {
 			if (cons != 5) {
-				if (hops < 4) {
-					if (rel_time < 669) {
-						if (rel_time < 422) {
-							w5 = 0.8450364;
+				if (rel_time < 1101) {
+					if (rel_time < 854) {
+						if (hops < 3) {
+							w5 = 1.8584222;
 						} else {
-							w5 = 1.5537947;
+							w5 = 2.249873;
 						}
 					} else {
-						if (prod != 3) {
-							w5 = -1.1363355;
+						if (hops < 4) {
+							w5 = 2.9538734;
 						} else {
-							w5 = -0.13393337;
+							w5 = 4.9948583;
 						}
 					}
 				} else {
-					if (rel_time < 1264) {
-						if (rel_time < 1196) {
-							w5 = 1.2934836;
+					if (hops < 4) {
+						if (size < 69) {
+							w5 = -1.9636481;
 						} else {
-							w5 = 10.601475;
+							w5 = -0.8331704;
 						}
 					} else {
-						if (prod != 3) {
-							w5 = 0.35309368;
+						if (rel_time < 1697) {
+							w5 = 3.0770822;
 						} else {
-							w5 = 1.5080299;
+							w5 = 0.4777801;
 						}
 					}
 				}
 			} else {
-				if (rel_time < 1654) {
-					if (rel_time < 1407) {
-						if (rel_time < 767) {
-							w5 = 1.8024409;
+				if (rel_time < 12186) {
+					if (hops < 2) {
+						if (rel_time < 2087) {
+							w5 = -1.97258;
 						} else {
-							w5 = -1.9345636;
+							w5 = -0.41463143;
 						}
 					} else {
-						if (hops < 3) {
-							w5 = -9.464422;
+						if (rel_time < 2087) {
+							w5 = -0.80314934;
 						} else {
-							w5 = -4.9747276;
+							w5 = 1.163343;
 						}
 					}
 				} else {
-					if (rel_time < 11747) {
-						if (rel_time < 2257) {
-							w5 = 2.7383215;
+					if (rel_time < 12625) {
+						if (hops < 2) {
+							w5 = 9.243764;
 						} else {
-							w5 = 0.47749275;
+							w5 = 11.700217;
 						}
 					} else {
-						if (rel_time < 12186) {
-							w5 = 7.5156574;
+						if (hops < 4) {
+							w5 = -0.021392632;
 						} else {
-							w5 = 0.3495356;
+							w5 = 1.5403465;
 						}
 					}
 				}
 			}
 		}
 	} else {
-		if (rel_time < 336) {
-			if (hops < 2) {
-				w5 = 3.861084;
+		if (rel_time < 768) {
+			if (hops < 3) {
+				if (hops < 2) {
+					w5 = 7.7398605;
+				} else {
+					w5 = 8.113681;
+				}
 			} else {
 				if (hops < 4) {
-					w5 = 4.174851;
+					w5 = 8.3814945;
 				} else {
-					w5 = 4.561719;
+					w5 = 8.964606;
 				}
 			}
 		} else {
 			if (hops < 3) {
-				if (rel_time < 1311) {
+				if (rel_time < 1743) {
 					if (hops < 2) {
-						w5 = 2.8103085;
+						w5 = 5.6551557;
 					} else {
-						if (rel_time < 731) {
-							w5 = 3.013921;
-						} else {
-							w5 = 2.8887346;
-						}
+						w5 = 5.8754044;
 					}
 				} else {
-					if (rel_time < 11051) {
+					if (rel_time < 11495) {
 						if (hops < 2) {
-							w5 = 2.565007;
+							w5 = 5.144733;
 						} else {
-							w5 = 2.6696436;
+							w5 = 5.3580403;
 						}
 					} else {
-						if (rel_time < 11662) {
-							w5 = 2.8488696;
+						if (rel_time < 12101) {
+							w5 = 5.5791225;
 						} else {
-							w5 = 3.0398607;
+							w5 = 5.9500923;
 						}
 					}
 				}
 			} else {
-				if (rel_time < 1311) {
+				if (rel_time < 1743) {
 					if (hops < 4) {
-						w5 = 3.0330741;
+						if (rel_time < 1163) {
+							w5 = 6.188824;
+						} else {
+							w5 = 5.9214892;
+						}
 					} else {
-						w5 = 3.2426014;
+						w5 = 6.4633217;
 					}
 				} else {
-					if (rel_time < 11071) {
+					if (rel_time < 11512) {
 						if (hops < 4) {
-							w5 = 2.8006823;
+							w5 = 5.5784316;
 						} else {
-							w5 = 2.904478;
+							w5 = 5.82559;
 						}
 					} else {
 						if (hops < 4) {
-							w5 = 3.0398314;
+							w5 = 6.0451884;
 						} else {
-							w5 = 3.2457638;
+							w5 = 6.4744654;
 						}
 					}
 				}
@@ -976,175 +1000,175 @@ float bolt(const uint16_t rel_time, const uint8_t hops, const uint8_t size, cons
 	float w6;
 	if (size < 133) {
 		if (size < 37) {
-			if (rel_time < 1338) {
-				if (rel_time < 969) {
-					if (rel_time < 65) {
-						if (hops < 4) {
-							w6 = -1.5970126;
-						} else {
-							w6 = -1.2822508;
-						}
+			if (rel_time < 497) {
+				if (hops < 3) {
+					if (hops < 2) {
+						w6 = -4.0606008;
 					} else {
-						if (rel_time < 540) {
-							w6 = -0.79312706;
-						} else {
-							w6 = -1.2214404;
-						}
+						w6 = -3.9002564;
 					}
 				} else {
 					if (hops < 4) {
-						if (hops < 3) {
-							w6 = -1.6734507;
-						} else {
-							w6 = -2.0646372;
-						}
+						w6 = -3.7615573;
 					} else {
-						w6 = -1.4048629;
+						w6 = -3.4749863;
 					}
 				}
 			} else {
 				if (hops < 3) {
-					if (rel_time < 9278) {
-						if (rel_time < 1949) {
-							w6 = -1.1685177;
+					if (rel_time < 1402) {
+						if (hops < 2) {
+							w6 = -2.9361837;
 						} else {
-							w6 = -1.127606;
+							w6 = -1.457529;
 						}
 					} else {
-						w6 = -1.0466177;
+						if (rel_time < 1770) {
+							w6 = -4.3189044;
+						} else {
+							w6 = -2.7703016;
+						}
 					}
 				} else {
-					if (rel_time < 9246) {
-						if (rel_time < 8667) {
-							w6 = -0.8508769;
+					if (rel_time < 1770) {
+						if (rel_time < 1402) {
+							w6 = -2.3255816;
 						} else {
-							w6 = -0.96718967;
+							w6 = -4.1206183;
 						}
 					} else {
-						if (hops < 4) {
-							w6 = -1.1560616;
+						if (rel_time < 7880) {
+							w6 = -2.415716;
 						} else {
-							w6 = -0.92853045;
+							w6 = -2.2382662;
 						}
 					}
 				}
 			}
 		} else {
-			if (hops < 2) {
-				if (size < 69) {
-					if (rel_time < 11577) {
-						if (rel_time < 1805) {
-							w6 = -1.9093621;
+			if (rel_time < 1199) {
+				if (prod != 0) {
+					if (hops < 4) {
+						if (hops < 2) {
+							w6 = 1.2194005;
 						} else {
-							w6 = -0.87237954;
+							w6 = 1.7996756;
 						}
 					} else {
-						if (rel_time < 11747) {
-							w6 = 12.964356;
+						if (rel_time < 854) {
+							w6 = 1.522936;
 						} else {
-							w6 = 2.1908054;
+							w6 = 3.0975466;
 						}
 					}
 				} else {
-					if (prod != 4) {
-						if (rel_time < 1407) {
-							w6 = 0.5837786;
+					if (hops < 4) {
+						if (hops < 2) {
+							w6 = 2.5033467;
 						} else {
-							w6 = -0.27346966;
+							w6 = 2.7823093;
 						}
 					} else {
-						if (rel_time < 655) {
-							w6 = 0.52748173;
-						} else {
-							w6 = -0.9043374;
-						}
+						w6 = 4.180909;
 					}
 				}
 			} else {
 				if (cons != 5) {
-					if (rel_time < 1264) {
-						if (rel_time < 1196) {
-							w6 = -0.0575391;
+					if (hops < 2) {
+						if (prod != 3) {
+							w6 = -1.5924625;
 						} else {
-							w6 = 3.9533744;
+							w6 = -0.67862695;
 						}
 					} else {
 						if (prod != 3) {
-							w6 = -0.33758938;
+							w6 = -0.62067;
 						} else {
-							w6 = 0.14352086;
+							w6 = 0.18007314;
 						}
 					}
 				} else {
-					if (rel_time < 1654) {
+					if (rel_time < 2087) {
 						if (size < 69) {
-							w6 = -2.0653615;
+							w6 = -5.0283713;
 						} else {
-							w6 = 1.6883781;
+							w6 = 1.9088303;
 						}
 					} else {
-						if (rel_time < 11747) {
-							w6 = 0.6067153;
+						if (size < 69) {
+							w6 = 1.2897142;
 						} else {
-							w6 = 2.3335094;
+							w6 = -0.067270085;
 						}
 					}
 				}
 			}
 		}
 	} else {
-		if (rel_time < 336) {
-			if (hops < 2) {
-				w6 = 1.932209;
+		if (rel_time < 768) {
+			if (hops < 3) {
+				if (hops < 2) {
+					w6 = 4.6465797;
+				} else {
+					w6 = 4.8706594;
+				}
 			} else {
 				if (hops < 4) {
-					w6 = 2.088261;
+					w6 = 5.0317817;
 				} else {
-					w6 = 2.2865677;
+					w6 = 5.387937;
 				}
 			}
 		} else {
 			if (hops < 3) {
-				if (rel_time < 11071) {
-					if (rel_time < 1311) {
-						if (rel_time < 669) {
-							w6 = 1.3550525;
+				if (rel_time < 2346) {
+					if (hops < 2) {
+						if (rel_time < 1163) {
+							w6 = 3.4727116;
 						} else {
-							w6 = 1.4701803;
+							w6 = 3.248409;
 						}
 					} else {
-						if (rel_time < 2502) {
-							w6 = 1.1703126;
-						} else {
-							w6 = 1.3256862;
-						}
+						w6 = 3.492068;
 					}
 				} else {
-					w6 = 1.4947243;
+					if (rel_time < 11495) {
+						if (hops < 2) {
+							w6 = 3.080472;
+						} else {
+							w6 = 3.2009964;
+						}
+					} else {
+						if (rel_time < 12101) {
+							w6 = 3.349404;
+						} else {
+							w6 = 3.5718687;
+						}
+					}
 				}
 			} else {
-				if (rel_time < 1311) {
-					if (hops < 4) {
-						if (rel_time < 731) {
-							w6 = 1.47384;
+				if (rel_time < 2346) {
+					if (rel_time < 1163) {
+						if (hops < 4) {
+							w6 = 3.7154102;
 						} else {
-							w6 = 1.5592273;
+							w6 = 3.9397686;
 						}
 					} else {
-						w6 = 1.6233231;
+						w6 = 3.6034913;
 					}
 				} else {
-					if (rel_time < 11071) {
-						if (rel_time < 1913) {
-							w6 = 1.2977482;
+					if (rel_time < 11512) {
+						if (hops < 4) {
+							w6 = 3.330005;
 						} else {
-							w6 = 1.421718;
+							w6 = 3.493749;
 						}
 					} else {
 						if (hops < 4) {
-							w6 = 1.5212414;
+							w6 = 3.629196;
 						} else {
-							w6 = 1.6269268;
+							w6 = 3.8912938;
 						}
 					}
 				}
@@ -1153,188 +1177,176 @@ float bolt(const uint16_t rel_time, const uint8_t hops, const uint8_t size, cons
 	}
 	float w7;
 	if (size < 133) {
-		if (hops < 4) {
-			if (size < 37) {
-				if (rel_time < 1338) {
-					if (rel_time < 853) {
-						if (rel_time < 65) {
-							w7 = -0.7987235;
+		if (size < 37) {
+			if (rel_time < 497) {
+				if (hops < 3) {
+					if (rel_time < 432) {
+						if (hops < 2) {
+							w7 = -2.4389665;
 						} else {
-							w7 = -0.48641574;
+							w7 = -2.2091672;
 						}
 					} else {
-						if (hops < 3) {
-							w7 = -0.72647685;
-						} else {
-							w7 = -1.0743937;
-						}
+						w7 = -2.4157445;
 					}
 				} else {
-					if (hops < 3) {
-						if (rel_time < 9278) {
-							w7 = -0.565421;
-						} else {
-							w7 = -0.52337176;
-						}
+					if (hops < 4) {
+						w7 = -2.258271;
 					} else {
-						if (rel_time < 9278) {
-							w7 = -0.43390474;
-						} else {
-							w7 = -0.58412373;
-						}
+						w7 = -2.0885785;
 					}
 				}
 			} else {
-				if (rel_time < 669) {
-					if (prod != 0) {
-						if (hops < 2) {
-							w7 = 0.6471803;
+				if (hops < 4) {
+					if (rel_time < 1770) {
+						if (rel_time < 1402) {
+							w7 = -1.4433621;
 						} else {
-							w7 = 0.75400823;
+							w7 = -2.7264533;
 						}
 					} else {
 						if (hops < 3) {
-							w7 = 1.2667667;
+							w7 = -1.662199;
 						} else {
-							w7 = 4.4185324;
+							w7 = -1.4413047;
 						}
 					}
 				} else {
-					if (rel_time < 1194) {
-						if (rel_time < 852) {
-							w7 = -1.0714885;
+					if (rel_time < 1402) {
+						if (rel_time < 972) {
+							w7 = -0.47266293;
 						} else {
-							w7 = -3.8256662;
+							w7 = 0.09187232;
 						}
 					} else {
-						if (prod != 0) {
-							w7 = -0.18434799;
+						if (rel_time < 1770) {
+							w7 = -0.8674213;
 						} else {
-							w7 = 0.21427464;
+							w7 = -1.3176064;
 						}
 					}
 				}
 			}
 		} else {
-			if (size < 37) {
-				if (rel_time < 969) {
-					if (rel_time < 65) {
-						w7 = -0.6428094;
-					} else {
-						if (rel_time < 540) {
-							w7 = -0.04731646;
+			if (hops < 4) {
+				if (rel_time < 12186) {
+					if (rel_time < 1199) {
+						if (rel_time < 854) {
+							w7 = 0.52504605;
 						} else {
-							w7 = 0.0038783827;
+							w7 = 1.2428198;
+						}
+					} else {
+						if (hops < 2) {
+							w7 = -0.7232215;
+						} else {
+							w7 = -0.17769192;
 						}
 					}
 				} else {
-					if (rel_time < 1338) {
-						w7 = -0.7042883;
-					} else {
-						if (rel_time < 7446) {
-							w7 = -0.39852712;
+					if (size < 69) {
+						if (hops < 2) {
+							w7 = 5.0340147;
 						} else {
-							w7 = -0.46955174;
+							w7 = 6.13249;
+						}
+					} else {
+						if (hops < 2) {
+							w7 = -0.5345043;
+						} else {
+							w7 = 0.016350403;
 						}
 					}
 				}
 			} else {
-				if (rel_time < 669) {
-					if (prod != 0) {
-						if (rel_time < 422) {
-							w7 = 0.28674176;
+				if (prod != 0) {
+					if (size < 69) {
+						if (rel_time < 1697) {
+							w7 = 2.6877022;
 						} else {
-							w7 = 2.4658;
+							w7 = -0.39676648;
 						}
 					} else {
-						w7 = 4.921469;
+						if (prod != 4) {
+							w7 = 1.2060407;
+						} else {
+							w7 = 0.5359433;
+						}
 					}
 				} else {
-					if (rel_time < 1196) {
-						if (rel_time < 767) {
-							w7 = 0.6496682;
+					if (rel_time < 11853) {
+						if (rel_time < 2087) {
+							w7 = 0.19639528;
 						} else {
-							w7 = -1.2700663;
+							w7 = 3.044817;
 						}
 					} else {
-						if (cons != 5) {
-							w7 = 0.51636153;
-						} else {
-							w7 = 1.129331;
-						}
+						w7 = 8.891672;
 					}
 				}
 			}
 		}
 	} else {
-		if (rel_time < 336) {
+		if (rel_time < 768) {
 			if (hops < 3) {
 				if (hops < 2) {
-					w7 = 0.9669484;
+					w7 = 2.7895381;
 				} else {
-					w7 = 1.0139794;
+					w7 = 2.923871;
 				}
 			} else {
-				w7 = 1.0977578;
+				if (hops < 4) {
+					w7 = 3.0207877;
+				} else {
+					w7 = 3.2382736;
+				}
 			}
 		} else {
-			if (hops < 2) {
-				if (rel_time < 3723) {
-					if (rel_time < 1280) {
-						if (rel_time < 731) {
-							w7 = 0.67642826;
-						} else {
-							w7 = 0.72701705;
-						}
+			if (hops < 3) {
+				if (rel_time < 1743) {
+					if (hops < 2) {
+						w7 = 2.050423;
 					} else {
-						if (rel_time < 2503) {
-							w7 = 0.4760438;
-						} else {
-							w7 = 0.5696018;
-						}
+						w7 = 2.1298292;
 					}
 				} else {
-					if (rel_time < 7389) {
-						if (rel_time < 6165) {
-							w7 = 0.6792183;
+					if (rel_time < 11495) {
+						if (hops < 2) {
+							w7 = 1.8506479;
 						} else {
-							w7 = 0.71991533;
+							w7 = 1.9273176;
 						}
 					} else {
-						if (rel_time < 11051) {
-							w7 = 0.6150772;
+						if (rel_time < 12101) {
+							w7 = 2.0107877;
 						} else {
-							w7 = 0.716177;
+							w7 = 2.1442173;
 						}
 					}
 				}
 			} else {
-				if (rel_time < 2524) {
-					if (rel_time < 1913) {
+				if (rel_time < 2957) {
+					if (rel_time < 1163) {
 						if (hops < 4) {
-							w7 = 0.70671;
+							w7 = 2.2305276;
 						} else {
-							w7 = 0.9210258;
+							w7 = 2.3678956;
 						}
 					} else {
-						if (hops < 4) {
-							w7 = 0.89286226;
-						} else {
-							w7 = 0.6183518;
-						}
+						w7 = 2.1485322;
 					}
 				} else {
-					if (rel_time < 8000) {
+					if (rel_time < 11512) {
 						if (hops < 4) {
-							w7 = 0.6501803;
+							w7 = 1.9895123;
 						} else {
-							w7 = 0.7615803;
+							w7 = 2.0942209;
 						}
 					} else {
-						if (rel_time < 11071) {
-							w7 = 0.7119871;
+						if (hops < 4) {
+							w7 = 2.1787565;
 						} else {
-							w7 = 0.775403;
+							w7 = 2.338756;
 						}
 					}
 				}
@@ -1343,196 +1355,196 @@ float bolt(const uint16_t rel_time, const uint8_t hops, const uint8_t size, cons
 	}
 	float w8;
 	if (size < 133) {
-		if (hops < 3) {
-			if (size < 69) {
-				if (rel_time < 11577) {
-					if (rel_time < 1654) {
-						if (rel_time < 1338) {
-							w8 = -0.31476295;
-						} else {
-							w8 = -3.7308655;
-						}
+		if (size < 37) {
+			if (rel_time < 497) {
+				if (hops < 3) {
+					if (hops < 2) {
+						w8 = -1.4703264;
 					} else {
-						if (rel_time < 2257) {
-							w8 = 0.3419577;
+						if (rel_time < 432) {
+							w8 = -1.3276452;
 						} else {
-							w8 = -0.31954202;
+							w8 = -1.430084;
 						}
 					}
 				} else {
-					if (rel_time < 11747) {
-						if (hops < 2) {
-							w8 = 6.5247884;
-						} else {
-							w8 = 13.482135;
-						}
+					if (hops < 4) {
+						w8 = -1.3557671;
 					} else {
-						if (hops < 2) {
-							w8 = 0.98933005;
-						} else {
-							w8 = 2.1925063;
-						}
+						w8 = -1.2552946;
 					}
 				}
 			} else {
-				if (rel_time < 1407) {
-					if (rel_time < 1279) {
-						if (hops < 2) {
-							w8 = -0.18359414;
+				if (hops < 4) {
+					if (rel_time < 7880) {
+						if (rel_time < 972) {
+							w8 = -0.7351053;
 						} else {
-							w8 = 0.23187931;
+							w8 = -1.0563873;
 						}
 					} else {
-						if (hops < 2) {
-							w8 = 2.123554;
+						if (rel_time < 9714) {
+							w8 = -0.8094717;
 						} else {
-							w8 = 2.3600638;
+							w8 = -0.9444302;
 						}
 					}
 				} else {
-					if (prod != 4) {
-						if (rel_time < 12263) {
-							w8 = -0.022903059;
+					if (rel_time < 1744) {
+						if (rel_time < 1402) {
+							w8 = -0.11457957;
 						} else {
-							w8 = -0.46245274;
+							w8 = -0.44629318;
 						}
 					} else {
-						if (hops < 2) {
-							w8 = -0.36298272;
+						if (rel_time < 7880) {
+							w8 = -0.86445266;
 						} else {
-							w8 = -0.032855313;
+							w8 = -0.6357348;
 						}
 					}
 				}
 			}
 		} else {
-			if (prod != 0) {
+			if (prod != 1) {
 				if (hops < 4) {
-					if (rel_time < 1196) {
-						if (rel_time < 767) {
-							w8 = 0.018318227;
+					if (rel_time < 12186) {
+						if (rel_time < 1199) {
+							w8 = 0.7457347;
 						} else {
-							w8 = -1.5422513;
+							w8 = -0.089701235;
 						}
 					} else {
-						if (rel_time < 1264) {
-							w8 = 3.149232;
+						if (size < 69) {
+							w8 = 3.472276;
 						} else {
-							w8 = -0.08795029;
+							w8 = -0.09472918;
 						}
 					}
 				} else {
-					if (size < 37) {
-						if (rel_time < 969) {
-							w8 = -0.11488196;
+					if (size < 69) {
+						if (rel_time < 11853) {
+							w8 = 1.5572753;
 						} else {
-							w8 = -0.22101;
+							w8 = 5.3442454;
 						}
 					} else {
-						if (rel_time < 1407) {
-							w8 = 0.8318793;
+						if (rel_time < 1199) {
+							w8 = 1.4687507;
 						} else {
-							w8 = 0.3079202;
+							w8 = 0.54036266;
 						}
 					}
 				}
 			} else {
-				if (rel_time < 11417) {
-					if (rel_time < 583) {
-						if (hops < 4) {
-							w8 = 2.2111619;
+				if (rel_time < 2238) {
+					if (rel_time < 1285) {
+						if (rel_time < 854) {
+							w8 = 0.26987398;
 						} else {
-							w8 = 2.4671369;
+							w8 = -1.7378947;
 						}
 					} else {
-						if (rel_time < 1654) {
-							w8 = -1.071285;
+						if (hops < 2) {
+							w8 = -1.0126413;
 						} else {
-							w8 = 0.7401975;
+							w8 = 2.2162673;
 						}
 					}
 				} else {
-					if (rel_time < 11747) {
-						w8 = 7.4177094;
+					if (hops < 3) {
+						if (rel_time < 3302) {
+							w8 = -1.0808412;
+						} else {
+							w8 = -0.879368;
+						}
 					} else {
 						if (hops < 4) {
-							w8 = 3.8993852;
+							w8 = -0.63924664;
 						} else {
-							w8 = 3.313219;
+							w8 = -0.27463663;
 						}
 					}
 				}
 			}
 		}
 	} else {
-		if (rel_time < 336) {
-			if (hops < 4) {
+		if (rel_time < 768) {
+			if (hops < 3) {
 				if (hops < 2) {
-					w8 = 0.48390642;
+					if (rel_time < 497) {
+						w8 = 1.1621928;
+					} else {
+						w8 = 1.6785704;
+					}
 				} else {
-					w8 = 0.5185707;
+					w8 = 1.7552027;
 				}
 			} else {
-				w8 = 0.5986288;
+				if (hops < 4) {
+					w8 = 1.8134987;
+				} else {
+					w8 = 1.9462738;
+				}
 			}
 		} else {
-			if (hops < 2) {
-				if (rel_time < 3723) {
-					if (rel_time < 1280) {
-						if (rel_time < 731) {
-							w8 = 0.338494;
+			if (hops < 3) {
+				if (rel_time < 4790) {
+					if (hops < 2) {
+						if (rel_time < 1743) {
+							w8 = 1.2306103;
 						} else {
-							w8 = 0.36384413;
+							w8 = 1.1408771;
 						}
 					} else {
-						if (rel_time < 1913) {
-							w8 = 0.29221356;
+						if (rel_time < 2346) {
+							w8 = 1.2708772;
 						} else {
-							w8 = 0.24097148;
+							w8 = 1.2148234;
 						}
 					}
 				} else {
-					if (rel_time < 9219) {
-						if (rel_time < 3725) {
-							w8 = 0.40749857;
+					if (rel_time < 9066) {
+						if (hops < 2) {
+							w8 = 1.0617402;
 						} else {
-							w8 = 0.33782327;
+							w8 = 1.1111153;
 						}
 					} else {
-						if (rel_time < 9830) {
-							w8 = 0.2467815;
+						if (rel_time < 12101) {
+							w8 = 1.160111;
 						} else {
-							w8 = 0.3230314;
+							w8 = 1.2871777;
 						}
 					}
 				}
 			} else {
-				if (rel_time < 3746) {
+				if (rel_time < 2346) {
 					if (hops < 4) {
-						if (rel_time < 1892) {
-							w8 = 0.3956631;
+						if (rel_time < 1163) {
+							w8 = 1.3390808;
 						} else {
-							w8 = 0.35145858;
+							w8 = 1.2800071;
 						}
 					} else {
-						if (rel_time < 731) {
-							w8 = 0.30228814;
+						if (rel_time < 1743) {
+							w8 = 1.4724423;
 						} else {
-							w8 = 0.44214818;
+							w8 = 1.2216315;
 						}
 					}
 				} else {
-					if (rel_time < 8000) {
-						if (hops < 3) {
-							w8 = 0.30104744;
+					if (rel_time < 11512) {
+						if (hops < 4) {
+							w8 = 1.1980776;
 						} else {
-							w8 = 0.34470913;
+							w8 = 1.2574775;
 						}
 					} else {
-						if (rel_time < 8020) {
-							w8 = 0.42639804;
+						if (hops < 4) {
+							w8 = 1.3079951;
 						} else {
-							w8 = 0.35506478;
+							w8 = 1.4056505;
 						}
 					}
 				}
@@ -1541,358 +1553,390 @@ float bolt(const uint16_t rel_time, const uint8_t hops, const uint8_t size, cons
 	}
 	float w9;
 	if (size < 133) {
-		if (hops < 2) {
-			if (rel_time < 852) {
-				if (prod != 1) {
-					if (prod != 0) {
-						if (rel_time < 540) {
-							w9 = -0.32682216;
+		if (size < 37) {
+			if (rel_time < 1770) {
+				if (rel_time < 1402) {
+					if (rel_time < 497) {
+						if (hops < 3) {
+							w9 = -0.860377;
 						} else {
-							w9 = 0.059270307;
+							w9 = -0.7992001;
 						}
 					} else {
-						w9 = 0.5875221;
-					}
-				} else {
-					if (rel_time < 422) {
-						w9 = 1.1853114;
-					} else {
-						w9 = 0.6342049;
-					}
-				}
-			} else {
-				if (rel_time < 1949) {
-					if (prod != 0) {
-						if (prod != 2) {
-							w9 = -0.49734512;
+						if (hops < 2) {
+							w9 = -0.8269933;
 						} else {
-							w9 = 1.0526248;
+							w9 = -0.32144377;
 						}
-					} else {
-						if (rel_time < 1194) {
-							w9 = -0.7236025;
-						} else {
-							w9 = -2.630705;
-						}
-					}
-				} else {
-					if (rel_time < 2257) {
-						if (size < 69) {
-							w9 = 0.9110613;
-						} else {
-							w9 = 0.39392057;
-						}
-					} else {
-						if (prod != 1) {
-							w9 = -0.11846296;
-						} else {
-							w9 = -0.36279702;
-						}
-					}
-				}
-			}
-		} else {
-			if (cons != 5) {
-				if (prod != 3) {
-					if (rel_time < 1264) {
-						if (rel_time < 1196) {
-							w9 = -0.14119375;
-						} else {
-							w9 = 1.4141659;
-						}
-					} else {
-						if (rel_time < 2417) {
-							w9 = -0.23830342;
-						} else {
-							w9 = -0.09634547;
-						}
-					}
-				} else {
-					if (rel_time < 669) {
-						if (hops < 4) {
-							w9 = 0.43914515;
-						} else {
-							w9 = 0.77985567;
-						}
-					} else {
-						if (hops < 4) {
-							w9 = 0.094938055;
-						} else {
-							w9 = 0.25649953;
-						}
-					}
-				}
-			} else {
-				if (hops < 3) {
-					if (rel_time < 1194) {
-						if (rel_time < 767) {
-							w9 = 0.47063503;
-						} else {
-							w9 = -4.19367;
-						}
-					} else {
-						if (rel_time < 1407) {
-							w9 = 1.1809076;
-						} else {
-							w9 = 0.008783071;
-						}
-					}
-				} else {
-					if (rel_time < 12186) {
-						if (rel_time < 11747) {
-							w9 = 0.2685911;
-						} else {
-							w9 = 1.8807224;
-						}
-					} else {
-						if (hops < 4) {
-							w9 = -0.82373905;
-						} else {
-							w9 = -0.4439476;
-						}
-					}
-				}
-			}
-		}
-	} else {
-		if (rel_time < 336) {
-			if (hops < 3) {
-				w9 = 0.24555144;
-			} else {
-				w9 = 0.2797103;
-			}
-		} else {
-			if (rel_time < 11071) {
-				if (hops < 2) {
-					if (rel_time < 2503) {
-						if (rel_time < 1913) {
-							w9 = 0.16569532;
-						} else {
-							w9 = 0.062063005;
-						}
-					} else {
-						if (rel_time < 9219) {
-							w9 = 0.17058557;
-						} else {
-							w9 = 0.13703512;
-						}
-					}
-				} else {
-					if (rel_time < 3746) {
-						if (rel_time < 1913) {
-							w9 = 0.17365587;
-						} else {
-							w9 = 0.20321946;
-						}
-					} else {
-						if (rel_time < 6797) {
-							w9 = 0.15940535;
-						} else {
-							w9 = 0.17359538;
-						}
-					}
-				}
-			} else {
-				if (hops < 4) {
-					w9 = 0.20157398;
-				} else {
-					w9 = 0.2516809;
-				}
-			}
-		}
-	}
-	float w10;
-	if (rel_time < 731) {
-		if (prod != 6) {
-			if (prod != 0) {
-				if (prod != 4) {
-					if (hops < 3) {
-						if (rel_time < 422) {
-							w10 = 0.5197141;
-						} else {
-							w10 = 0.15939003;
-						}
-					} else {
-						if (rel_time < 422) {
-							w10 = -0.06453922;
-						} else {
-							w10 = 0.24184296;
-						}
-					}
-				} else {
-					if (hops < 2) {
-						w10 = 0.0027935035;
-					} else {
-						if (hops < 4) {
-							w10 = 0.543777;
-						} else {
-							w10 = 0.9265031;
-						}
-					}
-				}
-			} else {
-				if (hops < 2) {
-					w10 = 0.29401156;
-				} else {
-					if (hops < 3) {
-						w10 = 0.73586744;
-					} else {
-						if (hops < 4) {
-							w10 = 0.9723229;
-						} else {
-							w10 = 1.1028004;
-						}
-					}
-				}
-			}
-		} else {
-			if (rel_time < 65) {
-				if (hops < 3) {
-					if (hops < 2) {
-						w10 = -0.19188085;
-					} else {
-						w10 = -0.11479216;
 					}
 				} else {
 					if (hops < 4) {
-						w10 = -0.29216364;
+						if (hops < 3) {
+							w9 = -1.07949;
+						} else {
+							w9 = -1.5143721;
+						}
 					} else {
-						w10 = -0.1945445;
+						if (rel_time < 1744) {
+							w9 = -0.2690259;
+						} else {
+							w9 = -0.21847938;
+						}
 					}
 				}
 			} else {
 				if (hops < 3) {
-					if (hops < 2) {
-						if (size < 37) {
-							w10 = -0.1349355;
+					if (rel_time < 2382) {
+						if (hops < 2) {
+							w9 = -0.44327027;
 						} else {
-							w10 = 0.103100404;
+							w9 = -0.2998602;
 						}
 					} else {
-						if (size < 37) {
-							w10 = 0.4412106;
+						if (rel_time < 7880) {
+							w9 = -0.6639734;
 						} else {
-							w10 = 0.13085124;
+							w9 = -0.5476529;
 						}
 					}
 				} else {
-					if (size < 37) {
-						if (hops < 4) {
-							w10 = -0.34432292;
+					if (rel_time < 9103) {
+						if (rel_time < 8491) {
+							w9 = -0.47658354;
 						} else {
-							w10 = 0.10395677;
+							w9 = -0.64793366;
 						}
 					} else {
-						if (rel_time < 336) {
-							w10 = 0.13993935;
+						if (rel_time < 9714) {
+							w9 = -0.26806614;
 						} else {
-							w10 = 0.09100282;
-						}
-					}
-				}
-			}
-		}
-	} else {
-		if (rel_time < 1194) {
-			if (size < 37) {
-				if (hops < 2) {
-					w10 = -0.13933714;
-				} else {
-					if (rel_time < 853) {
-						w10 = 0.1157268;
-					} else {
-						if (hops < 3) {
-							w10 = 1.1284329;
-						} else {
-							w10 = 0.22990483;
-						}
-					}
-				}
-			} else {
-				if (hops < 2) {
-					if (rel_time < 852) {
-						if (rel_time < 767) {
-							w10 = 0.023691269;
-						} else {
-							w10 = 0.31737182;
-						}
-					} else {
-						w10 = -0.3620961;
-					}
-				} else {
-					if (rel_time < 767) {
-						if (hops < 3) {
-							w10 = -0.2479536;
-						} else {
-							w10 = -0.18565655;
-						}
-					} else {
-						if (rel_time < 852) {
-							w10 = -1.2460196;
-						} else {
-							w10 = -0.99629307;
+							w9 = -0.46311012;
 						}
 					}
 				}
 			}
 		} else {
 			if (hops < 2) {
-				if (size < 69) {
-					if (rel_time < 1949) {
-						if (prod != 0) {
-							w10 = -0.46663567;
+				if (prod != 2) {
+					if (prod != 3) {
+						if (rel_time < 12086) {
+							w9 = -0.5066848;
 						} else {
-							w10 = -1.3164941;
+							w9 = 0.5742342;
 						}
 					} else {
-						if (rel_time < 11577) {
-							w10 = -0.14794166;
+						if (rel_time < 2324) {
+							w9 = 0.092962444;
 						} else {
-							w10 = 0.6618508;
+							w9 = -0.124430396;
 						}
 					}
 				} else {
-					if (prod != 4) {
-						if (prod != 3) {
-							w10 = 0.08906171;
+					if (rel_time < 2411) {
+						if (rel_time < 1199) {
+							w9 = 0.31294614;
 						} else {
-							w10 = -0.019917345;
+							w9 = 1.0473467;
 						}
 					} else {
-						if (rel_time < 12186) {
-							w10 = -0.12018121;
+						if (rel_time < 3023) {
+							w9 = 0.2544217;
 						} else {
-							w10 = 0.24928239;
+							w9 = -0.02949439;
 						}
 					}
 				}
 			} else {
 				if (prod != 0) {
-					if (rel_time < 1978) {
-						if (prod != 2) {
-							w10 = 0.04225659;
+					if (rel_time < 2411) {
+						if (rel_time < 1629) {
+							w9 = 0.08034744;
 						} else {
-							w10 = 0.83528167;
+							w9 = 0.740012;
 						}
 					} else {
-						if (rel_time < 12263) {
-							w10 = -0.011723534;
+						if (size < 69) {
+							w9 = -0.44849092;
 						} else {
-							w10 = -0.48091188;
+							w9 = -0.023677658;
 						}
 					}
 				} else {
-					if (rel_time < 1654) {
-						if (hops < 4) {
-							w10 = -1.2762505;
+					if (rel_time < 2087) {
+						if (rel_time < 1015) {
+							w9 = 1.0008194;
 						} else {
-							w10 = -1.7205966;
+							w9 = -2.7263086;
 						}
 					} else {
-						if (rel_time < 2257) {
-							w10 = 1.7005392;
+						if (rel_time < 2690) {
+							w9 = 2.7949083;
 						} else {
-							w10 = 0.15899049;
+							w9 = 0.7368335;
+						}
+					}
+				}
+			}
+		}
+	} else {
+		if (rel_time < 768) {
+			if (hops < 3) {
+				if (hops < 2) {
+					w9 = 1.0057788;
+				} else {
+					w9 = 1.0536603;
+				}
+			} else {
+				if (hops < 4) {
+					w9 = 1.0887302;
+				} else {
+					w9 = 1.1697493;
+				}
+			}
+		} else {
+			if (hops < 3) {
+				if (rel_time < 4790) {
+					if (rel_time < 1163) {
+						w9 = 0.7766965;
+					} else {
+						if (hops < 2) {
+							w9 = 0.68777174;
+						} else {
+							w9 = 0.7374971;
+						}
+					}
+				} else {
+					if (rel_time < 7214) {
+						if (hops < 2) {
+							w9 = 0.61224127;
+						} else {
+							w9 = 0.65384316;
+						}
+					} else {
+						if (rel_time < 11495) {
+							w9 = 0.6849107;
+						} else {
+							w9 = 0.7593407;
+						}
+					}
+				}
+			} else {
+				if (rel_time < 2957) {
+					if (hops < 4) {
+						if (rel_time < 1163) {
+							w9 = 0.80389565;
+						} else {
+							w9 = 0.7719092;
+						}
+					} else {
+						if (rel_time < 1743) {
+							w9 = 0.8842315;
+						} else {
+							w9 = 0.7499255;
+						}
+					}
+				} else {
+					if (rel_time < 11495) {
+						if (hops < 4) {
+							w9 = 0.71456593;
+						} else {
+							w9 = 0.75307566;
+						}
+					} else {
+						w9 = 0.79312027;
+					}
+				}
+			}
+		}
+	}
+	float w10;
+	if (size < 133) {
+		if (cons != 5) {
+			if (prod != 3) {
+				if (rel_time < 1697) {
+					if (rel_time < 1629) {
+						if (rel_time < 1087) {
+							w10 = -0.034920197;
+						} else {
+							w10 = -0.4503351;
+						}
+					} else {
+						if (hops < 4) {
+							w10 = 1.355935;
+						} else {
+							w10 = 7.5910807;
+						}
+					}
+				} else {
+					if (hops < 3) {
+						if (rel_time < 1770) {
+							w10 = -0.6478739;
+						} else {
+							w10 = -0.32427284;
+						}
+					} else {
+						if (rel_time < 2238) {
+							w10 = -0.9453109;
+						} else {
+							w10 = -0.14904921;
+						}
+					}
+				}
+			} else {
+				if (hops < 3) {
+					if (rel_time < 1697) {
+						if (hops < 2) {
+							w10 = -0.16653559;
+						} else {
+							w10 = 0.4321415;
+						}
+					} else {
+						if (rel_time < 12091) {
+							w10 = -0.08000377;
+						} else {
+							w10 = 0.026543884;
+						}
+					}
+				} else {
+					if (rel_time < 1101) {
+						w10 = 0.6559466;
+					} else {
+						if (rel_time < 2324) {
+							w10 = 0.02737224;
+						} else {
+							w10 = 0.26764834;
+						}
+					}
+				}
+			}
+		} else {
+			if (rel_time < 12186) {
+				if (rel_time < 2087) {
+					if (rel_time < 1840) {
+						if (rel_time < 1627) {
+							w10 = 0.021160884;
+						} else {
+							w10 = 0.8960611;
+						}
+					} else {
+						if (hops < 2) {
+							w10 = -4.8272567;
+						} else {
+							w10 = -2.5987508;
+						}
+					}
+				} else {
+					if (rel_time < 2690) {
+						if (size < 69) {
+							w10 = 1.8037812;
+						} else {
+							w10 = 0.8384433;
+						}
+					} else {
+						if (hops < 4) {
+							w10 = -0.0011732103;
+						} else {
+							w10 = 0.60968566;
+						}
+					}
+				}
+			} else {
+				if (rel_time < 12625) {
+					if (hops < 4) {
+						if (hops < 2) {
+							w10 = 1.4049627;
+						} else {
+							w10 = 1.9975153;
+						}
+					} else {
+						w10 = 2.9181411;
+					}
+				} else {
+					if (hops < 2) {
+						if (rel_time < 12777) {
+							w10 = -0.2540055;
+						} else {
+							w10 = -0.15427063;
+						}
+					} else {
+						if (hops < 3) {
+							w10 = 0.2072523;
+						} else {
+							w10 = 0.36702418;
+						}
+					}
+				}
+			}
+		}
+	} else {
+		if (rel_time < 768) {
+			if (hops < 3) {
+				if (hops < 2) {
+					if (rel_time < 497) {
+						w10 = 0.36727092;
+					} else {
+						w10 = 0.60574913;
+					}
+				} else {
+					w10 = 0.6325201;
+				}
+			} else {
+				if (hops < 4) {
+					w10 = 0.6536057;
+				} else {
+					w10 = 0.7030505;
+				}
+			}
+		} else {
+			if (hops < 3) {
+				if (rel_time < 2346) {
+					if (hops < 2) {
+						if (rel_time < 1163) {
+							w10 = 0.4631477;
+						} else {
+							w10 = 0.42066064;
+						}
+					} else {
+						w10 = 0.4625125;
+					}
+				} else {
+					if (rel_time < 11495) {
+						if (rel_time < 4790) {
+							w10 = 0.42219168;
+						} else {
+							w10 = 0.39996544;
+						}
+					} else {
+						if (rel_time < 12101) {
+							w10 = 0.440047;
+						} else {
+							w10 = 0.4691952;
+						}
+					}
+				}
+			} else {
+				if (rel_time < 4159) {
+					if (rel_time < 3569) {
+						if (rel_time < 2957) {
+							w10 = 0.47397685;
+						} else {
+							w10 = 0.4402542;
+						}
+					} else {
+						w10 = 0.5098415;
+					}
+				} else {
+					if (rel_time < 7235) {
+						if (rel_time < 6012) {
+							w10 = 0.4287934;
+						} else {
+							w10 = 0.38832244;
+						}
+					} else {
+						if (hops < 4) {
+							w10 = 0.44098696;
+						} else {
+							w10 = 0.47689602;
 						}
 					}
 				}
@@ -1900,177 +1944,181 @@ float bolt(const uint16_t rel_time, const uint8_t hops, const uint8_t size, cons
 		}
 	}
 	float w11;
-	if (rel_time < 11747) {
-		if (size < 69) {
-			if (rel_time < 11577) {
-				if (rel_time < 583) {
-					if (size < 37) {
-						if (hops < 3) {
-							w11 = 0.007168421;
-						} else {
-							w11 = -0.12529176;
-						}
-					} else {
-						if (rel_time < 422) {
-							w11 = 0.14951114;
-						} else {
-							w11 = 0.3564788;
-						}
-					}
+	if (size < 133) {
+		if (size < 37) {
+			if (rel_time < 497) {
+				if (hops < 2) {
+					w11 = -0.52489614;
 				} else {
-					if (rel_time < 852) {
-						if (hops < 3) {
-							w11 = 0.1869726;
-						} else {
-							w11 = -1.3649131;
-						}
+					if (hops < 4) {
+						w11 = -0.48221692;
 					} else {
-						if (hops < 3) {
-							w11 = -0.08367415;
+						if (rel_time < 432) {
+							w11 = -0.36551207;
 						} else {
-							w11 = -0.00028628664;
+							w11 = -0.4512446;
 						}
 					}
 				}
 			} else {
 				if (hops < 2) {
-					w11 = 3.0710206;
+					if (rel_time < 10937) {
+						if (rel_time < 1770) {
+							w11 = -0.42274246;
+						} else {
+							w11 = -0.2791856;
+						}
+					} else {
+						if (rel_time < 11512) {
+							w11 = 0.12111633;
+						} else {
+							w11 = -0.053998716;
+						}
+					}
 				} else {
 					if (hops < 3) {
-						w11 = 7.058651;
+						if (rel_time < 1402) {
+							w11 = 0.28612316;
+						} else {
+							w11 = -0.21168391;
+						}
 					} else {
-						w11 = 3.82193;
+						if (rel_time < 2958) {
+							w11 = -0.37687892;
+						} else {
+							w11 = -0.2161893;
+						}
 					}
 				}
 			}
 		} else {
 			if (hops < 4) {
-				if (size < 133) {
-					if (rel_time < 3028) {
-						if (prod != 2) {
-							w11 = 0.028282752;
+				if (rel_time < 1199) {
+					if (prod != 0) {
+						if (hops < 3) {
+							w11 = 0.19192468;
 						} else {
-							w11 = 0.16355985;
+							w11 = 0.42249608;
 						}
 					} else {
-						if (prod != 3) {
-							w11 = -0.058313105;
+						if (hops < 3) {
+							w11 = 0.7483504;
 						} else {
-							w11 = 0.03343401;
+							w11 = 0.292827;
 						}
 					}
 				} else {
-					if (hops < 2) {
-						if (rel_time < 336) {
-							w11 = 0.068006106;
+					if (rel_time < 1627) {
+						if (hops < 3) {
+							w11 = -0.3623769;
 						} else {
-							w11 = 0.035110734;
+							w11 = -1.9800898;
 						}
 					} else {
-						if (rel_time < 1913) {
-							w11 = 0.04498977;
+						if (rel_time < 1840) {
+							w11 = 0.35307103;
 						} else {
-							w11 = 0.095421046;
+							w11 = -0.054113474;
 						}
 					}
 				}
 			} else {
-				if (prod != 2) {
-					if (prod != 4) {
-						if (rel_time < 1891) {
-							w11 = -0.033533067;
+				if (prod != 0) {
+					if (rel_time < 1629) {
+						if (rel_time < 1199) {
+							w11 = 0.50127363;
 						} else {
-							w11 = 0.14407131;
+							w11 = -1.2725447;
 						}
 					} else {
-						if (rel_time < 655) {
-							w11 = 0.46446216;
+						if (rel_time < 1697) {
+							w11 = 3.5465825;
 						} else {
-							w11 = -0.03822339;
+							w11 = 0.19102894;
 						}
 					}
 				} else {
-					if (rel_time < 767) {
-						w11 = -0.13057277;
-					} else {
-						if (rel_time < 1978) {
-							w11 = 0.90959746;
+					if (rel_time < 11853) {
+						if (rel_time < 1015) {
+							w11 = 1.4055195;
 						} else {
-							w11 = 0.30683726;
+							w11 = 0.5128612;
 						}
+					} else {
+						w11 = 1.7539123;
 					}
 				}
 			}
 		}
 	} else {
-		if (size < 69) {
-			if (hops < 2) {
-				if (rel_time < 11752) {
-					w11 = 0.20893739;
-				} else {
-					w11 = 0.24896929;
-				}
+		if (rel_time < 768) {
+			if (hops < 3) {
+				w11 = 0.37185058;
 			} else {
 				if (hops < 4) {
-					if (hops < 3) {
-						w11 = 1.0132703;
-					} else {
-						w11 = 0.93236685;
-					}
+					w11 = 0.39237976;
 				} else {
-					if (rel_time < 11752) {
-						w11 = 0.6956104;
-					} else {
-						w11 = 0.5108428;
-					}
+					w11 = 0.4225441;
 				}
 			}
 		} else {
 			if (hops < 2) {
-				if (rel_time < 12263) {
-					if (rel_time < 12191) {
-						if (rel_time < 12186) {
-							w11 = 0.096036516;
+				if (rel_time < 9046) {
+					if (rel_time < 2936) {
+						if (rel_time < 1163) {
+							w11 = 0.27805334;
 						} else {
-							w11 = 0.16263483;
+							w11 = 0.25095388;
 						}
 					} else {
-						if (rel_time < 12257) {
-							w11 = 0.091819435;
+						if (rel_time < 6603) {
+							w11 = 0.2138677;
 						} else {
-							w11 = 0.1182211;
+							w11 = 0.24175112;
 						}
 					}
 				} else {
-					if (prod != 2) {
-						w11 = 0.3663723;
+					if (rel_time < 9659) {
+						if (rel_time < 9655) {
+							w11 = 0.5529594;
+						} else {
+							w11 = 0.35286927;
+						}
 					} else {
-						w11 = 0.26656967;
+						if (rel_time < 10266) {
+							w11 = 0.08616125;
+						} else {
+							w11 = 0.23936947;
+						}
 					}
 				}
 			} else {
-				if (prod != 2) {
-					if (rel_time < 12191) {
-						if (hops < 3) {
-							w11 = -0.24836436;
+				if (rel_time < 5401) {
+					if (rel_time < 1743) {
+						if (hops < 4) {
+							w11 = 0.2766312;
 						} else {
-							w11 = 0.028810138;
+							w11 = 0.34164104;
 						}
 					} else {
-						if (hops < 3) {
-							w11 = 0.20426558;
+						if (rel_time < 5380) {
+							w11 = 0.2671505;
 						} else {
-							w11 = 0.008089123;
+							w11 = 0.2874628;
 						}
 					}
 				} else {
-					if (hops < 3) {
-						w11 = -0.49757114;
-					} else {
+					if (rel_time < 7827) {
 						if (hops < 4) {
-							w11 = -0.17199501;
+							w11 = 0.22477756;
 						} else {
-							w11 = 0.0172934;
+							w11 = 0.28657004;
+						}
+					} else {
+						if (rel_time < 11512) {
+							w11 = 0.26117036;
+						} else {
+							w11 = 0.29376194;
 						}
 					}
 				}
@@ -2078,221 +2126,193 @@ float bolt(const uint16_t rel_time, const uint8_t hops, const uint8_t size, cons
 		}
 	}
 	float w12;
-	if (rel_time < 11136) {
-		if (size < 69) {
-			if (rel_time < 10530) {
-				if (rel_time < 583) {
-					if (rel_time < 65) {
-						if (hops < 2) {
-							w12 = -0.0996;
+	if (size < 133) {
+		if (cons != 5) {
+			if (prod != 3) {
+				if (rel_time < 1697) {
+					if (rel_time < 1629) {
+						if (size < 69) {
+							w12 = -0.13633649;
 						} else {
-							w12 = -0.066571854;
+							w12 = 0.065256536;
 						}
 					} else {
-						if (rel_time < 540) {
-							w12 = 0.053987708;
+						if (hops < 3) {
+							w12 = -0.16721845;
 						} else {
-							w12 = 0.17826983;
+							w12 = 2.6685;
 						}
 					}
 				} else {
-					if (rel_time < 1654) {
-						if (prod != 0) {
-							w12 = 0.05957111;
+					if (rel_time < 2850) {
+						if (size < 37) {
+							w12 = -0.14486516;
 						} else {
-							w12 = -0.51063585;
+							w12 = -0.33648822;
 						}
 					} else {
-						if (rel_time < 2257) {
-							w12 = 0.21656813;
+						if (hops < 3) {
+							w12 = -0.14853492;
 						} else {
-							w12 = -0.033717077;
+							w12 = -0.047332;
 						}
 					}
 				}
 			} else {
-				if (prod != 1) {
-					if (hops < 3) {
-						if (rel_time < 10804) {
-							w12 = -0.208316;
+				if (hops < 3) {
+					if (rel_time < 12101) {
+						if (rel_time < 11490) {
+							w12 = -0.026045008;
 						} else {
-							w12 = 0.021872882;
+							w12 = -0.12577777;
 						}
 					} else {
-						if (rel_time < 10804) {
-							w12 = -0.004692914;
+						if (rel_time < 12700) {
+							w12 = 0.107238166;
 						} else {
-							w12 = -0.17811841;
+							w12 = -0.06181557;
 						}
 					}
 				} else {
-					if (hops < 3) {
-						if (hops < 2) {
-							w12 = -0.27118117;
+					if (rel_time < 2324) {
+						if (rel_time < 1101) {
+							w12 = 0.21711448;
 						} else {
-							w12 = -0.2971778;
+							w12 = -0.08021785;
 						}
 					} else {
 						if (hops < 4) {
-							w12 = -0.19284496;
+							w12 = 0.13502733;
 						} else {
-							w12 = -0.14869699;
+							w12 = 0.22908013;
 						}
 					}
 				}
 			}
 		} else {
-			if (hops < 4) {
-				if (prod != 2) {
-					if (hops < 2) {
-						if (size < 133) {
-							w12 = -0.032730836;
+			if (rel_time < 2087) {
+				if (rel_time < 1840) {
+					if (size < 69) {
+						if (rel_time < 1015) {
+							w12 = 0.40917918;
 						} else {
-							w12 = 0.017551688;
+							w12 = -0.6591439;
 						}
 					} else {
-						if (rel_time < 669) {
-							w12 = 0.13499843;
+						if (hops < 4) {
+							w12 = 0.24142118;
 						} else {
-							w12 = 0.026451852;
+							w12 = 0.8805899;
 						}
 					}
 				} else {
-					if (rel_time < 1407) {
-						if (rel_time < 767) {
-							w12 = -0.14952925;
-						} else {
-							w12 = 0.48920336;
-						}
+					if (hops < 2) {
+						w12 = -2.8763778;
 					} else {
-						if (hops < 2) {
-							w12 = 0.032134432;
+						if (hops < 4) {
+							w12 = -1.7748299;
 						} else {
-							w12 = -0.0861308;
+							w12 = -0.23563312;
 						}
 					}
 				}
 			} else {
-				if (prod != 2) {
-					if (rel_time < 669) {
-						if (rel_time < 336) {
-							w12 = 0.107458726;
+				if (rel_time < 2690) {
+					if (size < 69) {
+						if (hops < 3) {
+							w12 = 1.2784122;
 						} else {
-							w12 = 0.26026097;
+							w12 = 0.76252645;
 						}
 					} else {
-						if (rel_time < 1279) {
-							w12 = -0.29765165;
+						if (hops < 3) {
+							w12 = 0.3816598;
 						} else {
-							w12 = 0.045878008;
+							w12 = 0.73651546;
 						}
 					}
 				} else {
-					if (rel_time < 767) {
-						w12 = -0.0654639;
-					} else {
-						if (rel_time < 1407) {
-							w12 = 0.6504547;
+					if (rel_time < 12186) {
+						if (hops < 2) {
+							w12 = -0.14303508;
 						} else {
-							w12 = 0.1645906;
+							w12 = 0.11423208;
+						}
+					} else {
+						if (rel_time < 12625) {
+							w12 = 1.1030005;
+						} else {
+							w12 = 0.09550314;
 						}
 					}
 				}
 			}
 		}
 	} else {
-		if (size < 69) {
-			if (rel_time < 11417) {
-				if (hops < 4) {
-					if (hops < 3) {
-						if (hops < 2) {
-							w12 = 0.1270166;
-						} else {
-							w12 = 0.07379777;
-						}
-					} else {
-						if (prod != 0) {
-							w12 = 0.21472874;
-						} else {
-							w12 = 0.1238889;
-						}
-					}
+		if (rel_time < 768) {
+			if (hops < 2) {
+				if (rel_time < 497) {
+					w12 = 0.09627686;
 				} else {
-					if (prod != 0) {
-						w12 = 0.18607275;
-					} else {
-						w12 = -0.3260958;
-					}
+					w12 = 0.2150491;
 				}
 			} else {
-				if (hops < 2) {
-					if (rel_time < 11747) {
-						if (rel_time < 11577) {
-							w12 = 0.26591602;
-						} else {
-							w12 = 1.5703964;
-						}
-					} else {
-						w12 = 0.11203663;
-					}
+				if (hops < 4) {
+					w12 = 0.23328121;
 				} else {
-					if (rel_time < 11577) {
-						if (hops < 4) {
-							w12 = 0.2253371;
-						} else {
-							w12 = 0.39437053;
-						}
-					} else {
-						if (rel_time < 11747) {
-							w12 = 3.156091;
-						} else {
-							w12 = 0.4661476;
-						}
-					}
+					w12 = 0.25395784;
 				}
 			}
 		} else {
-			if (prod != 2) {
-				if (rel_time < 12263) {
-					if (hops < 2) {
-						if (rel_time < 11659) {
-							w12 = -0.10397415;
+			if (hops < 3) {
+				if (rel_time < 4790) {
+					if (rel_time < 4769) {
+						if (rel_time < 1743) {
+							w12 = 0.1678959;
 						} else {
-							w12 = 0.04999053;
+							w12 = 0.15123804;
 						}
 					} else {
-						if (rel_time < 12186) {
-							w12 = 0.077997126;
-						} else {
-							w12 = -0.0057678106;
-						}
+						w12 = 0.1872658;
 					}
 				} else {
-					if (hops < 2) {
-						w12 = 0.18476827;
+					if (rel_time < 5380) {
+						w12 = 0.08978024;
 					} else {
-						w12 = 0.30230948;
+						if (rel_time < 5401) {
+							w12 = 0.189788;
+						} else {
+							w12 = 0.14396004;
+						}
 					}
 				}
 			} else {
-				if (hops < 2) {
-					if (rel_time < 11747) {
-						w12 = 0.018236727;
-					} else {
-						w12 = 0.13341622;
-					}
-				} else {
-					if (hops < 4) {
-						if (rel_time < 11723) {
-							w12 = -0.08392216;
+				if (rel_time < 10882) {
+					if (rel_time < 9066) {
+						if (rel_time < 4159) {
+							w12 = 0.17175159;
 						} else {
-							w12 = -0.17597863;
+							w12 = 0.15290652;
 						}
 					} else {
-						if (rel_time < 11723) {
-							w12 = 0.12841444;
+						if (rel_time < 10288) {
+							w12 = 0.18264262;
 						} else {
-							w12 = 0.0009911605;
+							w12 = 0.21765907;
+						}
+					}
+				} else {
+					if (rel_time < 11495) {
+						if (hops < 4) {
+							w12 = 0.094540454;
+						} else {
+							w12 = 0.20785335;
+						}
+					} else {
+						if (rel_time < 11512) {
+							w12 = 0.14993493;
+						} else {
+							w12 = 0.18638901;
 						}
 					}
 				}
@@ -2301,220 +2321,216 @@ float bolt(const uint16_t rel_time, const uint8_t hops, const uint8_t size, cons
 	}
 	float w13;
 	if (size < 37) {
-		if (hops < 3) {
-			if (rel_time < 1949) {
-				if (rel_time < 1338) {
-					if (hops < 2) {
-						if (rel_time < 65) {
-							w13 = -0.049838774;
-						} else {
-							w13 = -0.08200785;
-						}
-					} else {
-						if (rel_time < 65) {
-							w13 = -0.02775866;
-						} else {
-							w13 = 0.11985701;
-						}
-					}
-				} else {
-					if (rel_time < 1914) {
-						w13 = -0.28608817;
-					} else {
-						w13 = -0.25866705;
-					}
-				}
+		if (rel_time < 497) {
+			if (hops < 2) {
+				w13 = -0.26063618;
 			} else {
-				if (hops < 2) {
-					if (rel_time < 2561) {
-						if (rel_time < 2525) {
-							w13 = 0.12402279;
+				if (hops < 4) {
+					if (rel_time < 432) {
+						if (hops < 3) {
+							w13 = -0.19381939;
 						} else {
-							w13 = 0.21715552;
+							w13 = -0.26056504;
 						}
 					} else {
-						if (rel_time < 3171) {
-							w13 = -0.07792067;
+						if (hops < 3) {
+							w13 = -0.2537433;
 						} else {
-							w13 = 0.08135159;
+							w13 = -0.22230224;
 						}
 					}
 				} else {
-					if (rel_time < 3136) {
-						if (rel_time < 2525) {
-							w13 = -0.02784795;
-						} else {
-							w13 = 0.10806652;
-						}
+					if (rel_time < 432) {
+						w13 = -0.16622376;
 					} else {
-						if (rel_time < 7411) {
-							w13 = -0.04613193;
-						} else {
-							w13 = 0.01311572;
-						}
+						w13 = -0.21716271;
 					}
 				}
 			}
 		} else {
-			if (hops < 4) {
-				if (rel_time < 969) {
-					if (rel_time < 540) {
-						if (rel_time < 65) {
-							w13 = -0.050355915;
+			if (hops < 3) {
+				if (rel_time < 2994) {
+					if (hops < 2) {
+						if (rel_time < 1770) {
+							w13 = -0.19803955;
 						} else {
-							w13 = -0.13671067;
+							w13 = 0.010382524;
 						}
 					} else {
-						w13 = 0.11860932;
+						if (rel_time < 972) {
+							w13 = -0.2712238;
+						} else {
+							w13 = 0.17551033;
+						}
 					}
 				} else {
-					if (rel_time < 1338) {
-						if (rel_time < 1311) {
-							w13 = -0.54210514;
+					if (rel_time < 9103) {
+						if (rel_time < 8491) {
+							w13 = -0.10709379;
 						} else {
-							w13 = -0.37403718;
+							w13 = -0.24514428;
 						}
 					} else {
-						if (rel_time < 8635) {
-							w13 = -0.10330418;
+						if (rel_time < 9714) {
+							w13 = 0.22943854;
 						} else {
-							w13 = -0.15522149;
+							w13 = -0.12101302;
 						}
 					}
 				}
 			} else {
-				if (rel_time < 540) {
-					if (rel_time < 65) {
-						w13 = -0.0018461528;
-					} else {
-						w13 = 0.08767282;
-					}
-				} else {
-					if (rel_time < 1949) {
-						if (rel_time < 969) {
-							w13 = -0.01459704;
+				if (hops < 4) {
+					if (rel_time < 1770) {
+						if (rel_time < 972) {
+							w13 = -0.04346977;
 						} else {
-							w13 = -0.14134419;
+							w13 = -0.5848308;
 						}
 					} else {
-						if (rel_time < 2525) {
-							w13 = 0.16736984;
+						if (rel_time < 10937) {
+							w13 = -0.10184367;
 						} else {
-							w13 = -0.034609832;
+							w13 = -0.197979;
+						}
+					}
+				} else {
+					if (rel_time < 1770) {
+						if (rel_time < 972) {
+							w13 = 0.10857444;
+						} else {
+							w13 = 0.5285949;
+						}
+					} else {
+						if (rel_time < 7880) {
+							w13 = -0.16997443;
+						} else {
+							w13 = -0.031218115;
 						}
 					}
 				}
 			}
 		}
 	} else {
-		if (hops < 2) {
-			if (size < 69) {
-				if (rel_time < 422) {
-					w13 = 0.23185441;
-				} else {
-					if (rel_time < 8522) {
-						if (rel_time < 7753) {
-							w13 = -0.08970714;
+		if (prod != 1) {
+			if (hops < 2) {
+				if (size < 69) {
+					if (rel_time < 2087) {
+						if (rel_time < 1015) {
+							w13 = 0.4395739;
 						} else {
-							w13 = -0.27021703;
+							w13 = -1.4633405;
 						}
 					} else {
-						if (rel_time < 9132) {
-							w13 = 0.12588602;
+						if (rel_time < 2690) {
+							w13 = 0.9049587;
 						} else {
-							w13 = -0.02630458;
+							w13 = -0.22551318;
+						}
+					}
+				} else {
+					if (rel_time < 12186) {
+						if (prod != 4) {
+							w13 = 0.057024308;
+						} else {
+							w13 = -0.014992232;
+						}
+					} else {
+						if (prod != 4) {
+							w13 = -0.08714309;
+						} else {
+							w13 = -0.55169815;
 						}
 					}
 				}
 			} else {
-				if (rel_time < 3028) {
-					if (rel_time < 2486) {
-						if (prod != 3) {
-							w13 = 0.047119647;
+				if (size < 69) {
+					if (hops < 3) {
+						if (rel_time < 2087) {
+							w13 = 0.12716044;
 						} else {
-							w13 = -0.10528857;
+							w13 = 0.52300614;
 						}
 					} else {
-						if (prod != 3) {
-							w13 = 0.010572048;
+						if (rel_time < 2087) {
+							w13 = -0.6370478;
 						} else {
-							w13 = 0.3710796;
+							w13 = 0.09006401;
 						}
 					}
 				} else {
-					if (prod != 4) {
-						if (rel_time < 3113) {
-							w13 = -0.113332696;
+					if (hops < 3) {
+						if (size < 133) {
+							w13 = -0.089884005;
 						} else {
-							w13 = 0.0077144415;
+							w13 = 0.0941064;
 						}
 					} else {
-						if (rel_time < 10358) {
-							w13 = -0.060243316;
+						if (rel_time < 1087) {
+							w13 = 0.3374171;
 						} else {
-							w13 = 0.024825368;
+							w13 = 0.0775159;
 						}
 					}
 				}
 			}
 		} else {
-			if (prod != 0) {
-				if (hops < 4) {
-					if (rel_time < 1196) {
-						if (rel_time < 767) {
-							w13 = 0.02140737;
+			if (rel_time < 1697) {
+				if (rel_time < 1285) {
+					if (rel_time < 854) {
+						if (hops < 4) {
+							w13 = 0.2117167;
 						} else {
-							w13 = -0.3102384;
+							w13 = -0.4283565;
 						}
 					} else {
-						if (rel_time < 1264) {
-							w13 = 0.4933833;
+						if (hops < 2) {
+							w13 = 0.18971519;
 						} else {
-							w13 = -0.0014591434;
+							w13 = -0.64745456;
 						}
 					}
 				} else {
-					if (rel_time < 1264) {
-						if (rel_time < 1196) {
-							w13 = 0.037373424;
+					if (hops < 2) {
+						if (rel_time < 1629) {
+							w13 = -2.6207917;
 						} else {
-							w13 = 1.9156021;
+							w13 = -1.0601505;
 						}
 					} else {
-						if (rel_time < 1279) {
-							w13 = -0.39621806;
+						if (rel_time < 1629) {
+							w13 = 2.1018393;
 						} else {
-							w13 = 0.03420005;
+							w13 = 1.2519346;
 						}
 					}
 				}
 			} else {
-				if (rel_time < 1654) {
-					if (hops < 3) {
-						if (rel_time < 583) {
-							w13 = 0.10103597;
+				if (rel_time < 7737) {
+					if (hops < 2) {
+						if (rel_time < 2238) {
+							w13 = 0.24918619;
 						} else {
-							w13 = -0.8883043;
+							w13 = -0.11170774;
 						}
 					} else {
-						if (rel_time < 1194) {
-							w13 = 0.46288046;
+						if (rel_time < 2850) {
+							w13 = -0.33646724;
 						} else {
-							w13 = -0.32808876;
+							w13 = -0.15085822;
 						}
 					}
 				} else {
-					if (rel_time < 2257) {
-						if (hops < 3) {
-							w13 = 0.51767886;
+					if (hops < 4) {
+						if (hops < 2) {
+							w13 = -0.0051646014;
 						} else {
-							w13 = 0.96728677;
+							w13 = -0.08676141;
 						}
 					} else {
-						if (hops < 4) {
-							w13 = 0.10755661;
+						if (rel_time < 8799) {
+							w13 = 0.051681776;
 						} else {
-							w13 = -0.20329638;
+							w13 = 0.13145368;
 						}
 					}
 				}
@@ -2522,237 +2538,201 @@ float bolt(const uint16_t rel_time, const uint8_t hops, const uint8_t size, cons
 		}
 	}
 	float w14;
-	if (prod != 1) {
-		if (rel_time < 1949) {
-			if (hops < 3) {
-				if (prod != 0) {
-					if (rel_time < 1195) {
-						if (prod != 2) {
-							w14 = 0.022105327;
+	if (hops < 4) {
+		if (size < 133) {
+			if (rel_time < 12186) {
+				if (rel_time < 1199) {
+					if (size < 37) {
+						if (rel_time < 497) {
+							w14 = -0.14598417;
 						} else {
-							w14 = -0.08569219;
+							w14 = -0.052505136;
 						}
 					} else {
-						if (size < 133) {
-							w14 = -0.08181811;
+						if (rel_time < 1087) {
+							w14 = 0.17830114;
 						} else {
-							w14 = 0.010810441;
+							w14 = 0.049056;
 						}
 					}
 				} else {
-					if (rel_time < 583) {
-						if (hops < 2) {
-							w14 = -0.07520912;
+					if (rel_time < 2307) {
+						if (prod != 0) {
+							w14 = -0.029805535;
 						} else {
-							w14 = 0.050567813;
+							w14 = -0.6060171;
 						}
 					} else {
-						if (hops < 2) {
-							w14 = -0.078323595;
+						if (rel_time < 2690) {
+							w14 = 0.17783718;
 						} else {
-							w14 = -0.4443205;
+							w14 = -0.029486204;
 						}
 					}
 				}
 			} else {
-				if (prod != 2) {
-					if (rel_time < 1194) {
-						if (rel_time < 969) {
-							w14 = 0.030765897;
+				if (size < 69) {
+					if (hops < 3) {
+						if (hops < 2) {
+							w14 = 0.5144026;
 						} else {
-							w14 = 0.4580934;
+							w14 = 0.8136202;
 						}
 					} else {
-						if (size < 69) {
-							w14 = -0.12998207;
-						} else {
-							w14 = -0.013465039;
-						}
+						w14 = 0.45844814;
 					}
 				} else {
-					if (rel_time < 767) {
-						if (hops < 4) {
-							w14 = -0.09775611;
+					if (prod != 4) {
+						if (hops < 2) {
+							w14 = -0.05229499;
 						} else {
-							w14 = -0.05143156;
+							w14 = 0.1314186;
 						}
 					} else {
-						if (hops < 4) {
-							w14 = 0.7830342;
+						if (hops < 2) {
+							w14 = -0.33120874;
 						} else {
-							w14 = 0.30064374;
+							w14 = -0.1153625;
 						}
 					}
 				}
 			}
 		} else {
-			if (rel_time < 2257) {
-				if (size < 69) {
-					if (hops < 4) {
+			if (rel_time < 4159) {
+				if (rel_time < 4158) {
+					if (rel_time < 1163) {
 						if (hops < 3) {
-							w14 = 0.37641546;
+							w14 = 0.0876494;
 						} else {
-							w14 = 0.6243392;
+							w14 = 0.04526256;
 						}
 					} else {
-						if (rel_time < 1978) {
-							w14 = 0.13057764;
+						if (hops < 2) {
+							w14 = 0.06603435;
 						} else {
-							w14 = 0.04326514;
+							w14 = 0.0595522;
 						}
 					}
 				} else {
-					if (hops < 3) {
-						if (hops < 2) {
-							w14 = 0.031359766;
-						} else {
-							w14 = 0.15914851;
-						}
-					} else {
-						if (hops < 4) {
-							w14 = -0.10856789;
-						} else {
-							w14 = 0.16523021;
-						}
-					}
+					w14 = 0.09395321;
 				}
 			} else {
-				if (prod != 2) {
-					if (rel_time < 3477) {
-						if (prod != 0) {
-							w14 = 0.0154727185;
+				if (rel_time < 7235) {
+					if (rel_time < 6012) {
+						if (rel_time < 4180) {
+							w14 = 0.014340765;
 						} else {
-							w14 = -0.18983884;
+							w14 = 0.056901462;
 						}
 					} else {
-						if (rel_time < 4088) {
-							w14 = 0.07472374;
+						if (hops < 2) {
+							w14 = 0.06085697;
 						} else {
-							w14 = 0.008121273;
+							w14 = 0.021318143;
 						}
 					}
 				} else {
-					if (hops < 4) {
-						if (hops < 2) {
-							w14 = 0.012697681;
+					if (rel_time < 10882) {
+						if (rel_time < 10877) {
+							w14 = 0.06431003;
 						} else {
-							w14 = -0.050705094;
+							w14 = 0.09417517;
 						}
 					} else {
-						if (rel_time < 8671) {
-							w14 = 0.0826524;
+						if (rel_time < 11490) {
+							w14 = 0.013126941;
 						} else {
-							w14 = -0.002522909;
+							w14 = 0.0638977;
 						}
 					}
 				}
 			}
 		}
 	} else {
-		if (rel_time < 8522) {
-			if (rel_time < 6692) {
-				if (rel_time < 6081) {
-					if (hops < 3) {
-						if (rel_time < 5470) {
-							w14 = 0.031733654;
+		if (prod != 0) {
+			if (size < 69) {
+				if (rel_time < 1285) {
+					if (rel_time < 972) {
+						if (rel_time < 854) {
+							w14 = -0.1889251;
 						} else {
-							w14 = -0.16939828;
+							w14 = 0.06525376;
 						}
 					} else {
-						if (rel_time < 2417) {
-							w14 = -0.23532589;
-						} else {
-							w14 = 0.04560918;
-						}
+						w14 = -0.9902399;
 					}
 				} else {
-					if (rel_time < 6531) {
-						if (hops < 3) {
-							w14 = 0.048561327;
+					if (rel_time < 1697) {
+						if (rel_time < 1629) {
+							w14 = 0.2098378;
 						} else {
-							w14 = 0.13169822;
+							w14 = 1.5856062;
 						}
 					} else {
-						if (hops < 4) {
-							w14 = 0.18327297;
+						if (rel_time < 1770) {
+							w14 = 0.2313267;
 						} else {
-							w14 = 0.28022772;
+							w14 = -0.022265065;
 						}
 					}
 				}
 			} else {
-				if (rel_time < 8364) {
-					if (hops < 2) {
-						if (rel_time < 7303) {
-							w14 = -0.14621504;
+				if (rel_time < 1199) {
+					if (prod != 4) {
+						if (rel_time < 1163) {
+							w14 = 0.058120735;
 						} else {
-							w14 = -0.076037064;
+							w14 = 0.36194977;
 						}
 					} else {
-						if (hops < 3) {
-							w14 = -0.22616597;
-						} else {
-							w14 = -0.11600576;
-						}
+						w14 = 0.56392664;
 					}
 				} else {
-					if (hops < 2) {
-						w14 = -0.22036111;
-					} else {
-						if (hops < 3) {
-							w14 = -0.35676074;
+					if (rel_time < 1697) {
+						if (rel_time < 1629) {
+							w14 = -0.31053126;
 						} else {
-							w14 = -0.26579574;
+							w14 = -2.4354718;
+						}
+					} else {
+						if (rel_time < 1840) {
+							w14 = 0.29962644;
+						} else {
+							w14 = 0.07448497;
 						}
 					}
 				}
 			}
 		} else {
-			if (rel_time < 9132) {
-				if (hops < 4) {
-					if (hops < 2) {
-						if (rel_time < 8976) {
-							w14 = 0.16478603;
-						} else {
-							w14 = 0.19866881;
-						}
-					} else {
-						if (rel_time < 8976) {
-							w14 = 0.22279344;
-						} else {
-							w14 = 0.27285436;
-						}
-					}
-				} else {
-					w14 = 0.34565413;
-				}
+			if (rel_time < 1015) {
+				w14 = 0.9356737;
 			} else {
-				if (rel_time < 10966) {
-					if (rel_time < 9743) {
-						if (hops < 4) {
-							w14 = 0.039663307;
+				if (rel_time < 3301) {
+					if (rel_time < 2087) {
+						if (rel_time < 1627) {
+							w14 = 0.22323863;
 						} else {
-							w14 = 0.11997846;
+							w14 = 0.112532474;
 						}
 					} else {
-						if (hops < 3) {
-							w14 = -0.12560432;
+						if (rel_time < 2690) {
+							w14 = 0.9194886;
 						} else {
-							w14 = -0.058158755;
+							w14 = 0.5026299;
 						}
 					}
 				} else {
-					if (rel_time < 11417) {
-						if (hops < 3) {
-							w14 = 0.049916483;
+					if (rel_time < 11242) {
+						if (rel_time < 10966) {
+							w14 = 0.21676219;
 						} else {
-							w14 = 0.10105158;
+							w14 = 0.02765582;
 						}
 					} else {
-						if (hops < 4) {
-							w14 = 0.12349084;
+						if (rel_time < 11853) {
+							w14 = 0.39146104;
 						} else {
-							w14 = 0.1809339;
+							w14 = 0.5781656;
 						}
 					}
 				}
@@ -2760,225 +2740,241 @@ float bolt(const uint16_t rel_time, const uint8_t hops, const uint8_t size, cons
 		}
 	}
 	float w15;
-	if (rel_time < 11136) {
-		if (size < 69) {
-			if (rel_time < 10497) {
-				if (prod != 0) {
-					if (hops < 3) {
-						if (rel_time < 969) {
-							w15 = 0.054166734;
+	if (size < 37) {
+		if (rel_time < 10326) {
+			if (rel_time < 9714) {
+				if (rel_time < 9103) {
+					if (rel_time < 8491) {
+						if (rel_time < 7880) {
+							w15 = -0.061152946;
 						} else {
-							w15 = -0.007931659;
+							w15 = 0.07691919;
 						}
 					} else {
-						if (rel_time < 852) {
-							w15 = -0.15056728;
+						if (hops < 2) {
+							w15 = -0.042666834;
 						} else {
-							w15 = -0.023577075;
+							w15 = -0.19547564;
 						}
 					}
 				} else {
-					if (hops < 4) {
-						if (hops < 3) {
-							w15 = -0.028776966;
+					if (hops < 3) {
+						if (rel_time < 9681) {
+							w15 = 0.16222046;
 						} else {
-							w15 = 0.13739711;
+							w15 = 0.13137569;
 						}
 					} else {
-						if (rel_time < 1654) {
-							w15 = -0.30315956;
+						if (hops < 4) {
+							w15 = 0.008619186;
 						} else {
-							w15 = -0.110138856;
+							w15 = 0.16386147;
 						}
 					}
 				}
 			} else {
-				if (rel_time < 10966) {
-					if (hops < 2) {
-						if (rel_time < 10804) {
-							w15 = -0.2177389;
+				if (hops < 3) {
+					if (rel_time < 10293) {
+						if (hops < 2) {
+							w15 = -0.2751595;
 						} else {
-							w15 = -0.05981678;
+							w15 = -0.24039021;
 						}
 					} else {
-						if (rel_time < 10804) {
-							w15 = -0.03502924;
+						if (hops < 2) {
+							w15 = -0.25880158;
 						} else {
-							w15 = -0.07493728;
+							w15 = -0.28792045;
 						}
 					}
 				} else {
-					if (hops < 2) {
-						if (rel_time < 11074) {
-							w15 = 0.013199889;
+					if (rel_time < 10293) {
+						if (hops < 4) {
+							w15 = -0.16520564;
 						} else {
-							w15 = 0.04266281;
+							w15 = -0.19060528;
 						}
 					} else {
 						if (hops < 4) {
-							w15 = -0.055592056;
+							w15 = -0.2523029;
 						} else {
-							w15 = 0.04810823;
+							w15 = -0.3816705;
 						}
 					}
 				}
 			}
 		} else {
-			if (rel_time < 3028) {
-				if (rel_time < 2418) {
-					if (prod != 2) {
-						if (rel_time < 731) {
-							w15 = 0.026828941;
-						} else {
-							w15 = -0.02692262;
-						}
+			if (rel_time < 10937) {
+				if (hops < 2) {
+					if (rel_time < 10901) {
+						w15 = -0.20082068;
 					} else {
-						if (rel_time < 767) {
-							w15 = -0.042957906;
+						if (rel_time < 10906) {
+							w15 = -0.059979416;
 						} else {
-							w15 = 0.08314005;
+							w15 = 0.004546441;
 						}
 					}
 				} else {
-					if (prod != 2) {
-						if (size < 133) {
-							w15 = 0.09643897;
+					if (hops < 3) {
+						if (rel_time < 10901) {
+							w15 = 0.3369624;
 						} else {
-							w15 = 0.038306415;
+							w15 = 0.38904938;
 						}
 					} else {
 						if (hops < 4) {
-							w15 = 0.009013675;
+							w15 = 0.13519004;
 						} else {
-							w15 = 0.1355509;
+							w15 = -0.072745286;
 						}
 					}
 				}
 			} else {
 				if (hops < 2) {
-					if (prod != 3) {
-						if (prod != 4) {
-							w15 = 0.004644101;
-						} else {
-							w15 = -0.026202027;
-						}
+					if (rel_time < 11512) {
+						w15 = 0.19199273;
 					} else {
-						if (rel_time < 3113) {
-							w15 = -0.18350063;
-						} else {
-							w15 = -0.017806688;
-						}
+						w15 = 0.087084115;
 					}
 				} else {
-					if (prod != 2) {
-						if (hops < 3) {
-							w15 = 0.027364464;
+					if (hops < 3) {
+						if (rel_time < 11512) {
+							w15 = -0.28341183;
 						} else {
-							w15 = 0.0011917591;
+							w15 = -0.22884773;
 						}
 					} else {
-						if (rel_time < 3810) {
-							w15 = 0.03147762;
+						if (hops < 4) {
+							w15 = -0.107068814;
 						} else {
-							w15 = -0.027546762;
+							w15 = 0.0860176;
 						}
 					}
 				}
 			}
 		}
 	} else {
-		if (size < 69) {
-			if (rel_time < 11577) {
-				if (hops < 2) {
-					if (rel_time < 11141) {
-						w15 = 0.10721133;
-					} else {
-						if (rel_time < 11420) {
-							w15 = 0.045068596;
+		if (prod != 1) {
+			if (hops < 2) {
+				if (size < 69) {
+					if (rel_time < 11853) {
+						if (rel_time < 1015) {
+							w15 = 0.19264323;
 						} else {
-							w15 = 0.11421218;
+							w15 = -0.1867321;
+						}
+					} else {
+						if (rel_time < 12186) {
+							w15 = 8.002843;
+						} else {
+							w15 = 0.30881938;
 						}
 					}
 				} else {
-					if (prod != 0) {
-						if (hops < 3) {
-							w15 = 0.028936781;
+					if (prod != 2) {
+						if (size < 133) {
+							w15 = -0.014243448;
 						} else {
-							w15 = 0.0716944;
+							w15 = 0.040173125;
 						}
 					} else {
-						if (hops < 4) {
-							w15 = -0.01026369;
+						if (rel_time < 12186) {
+							w15 = 0.0663533;
 						} else {
-							w15 = -0.06612216;
+							w15 = -0.107250705;
 						}
 					}
 				}
 			} else {
-				if (rel_time < 11747) {
-					if (hops < 2) {
-						w15 = 0.81194234;
-					} else {
-						if (hops < 3) {
-							w15 = 2.1972942;
+				if (size < 69) {
+					if (hops < 3) {
+						if (rel_time < 1627) {
+							w15 = 0.6657335;
 						} else {
-							w15 = 0.6095403;
+							w15 = 0.2459416;
+						}
+					} else {
+						if (hops < 4) {
+							w15 = -0.104631476;
+						} else {
+							w15 = 0.19093291;
 						}
 					}
 				} else {
-					if (hops < 2) {
-						w15 = 0.06514235;
-					} else {
-						if (hops < 3) {
-							w15 = 0.21636878;
+					if (hops < 3) {
+						if (prod != 2) {
+							w15 = 0.0022635132;
 						} else {
-							w15 = 0.17912054;
+							w15 = -0.12235104;
+						}
+					} else {
+						if (rel_time < 3546) {
+							w15 = 0.07124143;
+						} else {
+							w15 = 0.031572532;
 						}
 					}
 				}
 			}
 		} else {
-			if (prod != 2) {
-				if (rel_time < 12263) {
+			if (rel_time < 1697) {
+				if (rel_time < 1285) {
 					if (hops < 2) {
-						if (rel_time < 11577) {
-							w15 = 0.20426841;
+						if (rel_time < 854) {
+							w15 = 0.24020968;
 						} else {
-							w15 = -0.027152065;
+							w15 = 0.12580588;
 						}
 					} else {
-						if (rel_time < 12186) {
-							w15 = 0.0332639;
+						if (rel_time < 854) {
+							w15 = -0.04991633;
 						} else {
-							w15 = -0.008660166;
+							w15 = -0.32519507;
 						}
 					}
 				} else {
 					if (hops < 2) {
-						w15 = 0.08535952;
+						if (rel_time < 1629) {
+							w15 = -1.566911;
+						} else {
+							w15 = -0.6246063;
+						}
 					} else {
-						w15 = 0.14837153;
+						if (rel_time < 1629) {
+							w15 = 1.2665805;
+						} else {
+							w15 = 0.6681565;
+						}
 					}
 				}
 			} else {
-				if (hops < 2) {
-					if (rel_time < 11747) {
-						w15 = -0.0010639696;
+				if (rel_time < 7737) {
+					if (hops < 2) {
+						if (rel_time < 2238) {
+							w15 = 0.16149382;
+						} else {
+							w15 = -0.055259474;
+						}
 					} else {
-						w15 = 0.05657932;
+						if (rel_time < 3302) {
+							w15 = -0.18029357;
+						} else {
+							w15 = -0.07596506;
+						}
 					}
 				} else {
 					if (hops < 3) {
-						if (rel_time < 11723) {
-							w15 = 0.00151847;
+						if (hops < 2) {
+							w15 = 0.008700865;
 						} else {
-							w15 = -0.11823795;
+							w15 = -0.097296;
 						}
 					} else {
-						if (rel_time < 11747) {
-							w15 = -0.028908487;
+						if (rel_time < 9416) {
+							w15 = 0.007855324;
 						} else {
-							w15 = 0.018934496;
+							w15 = 0.062624775;
 						}
 					}
 				}
@@ -2986,225 +2982,209 @@ float bolt(const uint16_t rel_time, const uint8_t hops, const uint8_t size, cons
 		}
 	}
 	float w16;
-	if (rel_time < 1407) {
-		if (hops < 3) {
-			if (rel_time < 969) {
-				if (rel_time < 853) {
-					if (prod != 1) {
-						if (prod != 6) {
-							w16 = 0.012871883;
+	if (rel_time < 2324) {
+		if (rel_time < 1840) {
+			if (rel_time < 1770) {
+				if (hops < 2) {
+					if (rel_time < 1015) {
+						if (rel_time < 497) {
+							w16 = -0.07304973;
 						} else {
-							w16 = -0.030884176;
+							w16 = 0.103619695;
 						}
 					} else {
-						if (rel_time < 422) {
-							w16 = 0.056282878;
+						if (size < 69) {
+							w16 = -0.2026631;
 						} else {
-							w16 = 0.12527357;
+							w16 = -0.029442398;
 						}
 					}
 				} else {
-					w16 = 0.4811808;
+					if (hops < 3) {
+						if (prod != 0) {
+							w16 = 0.0505726;
+						} else {
+							w16 = 0.39954874;
+						}
+					} else {
+						if (rel_time < 1199) {
+							w16 = 0.068916224;
+						} else {
+							w16 = -0.1398624;
+						}
+					}
 				}
 			} else {
 				if (hops < 2) {
-					if (prod != 1) {
-						if (rel_time < 1195) {
-							w16 = 0.20424746;
-						} else {
-							w16 = 0.02244177;
-						}
-					} else {
-						w16 = -0.28335726;
-					}
+					w16 = 0.013912893;
 				} else {
-					if (rel_time < 1194) {
-						w16 = -0.623574;
+					if (size < 69) {
+						w16 = -2.3607118;
 					} else {
-						if (rel_time < 1338) {
-							w16 = -0.027095063;
+						if (hops < 3) {
+							w16 = 0.30655402;
 						} else {
-							w16 = -0.152493;
+							w16 = 0.46836725;
 						}
 					}
 				}
 			}
 		} else {
-			if (rel_time < 969) {
-				if (rel_time < 767) {
+			if (prod != 0) {
+				if (hops < 2) {
 					if (prod != 4) {
-						if (hops < 4) {
-							w16 = -0.017853636;
+						if (rel_time < 2087) {
+							w16 = 0.045909707;
 						} else {
-							w16 = 0.06416553;
+							w16 = 0.116516225;
 						}
 					} else {
-						if (hops < 4) {
-							w16 = 0.22009161;
-						} else {
-							w16 = 0.05568681;
-						}
+						w16 = 0.011941659;
 					}
 				} else {
-					if (hops < 4) {
-						if (rel_time < 852) {
-							w16 = -0.7036076;
+					if (hops < 3) {
+						if (rel_time < 2238) {
+							w16 = 0.33325082;
 						} else {
-							w16 = 0.055767667;
+							w16 = -0.31679207;
 						}
 					} else {
-						if (rel_time < 852) {
-							w16 = 0.52137655;
+						if (rel_time < 2238) {
+							w16 = -0.44520733;
 						} else {
-							w16 = -0.01091413;
+							w16 = -0.1124198;
 						}
 					}
 				}
 			} else {
-				if (prod != 1) {
-					if (cons != 5) {
-						if (size < 133) {
-							w16 = -0.07547036;
-						} else {
-							w16 = 0.09768438;
-						}
+				if (hops < 4) {
+					if (hops < 2) {
+						w16 = -0.82517064;
 					} else {
-						if (hops < 4) {
-							w16 = 0.392982;
-						} else {
-							w16 = -0.14902903;
-						}
+						w16 = -0.76601887;
 					}
 				} else {
-					if (hops < 4) {
-						w16 = 0.70164406;
+					if (rel_time < 1841) {
+						w16 = -0.026820509;
 					} else {
-						w16 = 1.0895022;
+						w16 = 0.1203715;
 					}
 				}
 			}
 		}
 	} else {
-		if (rel_time < 3477) {
-			if (prod != 1) {
-				if (rel_time < 2589) {
-					if (rel_time < 1950) {
-						if (size < 69) {
-							w16 = -0.049421914;
+		if (prod != 0) {
+			if (size < 69) {
+				if (rel_time < 9416) {
+					if (hops < 4) {
+						if (rel_time < 5403) {
+							w16 = -0.027755668;
 						} else {
-							w16 = -0.008151526;
+							w16 = -0.060358334;
 						}
 					} else {
-						if (prod != 0) {
-							w16 = 0.010759131;
+						if (size < 37) {
+							w16 = -0.052763082;
 						} else {
-							w16 = 0.20332754;
+							w16 = 0.060941905;
 						}
 					}
 				} else {
-					if (prod != 0) {
-						if (hops < 3) {
-							w16 = 0.017523544;
+					if (rel_time < 10180) {
+						if (hops < 4) {
+							w16 = 0.055501122;
 						} else {
-							w16 = -0.041229904;
+							w16 = 0.10872497;
 						}
 					} else {
-						if (hops < 2) {
-							w16 = -0.15516748;
+						if (rel_time < 10634) {
+							w16 = -0.1340292;
 						} else {
-							w16 = -0.078770794;
+							w16 = 0.005859056;
 						}
 					}
 				}
 			} else {
-				if (hops < 3) {
-					if (rel_time < 1654) {
-						if (hops < 2) {
-							w16 = 1.6562612;
+				if (rel_time < 2411) {
+					if (rel_time < 2346) {
+						if (hops < 4) {
+							w16 = 0.030841831;
 						} else {
-							w16 = 2.3561203;
+							w16 = -0.018255724;
 						}
 					} else {
 						if (hops < 2) {
-							w16 = -0.13618757;
+							w16 = 0.017274207;
 						} else {
-							w16 = 0.11469018;
+							w16 = 0.3212501;
 						}
 					}
 				} else {
-					if (rel_time < 2417) {
-						if (rel_time < 1805) {
-							w16 = -0.26223296;
+					if (prod != 2) {
+						if (rel_time < 2920) {
+							w16 = -0.11305403;
 						} else {
-							w16 = -0.57553416;
+							w16 = 0.018210158;
 						}
 					} else {
-						if (hops < 4) {
-							w16 = 0.023053205;
+						if (hops < 2) {
+							w16 = 0.042209987;
 						} else {
-							w16 = 0.20899138;
+							w16 = -0.061964966;
 						}
 					}
 				}
 			}
 		} else {
-			if (rel_time < 4089) {
-				if (prod != 0) {
-					if (prod != 1) {
-						if (hops < 2) {
-							w16 = 0.032024216;
-						} else {
-							w16 = -0.022044417;
-						}
+			if (rel_time < 2690) {
+				if (hops < 2) {
+					if (rel_time < 2411) {
+						w16 = 0.5981837;
 					} else {
-						if (hops < 3) {
-							w16 = 0.019346785;
-						} else {
-							w16 = 0.11033854;
-						}
+						w16 = 0.5276553;
 					}
 				} else {
 					if (hops < 4) {
-						if (hops < 2) {
-							w16 = 0.073015146;
+						if (hops < 3) {
+							w16 = 0.26889256;
 						} else {
-							w16 = 0.3339193;
+							w16 = 0.2254226;
 						}
 					} else {
-						if (rel_time < 3811) {
-							w16 = -0.25013363;
+						if (rel_time < 2411) {
+							w16 = 0.39738226;
 						} else {
-							w16 = -0.09710693;
+							w16 = 0.48790693;
 						}
 					}
 				}
 			} else {
-				if (prod != 3) {
-					if (rel_time < 4861) {
-						if (rel_time < 4420) {
-							w16 = -0.011899785;
+				if (hops < 2) {
+					if (rel_time < 11853) {
+						if (rel_time < 11242) {
+							w16 = -0.08472899;
 						} else {
-							w16 = -0.060869865;
+							w16 = -0.25473627;
 						}
 					} else {
-						if (rel_time < 5540) {
-							w16 = 0.022642924;
+						if (rel_time < 12186) {
+							w16 = 5.1573787;
 						} else {
-							w16 = -0.0039978996;
+							w16 = 0.18539137;
 						}
 					}
 				} else {
 					if (hops < 3) {
-						if (rel_time < 4932) {
-							w16 = 0.01988066;
+						if (rel_time < 3301) {
+							w16 = 0.4718995;
 						} else {
-							w16 = -0.0066946577;
+							w16 = 0.18016635;
 						}
 					} else {
-						if (hops < 4) {
-							w16 = 0.035135806;
+						if (rel_time < 11853) {
+							w16 = -0.0055887057;
 						} else {
-							w16 = 0.076885745;
+							w16 = 0.35556927;
 						}
 					}
 				}
@@ -3212,181 +3192,225 @@ float bolt(const uint16_t rel_time, const uint8_t hops, const uint8_t size, cons
 		}
 	}
 	float w17;
-	if (rel_time < 11747) {
-		if (hops < 2) {
-			if (rel_time < 1806) {
-				if (rel_time < 1407) {
-					if (cons != 5) {
-						if (rel_time < 1196) {
-							w17 = -0.017952051;
+	if (hops < 4) {
+		if (rel_time < 12091) {
+			if (size < 133) {
+				if (rel_time < 2347) {
+					if (prod != 0) {
+						if (prod != 2) {
+							w17 = -0.013333075;
 						} else {
-							w17 = -0.055237334;
+							w17 = 0.079282805;
 						}
 					} else {
-						if (rel_time < 767) {
-							w17 = 0.0043310886;
+						if (rel_time < 1627) {
+							w17 = -0.033081856;
 						} else {
-							w17 = 0.12138181;
+							w17 = -0.47635737;
 						}
 					}
 				} else {
-					if (rel_time < 1805) {
-						if (rel_time < 1654) {
-							w17 = -0.21166857;
+					if (rel_time < 2690) {
+						if (cons != 5) {
+							w17 = -0.024282176;
 						} else {
-							w17 = -0.31877056;
+							w17 = 0.16548574;
 						}
 					} else {
-						w17 = -0.050221324;
+						if (rel_time < 2920) {
+							w17 = -0.08420735;
+						} else {
+							w17 = -0.0076690624;
+						}
 					}
 				}
 			} else {
-				if (rel_time < 1875) {
-					w17 = 0.24804543;
-				} else {
-					if (size < 37) {
-						if (rel_time < 1949) {
-							w17 = -0.06392863;
+				if (rel_time < 10882) {
+					if (rel_time < 10877) {
+						if (rel_time < 10288) {
+							w17 = 0.018136388;
 						} else {
-							w17 = 0.0329747;
+							w17 = -0.17140788;
 						}
 					} else {
-						if (rel_time < 2418) {
-							w17 = 0.059617314;
+						if (hops < 2) {
+							w17 = 0.02262513;
 						} else {
-							w17 = -0.011780915;
+							w17 = 0.050062187;
+						}
+					}
+				} else {
+					if (rel_time < 10901) {
+						w17 = -0.029851396;
+					} else {
+						if (rel_time < 11490) {
+							w17 = -0.0057353913;
+						} else {
+							w17 = 0.008016023;
 						}
 					}
 				}
 			}
 		} else {
-			if (rel_time < 1805) {
-				if (prod != 1) {
-					if (rel_time < 1338) {
-						if (cons != 5) {
-							w17 = 0.0096710995;
-						} else {
-							w17 = -0.049082372;
-						}
+			if (size < 69) {
+				if (rel_time < 12186) {
+					if (hops < 2) {
+						w17 = 3.3236547;
 					} else {
-						if (hops < 4) {
-							w17 = 0.066627935;
-						} else {
-							w17 = -0.00499247;
-						}
+						w17 = 9.215145;
 					}
 				} else {
-					if (rel_time < 852) {
-						if (hops < 3) {
-							w17 = 0.075493895;
+					if (hops < 2) {
+						if (rel_time < 12191) {
+							w17 = 0.09406239;
 						} else {
-							w17 = -0.0791674;
+							w17 = 0.13662718;
 						}
 					} else {
-						if (rel_time < 1654) {
-							w17 = 0.20846978;
+						if (hops < 3) {
+							w17 = 0.31809327;
 						} else {
-							w17 = 0.078642294;
+							w17 = 0.17493199;
 						}
 					}
 				}
 			} else {
-				if (rel_time < 2418) {
-					if (rel_time < 1979) {
-						if (hops < 3) {
-							w17 = -0.044515718;
+				if (prod != 4) {
+					if (rel_time < 12771) {
+						if (prod != 2) {
+							w17 = 0.032906607;
 						} else {
-							w17 = 0.02890262;
+							w17 = -0.0104113715;
 						}
 					} else {
-						if (hops < 3) {
-							w17 = -0.050516732;
+						if (hops < 2) {
+							w17 = -0.067508444;
 						} else {
-							w17 = -0.2400782;
+							w17 = 0.18144737;
 						}
 					}
 				} else {
-					if (size < 37) {
-						if (hops < 3) {
-							w17 = -0.0052791974;
+					if (hops < 2) {
+						if (rel_time < 12630) {
+							w17 = -0.3339009;
 						} else {
-							w17 = -0.03905775;
+							w17 = -0.0129522635;
 						}
 					} else {
-						if (rel_time < 2486) {
-							w17 = 0.15788914;
+						if (rel_time < 12630) {
+							w17 = 0.005506703;
 						} else {
-							w17 = 0.0047546276;
+							w17 = -0.23204343;
 						}
 					}
 				}
 			}
 		}
 	} else {
-		if (rel_time < 12186) {
-			if (hops < 2) {
-				w17 = 0.03282671;
-			} else {
-				if (size < 69) {
-					if (rel_time < 11752) {
-						w17 = 0.10761874;
-					} else {
-						if (hops < 4) {
-							w17 = 0.093310885;
+		if (cons != 5) {
+			if (rel_time < 2850) {
+				if (size < 37) {
+					if (rel_time < 972) {
+						if (rel_time < 497) {
+							w17 = -0.047792196;
 						} else {
-							w17 = 0.036698624;
+							w17 = 0.036129795;
+						}
+					} else {
+						if (rel_time < 1770) {
+							w17 = 0.3096395;
+						} else {
+							w17 = 0.03560124;
 						}
 					}
 				} else {
-					if (hops < 4) {
-						if (hops < 3) {
-							w17 = 0.14104126;
+					if (rel_time < 2238) {
+						if (rel_time < 1629) {
+							w17 = -0.108193;
 						} else {
-							w17 = 0.3112712;
+							w17 = 0.10494899;
 						}
 					} else {
-						w17 = 0.01913871;
+						if (size < 133) {
+							w17 = -0.30994704;
+						} else {
+							w17 = -0.01097459;
+						}
+					}
+				}
+			} else {
+				if (size < 37) {
+					if (rel_time < 10901) {
+						if (rel_time < 10293) {
+							w17 = -0.03185791;
+						} else {
+							w17 = -0.27031794;
+						}
+					} else {
+						if (rel_time < 11512) {
+							w17 = 0.10902188;
+						} else {
+							w17 = 0.0006742245;
+						}
+					}
+				} else {
+					if (rel_time < 4072) {
+						if (size < 133) {
+							w17 = 0.11866555;
+						} else {
+							w17 = 0.0006838438;
+						}
+					} else {
+						if (rel_time < 12156) {
+							w17 = 0.04154071;
+						} else {
+							w17 = -0.038307097;
+						}
 					}
 				}
 			}
 		} else {
-			if (rel_time < 12191) {
-				if (hops < 4) {
-					if (hops < 2) {
-						w17 = 0.055647172;
-					} else {
-						if (hops < 3) {
-							w17 = -0.19616173;
+			if (rel_time < 3301) {
+				if (rel_time < 1015) {
+					w17 = 0.45871755;
+				} else {
+					if (rel_time < 2382) {
+						if (size < 69) {
+							w17 = 0.054456722;
 						} else {
-							w17 = -0.085196614;
+							w17 = 0.22857265;
+						}
+					} else {
+						if (rel_time < 2994) {
+							w17 = 0.2960795;
+						} else {
+							w17 = 0.23228489;
 						}
 					}
-				} else {
-					w17 = 0.21250659;
 				}
 			} else {
-				if (rel_time < 12257) {
-					if (hops < 3) {
-						if (hops < 2) {
-							w17 = 0.024427434;
+				if (rel_time < 4244) {
+					if (rel_time < 4216) {
+						if (rel_time < 3634) {
+							w17 = 0.0013002602;
 						} else {
-							w17 = 0.19281238;
+							w17 = -0.031937;
 						}
 					} else {
-						if (prod != 3) {
-							w17 = -0.1491308;
-						} else {
-							w17 = 0.086163305;
-						}
+						w17 = -0.0943716;
 					}
 				} else {
-					if (hops < 2) {
-						w17 = 0.03588477;
-					} else {
-						if (hops < 3) {
-							w17 = -0.045507584;
+					if (size < 69) {
+						if (rel_time < 11242) {
+							w17 = 0.056657385;
 						} else {
-							w17 = -0.0018442173;
+							w17 = 0.14559087;
+						}
+					} else {
+						if (rel_time < 12186) {
+							w17 = 0.037498865;
+						} else {
+							w17 = -0.043852475;
 						}
 					}
 				}
@@ -3394,121 +3418,225 @@ float bolt(const uint16_t rel_time, const uint8_t hops, const uint8_t size, cons
 		}
 	}
 	float w18;
-	if (rel_time < 336) {
-		if (rel_time < 65) {
-			if (hops < 3) {
-				w18 = -0.040156335;
+	if (hops < 4) {
+		if (rel_time < 12091) {
+			if (size < 133) {
+				if (prod != 3) {
+					if (rel_time < 1840) {
+						if (prod != 1) {
+							w18 = -0.012709744;
+						} else {
+							w18 = 0.069519885;
+						}
+					} else {
+						if (rel_time < 2087) {
+							w18 = -0.25179332;
+						} else {
+							w18 = -0.007955092;
+						}
+					}
+				} else {
+					if (hops < 2) {
+						if (rel_time < 1101) {
+							w18 = -0.2607658;
+						} else {
+							w18 = -0.00469851;
+						}
+					} else {
+						if (rel_time < 1101) {
+							w18 = 0.16678505;
+						} else {
+							w18 = 0.014684148;
+						}
+					}
+				}
 			} else {
-				w18 = 0.034578554;
+				if (rel_time < 768) {
+					if (hops < 3) {
+						if (hops < 2) {
+							w18 = 0.0066636303;
+						} else {
+							w18 = 0.03682978;
+						}
+					} else {
+						w18 = -0.07387042;
+					}
+				} else {
+					if (rel_time < 10882) {
+						if (rel_time < 9066) {
+							w18 = 0.010417658;
+						} else {
+							w18 = 0.020726686;
+						}
+					} else {
+						if (hops < 3) {
+							w18 = 0.006216246;
+						} else {
+							w18 = -0.010439744;
+						}
+					}
+				}
 			}
 		} else {
-			if (hops < 2) {
-				w18 = 0.0016571993;
-			} else {
-				if (hops < 4) {
-					w18 = -0.058123223;
+			if (size < 69) {
+				if (rel_time < 12186) {
+					if (hops < 2) {
+						w18 = 2.1419055;
+					} else {
+						w18 = 5.792376;
+					}
 				} else {
-					w18 = -0.030318527;
+					if (hops < 2) {
+						if (rel_time < 12191) {
+							w18 = 0.05649492;
+						} else {
+							w18 = 0.08210602;
+						}
+					} else {
+						if (hops < 3) {
+							w18 = 0.19094248;
+						} else {
+							w18 = 0.10502254;
+						}
+					}
+				}
+			} else {
+				if (prod != 4) {
+					if (rel_time < 12695) {
+						if (rel_time < 12160) {
+							w18 = 0.015285241;
+						} else {
+							w18 = -0.03385539;
+						}
+					} else {
+						if (hops < 2) {
+							w18 = -0.01529283;
+						} else {
+							w18 = 0.068644255;
+						}
+					}
+				} else {
+					if (hops < 2) {
+						if (rel_time < 12630) {
+							w18 = -0.20052771;
+						} else {
+							w18 = -0.0077871317;
+						}
+					} else {
+						if (rel_time < 12630) {
+							w18 = 0.0033108478;
+						} else {
+							w18 = -0.13932197;
+						}
+					}
 				}
 			}
 		}
 	} else {
-		if (rel_time < 655) {
-			if (hops < 2) {
-				if (rel_time < 422) {
-					w18 = 0.053969264;
-				} else {
-					if (rel_time < 540) {
-						w18 = -0.07078254;
+		if (cons != 5) {
+			if (rel_time < 2850) {
+				if (prod != 6) {
+					if (rel_time < 1101) {
+						if (prod != 4) {
+							w18 = -0.0428083;
+						} else {
+							w18 = 0.3262061;
+						}
 					} else {
-						w18 = -0.036833715;
+						if (rel_time < 1629) {
+							w18 = -0.33399907;
+						} else {
+							w18 = -0.05680703;
+						}
+					}
+				} else {
+					if (rel_time < 1163) {
+						if (rel_time < 768) {
+							w18 = -0.023323573;
+						} else {
+							w18 = 0.021949999;
+						}
+					} else {
+						if (rel_time < 1402) {
+							w18 = 0.27569908;
+						} else {
+							w18 = 0.032307968;
+						}
 					}
 				}
 			} else {
-				if (rel_time < 583) {
-					if (size < 37) {
-						if (hops < 3) {
-							w18 = 0.10283509;
+				if (prod != 6) {
+					if (rel_time < 4072) {
+						if (rel_time < 3531) {
+							w18 = 0.028638229;
 						} else {
-							w18 = 0.013382992;
+							w18 = 0.16687106;
 						}
 					} else {
-						if (hops < 3) {
-							w18 = 0.016265217;
+						if (rel_time < 4158) {
+							w18 = -0.03486007;
 						} else {
-							w18 = 0.041239936;
+							w18 = 0.031597618;
 						}
 					}
 				} else {
-					if (hops < 4) {
-						if (hops < 3) {
-							w18 = 0.085029036;
+					if (rel_time < 8455) {
+						if (rel_time < 7235) {
+							w18 = -0.012085696;
 						} else {
-							w18 = 0.10532307;
+							w18 = -0.073261835;
 						}
 					} else {
-						w18 = 0.023118708;
+						if (rel_time < 9066) {
+							w18 = 0.08086198;
+						} else {
+							w18 = 0.012744223;
+						}
 					}
 				}
 			}
 		} else {
-			if (size < 133) {
-				if (rel_time < 8525) {
-					if (rel_time < 8085) {
-						if (rel_time < 7753) {
-							w18 = -0.0009677107;
-						} else {
-							w18 = -0.017773492;
-						}
-					} else {
-						if (prod != 1) {
-							w18 = -0.056048155;
-						} else {
-							w18 = -0.13303879;
-						}
-					}
+			if (rel_time < 3301) {
+				if (rel_time < 1015) {
+					w18 = 0.27569804;
 				} else {
-					if (rel_time < 9206) {
-						if (prod != 1) {
-							w18 = 0.020565296;
+					if (rel_time < 2382) {
+						if (rel_time < 1840) {
+							w18 = 0.123070024;
 						} else {
-							w18 = 0.12586132;
+							w18 = -0.018523756;
 						}
 					} else {
-						if (rel_time < 9241) {
-							w18 = -0.087194964;
+						if (rel_time < 2995) {
+							w18 = 0.17437321;
 						} else {
-							w18 = -0.0017726497;
+							w18 = 0.124971904;
 						}
 					}
 				}
 			} else {
-				if (hops < 4) {
-					if (rel_time < 2503) {
-						if (rel_time < 1892) {
-							w18 = 0.017243993;
+				if (rel_time < 5466) {
+					if (rel_time < 5439) {
+						if (rel_time < 4244) {
+							w18 = -0.01942347;
 						} else {
-							w18 = -0.07693457;
+							w18 = 0.015564034;
 						}
 					} else {
-						if (rel_time < 2524) {
-							w18 = 0.16166694;
-						} else {
-							w18 = 0.011673567;
-						}
+						w18 = -0.12429593;
 					}
 				} else {
-					if (rel_time < 1913) {
-						if (rel_time < 1311) {
-							w18 = 0.059090663;
+					if (rel_time < 6965) {
+						if (rel_time < 6663) {
+							w18 = 0.03751039;
 						} else {
-							w18 = 0.2456533;
+							w18 = 0.1876867;
 						}
 					} else {
-						if (rel_time < 2524) {
-							w18 = -0.15245193;
+						if (rel_time < 7576) {
+							w18 = -0.042618867;
 						} else {
-							w18 = -0.025869321;
+							w18 = 0.034027826;
 						}
 					}
 				}
@@ -3516,221 +3644,205 @@ float bolt(const uint16_t rel_time, const uint8_t hops, const uint8_t size, cons
 		}
 	}
 	float w19;
-	if (rel_time < 11136) {
-		if (rel_time < 10497) {
-			if (rel_time < 9915) {
-				if (rel_time < 9219) {
-					if (rel_time < 8671) {
-						if (rel_time < 7753) {
-							w19 = 0.00052421016;
+	if (prod != 0) {
+		if (hops < 3) {
+			if (rel_time < 1627) {
+				if (rel_time < 1285) {
+					if (size < 37) {
+						if (hops < 2) {
+							w19 = 0.01691433;
 						} else {
-							w19 = -0.01080168;
+							w19 = -0.097996734;
 						}
 					} else {
-						if (hops < 2) {
-							w19 = -0.006280146;
+						if (rel_time < 1163) {
+							w19 = 0.032018255;
 						} else {
-							w19 = 0.047737136;
+							w19 = -0.021771036;
 						}
 					}
 				} else {
-					if (prod != 0) {
-						if (prod != 1) {
-							w19 = -0.0091180885;
+					if (hops < 2) {
+						if (rel_time < 1402) {
+							w19 = -0.118937254;
 						} else {
-							w19 = 0.03333497;
+							w19 = 2.2403429;
 						}
 					} else {
-						if (hops < 4) {
-							w19 = -0.06937415;
+						if (rel_time < 1402) {
+							w19 = 0.6798799;
 						} else {
-							w19 = 0.07077922;
+							w19 = 1.7787924;
 						}
 					}
 				}
 			} else {
-				if (prod != 0) {
-					if (rel_time < 10358) {
-						if (hops < 2) {
-							w19 = -0.08663522;
+				if (hops < 2) {
+					if (rel_time < 1697) {
+						if (size < 69) {
+							w19 = -0.39928395;
 						} else {
-							w19 = -0.006275424;
+							w19 = -0.003104752;
 						}
 					} else {
-						if (hops < 2) {
-							w19 = 0.035698097;
+						if (rel_time < 1712) {
+							w19 = 0.16895716;
 						} else {
-							w19 = 0.00019759292;
+							w19 = 0.0032098908;
 						}
 					}
 				} else {
-					if (hops < 4) {
-						if (hops < 2) {
-							w19 = 0.04096578;
+					if (prod != 2) {
+						if (rel_time < 2920) {
+							w19 = -0.06250956;
 						} else {
-							w19 = 0.1496362;
+							w19 = -0.006747046;
 						}
 					} else {
-						if (rel_time < 9919) {
-							w19 = -0.19208807;
+						if (rel_time < 3023) {
+							w19 = 0.108226016;
 						} else {
-							w19 = -0.1344665;
+							w19 = -0.108014576;
 						}
 					}
 				}
 			}
 		} else {
-			if (rel_time < 10969) {
-				if (hops < 2) {
-					if (rel_time < 10966) {
-						if (prod != 4) {
-							w19 = -0.036297593;
+			if (rel_time < 1629) {
+				if (rel_time < 1199) {
+					if (prod != 4) {
+						if (rel_time < 854) {
+							w19 = -0.058662146;
 						} else {
-							w19 = 0.20148212;
-						}
-					} else {
-						w19 = -0.36664715;
-					}
-				} else {
-					if (rel_time < 10966) {
-						if (rel_time < 10501) {
-							w19 = -0.009499471;
-						} else {
-							w19 = -0.035376523;
+							w19 = 0.00093894993;
 						}
 					} else {
 						if (hops < 4) {
-							w19 = 0.18641157;
+							w19 = 0.22436832;
 						} else {
-							w19 = -0.09589694;
+							w19 = 0.19604668;
+						}
+					}
+				} else {
+					if (size < 37) {
+						if (hops < 4) {
+							w19 = -0.5098905;
+						} else {
+							w19 = 0.16570498;
+						}
+					} else {
+						if (rel_time < 1285) {
+							w19 = -0.2129126;
+						} else {
+							w19 = -0.11173087;
 						}
 					}
 				}
 			} else {
-				if (hops < 2) {
-					if (prod != 4) {
-						if (prod != 6) {
-							w19 = 0.028637003;
-						} else {
-							w19 = -0.011350922;
-						}
+				if (rel_time < 1697) {
+					if (size < 69) {
+						w19 = 0.70847046;
 					} else {
-						w19 = 0.23239367;
+						if (hops < 4) {
+							w19 = 0.066056214;
+						} else {
+							w19 = -1.4659765;
+						}
 					}
 				} else {
-					if (rel_time < 11112) {
-						if (hops < 4) {
-							w19 = -0.013493152;
+					if (size < 69) {
+						if (rel_time < 2850) {
+							w19 = -0.10682162;
 						} else {
-							w19 = 0.021921372;
+							w19 = 0.0032584388;
 						}
 					} else {
-						w19 = -0.0726927;
+						if (rel_time < 1840) {
+							w19 = 0.084235266;
+						} else {
+							w19 = 0.015402667;
+						}
 					}
 				}
 			}
 		}
 	} else {
-		if (size < 69) {
-			if (rel_time < 11417) {
-				if (hops < 2) {
-					if (rel_time < 11141) {
-						w19 = 0.062444594;
-					} else {
-						w19 = 0.019988306;
-					}
+		if (hops < 2) {
+			if (rel_time < 1015) {
+				if (rel_time < 973) {
+					w19 = 0.12824689;
 				} else {
-					if (hops < 4) {
-						if (hops < 3) {
-							w19 = -0.012363166;
-						} else {
-							w19 = 0.012859542;
-						}
-					} else {
-						w19 = -0.027185194;
-					}
+					w19 = 0.041779824;
 				}
 			} else {
-				if (rel_time < 11577) {
-					if (rel_time < 11420) {
-						if (hops < 4) {
-							w19 = 0.043382045;
-						} else {
-							w19 = 0.09008759;
-						}
+				if (rel_time < 2087) {
+					if (rel_time < 1402) {
+						w19 = -0.30718777;
 					} else {
-						if (hops < 2) {
-							w19 = 0.066053346;
+						if (rel_time < 1627) {
+							w19 = -0.17596574;
 						} else {
-							w19 = 0.0042293468;
+							w19 = -0.2096176;
 						}
 					}
 				} else {
-					if (rel_time < 11747) {
-						if (hops < 2) {
-							w19 = 0.42378303;
+					if (rel_time < 2690) {
+						if (rel_time < 2411) {
+							w19 = 0.29687026;
 						} else {
-							w19 = 0.8482786;
+							w19 = 0.25390396;
 						}
 					} else {
-						if (hops < 2) {
-							w19 = 0.019101804;
+						if (rel_time < 10631) {
+							w19 = -0.05762702;
 						} else {
-							w19 = 0.05102018;
+							w19 = 0.009553873;
 						}
 					}
 				}
 			}
 		} else {
-			if (rel_time < 12191) {
-				if (rel_time < 12186) {
-					if (hops < 2) {
-						if (rel_time < 11582) {
-							w19 = -0.11726563;
-						} else {
-							w19 = 0.007889494;
-						}
-					} else {
-						if (rel_time < 11582) {
-							w19 = 0.04169094;
-						} else {
-							w19 = -0.005956561;
-						}
-					}
+			if (hops < 3) {
+				if (rel_time < 1015) {
+					w19 = -0.3777233;
 				} else {
-					if (hops < 4) {
-						if (hops < 2) {
-							w19 = 0.028755596;
-						} else {
-							w19 = -0.06751827;
-						}
+					if (rel_time < 1627) {
+						w19 = 0.893726;
 					} else {
-						w19 = 0.10769901;
+						if (rel_time < 2087) {
+							w19 = -0.1872082;
+						} else {
+							w19 = 0.110115804;
+						}
 					}
 				}
 			} else {
-				if (prod != 4) {
-					if (hops < 2) {
-						w19 = 0.02022511;
-					} else {
-						if (hops < 3) {
-							w19 = -0.029495476;
+				if (rel_time < 2087) {
+					if (rel_time < 1015) {
+						if (hops < 4) {
+							w19 = 0.2281616;
 						} else {
-							w19 = 0.0065854467;
+							w19 = 0.16570617;
+						}
+					} else {
+						if (rel_time < 1840) {
+							w19 = -0.6075579;
+						} else {
+							w19 = -0.12025704;
 						}
 					}
 				} else {
-					if (hops < 3) {
-						if (hops < 2) {
-							w19 = 0.0018554424;
+					if (rel_time < 11242) {
+						if (rel_time < 10631) {
+							w19 = -0.0018048286;
 						} else {
-							w19 = 0.20207313;
+							w19 = -0.1325105;
 						}
 					} else {
-						if (hops < 4) {
-							w19 = -0.041112293;
+						if (rel_time < 12186) {
+							w19 = 0.112558715;
 						} else {
-							w19 = -0.14905615;
+							w19 = 0.06175937;
 						}
 					}
 				}
@@ -3738,233 +3850,205 @@ float bolt(const uint16_t rel_time, const uint8_t hops, const uint8_t size, cons
 		}
 	}
 	float w20;
-	if (rel_time < 6151) {
-		if (rel_time < 5615) {
-			if (rel_time < 5031) {
-				if (rel_time < 4966) {
-					if (rel_time < 3171) {
-						if (rel_time < 2589) {
-							w20 = -7.515332e-05;
+	if (prod != 0) {
+		if (hops < 3) {
+			if (rel_time < 3023) {
+				if (prod != 4) {
+					if (rel_time < 1200) {
+						if (rel_time < 1199) {
+							w20 = -0.0077137672;
 						} else {
-							w20 = -0.022147369;
+							w20 = -0.12384051;
 						}
 					} else {
-						if (hops < 3) {
-							w20 = -0.0047835577;
+						if (rel_time < 1629) {
+							w20 = 0.17415258;
 						} else {
-							w20 = 0.02154523;
+							w20 = 0.016949091;
 						}
 					}
 				} else {
-					if (rel_time < 4967) {
-						if (hops < 3) {
-							w20 = -0.13011594;
+					if (rel_time < 1627) {
+						if (rel_time < 1087) {
+							w20 = 0.06283522;
 						} else {
-							w20 = -0.024398603;
+							w20 = 1.4363631;
 						}
 					} else {
-						if (rel_time < 5002) {
-							w20 = -0.041403938;
+						if (hops < 2) {
+							w20 = 0.0073927017;
 						} else {
-							w20 = -0.00921916;
+							w20 = -0.19808303;
 						}
 					}
 				}
 			} else {
 				if (prod != 1) {
-					if (hops < 4) {
-						if (size < 133) {
-							w20 = 0.024223646;
+					if (prod != 2) {
+						if (rel_time < 3462) {
+							w20 = -0.110086;
 						} else {
-							w20 = -0.024892746;
+							w20 = 0.0009823353;
 						}
 					} else {
-						if (rel_time < 5543) {
-							w20 = -0.13885988;
+						if (hops < 2) {
+							w20 = 0.022124413;
 						} else {
-							w20 = 0.011514113;
+							w20 = -0.064803675;
 						}
 					}
 				} else {
-					if (hops < 4) {
-						if (hops < 3) {
-							w20 = 0.08382917;
+					if (hops < 2) {
+						if (rel_time < 3461) {
+							w20 = -0.057820108;
 						} else {
-							w20 = 0.043745656;
+							w20 = 0.005712894;
 						}
 					} else {
-						if (rel_time < 5311) {
-							w20 = 0.13293114;
+						if (rel_time < 7737) {
+							w20 = -0.086225085;
 						} else {
-							w20 = 0.1863117;
+							w20 = -0.041780338;
 						}
 					}
 				}
 			}
 		} else {
-			if (hops < 2) {
-				if (prod != 0) {
-					if (rel_time < 6081) {
-						if (prod != 4) {
-							w20 = -0.020567603;
+			if (rel_time < 1629) {
+				if (rel_time < 1199) {
+					if (prod != 4) {
+						if (rel_time < 854) {
+							w20 = -0.03520533;
 						} else {
-							w20 = 0.1762018;
+							w20 = 0.00057279883;
 						}
 					} else {
-						if (rel_time < 6084) {
-							w20 = -0.25037685;
-						} else {
-							w20 = 0.088601016;
-						}
+						w20 = 0.13046646;
 					}
 				} else {
-					if (rel_time < 5644) {
-						w20 = -0.26818556;
+					if (size < 37) {
+						if (hops < 4) {
+							w20 = -0.30611703;
+						} else {
+							w20 = 0.099591635;
+						}
 					} else {
-						w20 = -0.32590815;
+						if (rel_time < 1285) {
+							w20 = -0.12781163;
+						} else {
+							w20 = -0.06705357;
+						}
 					}
 				}
 			} else {
-				if (prod != 1) {
-					if (hops < 3) {
-						if (prod != 3) {
-							w20 = 0.059572123;
-						} else {
-							w20 = -0.08587735;
-						}
+				if (rel_time < 1697) {
+					if (size < 69) {
+						w20 = 0.4252955;
 					} else {
-						if (prod != 3) {
-							w20 = -0.038241934;
+						if (hops < 4) {
+							w20 = 0.03975455;
 						} else {
-							w20 = 0.028782437;
+							w20 = -0.8872909;
 						}
 					}
 				} else {
-					if (hops < 3) {
-						if (rel_time < 5922) {
-							w20 = -0.09676972;
+					if (rel_time < 1840) {
+						if (rel_time < 1770) {
+							w20 = 0.008543114;
 						} else {
-							w20 = -0.14348902;
+							w20 = 0.19243972;
 						}
 					} else {
-						if (rel_time < 5922) {
-							w20 = -0.12016017;
+						if (rel_time < 2238) {
+							w20 = -0.20794263;
 						} else {
-							w20 = -0.058458593;
+							w20 = 0.005801351;
 						}
 					}
 				}
 			}
 		}
 	} else {
-		if (rel_time < 6534) {
-			if (rel_time < 6253) {
-				if (hops < 2) {
-					if (size < 37) {
-						w20 = 0.07827343;
-					} else {
-						if (prod != 2) {
-							w20 = 0.024210084;
-						} else {
-							w20 = -0.0039449786;
-						}
-					}
+		if (hops < 2) {
+			if (rel_time < 1015) {
+				if (rel_time < 973) {
+					w20 = 0.07702827;
 				} else {
-					if (size < 37) {
-						if (rel_time < 6190) {
-							w20 = -0.071163975;
-						} else {
-							w20 = 0.03761865;
-						}
-					} else {
-						if (prod != 2) {
-							w20 = 0.02783318;
-						} else {
-							w20 = -0.0059068236;
-						}
-					}
+					w20 = 0.025090957;
 				}
 			} else {
-				if (hops < 4) {
-					if (hops < 3) {
-						if (rel_time < 6531) {
-							w20 = 0.05229187;
-						} else {
-							w20 = 0.121017545;
-						}
+				if (rel_time < 2087) {
+					if (rel_time < 1402) {
+						w20 = -0.18512553;
 					} else {
-						if (prod != 0) {
-							w20 = 0.060413644;
+						if (rel_time < 1627) {
+							w20 = -0.10564963;
 						} else {
-							w20 = 0.24387991;
+							w20 = -0.12585191;
 						}
 					}
 				} else {
-					if (prod != 0) {
-						w20 = 0.14520255;
+					if (rel_time < 2690) {
+						if (rel_time < 2411) {
+							w20 = 0.1785058;
+						} else {
+							w20 = 0.15246038;
+						}
 					} else {
-						w20 = -0.13783677;
+						if (rel_time < 3301) {
+							w20 = -0.1137432;
+						} else {
+							w20 = -0.021237409;
+						}
 					}
 				}
 			}
 		} else {
-			if (rel_time < 7303) {
-				if (rel_time < 6864) {
-					if (hops < 3) {
-						if (rel_time < 6760) {
-							w20 = 0.06612704;
-						} else {
-							w20 = -0.0101475315;
-						}
-					} else {
-						if (prod != 4) {
-							w20 = -0.0029218995;
-						} else {
-							w20 = -0.12832193;
-						}
-					}
+			if (hops < 3) {
+				if (rel_time < 1015) {
+					w20 = -0.22673741;
 				} else {
-					if (hops < 4) {
-						if (hops < 2) {
-							w20 = -0.09269979;
+					if (rel_time < 1627) {
+						if (rel_time < 1402) {
+							w20 = 0.46640378;
 						} else {
-							w20 = -0.06492132;
+							w20 = 0.54415697;
 						}
 					} else {
-						if (prod != 0) {
-							w20 = -0.050424956;
+						if (rel_time < 2087) {
+							w20 = -0.112386145;
 						} else {
-							w20 = 0.12311214;
+							w20 = 0.06607477;
 						}
 					}
 				}
 			} else {
-				if (rel_time < 7753) {
-					if (rel_time < 7371) {
-						if (hops < 2) {
-							w20 = 0.19294198;
+				if (rel_time < 2087) {
+					if (rel_time < 1015) {
+						if (hops < 4) {
+							w20 = 0.13698119;
 						} else {
-							w20 = 0.060971197;
+							w20 = 0.09959416;
 						}
 					} else {
-						if (rel_time < 7448) {
-							w20 = 0.010886933;
+						if (hops < 4) {
+							w20 = -0.34460256;
 						} else {
-							w20 = 0.053222068;
+							w20 = 0.15719162;
 						}
 					}
 				} else {
-					if (rel_time < 7911) {
-						if (hops < 2) {
-							w20 = -0.023875851;
+					if (rel_time < 2690) {
+						if (hops < 4) {
+							w20 = 0.07311375;
 						} else {
-							w20 = -0.08486092;
+							w20 = 0.09983811;
 						}
 					} else {
-						if (hops < 3) {
-							w20 = 0.0038357868;
+						if (rel_time < 11242) {
+							w20 = -0.01246582;
 						} else {
-							w20 = -0.0048998212;
+							w20 = 0.05241507;
 						}
 					}
 				}
@@ -3972,431 +4056,319 @@ float bolt(const uint16_t rel_time, const uint8_t hops, const uint8_t size, cons
 		}
 	}
 	float w21;
-	if (rel_time < 1950) {
-		if (hops < 2) {
-			if (rel_time < 1407) {
-				if (cons != 5) {
-					if (size < 69) {
-						if (rel_time < 422) {
-							w21 = 0.0040496415;
+	if (rel_time < 12771) {
+		if (size < 37) {
+			if (hops < 2) {
+				if (rel_time < 10937) {
+					if (rel_time < 9714) {
+						if (rel_time < 9070) {
+							w21 = -0.0327826;
 						} else {
-							w21 = -0.03673542;
+							w21 = 0.0522166;
 						}
 					} else {
-						if (rel_time < 731) {
-							w21 = -0.0077641243;
+						if (rel_time < 10901) {
+							w21 = -0.1064747;
 						} else {
-							w21 = 0.011399503;
+							w21 = -0.028931638;
 						}
 					}
 				} else {
-					if (rel_time < 583) {
-						w21 = -0.013738402;
+					if (rel_time < 11512) {
+						w21 = 0.11773779;
 					} else {
-						if (rel_time < 1194) {
-							w21 = 0.044505265;
-						} else {
-							w21 = 0.07048442;
-						}
+						w21 = 0.054502156;
 					}
 				}
 			} else {
-				if (prod != 4) {
-					if (rel_time < 1805) {
-						if (rel_time < 1654) {
-							w21 = -0.10567816;
+				if (rel_time < 10937) {
+					if (rel_time < 10326) {
+						if (rel_time < 9714) {
+							w21 = -0.0014758582;
 						} else {
-							w21 = -0.15927513;
+							w21 = -0.07338763;
 						}
 					} else {
-						if (size < 37) {
-							w21 = -0.031760678;
+						if (hops < 3) {
+							w21 = 0.22909252;
 						} else {
-							w21 = -0.055950984;
+							w21 = 0.047091316;
 						}
 					}
 				} else {
-					if (rel_time < 1806) {
-						w21 = -0.024934089;
+					if (hops < 3) {
+						if (rel_time < 11512) {
+							w21 = -0.16408037;
+						} else {
+							w21 = -0.13120316;
+						}
 					} else {
-						w21 = 0.124421045;
+						if (hops < 4) {
+							w21 = -0.06399198;
+						} else {
+							w21 = 0.027340416;
+						}
 					}
 				}
 			}
 		} else {
-			if (prod != 1) {
-				if (rel_time < 731) {
-					if (hops < 4) {
-						if (prod != 4) {
-							w21 = -0.005636807;
+			if (rel_time < 4828) {
+				if (rel_time < 2346) {
+					if (prod != 1) {
+						if (rel_time < 1163) {
+							w21 = 0.014256074;
 						} else {
-							w21 = 0.04698674;
+							w21 = -0.023164172;
 						}
 					} else {
-						if (prod != 0) {
-							w21 = 0.03405572;
+						if (rel_time < 1285) {
+							w21 = -0.034162853;
 						} else {
-							w21 = 0.16280438;
+							w21 = 0.0922997;
 						}
 					}
 				} else {
-					if (hops < 3) {
-						if (rel_time < 1195) {
-							w21 = -0.10865005;
+					if (rel_time < 3301) {
+						if (cons != 5) {
+							w21 = 0.0010268786;
 						} else {
-							w21 = -0.00393514;
+							w21 = 0.05944121;
 						}
 					} else {
-						if (hops < 4) {
-							w21 = 0.021286864;
+						if (prod != 2) {
+							w21 = 0.010755594;
 						} else {
-							w21 = -0.04087825;
+							w21 = -0.025739787;
 						}
 					}
 				}
 			} else {
-				if (rel_time < 852) {
-					if (hops < 3) {
-						if (rel_time < 422) {
-							w21 = -0.032257147;
+				if (rel_time < 7810) {
+					if (prod != 1) {
+						if (rel_time < 5364) {
+							w21 = -0.037791368;
 						} else {
-							w21 = 0.09963276;
+							w21 = 0.0023584012;
 						}
 					} else {
-						if (rel_time < 422) {
-							w21 = 0.06389786;
+						if (rel_time < 7579) {
+							w21 = -0.023182735;
 						} else {
-							w21 = -0.16368642;
+							w21 = -0.14585677;
 						}
 					}
 				} else {
-					if (rel_time < 1654) {
-						if (hops < 3) {
-							w21 = -0.09090665;
+					if (rel_time < 8352) {
+						if (prod != 2) {
+							w21 = 0.037536737;
 						} else {
-							w21 = 0.27420756;
+							w21 = -0.033692535;
 						}
 					} else {
-						if (hops < 3) {
-							w21 = 0.28074294;
+						if (rel_time < 8419) {
+							w21 = -0.062363245;
 						} else {
-							w21 = -0.18072999;
+							w21 = -0.00012557424;
 						}
 					}
 				}
 			}
 		}
 	} else {
-		if (rel_time < 1979) {
-			if (hops < 2) {
-				if (size < 69) {
-					if (rel_time < 1978) {
-						w21 = 0.15938392;
-					} else {
-						w21 = 0.23015851;
-					}
-				} else {
-					w21 = -0.080424845;
-				}
+		if (hops < 2) {
+			if (rel_time < 12777) {
+				w21 = -0.051310755;
 			} else {
-				if (size < 69) {
-					if (hops < 3) {
-						if (rel_time < 1978) {
-							w21 = -0.05003522;
-						} else {
-							w21 = 0.010261959;
-						}
-					} else {
-						if (hops < 4) {
-							w21 = 0.1364075;
-						} else {
-							w21 = -0.034044996;
-						}
-					}
-				} else {
-					if (hops < 3) {
-						w21 = -0.022844438;
-					} else {
-						w21 = -0.12673569;
-					}
-				}
+				w21 = -0.0055690515;
 			}
 		} else {
-			if (rel_time < 2417) {
-				if (hops < 2) {
-					if (rel_time < 2257) {
-						w21 = -0.021832785;
-					} else {
-						w21 = 0.11584589;
-					}
+			if (hops < 3) {
+				if (rel_time < 12777) {
+					w21 = 0.17734466;
 				} else {
-					if (hops < 4) {
-						if (prod != 0) {
-							w21 = -0.090617165;
-						} else {
-							w21 = 0.19697015;
-						}
-					} else {
-						if (rel_time < 2257) {
-							w21 = 0.12148176;
-						} else {
-							w21 = -0.33887252;
-						}
-					}
+					w21 = 0.010494238;
 				}
 			} else {
-				if (rel_time < 2524) {
-					if (rel_time < 2418) {
-						if (hops < 3) {
-							w21 = 0.026763717;
-						} else {
-							w21 = -0.07735388;
-						}
+				if (hops < 4) {
+					if (rel_time < 12777) {
+						w21 = 0.06251185;
 					} else {
-						if (hops < 4) {
-							w21 = 0.023280127;
-						} else {
-							w21 = 0.054569058;
-						}
+						w21 = 0.10578885;
 					}
 				} else {
-					if (rel_time < 2867) {
-						if (rel_time < 2589) {
-							w21 = 0.0042752945;
-						} else {
-							w21 = -0.0638595;
-						}
-					} else {
-						if (rel_time < 2868) {
-							w21 = 0.069341205;
-						} else {
-							w21 = 0.00042677243;
-						}
-					}
+					w21 = -0.025615642;
 				}
 			}
 		}
 	}
 	float w22;
-	if (prod != 4) {
-		if (hops < 4) {
-			if (prod != 0) {
-				if (size < 133) {
-					if (hops < 2) {
-						if (rel_time < 1978) {
-							w22 = -0.012358308;
+	if (hops < 4) {
+		if (rel_time < 12695) {
+			if (rel_time < 12625) {
+				if (rel_time < 12091) {
+					if (rel_time < 11247) {
+						if (rel_time < 10791) {
+							w22 = -0.0017952016;
 						} else {
-							w22 = 0.0069112494;
+							w22 = 0.028571172;
 						}
 					} else {
-						if (rel_time < 540) {
-							w22 = 0.019280676;
+						if (rel_time < 12086) {
+							w22 = -0.015130155;
 						} else {
-							w22 = -0.007418741;
+							w22 = -0.057107855;
 						}
 					}
 				} else {
-					if (rel_time < 2502) {
-						if (rel_time < 1892) {
-							w22 = 0.003770017;
+					if (size < 69) {
+						if (rel_time < 12186) {
+							w22 = 2.843365;
 						} else {
-							w22 = -0.1002735;
+							w22 = 0.036038574;
 						}
 					} else {
-						if (rel_time < 3113) {
-							w22 = 0.04455249;
+						if (hops < 2) {
+							w22 = 0.0327262;
 						} else {
-							w22 = 0.00580381;
+							w22 = -0.0022507657;
 						}
 					}
 				}
 			} else {
-				if (hops < 2) {
-					if (rel_time < 2867) {
-						if (rel_time < 1654) {
-							w22 = -0.019238703;
+				if (prod != 3) {
+					if (hops < 2) {
+						if (rel_time < 12630) {
+							w22 = -0.14817956;
 						} else {
-							w22 = 0.06155199;
+							w22 = -0.0063009383;
 						}
 					} else {
-						if (rel_time < 3477) {
-							w22 = -0.11865988;
+						if (rel_time < 12630) {
+							w22 = -0.0051080706;
 						} else {
-							w22 = -0.020751294;
+							w22 = -0.08527496;
 						}
 					}
 				} else {
 					if (hops < 3) {
-						if (rel_time < 1194) {
-							w22 = -0.09042834;
-						} else {
-							w22 = 0.019075474;
-						}
+						w22 = -0.0069480524;
 					} else {
-						if (rel_time < 583) {
-							w22 = -0.08045699;
-						} else {
-							w22 = 0.039311785;
-						}
+						w22 = 0.02676042;
 					}
 				}
 			}
 		} else {
-			if (prod != 0) {
-				if (size < 133) {
-					if (rel_time < 422) {
-						if (rel_time < 65) {
-							w22 = -0.01246876;
-						} else {
-							w22 = -0.14138876;
-						}
-					} else {
-						if (rel_time < 1264) {
-							w22 = 0.13250975;
-						} else {
-							w22 = 0.025003487;
-						}
-					}
-				} else {
-					if (rel_time < 1913) {
-						if (rel_time < 1311) {
-							w22 = 0.009884027;
-						} else {
-							w22 = 0.14327927;
-						}
-					} else {
-						if (rel_time < 2524) {
-							w22 = -0.10386764;
-						} else {
-							w22 = -0.014355946;
-						}
-					}
-				}
+			if (rel_time < 12700) {
+				w22 = 0.081744365;
 			} else {
-				if (rel_time < 2867) {
-					if (rel_time < 583) {
-						w22 = 0.08162541;
+				if (prod != 2) {
+					if (hops < 2) {
+						w22 = 0.0034209264;
 					} else {
-						if (rel_time < 1408) {
-							w22 = -0.2511522;
+						if (hops < 3) {
+							w22 = -0.09561404;
 						} else {
-							w22 = -0.09339944;
+							w22 = -0.15715076;
 						}
 					}
 				} else {
-					if (rel_time < 4698) {
-						if (rel_time < 4088) {
-							w22 = 0.03548837;
+					if (hops < 2) {
+						if (rel_time < 12771) {
+							w22 = -0.11213261;
 						} else {
-							w22 = 0.19398336;
+							w22 = -0.026745895;
 						}
 					} else {
-						if (rel_time < 8972) {
-							w22 = -0.086846195;
+						if (rel_time < 12771) {
+							w22 = 0.13314314;
 						} else {
-							w22 = -0.015155671;
+							w22 = 0.06994176;
 						}
 					}
 				}
 			}
 		}
 	} else {
-		if (hops < 3) {
-			if (rel_time < 2486) {
-				if (hops < 2) {
-					if (rel_time < 2418) {
-						if (rel_time < 655) {
-							w22 = -0.01983078;
+		if (prod != 0) {
+			if (rel_time < 12186) {
+				if (rel_time < 10963) {
+					if (rel_time < 10791) {
+						if (rel_time < 2238) {
+							w22 = 0.016675996;
 						} else {
-							w22 = 0.033891745;
+							w22 = 0.00059205934;
 						}
 					} else {
-						w22 = -0.12193725;
+						if (rel_time < 10796) {
+							w22 = -0.1435944;
+						} else {
+							w22 = -0.036661368;
+						}
 					}
 				} else {
-					if (rel_time < 1875) {
-						if (rel_time < 1806) {
-							w22 = -0.02968843;
+					if (prod != 3) {
+						if (rel_time < 12014) {
+							w22 = 0.013442305;
 						} else {
-							w22 = -0.16529205;
+							w22 = 0.06166617;
 						}
 					} else {
-						if (rel_time < 2418) {
-							w22 = 0.023287984;
+						if (rel_time < 11490) {
+							w22 = 0.12593387;
 						} else {
-							w22 = 0.0772834;
+							w22 = 0.048685193;
 						}
 					}
 				}
 			} else {
-				if (rel_time < 3028) {
-					if (hops < 2) {
-						w22 = 0.31273997;
+				if (prod != 3) {
+					if (rel_time < 12625) {
+						w22 = -0.15393798;
 					} else {
-						w22 = 0.16090009;
+						if (rel_time < 12695) {
+							w22 = 0.0042723934;
+						} else {
+							w22 = -0.041321058;
+						}
 					}
 				} else {
-					if (hops < 2) {
-						if (rel_time < 5470) {
-							w22 = 0.041202348;
+					if (rel_time < 12700) {
+						if (rel_time < 12695) {
+							w22 = -0.1399335;
 						} else {
-							w22 = -0.019802777;
+							w22 = -0.09279811;
 						}
 					} else {
-						if (rel_time < 4319) {
-							w22 = -0.025949832;
-						} else {
-							w22 = 0.043683693;
-						}
+						w22 = -0.023811288;
 					}
 				}
 			}
 		} else {
-			if (rel_time < 1806) {
-				if (hops < 4) {
-					if (rel_time < 655) {
-						w22 = 0.02897333;
+			if (rel_time < 1627) {
+				if (rel_time < 1402) {
+					if (rel_time < 1015) {
+						w22 = 0.054155845;
 					} else {
-						if (rel_time < 1195) {
-							w22 = 0.0937485;
-						} else {
-							w22 = 0.1476377;
-						}
+						w22 = 0.14415541;
 					}
 				} else {
-					if (rel_time < 655) {
-						w22 = -0.0056447107;
-					} else {
-						if (rel_time < 1196) {
-							w22 = -0.19681771;
-						} else {
-							w22 = -0.02225292;
-						}
-					}
+					w22 = 0.25270304;
 				}
 			} else {
-				if (rel_time < 11577) {
-					if (rel_time < 11036) {
-						if (rel_time < 10966) {
-							w22 = -0.049790427;
-						} else {
-							w22 = 0.013333239;
-						}
-					} else {
-						w22 = -0.17291449;
-					}
+				if (rel_time < 1841) {
+					w22 = -0.035948697;
 				} else {
-					if (rel_time < 12186) {
-						if (hops < 4) {
-							w22 = 0.10645309;
+					if (rel_time < 9748) {
+						if (rel_time < 9412) {
+							w22 = 0.027328465;
 						} else {
-							w22 = -0.06478193;
+							w22 = -0.053920455;
 						}
 					} else {
-						if (rel_time < 12191) {
-							w22 = 0.006865612;
+						if (rel_time < 10631) {
+							w22 = 0.18400162;
 						} else {
-							w22 = -0.034888122;
+							w22 = 0.0035284143;
 						}
 					}
 				}
@@ -4404,117 +4376,197 @@ float bolt(const uint16_t rel_time, const uint8_t hops, const uint8_t size, cons
 		}
 	}
 	float w23;
-	if (rel_time < 336) {
-		if (hops < 2) {
-			w23 = -0.006005476;
-		} else {
-			if (rel_time < 65) {
-				if (hops < 3) {
-					w23 = -0.028368564;
-				} else {
-					w23 = 0.009268224;
-				}
-			} else {
-				w23 = -0.029664285;
-			}
-		}
-	} else {
-		if (rel_time < 655) {
-			if (hops < 4) {
-				if (hops < 2) {
-					if (rel_time < 422) {
-						w23 = 0.030917985;
+	if (rel_time < 6014) {
+		if (rel_time < 6012) {
+			if (rel_time < 1770) {
+				if (rel_time < 1743) {
+					if (hops < 3) {
+						if (hops < 2) {
+							w23 = -0.022105975;
+						} else {
+							w23 = 0.033419263;
+						}
 					} else {
-						w23 = -0.0060620075;
+						if (prod != 0) {
+							w23 = -0.0074866116;
+						} else {
+							w23 = -0.11105251;
+						}
 					}
 				} else {
 					if (hops < 3) {
-						if (rel_time < 422) {
-							w23 = -0.025761694;
+						if (hops < 2) {
+							w23 = -0.029635152;
 						} else {
-							w23 = 0.058047876;
+							w23 = -0.20290425;
 						}
 					} else {
-						if (rel_time < 422) {
-							w23 = 0.07778986;
+						if (hops < 4) {
+							w23 = 0.0540543;
 						} else {
-							w23 = -0.014780254;
+							w23 = 0.11597536;
 						}
 					}
 				}
 			} else {
-				if (rel_time < 540) {
-					if (rel_time < 422) {
-						w23 = -0.070870645;
+				if (rel_time < 1840) {
+					if (size < 69) {
+						w23 = -1.395119;
 					} else {
-						w23 = -0.023057958;
+						if (hops < 2) {
+							w23 = -0.010375575;
+						} else {
+							w23 = 0.12071569;
+						}
 					}
 				} else {
-					if (rel_time < 583) {
-						w23 = 0.040929385;
+					if (rel_time < 2324) {
+						if (hops < 2) {
+							w23 = 0.020827347;
+						} else {
+							w23 = -0.034134176;
+						}
 					} else {
-						w23 = -0.0028444626;
+						if (rel_time < 3301) {
+							w23 = 0.017145772;
+						} else {
+							w23 = 0.0011362925;
+						}
 					}
 				}
 			}
 		} else {
-			if (rel_time < 4392) {
-				if (rel_time < 3746) {
-					if (prod != 2) {
-						if (rel_time < 3709) {
-							w23 = -0.001926036;
+			if (hops < 2) {
+				w23 = 0.044912156;
+			} else {
+				if (hops < 3) {
+					w23 = 0.16483384;
+				} else {
+					w23 = 0.07398094;
+				}
+			}
+		}
+	} else {
+		if (rel_time < 7810) {
+			if (size < 37) {
+				if (rel_time < 6623) {
+					if (hops < 4) {
+						if (hops < 3) {
+							w23 = -0.092521705;
 						} else {
-							w23 = -0.022740873;
+							w23 = -0.0008978285;
 						}
 					} else {
-						if (hops < 4) {
-							w23 = 0.0069706747;
+						if (rel_time < 6048) {
+							w23 = -0.17319554;
 						} else {
-							w23 = 0.055278935;
+							w23 = -0.08117969;
 						}
 					}
 				} else {
-					if (prod != 0) {
-						if (hops < 4) {
-							w23 = -0.0016247818;
+					if (rel_time < 6626) {
+						if (hops < 2) {
+							w23 = -0.048161756;
 						} else {
-							w23 = 0.0667849;
+							w23 = 0.01221248;
 						}
 					} else {
-						if (hops < 4) {
-							w23 = 0.11735342;
+						if (rel_time < 6660) {
+							w23 = -0.11885659;
 						} else {
-							w23 = -0.10298922;
+							w23 = -0.048109464;
 						}
 					}
 				}
 			} else {
-				if (rel_time < 4861) {
-					if (hops < 4) {
-						if (prod != 0) {
-							w23 = -0.031130308;
+				if (rel_time < 7740) {
+					if (prod != 1) {
+						if (rel_time < 6585) {
+							w23 = -0.020472733;
 						} else {
-							w23 = -0.06861264;
+							w23 = 0.006433006;
 						}
 					} else {
-						if (prod != 0) {
-							w23 = -0.011552533;
+						if (hops < 4) {
+							w23 = -0.040416863;
 						} else {
-							w23 = 0.09725041;
+							w23 = 0.077115364;
 						}
 					}
 				} else {
-					if (rel_time < 5470) {
-						if (size < 37) {
-							w23 = -0.027515376;
+					if (hops < 3) {
+						if (hops < 2) {
+							w23 = -0.061260324;
 						} else {
-							w23 = 0.016261548;
+							w23 = -0.095445685;
 						}
 					} else {
-						if (rel_time < 6081) {
-							w23 = -0.012855607;
+						if (prod != 3) {
+							w23 = 0.05685385;
 						} else {
-							w23 = 0.00056778174;
+							w23 = -0.044493046;
+						}
+					}
+				}
+			}
+		} else {
+			if (rel_time < 8495) {
+				if (rel_time < 8455) {
+					if (prod != 4) {
+						if (hops < 3) {
+							w23 = -0.0065906392;
+						} else {
+							w23 = 0.02239995;
+						}
+					} else {
+						if (hops < 3) {
+							w23 = 0.0763618;
+						} else {
+							w23 = 0.010522253;
+						}
+					}
+				} else {
+					if (hops < 3) {
+						if (hops < 2) {
+							w23 = 0.0035504547;
+						} else {
+							w23 = 0.17571199;
+						}
+					} else {
+						if (hops < 4) {
+							w23 = -0.031340275;
+						} else {
+							w23 = 0.05476291;
+						}
+					}
+				}
+			} else {
+				if (rel_time < 9132) {
+					if (hops < 2) {
+						if (rel_time < 8961) {
+							w23 = 0.074726515;
+						} else {
+							w23 = -0.03695486;
+						}
+					} else {
+						if (rel_time < 8799) {
+							w23 = -0.09613605;
+						} else {
+							w23 = -0.023612512;
+						}
+					}
+				} else {
+					if (rel_time < 9714) {
+						if (hops < 2) {
+							w23 = -0.007396356;
+						} else {
+							w23 = 0.0349088;
+						}
+					} else {
+						if (rel_time < 10791) {
+							w23 = -0.010908203;
+						} else {
+							w23 = 0.0025252278;
 						}
 					}
 				}
@@ -4522,193 +4574,113 @@ float bolt(const uint16_t rel_time, const uint8_t hops, const uint8_t size, cons
 		}
 	}
 	float w24;
-	if (rel_time < 9206) {
-		if (rel_time < 8671) {
-			if (rel_time < 8635) {
-				if (rel_time < 8525) {
-					if (rel_time < 8085) {
-						if (rel_time < 8000) {
-							w24 = 0.00026537143;
-						} else {
-							w24 = 0.019779736;
-						}
-					} else {
-						if (hops < 2) {
-							w24 = -0.0799465;
-						} else {
-							w24 = -0.022405226;
-						}
-					}
-				} else {
-					if (hops < 2) {
-						if (prod != 4) {
-							w24 = 0.0561321;
-						} else {
-							w24 = 0.38346002;
-						}
-					} else {
-						if (rel_time < 8592) {
-							w24 = -0.119293235;
-						} else {
-							w24 = -0.0003622415;
-						}
-					}
-				}
+	if (rel_time < 497) {
+		if (hops < 4) {
+			if (hops < 2) {
+				w24 = -0.014897957;
 			} else {
-				if (rel_time < 8667) {
-					if (hops < 4) {
-						w24 = -0.053662475;
-					} else {
-						if (size < 37) {
-							w24 = 0.075242266;
-						} else {
-							w24 = -0.032454375;
-						}
-					}
-				} else {
-					if (hops < 4) {
-						w24 = -0.018171;
-					} else {
-						w24 = 0.020008212;
-					}
-				}
+				w24 = -0.035509646;
 			}
 		} else {
-			if (prod != 1) {
-				if (prod != 2) {
-					if (hops < 4) {
-						if (prod != 4) {
-							w24 = 0.023485452;
-						} else {
-							w24 = -0.008846581;
-						}
-					} else {
-						if (rel_time < 9136) {
-							w24 = -0.13403359;
-						} else {
-							w24 = 0.08878532;
-						}
-					}
-				} else {
-					if (hops < 2) {
-						w24 = 0.1771793;
-					} else {
-						w24 = 0.06675293;
-					}
-				}
-			} else {
-				if (hops < 4) {
-					if (rel_time < 8976) {
-						w24 = 0.033150747;
-					} else {
-						if (hops < 3) {
-							w24 = 0.044381246;
-						} else {
-							w24 = 0.07991432;
-						}
-					}
-				} else {
-					if (rel_time < 8976) {
-						w24 = 0.070128806;
-					} else {
-						w24 = 0.12669818;
-					}
-				}
-			}
+			w24 = 0.018159492;
 		}
 	} else {
-		if (rel_time < 9583) {
-			if (hops < 2) {
-				if (prod != 3) {
-					if (rel_time < 9246) {
-						w24 = 0.022289142;
-					} else {
-						if (rel_time < 9278) {
-							w24 = -0.044153955;
+		if (rel_time < 6014) {
+			if (rel_time < 6012) {
+				if (hops < 2) {
+					if (rel_time < 5466) {
+						if (rel_time < 973) {
+							w24 = 0.05805641;
 						} else {
-							w24 = 0.017700242;
+							w24 = -0.0035101157;
+						}
+					} else {
+						if (prod != 0) {
+							w24 = -0.02727128;
+						} else {
+							w24 = -0.20198767;
 						}
 					}
 				} else {
-					w24 = -0.14561242;
+					if (rel_time < 5364) {
+						if (rel_time < 4790) {
+							w24 = 0.0031163576;
+						} else {
+							w24 = -0.025534555;
+						}
+					} else {
+						if (prod != 0) {
+							w24 = 0.016648717;
+						} else {
+							w24 = 0.11286475;
+						}
+					}
 				}
 			} else {
-				if (rel_time < 9307) {
-					if (hops < 3) {
-						if (rel_time < 9241) {
-							w24 = -0.06435255;
-						} else {
-							w24 = -0.019443301;
-						}
-					} else {
-						if (rel_time < 9222) {
-							w24 = 0.07497282;
-						} else {
-							w24 = -0.01811847;
-						}
-					}
+				if (hops < 2) {
+					w24 = 0.026970923;
 				} else {
 					if (hops < 3) {
-						w24 = -0.03728219;
+						w24 = 0.09898009;
 					} else {
-						if (hops < 4) {
-							w24 = -0.1238299;
-						} else {
-							w24 = 0.0038218275;
-						}
+						w24 = 0.044422276;
 					}
 				}
 			}
 		} else {
-			if (rel_time < 10354) {
-				if (prod != 0) {
-					if (size < 133) {
-						if (hops < 2) {
-							w24 = 0.015896475;
+			if (rel_time < 7576) {
+				if (prod != 3) {
+					if (hops < 2) {
+						if (rel_time < 7298) {
+							w24 = -0.007485552;
 						} else {
-							w24 = -0.005015263;
+							w24 = 0.11657431;
 						}
 					} else {
-						if (rel_time < 9830) {
-							w24 = -0.024651378;
+						if (rel_time < 7298) {
+							w24 = -0.014683674;
 						} else {
-							w24 = 0.039631743;
+							w24 = -0.08933529;
 						}
 					}
 				} else {
-					if (hops < 4) {
-						if (hops < 3) {
-							w24 = 0.034260582;
+					if (hops < 2) {
+						if (rel_time < 7199) {
+							w24 = -0.009735017;
 						} else {
-							w24 = 0.08348172;
+							w24 = -0.07240262;
 						}
 					} else {
-						w24 = -0.078918934;
+						if (rel_time < 6588) {
+							w24 = 0.0643622;
+						} else {
+							w24 = 0.021327099;
+						}
 					}
 				}
 			} else {
-				if (rel_time < 10358) {
-					if (hops < 2) {
-						w24 = -0.2760365;
-					} else {
-						if (hops < 3) {
-							w24 = 0.1071663;
+				if (rel_time < 7579) {
+					if (hops < 4) {
+						if (hops < 2) {
+							w24 = 0.10576508;
 						} else {
-							w24 = -0.05080599;
+							w24 = 0.036783587;
 						}
+					} else {
+						w24 = 0.13892514;
 					}
 				} else {
-					if (rel_time < 11074) {
-						if (prod != 0) {
-							w24 = -0.0032609927;
+					if (rel_time < 7737) {
+						if (hops < 3) {
+							w24 = -0.089505665;
 						} else {
-							w24 = -0.029065015;
+							w24 = -0.04830941;
 						}
 					} else {
-						if (size < 69) {
-							w24 = 0.011398257;
+						if (rel_time < 7740) {
+							w24 = 0.04723205;
 						} else {
-							w24 = -0.002632771;
+							w24 = 0.00014784314;
 						}
 					}
 				}
@@ -4716,217 +4688,153 @@ float bolt(const uint16_t rel_time, const uint8_t hops, const uint8_t size, cons
 		}
 	}
 	float w25;
-	if (rel_time < 6762) {
-		if (rel_time < 6253) {
-			if (rel_time < 5615) {
-				if (rel_time < 5578) {
-					if (rel_time < 5031) {
-						if (rel_time < 4392) {
-							w25 = 0.0009915587;
-						} else {
-							w25 = -0.009501481;
-						}
-					} else {
-						if (hops < 2) {
-							w25 = -0.02036889;
-						} else {
-							w25 = 0.016942084;
-						}
-					}
+	if (rel_time < 972) {
+		if (hops < 2) {
+			if (rel_time < 768) {
+				if (rel_time < 497) {
+					w25 = -0.008946053;
 				} else {
-					if (rel_time < 5613) {
-						if (hops < 2) {
-							w25 = 0.02660535;
-						} else {
-							w25 = 0.05294105;
-						}
-					} else {
-						if (hops < 2) {
-							w25 = -0.0132227;
-						} else {
-							w25 = 0.016643755;
-						}
-					}
+					w25 = -0.025171516;
 				}
 			} else {
-				if (rel_time < 6081) {
-					if (hops < 4) {
-						if (size < 69) {
-							w25 = -0.042488985;
-						} else {
-							w25 = -0.0041305977;
-						}
-					} else {
-						if (prod != 0) {
-							w25 = -0.03807285;
-						} else {
-							w25 = 0.146388;
-						}
-					}
-				} else {
-					if (prod != 0) {
-						if (rel_time < 6226) {
-							w25 = 0.0034632413;
-						} else {
-							w25 = -0.023354277;
-						}
-					} else {
-						if (hops < 4) {
-							w25 = 0.064241365;
-						} else {
-							w25 = -0.24582699;
-						}
-					}
-				}
+				w25 = 0.06714398;
 			}
 		} else {
-			if (size < 69) {
-				if (rel_time < 6531) {
-					if (hops < 3) {
-						if (prod != 0) {
-							w25 = 0.005668629;
+			if (hops < 3) {
+				if (rel_time < 768) {
+					if (size < 37) {
+						if (rel_time < 432) {
+							w25 = 0.00071461505;
 						} else {
-							w25 = 0.032809746;
+							w25 = -0.03498875;
 						}
 					} else {
-						if (hops < 4) {
-							w25 = 0.0818721;
-						} else {
-							w25 = -0.0064628306;
-						}
+						w25 = -0.0068650753;
 					}
 				} else {
-					if (hops < 2) {
-						w25 = 0.034652807;
+					if (rel_time < 854) {
+						w25 = -0.058348846;
 					} else {
-						if (hops < 3) {
-							w25 = 0.080253445;
-						} else {
-							w25 = 0.04763202;
-						}
+						w25 = -0.09827847;
 					}
 				}
 			} else {
-				if (hops < 4) {
-					if (hops < 3) {
-						if (rel_time < 6692) {
-							w25 = 0.051069252;
+				if (prod != 1) {
+					if (hops < 4) {
+						if (rel_time < 432) {
+							w25 = -0.035282478;
 						} else {
-							w25 = -0.0002648972;
+							w25 = -0.0050864303;
 						}
 					} else {
-						if (rel_time < 6760) {
-							w25 = -0.08373875;
-						} else {
-							w25 = 0.06257491;
-						}
+						w25 = 0.011365416;
 					}
 				} else {
-					if (rel_time < 6692) {
-						w25 = -0.059208103;
+					if (hops < 4) {
+						w25 = -0.010167242;
 					} else {
-						w25 = 0.14810757;
+						w25 = -0.08323013;
 					}
 				}
 			}
 		}
 	} else {
-		if (rel_time < 7303) {
-			if (hops < 4) {
-				if (prod != 0) {
-					if (rel_time < 6864) {
-						if (rel_time < 6800) {
-							w25 = -0.017963653;
-						} else {
-							w25 = 0.011160708;
-						}
+		if (rel_time < 1101) {
+			if (hops < 2) {
+				if (rel_time < 1087) {
+					if (rel_time < 1015) {
+						w25 = 0.024199236;
 					} else {
-						if (hops < 3) {
-							w25 = -0.043412983;
+						w25 = -0.04533122;
+					}
+				} else {
+					w25 = -0.16104834;
+				}
+			} else {
+				if (rel_time < 1015) {
+					if (hops < 3) {
+						w25 = -0.15572111;
+					} else {
+						if (hops < 4) {
+							w25 = 0.12036967;
 						} else {
-							w25 = -0.0063570673;
+							w25 = 0.07560877;
 						}
 					}
 				} else {
 					if (hops < 3) {
-						if (rel_time < 6864) {
-							w25 = -0.077236734;
+						if (rel_time < 1087) {
+							w25 = 0.09474238;
 						} else {
-							w25 = -0.029668469;
+							w25 = 0.18834923;
 						}
 					} else {
-						w25 = -0.09604401;
-					}
-				}
-			} else {
-				if (prod != 0) {
-					if (rel_time < 6837) {
-						if (rel_time < 6834) {
-							w25 = 0.01153078;
+						if (rel_time < 1087) {
+							w25 = 0.073174134;
 						} else {
-							w25 = 0.06534218;
-						}
-					} else {
-						if (rel_time < 7145) {
-							w25 = -0.008086009;
-						} else {
-							w25 = -0.048056617;
+							w25 = -0.014265033;
 						}
 					}
-				} else {
-					w25 = 0.10855055;
 				}
 			}
 		} else {
-			if (rel_time < 7386) {
+			if (rel_time < 1285) {
 				if (hops < 2) {
-					if (size < 133) {
-						if (rel_time < 7372) {
-							w25 = 0.06704939;
+					if (rel_time < 1199) {
+						if (rel_time < 1163) {
+							w25 = 0.021804513;
 						} else {
-							w25 = 0.16257876;
+							w25 = -0.045507897;
 						}
 					} else {
-						w25 = -0.22768703;
+						if (rel_time < 1200) {
+							w25 = 0.16739346;
+						} else {
+							w25 = 0.108206525;
+						}
 					}
 				} else {
-					if (rel_time < 7371) {
-						w25 = 0.034302436;
-					} else {
-						if (rel_time < 7372) {
-							w25 = -0.0809515;
+					if (rel_time < 1199) {
+						if (rel_time < 1163) {
+							w25 = -0.015415725;
 						} else {
-							w25 = 0.010916825;
+							w25 = 0.007780276;
+						}
+					} else {
+						if (hops < 3) {
+							w25 = -0.15162398;
+						} else {
+							w25 = -0.06244138;
 						}
 					}
 				}
 			} else {
-				if (rel_time < 7753) {
-					if (hops < 4) {
-						if (prod != 0) {
-							w25 = -0.0031334164;
+				if (rel_time < 1627) {
+					if (hops < 3) {
+						if (hops < 2) {
+							w25 = -0.079143;
 						} else {
-							w25 = 0.06526527;
+							w25 = 0.32251745;
 						}
 					} else {
-						if (prod != 0) {
-							w25 = 0.026132487;
+						if (hops < 4) {
+							w25 = -0.28206795;
 						} else {
-							w25 = -0.27476665;
+							w25 = 0.118991636;
 						}
 					}
 				} else {
-					if (rel_time < 7911) {
-						if (hops < 3) {
-							w25 = -0.05558934;
+					if (rel_time < 1712) {
+						if (size < 69) {
+							w25 = 0.092632376;
 						} else {
-							w25 = 0.0019726942;
+							w25 = -0.074813075;
 						}
 					} else {
-						if (hops < 2) {
-							w25 = -0.0042994116;
+						if (size < 37) {
+							w25 = -0.006207714;
 						} else {
-							w25 = 0.0010329597;
+							w25 = 0.0016141953;
 						}
 					}
 				}
@@ -4934,101 +4842,173 @@ float bolt(const uint16_t rel_time, const uint8_t hops, const uint8_t size, cons
 		}
 	}
 	float w26;
-	if (rel_time < 336) {
-		w26 = -0.0083011845;
-	} else {
-		if (rel_time < 669) {
-			if (hops < 3) {
-				if (prod != 0) {
-					if (prod != 3) {
-						if (rel_time < 655) {
-							w26 = 0.0007776403;
+	if (rel_time < 5403) {
+		if (rel_time < 5401) {
+			if (size < 37) {
+				if (rel_time < 3569) {
+					if (rel_time < 2347) {
+						if (rel_time < 1402) {
+							w26 = 0.0023543497;
 						} else {
-							w26 = -0.019613856;
+							w26 = -0.031606283;
 						}
 					} else {
-						w26 = 0.034790285;
+						if (hops < 3) {
+							w26 = 0.031509817;
+						} else {
+							w26 = 0.0013196553;
+						}
 					}
 				} else {
-					if (hops < 2) {
-						w26 = 0.005135792;
+					if (rel_time < 4215) {
+						if (hops < 3) {
+							w26 = -0.06917208;
+						} else {
+							w26 = -0.008350959;
+						}
 					} else {
-						w26 = 0.06776663;
+						if (hops < 3) {
+							w26 = -0.0018445613;
+						} else {
+							w26 = -0.04522434;
+						}
 					}
 				}
 			} else {
-				if (rel_time < 422) {
-					if (hops < 4) {
-						w26 = 0.038303785;
-					} else {
-						w26 = -0.036144193;
-					}
-				} else {
-					if (prod != 4) {
-						if (hops < 4) {
-							w26 = -0.027753698;
+				if (rel_time < 2920) {
+					if (rel_time < 2690) {
+						if (prod != 4) {
+							w26 = 0.0036391981;
 						} else {
-							w26 = -0.00044048906;
+							w26 = -0.019531518;
 						}
 					} else {
-						w26 = 0.015486686;
+						if (hops < 2) {
+							w26 = 0.030674001;
+						} else {
+							w26 = -0.05762722;
+						}
+					}
+				} else {
+					if (rel_time < 2935) {
+						if (hops < 2) {
+							w26 = -0.038605962;
+						} else {
+							w26 = 0.09514921;
+						}
+					} else {
+						if (rel_time < 3301) {
+							w26 = 0.021200888;
+						} else {
+							w26 = 0.0031908904;
+						}
 					}
 				}
 			}
 		} else {
-			if (rel_time < 1279) {
-				if (rel_time < 1264) {
-					if (hops < 3) {
-						if (rel_time < 969) {
-							w26 = 0.022886233;
+			if (hops < 3) {
+				if (hops < 2) {
+					w26 = 0.14788161;
+				} else {
+					w26 = 0.24002734;
+				}
+			} else {
+				if (hops < 4) {
+					w26 = 0.02464888;
+				} else {
+					w26 = 0.04930293;
+				}
+			}
+		}
+	} else {
+		if (rel_time < 5906) {
+			if (cons != 5) {
+				if (hops < 2) {
+					if (size < 69) {
+						if (rel_time < 5437) {
+							w26 = -0.06897055;
 						} else {
-							w26 = -0.058694705;
+							w26 = -0.024443753;
 						}
 					} else {
-						if (rel_time < 969) {
-							w26 = -0.031504788;
-						} else {
-							w26 = 0.0991207;
-						}
+						w26 = 0.1497464;
 					}
 				} else {
 					if (hops < 3) {
-						if (hops < 2) {
-							w26 = -0.034682024;
+						if (rel_time < 5747) {
+							w26 = -0.08845416;
 						} else {
-							w26 = -0.008052718;
+							w26 = -0.111140825;
 						}
 					} else {
-						w26 = -0.116761066;
+						if (rel_time < 5745) {
+							w26 = -0.010330949;
+						} else {
+							w26 = -0.048548505;
+						}
 					}
 				}
 			} else {
-				if (rel_time < 1654) {
-					if (prod != 1) {
-						if (size < 69) {
-							w26 = -0.0021265096;
+				if (hops < 2) {
+					if (size < 69) {
+						w26 = -0.121716514;
+					} else {
+						w26 = 0.005003509;
+					}
+				} else {
+					if (size < 69) {
+						if (hops < 4) {
+							w26 = 0.07361392;
 						} else {
-							w26 = 0.023413649;
+							w26 = 0.024845779;
 						}
 					} else {
-						if (hops < 3) {
-							w26 = 1.1121306;
+						if (rel_time < 5439) {
+							w26 = -0.0036642717;
 						} else {
-							w26 = -0.2039022;
+							w26 = -0.052462637;
+						}
+					}
+				}
+			}
+		} else {
+			if (rel_time < 5974) {
+				if (hops < 2) {
+					w26 = -0.07035056;
+				} else {
+					if (hops < 3) {
+						w26 = 0.21733582;
+					} else {
+						if (hops < 4) {
+							w26 = 0.04805597;
+						} else {
+							w26 = -0.05004234;
+						}
+					}
+				}
+			} else {
+				if (rel_time < 5975) {
+					if (hops < 2) {
+						w26 = -0.059468586;
+					} else {
+						if (hops < 4) {
+							w26 = -0.10835781;
+						} else {
+							w26 = -0.06251116;
 						}
 					}
 				} else {
-					if (rel_time < 1875) {
-						if (hops < 3) {
-							w26 = 0.007361529;
+					if (rel_time < 5989) {
+						if (hops < 2) {
+							w26 = -0.008533711;
 						} else {
-							w26 = -0.06699551;
+							w26 = 0.07780106;
 						}
 					} else {
-						if (rel_time < 1892) {
-							w26 = 0.020526897;
+						if (rel_time < 7129) {
+							w26 = -0.0071809143;
 						} else {
-							w26 = -0.00012704164;
+							w26 = 0.00022777243;
 						}
 					}
 				}
@@ -5036,154 +5016,624 @@ float bolt(const uint16_t rel_time, const uint8_t hops, const uint8_t size, cons
 		}
 	}
 	float w27;
-	if (prod != 2) {
-		if (rel_time < 12263) {
-			if (rel_time < 3477) {
-				if (rel_time < 2589) {
-					if (hops < 3) {
-						if (rel_time < 1978) {
-							w27 = 0.0011027454;
-						} else {
-							w27 = 0.022275312;
-						}
-					} else {
-						if (rel_time < 1264) {
-							w27 = 0.005722862;
-						} else {
-							w27 = -0.017061438;
-						}
-					}
-				} else {
-					if (size < 69) {
-						if (rel_time < 2867) {
-							w27 = -0.0447646;
-						} else {
-							w27 = -0.017625464;
-						}
-					} else {
-						if (rel_time < 3113) {
-							w27 = 0.0073064268;
-						} else {
-							w27 = -0.01618736;
-						}
-					}
-				}
+	if (rel_time < 972) {
+		if (hops < 2) {
+			if (rel_time < 768) {
+				w27 = -0.011429141;
 			} else {
-				if (rel_time < 3638) {
-					if (hops < 2) {
-						if (rel_time < 3479) {
-							w27 = 0.07823316;
-						} else {
-							w27 = 0.1406217;
-						}
-					} else {
-						if (hops < 3) {
-							w27 = -0.03689267;
-						} else {
-							w27 = 0.05126393;
-						}
-					}
-				} else {
-					if (rel_time < 4088) {
-						if (hops < 3) {
-							w27 = -0.012137867;
-						} else {
-							w27 = 0.041085728;
-						}
-					} else {
-						if (rel_time < 4319) {
-							w27 = -0.015267174;
-						} else {
-							w27 = 0.0008726768;
-						}
-					}
-				}
+				w27 = 0.03909209;
 			}
 		} else {
-			if (hops < 2) {
-				w27 = 0.017110543;
+			if (hops < 3) {
+				if (rel_time < 768) {
+					w27 = -0.010669812;
+				} else {
+					if (rel_time < 854) {
+						w27 = -0.036490146;
+					} else {
+						w27 = -0.059951898;
+					}
+				}
 			} else {
-				w27 = 0.094432734;
+				if (prod != 1) {
+					if (rel_time < 768) {
+						if (hops < 4) {
+							w27 = -0.011571727;
+						} else {
+							w27 = 0.0072657573;
+						}
+					} else {
+						w27 = 0.004904349;
+					}
+				} else {
+					if (hops < 4) {
+						w27 = -0.0075571984;
+					} else {
+						w27 = -0.05147645;
+					}
+				}
 			}
 		}
 	} else {
-		if (hops < 4) {
-			if (hops < 2) {
-				if (rel_time < 6837) {
-					if (rel_time < 1407) {
-						if (rel_time < 767) {
-							w27 = 0.0056406967;
-						} else {
-							w27 = 0.025632411;
-						}
+		if (rel_time < 1087) {
+			if (hops < 3) {
+				if (rel_time < 1015) {
+					if (hops < 2) {
+						w27 = 0.013076012;
 					} else {
-						if (rel_time < 2562) {
-							w27 = -0.030064203;
-						} else {
-							w27 = -0.0020669987;
-						}
+						w27 = -0.09495106;
 					}
 				} else {
-					if (rel_time < 6864) {
-						w27 = 0.041750636;
+					if (hops < 2) {
+						w27 = -0.019401329;
 					} else {
-						if (rel_time < 8056) {
-							w27 = -0.0027464177;
-						} else {
-							w27 = 0.014125849;
-						}
+						w27 = 0.06468665;
 					}
 				}
 			} else {
-				if (rel_time < 5615) {
-					if (rel_time < 2561) {
-						if (hops < 3) {
-							w27 = -0.024385061;
-						} else {
-							w27 = 0.00044510578;
-						}
+				if (hops < 4) {
+					if (rel_time < 1015) {
+						w27 = 0.07080343;
 					} else {
-						if (rel_time < 3199) {
-							w27 = 0.023550384;
-						} else {
-							w27 = -0.0034118746;
-						}
+						w27 = 0.057864618;
 					}
 				} else {
-					if (rel_time < 5642) {
-						if (hops < 3) {
-							w27 = -0.050318778;
-						} else {
-							w27 = -0.015518088;
-						}
-					} else {
-						if (rel_time < 6226) {
-							w27 = 0.00671473;
-						} else {
-							w27 = -0.013711488;
-						}
-					}
+					w27 = 0.038883;
 				}
 			}
 		} else {
-			if (rel_time < 767) {
-				w27 = -0.06978623;
-			} else {
-				if (rel_time < 1407) {
-					w27 = 0.16273184;
-				} else {
-					if (rel_time < 12332) {
-						if (rel_time < 1949) {
-							w27 = -0.25453186;
+			if (rel_time < 12771) {
+				if (rel_time < 11247) {
+					if (rel_time < 11242) {
+						if (rel_time < 10906) {
+							w27 = 0.00040942323;
 						} else {
-							w27 = 0.015615174;
+							w27 = -0.0150425825;
 						}
 					} else {
-						w27 = -0.07560714;
+						if (hops < 2) {
+							w27 = 0.08735023;
+						} else {
+							w27 = 0.06808069;
+						}
+					}
+				} else {
+					if (prod != 0) {
+						if (hops < 4) {
+							w27 = -0.010515367;
+						} else {
+							w27 = 0.009249697;
+						}
+					} else {
+						if (hops < 2) {
+							w27 = -0.053177513;
+						} else {
+							w27 = 0.04771946;
+						}
+					}
+				}
+			} else {
+				if (hops < 2) {
+					w27 = -0.01784586;
+				} else {
+					if (hops < 3) {
+						if (rel_time < 12777) {
+							w27 = 0.07675417;
+						} else {
+							w27 = -0.023224873;
+						}
+					} else {
+						if (rel_time < 12777) {
+							w27 = 0.005445195;
+						} else {
+							w27 = 0.034385853;
+						}
 					}
 				}
 			}
 		}
 	}
-	return (687.4313 + w0 + w1 + w2 + w3 + w4 + w5 + w6 + w7 + w8 + w9 + w10 + w11 + w12 + w13 + w14 + w15 + w16 + w17 + w18 + w19 + w20 + w21 + w22 + w23 + w24 + w25 + w26 + w27);
+	float w28;
+	if (rel_time < 6965) {
+		if (rel_time < 6689) {
+			if (rel_time < 4524) {
+				if (rel_time < 4159) {
+					if (prod != 4) {
+						if (rel_time < 3911) {
+							w28 = 0.00092500757;
+						} else {
+							w28 = 0.04291985;
+						}
+					} else {
+						if (rel_time < 1627) {
+							w28 = 0.025704507;
+						} else {
+							w28 = -0.029932067;
+						}
+					}
+				} else {
+					if (hops < 2) {
+						if (prod != 0) {
+							w28 = -0.010029296;
+						} else {
+							w28 = -0.18059105;
+						}
+					} else {
+						if (prod != 0) {
+							w28 = -0.042288873;
+						} else {
+							w28 = 0.06853234;
+						}
+					}
+				}
+			} else {
+				if (rel_time < 4753) {
+					if (prod != 4) {
+						if (rel_time < 4683) {
+							w28 = -0.040228035;
+						} else {
+							w28 = -0.14737144;
+						}
+					} else {
+						if (hops < 2) {
+							w28 = 0.08641611;
+						} else {
+							w28 = 0.12154193;
+						}
+					}
+				} else {
+					if (rel_time < 5403) {
+						if (rel_time < 5401) {
+							w28 = 0.0027651947;
+						} else {
+							w28 = 0.07785703;
+						}
+					} else {
+						if (hops < 3) {
+							w28 = -0.007653221;
+						} else {
+							w28 = 0.010878682;
+						}
+					}
+				}
+			}
+		} else {
+			if (hops < 2) {
+				w28 = -0.12260791;
+			} else {
+				if (hops < 3) {
+					w28 = 0.121280126;
+				} else {
+					if (hops < 4) {
+						w28 = 0.08212204;
+					} else {
+						w28 = 0.12648214;
+					}
+				}
+			}
+		}
+	} else {
+		if (rel_time < 7129) {
+			if (rel_time < 6967) {
+				if (hops < 4) {
+					if (hops < 2) {
+						w28 = -0.09361069;
+					} else {
+						w28 = -0.020443343;
+					}
+				} else {
+					w28 = 0.09385579;
+				}
+			} else {
+				if (hops < 2) {
+					if (rel_time < 7126) {
+						w28 = -0.09790613;
+					} else {
+						w28 = 0.055199157;
+					}
+				} else {
+					if (hops < 3) {
+						if (rel_time < 7126) {
+							w28 = -0.117948525;
+						} else {
+							w28 = -0.096012264;
+						}
+					} else {
+						if (hops < 4) {
+							w28 = -0.07087254;
+						} else {
+							w28 = -0.049280126;
+						}
+					}
+				}
+			}
+		} else {
+			if (rel_time < 7196) {
+				if (hops < 2) {
+					w28 = -0.08506071;
+				} else {
+					if (hops < 4) {
+						if (hops < 3) {
+							w28 = 0.264376;
+						} else {
+							w28 = 0.16970572;
+						}
+					} else {
+						w28 = -0.036775663;
+					}
+				}
+			} else {
+				if (prod != 2) {
+					if (rel_time < 12700) {
+						if (rel_time < 12695) {
+							w28 = 0.0011971606;
+						} else {
+							w28 = 0.039406575;
+						}
+					} else {
+						if (hops < 2) {
+							w28 = 0.0044684187;
+						} else {
+							w28 = -0.06717668;
+						}
+					}
+				} else {
+					if (hops < 2) {
+						if (rel_time < 12186) {
+							w28 = 0.027336583;
+						} else {
+							w28 = -0.027323077;
+						}
+					} else {
+						if (hops < 3) {
+							w28 = -0.045273464;
+						} else {
+							w28 = 0.0013218158;
+						}
+					}
+				}
+			}
+		}
+	}
+	float w29;
+	if (rel_time < 12771) {
+		if (rel_time < 1285) {
+			if (rel_time < 1199) {
+				if (hops < 2) {
+					if (prod != 3) {
+						if (size < 69) {
+							w29 = 0.012844443;
+						} else {
+							w29 = -0.013053936;
+						}
+					} else {
+						w29 = -0.09867616;
+					}
+				} else {
+					if (prod != 3) {
+						if (hops < 3) {
+							w29 = -0.016423035;
+						} else {
+							w29 = 0.0063951323;
+						}
+					} else {
+						if (hops < 3) {
+							w29 = 0.11106253;
+						} else {
+							w29 = -0.010556513;
+						}
+					}
+				}
+			} else {
+				if (hops < 2) {
+					if (rel_time < 1200) {
+						w29 = 0.09876183;
+					} else {
+						w29 = 0.06296616;
+					}
+				} else {
+					if (hops < 3) {
+						if (rel_time < 1200) {
+							w29 = -0.14222883;
+						} else {
+							w29 = -0.07552153;
+						}
+					} else {
+						if (rel_time < 1200) {
+							w29 = 0.0011024693;
+						} else {
+							w29 = -0.051366307;
+						}
+					}
+				}
+			}
+		} else {
+			if (rel_time < 1629) {
+				if (prod != 1) {
+					if (hops < 3) {
+						if (hops < 2) {
+							w29 = -0.024555342;
+						} else {
+							w29 = 0.10503087;
+						}
+					} else {
+						if (hops < 4) {
+							w29 = -0.14414553;
+						} else {
+							w29 = 0.0941953;
+						}
+					}
+				} else {
+					if (hops < 2) {
+						w29 = -0.86078864;
+					} else {
+						if (hops < 4) {
+							w29 = 0.9115267;
+						} else {
+							w29 = -1.6815051;
+						}
+					}
+				}
+			} else {
+				if (rel_time < 1712) {
+					if (hops < 3) {
+						if (hops < 2) {
+							w29 = -0.016344486;
+						} else {
+							w29 = -0.15994547;
+						}
+					} else {
+						if (size < 69) {
+							w29 = 0.17989433;
+						} else {
+							w29 = -0.025914151;
+						}
+					}
+				} else {
+					if (rel_time < 1840) {
+						if (prod != 0) {
+							w29 = 0.014926522;
+						} else {
+							w29 = -0.8801479;
+						}
+					} else {
+						if (rel_time < 2324) {
+							w29 = -0.008749026;
+						} else {
+							w29 = 0.00020555899;
+						}
+					}
+				}
+			}
+		}
+	} else {
+		if (hops < 2) {
+			w29 = 0.00019804882;
+		} else {
+			if (hops < 3) {
+				if (rel_time < 12777) {
+					w29 = 0.06417121;
+				} else {
+					w29 = 0.003997673;
+				}
+			} else {
+				w29 = 0.004549123;
+			}
+		}
+	}
+	float w30;
+	if (rel_time < 8495) {
+		if (rel_time < 8419) {
+			if (rel_time < 8352) {
+				if (prod != 6) {
+					if (rel_time < 8191) {
+						if (rel_time < 6965) {
+							w30 = 0.0029244549;
+						} else {
+							w30 = -0.0051163556;
+						}
+					} else {
+						if (hops < 4) {
+							w30 = 0.019987099;
+						} else {
+							w30 = 0.08657419;
+						}
+					}
+				} else {
+					if (rel_time < 1743) {
+						if (rel_time < 1163) {
+							w30 = -0.004411713;
+						} else {
+							w30 = 0.01625832;
+						}
+					} else {
+						if (rel_time < 1744) {
+							w30 = -0.03975631;
+						} else {
+							w30 = -0.005936296;
+						}
+					}
+				}
+			} else {
+				if (prod != 3) {
+					if (hops < 4) {
+						if (hops < 2) {
+							w30 = -0.010113678;
+						} else {
+							w30 = 0.08606556;
+						}
+					} else {
+						w30 = -0.17546271;
+					}
+				} else {
+					if (hops < 4) {
+						if (hops < 3) {
+							w30 = -0.115022756;
+						} else {
+							w30 = -0.1380201;
+						}
+					} else {
+						w30 = -0.060259957;
+					}
+				}
+			}
+		} else {
+			if (hops < 3) {
+				if (size < 37) {
+					if (hops < 2) {
+						w30 = -0.05806466;
+					} else {
+						if (rel_time < 8457) {
+							w30 = 0.21305387;
+						} else {
+							w30 = 0.24494982;
+						}
+					}
+				} else {
+					if (rel_time < 8455) {
+						if (rel_time < 8435) {
+							w30 = 0.01884834;
+						} else {
+							w30 = 0.052772757;
+						}
+					} else {
+						if (hops < 2) {
+							w30 = 0.0954281;
+						} else {
+							w30 = -0.07893137;
+						}
+					}
+				}
+			} else {
+				if (prod != 6) {
+					if (hops < 4) {
+						if (rel_time < 8435) {
+							w30 = 0.053706545;
+						} else {
+							w30 = 0.022627635;
+						}
+					} else {
+						if (rel_time < 8423) {
+							w30 = -0.040748723;
+						} else {
+							w30 = 0.00548128;
+						}
+					}
+				} else {
+					if (hops < 4) {
+						if (rel_time < 8455) {
+							w30 = 0.0010296202;
+						} else {
+							w30 = -0.04301023;
+						}
+					} else {
+						if (rel_time < 8455) {
+							w30 = -0.040338527;
+						} else {
+							w30 = 0.05208105;
+						}
+					}
+				}
+			}
+		}
+	} else {
+		if (rel_time < 9030) {
+			if (rel_time < 8961) {
+				if (hops < 2) {
+					if (prod != 0) {
+						if (prod != 4) {
+							w30 = -0.043725498;
+						} else {
+							w30 = 0.17138308;
+						}
+					} else {
+						if (rel_time < 8524) {
+							w30 = 0.15759087;
+						} else {
+							w30 = 0.08441051;
+						}
+					}
+				} else {
+					if (prod != 0) {
+						if (hops < 3) {
+							w30 = -0.024417948;
+						} else {
+							w30 = 0.014593161;
+						}
+					} else {
+						if (hops < 3) {
+							w30 = -0.051112916;
+						} else {
+							w30 = -0.089712895;
+						}
+					}
+				}
+			} else {
+				if (hops < 4) {
+					if (prod != 3) {
+						if (rel_time < 8965) {
+							w30 = -0.09833258;
+						} else {
+							w30 = 0.102846585;
+						}
+					} else {
+						if (hops < 2) {
+							w30 = -0.14929087;
+						} else {
+							w30 = -0.12644213;
+						}
+					}
+				} else {
+					if (prod != 3) {
+						if (rel_time < 8965) {
+							w30 = -0.002569912;
+						} else {
+							w30 = -0.45166126;
+						}
+					} else {
+						w30 = 0.11161895;
+					}
+				}
+			}
+		} else {
+			if (rel_time < 9044) {
+				if (hops < 2) {
+					w30 = 0.039567813;
+				} else {
+					w30 = 0.06903588;
+				}
+			} else {
+				if (rel_time < 9416) {
+					if (size < 37) {
+						if (hops < 2) {
+							w30 = 0.019267915;
+						} else {
+							w30 = -0.07570767;
+						}
+					} else {
+						if (hops < 2) {
+							w30 = -0.052998986;
+						} else {
+							w30 = 0.009944108;
+						}
+					}
+				} else {
+					if (rel_time < 10180) {
+						if (hops < 2) {
+							w30 = 0.042988937;
+						} else {
+							w30 = 0.007409837;
+						}
+					} else {
+						if (rel_time < 10250) {
+							w30 = -0.041125692;
+						} else {
+							w30 = -0.0006711315;
+						}
+					}
+				}
+			}
+		}
+	}
+	return (695.2852 + w0 + w1 + w2 + w3 + w4 + w5 + w6 + w7 + w8 + w9 + w10 + w11 + w12 + w13 + w14 + w15 + w16 + w17 + w18 + w19 + w20 + w21 + w22 + w23 + w24 + w25 + w26 + w27 + w28 + w29 + w30);
 }
