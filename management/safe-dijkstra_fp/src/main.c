@@ -29,6 +29,10 @@ int main()
 {
 	// printf("SAFE dijkstra model started at %d\n", memphis_get_tick());
 
+	int ret = memphis_mkfifo(sizeof(safe_infer_t), 128);
+	if (ret != 0)
+		return ret;
+
 	safe_fp_t dijkstra;
 	safe_fp_init(&dijkstra, SAFE_HASH_dijkstra, bolt, 50.0);
 

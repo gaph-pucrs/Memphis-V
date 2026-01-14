@@ -132,7 +132,8 @@ int sm_monitor(sm_t *sm, oda_list_t *servers, memphis_sec_monitor_t *message)
 	infer.size      = message->size;
 	infer.latency   = message->latency;
 	// printf("S\n");
-	memphis_send_any(&infer, sizeof(safe_infer_t), decider_id);
+	// memphis_send_any(&infer, sizeof(safe_infer_t), decider_id);
+	memphis_send_mpipe(&infer, sizeof(safe_infer_t), decider_id);
 	sm->monitored_cnt++;
 	return 0;
 }

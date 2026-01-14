@@ -31,6 +31,10 @@ int main()
 {
 	// printf("SAFE audio_video model started at %d\n", memphis_get_tick());
 
+	int ret = memphis_mkfifo(sizeof(safe_infer_t), 128);
+	if (ret != 0)
+		return ret;
+
 	safe_t audio_video;
 	safe_init(&audio_video, SAFE_HASH_audio_video, bolt, 50);
 

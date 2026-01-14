@@ -31,6 +31,10 @@ int main()
 {
 	// printf("SAFE mpeg model started at %d\n", memphis_get_tick());
 
+	int ret = memphis_mkfifo(sizeof(safe_infer_t), 128);
+	if (ret != 0)
+		return ret;
+
 	safe_t mpeg;
 	safe_init(&mpeg, SAFE_HASH_mpeg, bolt, 50);
 

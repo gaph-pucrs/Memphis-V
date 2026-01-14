@@ -31,8 +31,12 @@ int main()
 {
 	// printf("SAFE dtw model started at %d\n", memphis_get_tick());
 
+	int ret = memphis_mkfifo(sizeof(safe_infer_t), 128);
+	if (ret != 0)
+		return ret;
+
 	safe_t dtw;
-	safe_init(&dtw, SAFE_HASH_dtw, avg, 50);
+	safe_init(&dtw, SAFE_HASH_dtw, bolt, 50);
 
 		while (true) {
 		static safe_infer_t message;
