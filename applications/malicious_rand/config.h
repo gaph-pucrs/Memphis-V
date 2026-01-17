@@ -5,7 +5,7 @@
 #endif
 
 #ifndef MAL_TRIGGER_START
-	#define MAL_TRIGGER_START  1000000
+	#define MAL_TRIGGER_START   330000
 #endif
 
 #ifndef MAL_TRIGGER_END
