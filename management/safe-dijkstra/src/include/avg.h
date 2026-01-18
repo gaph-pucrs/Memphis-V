@@ -6,25 +6,25 @@
 int avg(const uint16_t rel_time, const uint8_t hops, const uint8_t size, const uint8_t prod, const uint8_t cons)
 {
     if      (prod == 5 && cons == 0)
-        return 560.0065476190476;
+        return 561.6387028769841;
     else if (prod == 5 && cons == 1)
-        return 585.8576016865079;
+        return 588.0352678571429;
     else if (prod == 5 && cons == 2)
-        return 586.3183159722222;
+        return 588.218005952381;
     else if (prod == 5 && cons == 3)
-        return 589.077591765873;
+        return 591.0101314484127;
     else if (prod == 5 && cons == 4)
-        return 587.0827132936508;
+        return 589.106324404762;
     else if (prod == 0 && cons == 6)
-        return 792.3447222222222;
+        return 795.3932242063493;
     else if (prod == 1 && cons == 6)
-        return 788.6331746031746;
+        return 791.5802976190477;
     else if (prod == 2 && cons == 6)
-        return 789.9101984126984;
+        return 792.8911011904762;
     else if (prod == 3 && cons == 6)
-        return 788.667380952381;
+        return 791.7160615079365;
     else if (prod == 4 && cons == 6)
-        return 789.9760416666667;
+        return 792.9705456349207;
 
-    return 697.356192680776;
+    return 699.8842195767196;
 }
