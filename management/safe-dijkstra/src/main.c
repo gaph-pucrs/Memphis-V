@@ -36,7 +36,7 @@ int main()
 		return ret;
 
 	safe_t dijkstra;
-	safe_init(&dijkstra, SAFE_HASH_dijkstra, bolt, 50);
+	safe_init(&dijkstra, SAFE_HASH_dijkstra, bolt, 45);
 
 	while (true) {
 		static safe_infer_t message;

@@ -36,9 +36,9 @@ int main()
 		return ret;
 
 	safe_t dtw;
-	safe_init(&dtw, SAFE_HASH_dtw, bolt, 50);
+	safe_init(&dtw, SAFE_HASH_dtw, bolt, 45);
 
-		while (true) {
+	while (true) {
 		static safe_infer_t message;
 		memphis_receive_any(&message, sizeof(safe_infer_t));
 		switch (message.service) {

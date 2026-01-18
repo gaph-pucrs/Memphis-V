@@ -36,7 +36,7 @@ int main()
 		return ret;
 
 	safe_t audio_video;
-	safe_init(&audio_video, SAFE_HASH_audio_video, bolt, 50);
+	safe_init(&audio_video, SAFE_HASH_audio_video, bolt, 45);
 
 	while (true) {
 		static safe_infer_t message;
