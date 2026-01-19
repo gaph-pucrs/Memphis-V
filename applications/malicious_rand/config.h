@@ -1,15 +1,15 @@
 #pragma once
 
 #ifndef MAL_MSG_SIZE
-	#define MAL_MSG_SIZE           83
+	#define MAL_MSG_SIZE             45
 #endif
 
 #ifndef MAL_TRIGGER_START
-	#define MAL_TRIGGER_START   330000
+	#define MAL_TRIGGER_START    330000
 #endif
 
 #ifndef MAL_TRIGGER_END
-	#define MAL_TRIGGER_END    2000000
+	#define MAL_TRIGGER_END     2000000
 #endif
 
 #ifndef MAL_MSG_INTERVAL_MIN
