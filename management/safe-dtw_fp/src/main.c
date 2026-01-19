@@ -34,7 +34,7 @@ int main()
 		return ret;
 
 	safe_fp_t dtw;
-	safe_fp_init(&dtw, SAFE_HASH_dtw, bolt, 50.0);
+	safe_fp_init(&dtw, SAFE_HASH_dtw, bolt, 45.0);
 
 		while (true) {
 		static safe_infer_t message;

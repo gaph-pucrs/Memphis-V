@@ -34,7 +34,7 @@ int main()
 		return ret;
 
 	safe_fp_t dijkstra;
-	safe_fp_init(&dijkstra, SAFE_HASH_dijkstra, bolt, 50.0);
+	safe_fp_init(&dijkstra, SAFE_HASH_dijkstra, bolt, 45.0);
 
 	while (true) {
 		static safe_infer_t message;
