@@ -34,7 +34,7 @@ int main()
 		return ret;
 
 	safe_fp_t mpeg;
-	safe_fp_init(&mpeg, SAFE_HASH_mpeg, bolt, 50.0);
+	safe_fp_init(&mpeg, SAFE_HASH_mpeg, bolt, 45.0);
 
 	while (true) {
 		static safe_infer_t message;
