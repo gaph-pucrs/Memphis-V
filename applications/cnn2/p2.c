@@ -78,40 +78,41 @@ int main()
         time_end[o_channel] = memphis_get_tick();
 		printf("Finished channel %d - Ticks = %d\n", o_channel, time_end[o_channel]);
 
-		memphis_send(out_pool_1, P2_MSG_SIZE*sizeof(int), p3);
-
-        time_sent[o_channel] = memphis_get_tick();
-		printf("Sent channel %d - Ticks = %d\n\n", o_channel, time_sent[o_channel]);
-
 		// SEND
-/*
 		switch (o_channel % P3_AMONT_OF_PES) {
 			case 1:
-				memphis_send(out_slice, P2_MSG_SIZE*sizeof(int), p3_1);
+				memphis_send(out_pool_1, P2_MSG_SIZE*sizeof(int), p3_1);
 				break;
 			case 2:
-				memphis_send(out_slice, P2_MSG_SIZE*sizeof(int), p3_2);
+				memphis_send(out_pool_1, P2_MSG_SIZE*sizeof(int), p3_2);
 				break;
 			case 3:
-				memphis_send(out_slice, P2_MSG_SIZE*sizeof(int), p3_3);
+				memphis_send(out_pool_1, P2_MSG_SIZE*sizeof(int), p3_3);
 				break;
+
 			case 4:
-				memphis_send(out_slice, P2_MSG_SIZE*sizeof(int), p3_4);
+				memphis_send(out_pool_1, P2_MSG_SIZE*sizeof(int), p3_4);
 				break;
 			case 5:
-				memphis_send(out_slice, P2_MSG_SIZE*sizeof(int), p3_5);
+				memphis_send(out_pool_1, P2_MSG_SIZE*sizeof(int), p3_5);
 				break;
 			case 6:
-				memphis_send(out_slice, P2_MSG_SIZE*sizeof(int), p3_6);
+				memphis_send(out_pool_1, P2_MSG_SIZE*sizeof(int), p3_6);
 				break;
 			case 7:
-				memphis_send(out_slice, P2_MSG_SIZE*sizeof(int), p3_7);
+				memphis_send(out_pool_1, P2_MSG_SIZE*sizeof(int), p3_7);
 				break;
 			default:
-				memphis_send(out_slice, P2_MSG_SIZE*sizeof(int), p3_0);
+				memphis_send(out_pool_1, P2_MSG_SIZE*sizeof(int), p3_0);
 		}
-*/
+
+		//memphis_send(out_pool_1, P2_MSG_SIZE*sizeof(int), p3);
+
+		time_sent[o_channel] = memphis_get_tick();
+		printf("Sent channel %d - Ticks = %d\n\n", o_channel, time_sent[o_channel]);
+
 	}
+
 
     printf("Finished P2 - Ticks = %d\n\n", memphis_get_tick());
 

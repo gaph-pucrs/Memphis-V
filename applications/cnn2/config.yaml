@@ -1,0 +1,44 @@
+ctg:
+  p1_0:
+    successors:
+      - "p2"
+  p1_1:
+    successors:
+      - "p2"
+  p1_2:
+    successors:
+      - "p2"
+  p2:
+    successors:
+      - "p3_0"
+      - "p3_1"
+      - "p3_2"
+      - "p3_3"
+      - "p3_4"
+      - "p3_5"
+      - "p3_6"
+      - "p3_7"
+  p3_0:
+    successors:
+      - "p4"
+  p3_1:
+    successors:
+      - "p4"
+  p3_2:
+    successors:
+      - "p4"
+  p3_3:
+    successors:
+      - "p4"
+  p3_4:
+    successors:
+      - "p4"
+  p3_5:
+    successors:
+      - "p4"
+  p3_6:
+    successors:
+      - "p4"
+  p3_7:
+    successors:
+      - "p4"

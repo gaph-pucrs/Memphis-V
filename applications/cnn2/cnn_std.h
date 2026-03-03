@@ -49,6 +49,10 @@
     #define P2_MSG_SIZE OUT_HEIGHT_1*OUT_WIDTH_1
 #endif
 
+#ifndef P3_MSG_SIZE
+    #define P3_MSG_SIZE OUT_CONV_HEIGHT_2*OUT_CONV_WIDTH_2
+#endif
+
 #ifndef INFERENCES
     #define INFERENCES	 1
 #endif

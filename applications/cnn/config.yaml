@@ -8,3 +8,6 @@ ctg:
   p1_2:
     successors:
       - "p2"
+  p2:
+    successors:
+      - "p3"
