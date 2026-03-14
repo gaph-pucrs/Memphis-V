@@ -1,0 +1,100 @@
+ctg:
+  p1_0:
+    successors:
+      - "p2"
+  p1_1:
+    successors:
+      - "p2"
+  p1_2:
+    successors:
+      - "p2"
+  p2:
+    successors:
+      - "p3_0"
+      - "p3_1"
+      - "p3_2"
+      - "p3_3"
+  p3_0:
+    successors:
+      - "p4"
+  p3_1:
+    successors:
+      - "p4"
+  p3_2:
+    successors:
+      - "p4"
+  p3_3:
+    successors:
+      - "p4"
+  p4:
+    successors:
+      - "p5_0"
+      - "p5_1"
+      - "p5_2"
+      - "p5_3"
+      - "p5_4"
+      - "p5_5"
+  p5_0:
+    successors:
+      - "p6"
+  p5_1:
+    successors:
+      - "p6"
+  p5_2:
+    successors:
+      - "p6"
+  p5_3:
+    successors:
+      - "p6"
+  p5_4:
+    successors:
+      - "p6"
+  p5_5:
+    successors:
+      - "p6"
+  p6:
+    successors:
+      - "p7_0"
+      - "p7_1"
+      - "p7_2"
+      - "p7_3"
+      - "p7_4"
+      - "p7_5"
+  p7_0:
+    successors:
+      - "p8"
+  p7_1:
+    successors:
+      - "p8"
+  p7_2:
+    successors:
+      - "p8"
+  p7_3:
+    successors:
+      - "p8"
+  p7_4:
+    successors:
+      - "p8"
+  p7_5:
+    successors:
+      - "p8"
+  p8:
+    successors:
+      - "p9_0"
+      - "p9_1"
+      - "p9_2"
+      - "p9_3"
+  p9_0:
+    successors:
+      - "p10"
+  p9_1:
+    successors:
+      - "p10"
+  p9_2:
+    successors:
+      - "p10"
+  p9_3:
+    successors:
+      - "p10"
+  p10:
+    successors: []
