@@ -21,11 +21,9 @@
 #include <memphis/monitor.h>
 #include <memphis/services.h>
 #include <memphis/oda.h>
-#include <memphis/safe.h>
+#include <memphis/safe_fp.h>
 
 #include "bolt.h"
-#include "lin.h"
-#include "avg.h"
 
 int main()
 {
@@ -35,18 +33,18 @@ int main()
 	if (ret != 0)
 		return ret;
 
-	safe_t aes;
-	safe_init(&aes, SAFE_HASH_aes, avg, 55);
+	safe_fp_t aes;
+	safe_fp_init(&aes, SAFE_HASH_aes, bolt, 55.0);
 
-	while (true) {
+		while (true) {
 		static safe_infer_t message;
 		memphis_receive_any(&message, sizeof(safe_infer_t));
 		switch (message.service) {
 			case SEC_SAFE_REQ_APP:
-				safe_app_response(&aes, (memphis_info_t*)&message);
+				safe_fp_app_response(&aes, (memphis_info_t*)&message);
 				break;
 			case SEC_INFER:
-				safe_infer(&aes, &message);
+				safe_fp_infer(&aes, &message);
 				break;
 			case TERMINATE_ODA:
 				return 0;
