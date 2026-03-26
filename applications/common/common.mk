@@ -26,10 +26,10 @@ INCMUTILS = $(DIRMUTILS)/src/include
 HDRMUTILS = $(wildcard $(DIRMUTILS)/*.h) $(wildcard $(DIRMUTILS)/**/*.h)
 LIBMUTILS = $(DIRMUTILS)/libmutils.a
 
-CFLAGS	+= -march=rv32imac_zicntr_zicsr_zihpm -mabi=ilp32 -Os -fdata-sections -ffunction-sections -flto -Wall -std=c23 -I$(SRCDIR) -I$(INCMUTILS) -I$(INCMEMPHIS)
+CFLAGS	+= -march=rv32imac_zicntr_zicsr_zihpm -mabi=ilp32 -O2 -fdata-sections -ffunction-sections -flto -Wall -std=c23 -I$(SRCDIR) -I$(INCMUTILS) -I$(INCMEMPHIS)
 LDFLAGS += -L$(DIRMEMPHIS) -L$(DIRMUTILS) --specs=nano.specs -T $(DIRMEMPHIS)/memphis.ld -Wl,--gc-sections,-flto -u _getpid -march=rv32imac_zicntr_zicsr_zihpm -mabi=ilp32 -lmemphis -lmutils
 
-all: $(TARGETS) $(ELFS) #$(LSTS)
+all: $(TARGETS) $(ELFS) $(LSTS)
 
 $(SRCDIR)/%.txt: $(SRCDIR)/i%.bin $(SRCDIR)/d%.bin $(SRCDIR)/%.elf
 	@printf "${GREEN}Dumping to %s ...${NC}\n" "$(patsubst %.txt,%.bin,$@)"
