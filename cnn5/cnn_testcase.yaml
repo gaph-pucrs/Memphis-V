@@ -2,8 +2,8 @@ simulation:                 # Optional: simulation parameters
   simulator: verilator      # Optional: verilator (default) or vsim
   trace: no                 # Optional: generate wave trace (default is off)
 hw:                         # Hardware properties
-  page_size_inst_KB: 524288   # Size of each instruction memory page (maximum task instruction size)
-  page_size_data_KB: 524288   # Size of each task memory page (maximum task data size)
+  page_size_inst_KB: 65536   # Size of each instruction memory page (maximum task instruction size)
+  page_size_data_KB: 65536   # Size of each task memory page (maximum task data size)
   tasks_per_PE: 2           # Maximum number of tasks in the same PE (mapper_task shares [0,0] with p1_0)
   mpsoc_dimension: [4,4]    # Dimension of the many-core [X, Y]
   Peripherals:              # Attached peripherals

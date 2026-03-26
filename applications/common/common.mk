@@ -48,9 +48,9 @@ $(SRCDIR)/i%.bin: $(SRCDIR)/%.elf
 	@printf "${GREEN}Generating binary %s ...${NC}\n" "$@"
 	@$(OBJCOPY) -j .text -O binary $< $@
 
-# $(SRCDIR)/%.lst: $(SRCDIR)/%.elf
-# 	@printf "${GREEN}Listing task: %s ...${NC}\n" "$@"
-# 	@$(OBJDUMP) -S $< > $@
+$(SRCDIR)/%.lst: $(SRCDIR)/%.elf
+	@printf "${GREEN}Listing task: %s ...${NC}\n" "$@"
+	@$(OBJDUMP) -S $< > $@
 
 $(SRCDIR)/%.elf: $(SRCDIR)/%.o $(LIBMEMPHIS) $(LIBMUTILS)
 	@printf "${GREEN}Linking %s ...${NC}\n" "$@"

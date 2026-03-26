@@ -35,6 +35,10 @@ int main()
 	int *msg_1 = malloc(P3_MSG_SIZE*sizeof(int));
 	int *msg_2 = malloc(P3_MSG_SIZE*sizeof(int));
 	int *msg_3 = malloc(P3_MSG_SIZE*sizeof(int));
+	int *msg_4 = malloc(P3_MSG_SIZE*sizeof(int));
+	int *msg_5 = malloc(P3_MSG_SIZE*sizeof(int));
+	int *msg_6 = malloc(P3_MSG_SIZE*sizeof(int));
+	int *msg_7 = malloc(P3_MSG_SIZE*sizeof(int));
 
     printf("Starting P4 - Ticks = %s\n\n", memphis_u64_str(memphis_get_tick()));
 
@@ -55,6 +59,10 @@ int main()
 		int received_1 = memphis_receive(msg_1, P3_MSG_SIZE*sizeof(int), p3_1);
 		int received_2 = memphis_receive(msg_2, P3_MSG_SIZE*sizeof(int), p3_2);
 		int received_3 = memphis_receive(msg_3, P3_MSG_SIZE*sizeof(int), p3_3);
+		int received_4 = memphis_receive(msg_4, P3_MSG_SIZE*sizeof(int), p3_4);
+		int received_5 = memphis_receive(msg_5, P3_MSG_SIZE*sizeof(int), p3_5);
+		int received_6 = memphis_receive(msg_6, P3_MSG_SIZE*sizeof(int), p3_6);
+		int received_7 = memphis_receive(msg_7, P3_MSG_SIZE*sizeof(int), p3_7);
 
         time_recd[o_channel] = memphis_get_tick();
 		printf("Received channel %d - Ticks = %s\n", o_channel, memphis_u64_str(time_recd[o_channel]));
@@ -64,6 +72,10 @@ int main()
 			out_slice[j] += msg_1[j];
 			out_slice[j] += msg_2[j];
 			out_slice[j] += msg_3[j];
+			out_slice[j] += msg_4[j];
+			out_slice[j] += msg_5[j];
+			out_slice[j] += msg_6[j];
+			out_slice[j] += msg_7[j];
 		}
 
         conv_sum_bias(OUT_CONV_HEIGHT_2, OUT_CONV_WIDTH_2, out_slice, bias_2, o_channel);
@@ -90,12 +102,6 @@ int main()
 				break;
 			case 3:
 				memphis_send(out_pool_2, P4_MSG_SIZE*sizeof(int), p5_3);
-				break;
-			case 4:
-				memphis_send(out_pool_2, P4_MSG_SIZE*sizeof(int), p5_4);
-				break;
-			case 5:
-				memphis_send(out_pool_2, P4_MSG_SIZE*sizeof(int), p5_5);
 				break;
 			default:
 				memphis_send(out_pool_2, P4_MSG_SIZE*sizeof(int), p5_0);
