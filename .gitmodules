@@ -1,7 +1,7 @@
 [submodule "libmemphis"]
 	path = libmemphis
 	url = https://github.com/gaph-pucrs/libmemphis
-	branch = phivers
+	branch = newmap
 [submodule "libmutils"]
 	path = libmutils
 	url = https://github.com/gaph-pucrs/libmutils
@@ -9,8 +9,8 @@
 [submodule "MAestro"]
 	path = MAestro
 	url = https://github.com/gaph-pucrs/MAestro
-	branch = phivers
+	branch = newmap
 [submodule "Phivers"]
 	path = Phivers
 	url = https://github.com/gaph-pucrs/Phivers
-	branch = master
+	branch = newmap
