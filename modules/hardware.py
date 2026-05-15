@@ -49,6 +49,8 @@ class Hardware:
 		definitions.define("TRAFFIC_DEBUG", int(self.__param_or_default("TRAFFIC_DEBUG",  "True") == "True"))
 		definitions.define("DMNI_DEBUG",    int(self.__param_or_default("DMNI_DEBUG",    "False") == "True"))
 		definitions.define("SAFE_DEBUG",    int(self.__param_or_default("SAFE_DEBUG",     "True") == "True"))
+		definitions.define("VEnable", 		int(self.__param_or_default("VEnable",       "False") == "True"))
+		definitions.define("VLEN",   		int(self.__param_or_default("VLEN",              64)))
 
 		ports = ["" for x in range(self.PKG_N_PE_X) for y in range(self.PKG_N_PE_Y) for p in range(5)]
 		for link in self.links:
