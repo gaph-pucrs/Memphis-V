@@ -138,6 +138,7 @@ void stemBlock (
     type out[],
     const int K,
     const int s,
+    const int id,
     const int target_id
 ) {
     const int p = W_out - (int)((W_in-K)/s) - 1;
@@ -148,10 +149,16 @@ void stemBlock (
 
     int y = 0, x = 0;
     int *out_chunk;
+
+    unsigned *time_start  = malloc(H_out*sizeof(type));
+    unsigned *time_finish = malloc(H_out*sizeof(type));
     
     for (int k = 0; k < H_out; k++)
     {
         x = 0;
+
+        time_start[k] = memphis_get_tick();
+
         for (int l = 0; l < W_out; l++)
         {
             out_chunk = out + l*C_out + k*C_out*W_out;
@@ -176,12 +183,23 @@ void stemBlock (
         }
 
         // send row
-        printf("[conv] finished row (%d/%d)\n", k+1, H_out);
+        // printf("[conv] finished row (%d/%d)\n", k+1, H_out);
+        time_finish[k] = memphis_get_tick();
         memphis_send(out + k*C_out*W_out, C_out*W_out*sizeof(type), target_id);
 
         y += s*C_in*(W_in+p);
     }
 
+    unsigned mean = 0;
+    for (int k = 0; k < H_out; k++) {
+        printf("[%d] %d %u - %u = %u\n", id, k, time_finish[k], time_start[k], (time_finish[k]-time_start[k]));
+        mean += (time_finish[k] - time_start[k])/H_out;
+    }
+
+    printf("[%d] mean = %u\n", id, mean);
+    
+    free(time_start);
+    free(time_finish);
     free(in_pd);
 }
 //}}}
@@ -201,6 +219,7 @@ void MFBlock (
    type x[],
    type out[],
    const int parent_id,
+   const int id,
    const int target_id
 ) {
     const int C_b11  = 12;
@@ -225,14 +244,22 @@ void MFBlock (
     int rows_b33b = 0;
     int rows_b33c = 0;
 
-    for (int k = 0; k < (H_in+20); k++)
+    unsigned *time_start  = malloc((H_in+3)*sizeof(type));
+    unsigned *time_finish = malloc((H_in+3)*sizeof(type));
+
+    for (int k = 0; k < (H_in+3); k++)
     {
-        // b11
         if (rows_b11 < H_in)
         {
             // receive row
             memphis_receive(x + rows_b11*C_in*W_in, C_in*W_in*sizeof(type), parent_id);
+        }
 
+        time_start[k] = memphis_get_tick();
+
+        // b11
+        if (rows_b11 < H_in)
+        {
             for (int l = 0; l < W_in; l++)
             {
                 // y0: padded
@@ -332,15 +359,30 @@ void MFBlock (
 
             }
 
-            printf("[MFBlock] finished row (%d/%d)\n", rows_b33c+1, H_in);
+            // printf("[MFBlock] finished row (%d/%d)\n", rows_b33c+1, H_in);
             
             // send row 
+            time_finish[k] = memphis_get_tick();
             memphis_send(out + rows_b33c*C_out*W_in, C_out*W_in*sizeof(type), target_id);
 
             rows_b33c++;
         }
+        else 
+        {
+            time_finish[k] = memphis_get_tick();
+        }
     }
 
+    unsigned mean = 0;
+    for (int k = 0; k < (H_in+3); k++) {
+        printf("[%d] %d %u - %u = %u\n", id, k, time_finish[k], time_start[k], (time_finish[k]-time_start[k]));
+        mean += (time_finish[k] - time_start[k])/(H_in);
+    }
+
+    printf("[%d] mean = %u\n", id, mean);
+
+    free(time_start);
+    free(time_finish);
     free(y0);
     free(y1);
     free(y2);
@@ -365,6 +407,7 @@ void MFBlock_tran (
    type x[],
    type out[], // pooled
    const int parent_id,
+   const int id,
    const int target_id
 ) {
     const int H_out = H_in / 2;
@@ -395,14 +438,22 @@ void MFBlock_tran (
     int rows_b33c = 0;
     int rows_pool = 0;
 
-    for (int k = 0; k < (H_in+20); k++)
+    unsigned *time_start  = malloc((H_in+3)*sizeof(type));
+    unsigned *time_finish = malloc((H_in+3)*sizeof(type));
+
+    for (int k = 0; k < (H_in+3); k++)
     {
-        // b11
         if (rows_b11 < H_in)
         {
             // receive row
             memphis_receive(x + rows_b11*C_in*W_in, C_in*W_in*sizeof(type), parent_id);
+        }
 
+        time_start[k] = memphis_get_tick();
+
+        // b11
+        if (rows_b11 < H_in)
+        {
             for (int l = 0; l < W_in; l++)
             {
                 // y0: padded
@@ -534,16 +585,35 @@ void MFBlock_tran (
                     );
                 }
                 
-                printf("[MFBlock_tran] finished row (%d/%d)\n", rows_pool+1, H_out);
+                // printf("[MFBlock_tran] finished row (%d/%d)\n", rows_pool+1, H_out);
             
                 // send row 
+                time_finish[k] = memphis_get_tick();
                 memphis_send(out + rows_pool*C_out*W_out, C_out*W_out*sizeof(type), target_id);
 
                 rows_pool++;
             }
+            else 
+            {
+                time_finish[k] = memphis_get_tick();
+            }
+        }
+        else 
+        {
+            time_finish[k] = memphis_get_tick();
         }
     }
 
+    unsigned mean = 0;
+    for (int k = 0; k < (H_in+3); k++) {
+        printf("[%d] %d %u - %u = %u\n", id, k, time_finish[k], time_start[k], (time_finish[k]-time_start[k]));
+        mean += (time_finish[k] - time_start[k])/(H_out);
+    }
+
+    printf("[%d] mean = %u\n", id, mean);
+
+    free(time_start);
+    free(time_finish);
     free(y0);
     free(y1);
     free(y2);
@@ -569,6 +639,7 @@ void MFBlock_gap (
    type x[],
    type out[], // pooled
    const int parent_id,
+   const int id,
    const int target_id
 ) {
     const int C_b11  = 12;
@@ -594,14 +665,22 @@ void MFBlock_gap (
     int rows_b33b = 0;
     int rows_b33c = 0;
 
-    for (int k = 0; k < (H_in+20); k++)
+    unsigned *time_start  = malloc((H_in+3)*sizeof(type));
+    unsigned *time_finish = malloc((H_in+3)*sizeof(type));
+
+    for (int k = 0; k < (H_in+3); k++)
     {
-        // b11
         if (rows_b11 < H_in)
         {
             // receive row
             memphis_receive(x + rows_b11*C_in*W_in, C_in*W_in*sizeof(type), parent_id);
+        }
 
+        time_start[k] = memphis_get_tick();
+
+        // b11
+        if (rows_b11 < H_in)
+        {
             for (int l = 0; l < W_in; l++)
             {
                 // y0: padded
@@ -722,19 +801,36 @@ void MFBlock_gap (
             }
 
             rows_b33c++;
+
+            time_finish[k] = memphis_get_tick();
         }
     }
 
+    unsigned time_div = memphis_get_tick();
     // GAP division
     for (int n = 0; n < C_out; n++)
     {
         out[n] >>= 4;
     }
+    time_div = memphis_get_tick() - time_div;
 
-    printf("[MFBlock_gap] finished global average pooling\n");
+    printf("[%d] time_div = %u\n", id, time_div);
+
+    long unsigned time_total = time_div;
+    for (int k = 0; k < (H_in+3); k++)
+    {
+        printf("[%d] %d %u - %u = %u\n", id, k, time_finish[k], time_start[k], (time_finish[k]-time_start[k]));
+        time_total += (time_finish[k] - time_start[k]);
+    }
+
+    printf("[%d] time_total = %lu\n", id, time_total);
+
+    // printf("[MFBlock_gap] finished global average pooling\n");
 
     memphis_send(out, C_out*sizeof(type), target_id);
 
+    free(time_start);
+    free(time_finish);
     free(y0);
     free(y1);
     free(y2);
@@ -750,9 +846,12 @@ void fc (
     const type b[],
     const int NEURONS,
     type out[],
-    const int parent_id
+    const int parent_id,
+    const int id
 ) {
     memphis_receive(in, INPUT_CHANNELS*sizeof(type), parent_id);
+
+    unsigned time_start = memphis_get_tick();
 
     for (int ch = 0; ch < INPUT_CHANNELS; ch++)
     {
@@ -770,6 +869,10 @@ void fc (
     for (int n = 0; n < NEURONS; n++) {
         out[n] += b[n];
     }
+
+    unsigned time_finish = memphis_get_tick();
+
+    printf("[%d] %u - %u = %u\n", id, time_finish, time_start, (time_finish-time_start));
 }
 //}}}
 

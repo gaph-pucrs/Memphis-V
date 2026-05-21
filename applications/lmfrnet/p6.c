@@ -44,6 +44,7 @@ int main()
         x,
         out,
         p5,
+        p6,
         p7
     );
     

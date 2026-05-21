@@ -30,7 +30,8 @@ int main()
         classifier_bias,
         STAGE_6_CLASSES,
         out,
-        p19
+        p19,
+        p20
     );
     
     time_finish = memphis_get_tick();
