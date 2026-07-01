@@ -150,8 +150,8 @@ void stemBlock (
     int y = 0, x = 0;
     int *out_chunk;
 
-    unsigned *time_start  = malloc(H_out*sizeof(type));
-    unsigned *time_finish = malloc(H_out*sizeof(type));
+    unsigned *time_start  = malloc(H_out*sizeof(unsigned));
+    unsigned *time_finish = malloc(H_out*sizeof(unsigned));
     
     for (int k = 0; k < H_out; k++)
     {
@@ -190,14 +190,16 @@ void stemBlock (
         y += s*C_in*(W_in+p);
     }
 
-    unsigned mean = 0;
-    for (int k = 0; k < H_out; k++) {
+    long unsigned time_total = 0;
+
+    for (int k = 0; k < H_out; k++)
+    {
         printf("[%d] %d %u - %u = %u\n", id, k, time_finish[k], time_start[k], (time_finish[k]-time_start[k]));
-        mean += (time_finish[k] - time_start[k])/H_out;
+        time_total += (time_finish[k] - time_start[k]);
     }
 
-    printf("[%d] mean = %u\n", id, mean);
-    
+    printf("[%d] time_total = %lu\n", id, time_total);
+
     free(time_start);
     free(time_finish);
     free(in_pd);
@@ -244,8 +246,8 @@ void MFBlock (
     int rows_b33b = 0;
     int rows_b33c = 0;
 
-    unsigned *time_start  = malloc((H_in+3)*sizeof(type));
-    unsigned *time_finish = malloc((H_in+3)*sizeof(type));
+    unsigned *time_start  = malloc((H_in+3)*sizeof(unsigned));
+    unsigned *time_finish = malloc((H_in+3)*sizeof(unsigned));
 
     for (int k = 0; k < (H_in+3); k++)
     {
@@ -373,13 +375,14 @@ void MFBlock (
         }
     }
 
-    unsigned mean = 0;
-    for (int k = 0; k < (H_in+3); k++) {
+    long unsigned time_total = 0;
+    for (int k = 0; k < (H_in+3); k++)
+    {
         printf("[%d] %d %u - %u = %u\n", id, k, time_finish[k], time_start[k], (time_finish[k]-time_start[k]));
-        mean += (time_finish[k] - time_start[k])/(H_in);
+        time_total += (time_finish[k] - time_start[k]);
     }
 
-    printf("[%d] mean = %u\n", id, mean);
+    printf("[%d] time_total = %lu\n", id, time_total);
 
     free(time_start);
     free(time_finish);
@@ -438,8 +441,8 @@ void MFBlock_tran (
     int rows_b33c = 0;
     int rows_pool = 0;
 
-    unsigned *time_start  = malloc((H_in+3)*sizeof(type));
-    unsigned *time_finish = malloc((H_in+3)*sizeof(type));
+    unsigned *time_start  = malloc((H_in+3)*sizeof(unsigned));
+    unsigned *time_finish = malloc((H_in+3)*sizeof(unsigned));
 
     for (int k = 0; k < (H_in+3); k++)
     {
@@ -604,13 +607,14 @@ void MFBlock_tran (
         }
     }
 
-    unsigned mean = 0;
-    for (int k = 0; k < (H_in+3); k++) {
+    long unsigned time_total = 0;
+    for (int k = 0; k < (H_in+3); k++)
+    {
         printf("[%d] %d %u - %u = %u\n", id, k, time_finish[k], time_start[k], (time_finish[k]-time_start[k]));
-        mean += (time_finish[k] - time_start[k])/(H_out);
+        time_total += (time_finish[k] - time_start[k]);
     }
 
-    printf("[%d] mean = %u\n", id, mean);
+    printf("[%d] time_total = %lu\n", id, time_total);
 
     free(time_start);
     free(time_finish);
@@ -665,8 +669,8 @@ void MFBlock_gap (
     int rows_b33b = 0;
     int rows_b33c = 0;
 
-    unsigned *time_start  = malloc((H_in+3)*sizeof(type));
-    unsigned *time_finish = malloc((H_in+3)*sizeof(type));
+    unsigned *time_start  = malloc((H_in+3)*sizeof(unsigned));
+    unsigned *time_finish = malloc((H_in+3)*sizeof(unsigned));
 
     for (int k = 0; k < (H_in+3); k++)
     {
@@ -801,9 +805,9 @@ void MFBlock_gap (
             }
 
             rows_b33c++;
-
-            time_finish[k] = memphis_get_tick();
         }
+
+        time_finish[k] = memphis_get_tick();
     }
 
     unsigned time_div = memphis_get_tick();
@@ -871,8 +875,11 @@ void fc (
     }
 
     unsigned time_finish = memphis_get_tick();
+    long unsigned time_total = time_finish - time_start;
 
     printf("[%d] %u - %u = %u\n", id, time_finish, time_start, (time_finish-time_start));
+
+    printf("[%d] time_total = %lu\n", id, time_total);
 }
 //}}}
 
