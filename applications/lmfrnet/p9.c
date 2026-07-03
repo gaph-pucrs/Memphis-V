@@ -1,4 +1,4 @@
-// MMCBlock3_layer1
+// MMCBlock2_layer4 + tran + pool (backbone half; tran_conv+pool now runs on p10)
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -7,50 +7,38 @@
 #include "cnn_std.h"
 #include "cnn_common.h"
 
-#include "./params/MMCBlock3_mmLayer1_branch11_conv_0_weight.h"
-#include "./params/MMCBlock3_mmLayer1_branch33a_conv_0_weight.h"
-#include "./params/MMCBlock3_mmLayer1_branch33b_conv_0_weight.h"
-#include "./params/MMCBlock3_mmLayer1_branch33c_conv_0_weight.h"
-#include "./params/MMCBlock3_mmLayer1_branch11_conv_0_bias.h"
-#include "./params/MMCBlock3_mmLayer1_branch33a_conv_0_bias.h"
-#include "./params/MMCBlock3_mmLayer1_branch33b_conv_0_bias.h"
-#include "./params/MMCBlock3_mmLayer1_branch33c_conv_0_bias.h"
+#include "./params/MMCBlock2_mmLayer4_branch11_conv_0_weight.h"
+#include "./params/MMCBlock2_mmLayer4_branch33a_conv_0_weight.h"
+#include "./params/MMCBlock2_mmLayer4_branch33b_conv_0_weight.h"
+#include "./params/MMCBlock2_mmLayer4_branch33c_conv_0_weight.h"
+#include "./params/MMCBlock2_mmLayer4_branch11_conv_0_bias.h"
+#include "./params/MMCBlock2_mmLayer4_branch33a_conv_0_bias.h"
+#include "./params/MMCBlock2_mmLayer4_branch33b_conv_0_bias.h"
+#include "./params/MMCBlock2_mmLayer4_branch33c_conv_0_bias.h"
 
 int main()
 {
     puts("[p9] starting application");
 
-    unsigned time_start;
-    unsigned time_finish;
-    
-    type x[STAGE_3_HEIGHT*STAGE_3_WIDTH*STAGE_3_CHANNELS] = {0};
-    type out[STAGE_3_HEIGHT*STAGE_3_WIDTH*(STAGE_3_CHANNELS + 24)] = {0};
-    
-    time_start = memphis_get_tick();
-    printf("[p9] starting MFBlock %u\n", time_start);
+    type x[STAGE_2_HEIGHT*STAGE_2_WIDTH*(STAGE_2_CHANNELS + 3*24)] = {0};
 
-    MFBlock (
-        STAGE_3_HEIGHT, 
-        STAGE_3_WIDTH, 
-        STAGE_3_CHANNELS,
-        MMCBlock3_mmLayer1_branch11_conv_0_weight,
-        MMCBlock3_mmLayer1_branch33a_conv_0_weight,
-        MMCBlock3_mmLayer1_branch33b_conv_0_weight,
-        MMCBlock3_mmLayer1_branch33c_conv_0_weight,
-        MMCBlock3_mmLayer1_branch11_conv_0_bias,
-        MMCBlock3_mmLayer1_branch33a_conv_0_bias,
-        MMCBlock3_mmLayer1_branch33b_conv_0_bias,
-        MMCBlock3_mmLayer1_branch33c_conv_0_bias,
+    MFBlock_backbone (
+        STAGE_2_HEIGHT,
+        STAGE_2_WIDTH,
+        STAGE_2_CHANNELS + 3*24,
+        MMCBlock2_mmLayer4_branch11_conv_0_weight,
+        MMCBlock2_mmLayer4_branch33a_conv_0_weight,
+        MMCBlock2_mmLayer4_branch33b_conv_0_weight,
+        MMCBlock2_mmLayer4_branch33c_conv_0_weight,
+        MMCBlock2_mmLayer4_branch11_conv_0_bias,
+        MMCBlock2_mmLayer4_branch33a_conv_0_bias,
+        MMCBlock2_mmLayer4_branch33b_conv_0_bias,
+        MMCBlock2_mmLayer4_branch33c_conv_0_bias,
         x,
-        out,
         p8,
         p9,
         p10
     );
-    
-    time_finish = memphis_get_tick();
-    printf("[p9] finished MFBlock %u\n", time_finish);
-    printf("[p9] time lapsed %u\n", time_finish-time_start);
 
     puts("[p9] finishing application");
 

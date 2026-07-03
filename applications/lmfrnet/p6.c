@@ -1,4 +1,4 @@
-// MMCBlock2_layer2
+// MMCBlock2_layer1
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -7,14 +7,14 @@
 #include "cnn_std.h"
 #include "cnn_common.h"
 
-#include "./params/MMCBlock2_mmLayer2_branch11_conv_0_weight.h"
-#include "./params/MMCBlock2_mmLayer2_branch33a_conv_0_weight.h"
-#include "./params/MMCBlock2_mmLayer2_branch33b_conv_0_weight.h"
-#include "./params/MMCBlock2_mmLayer2_branch33c_conv_0_weight.h"
-#include "./params/MMCBlock2_mmLayer2_branch11_conv_0_bias.h"
-#include "./params/MMCBlock2_mmLayer2_branch33a_conv_0_bias.h"
-#include "./params/MMCBlock2_mmLayer2_branch33b_conv_0_bias.h"
-#include "./params/MMCBlock2_mmLayer2_branch33c_conv_0_bias.h"
+#include "./params/MMCBlock2_mmLayer1_branch11_conv_0_weight.h"
+#include "./params/MMCBlock2_mmLayer1_branch33a_conv_0_weight.h"
+#include "./params/MMCBlock2_mmLayer1_branch33b_conv_0_weight.h"
+#include "./params/MMCBlock2_mmLayer1_branch33c_conv_0_weight.h"
+#include "./params/MMCBlock2_mmLayer1_branch11_conv_0_bias.h"
+#include "./params/MMCBlock2_mmLayer1_branch33a_conv_0_bias.h"
+#include "./params/MMCBlock2_mmLayer1_branch33b_conv_0_bias.h"
+#include "./params/MMCBlock2_mmLayer1_branch33c_conv_0_bias.h"
 
 int main()
 {
@@ -23,8 +23,8 @@ int main()
     unsigned time_start;
     unsigned time_finish;
     
-    type x[STAGE_2_HEIGHT*STAGE_2_WIDTH*(STAGE_2_CHANNELS + 24)] = {0};
-    type out[STAGE_2_HEIGHT*STAGE_2_WIDTH*(STAGE_2_CHANNELS + 2*24)] = {0};
+    type x[STAGE_2_HEIGHT*STAGE_2_WIDTH*STAGE_2_CHANNELS] = {0};
+    type out[STAGE_2_HEIGHT*STAGE_2_WIDTH*(STAGE_2_CHANNELS + 24)] = {0};
     
     time_start = memphis_get_tick();
     printf("[p6] starting MFBlock %u\n", time_start);
@@ -32,15 +32,15 @@ int main()
     MFBlock (
         STAGE_2_HEIGHT, 
         STAGE_2_WIDTH, 
-        STAGE_2_CHANNELS + 24,
-        MMCBlock2_mmLayer2_branch11_conv_0_weight,
-        MMCBlock2_mmLayer2_branch33a_conv_0_weight,
-        MMCBlock2_mmLayer2_branch33b_conv_0_weight,
-        MMCBlock2_mmLayer2_branch33c_conv_0_weight,
-        MMCBlock2_mmLayer2_branch11_conv_0_bias,
-        MMCBlock2_mmLayer2_branch33a_conv_0_bias,
-        MMCBlock2_mmLayer2_branch33b_conv_0_bias,
-        MMCBlock2_mmLayer2_branch33c_conv_0_bias,
+        STAGE_2_CHANNELS,
+        MMCBlock2_mmLayer1_branch11_conv_0_weight,
+        MMCBlock2_mmLayer1_branch33a_conv_0_weight,
+        MMCBlock2_mmLayer1_branch33b_conv_0_weight,
+        MMCBlock2_mmLayer1_branch33c_conv_0_weight,
+        MMCBlock2_mmLayer1_branch11_conv_0_bias,
+        MMCBlock2_mmLayer1_branch33a_conv_0_bias,
+        MMCBlock2_mmLayer1_branch33b_conv_0_bias,
+        MMCBlock2_mmLayer1_branch33c_conv_0_bias,
         x,
         out,
         p5,
@@ -53,8 +53,6 @@ int main()
     printf("[p6] time lapsed %u\n", time_finish-time_start);
 
     puts("[p6] finishing application");
-
-    puts("[p6] printing data");
 
     return 0;
 }

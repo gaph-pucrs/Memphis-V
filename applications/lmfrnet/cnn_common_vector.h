@@ -4,9 +4,12 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "debug.h"
+
 typedef int type;
 
 //{{{
+__attribute__((optimize("no-tree-vectorize","no-tree-slp-vectorize","no-tree-loop-distribute-patterns"))) __attribute__((no_builtin))
 void pad (
     const int H,
     const int W,
@@ -32,6 +35,7 @@ void pad (
 }
 //}}}
 //{{{
+__attribute__((optimize("no-tree-vectorize","no-tree-slp-vectorize","no-tree-loop-distribute-patterns"))) __attribute__((no_builtin))
 void sum_bias(const int C, type buf[], const type b[])
 {   
     size_t vl = 0;
@@ -58,12 +62,14 @@ void sum_bias(const int C, type buf[], const type b[])
 }
 //}}}
 //{{{
+__attribute__((optimize("no-tree-vectorize","no-tree-slp-vectorize","no-tree-loop-distribute-patterns"))) __attribute__((no_builtin))
 void relu(const int C, type buf[])
 {
     // merged with sum_bias()
 }
 //}}}
 //{{{
+__attribute__((optimize("no-tree-vectorize","no-tree-slp-vectorize","no-tree-loop-distribute-patterns"))) __attribute__((no_builtin))
 void int_handler (const int C, type buf[])
 {
     // can be merged with sum_bias() as well to avoid VLOAD and VSTORE calls
@@ -84,6 +90,7 @@ void int_handler (const int C, type buf[])
 }
 //}}}
 //{{{
+__attribute__((optimize("no-tree-vectorize","no-tree-slp-vectorize","no-tree-loop-distribute-patterns"))) __attribute__((no_builtin))
 void avg_pool_chunk (
     const type *in,     // (0, 0)
     const int W_in,     
@@ -123,6 +130,7 @@ void avg_pool_chunk (
 }
 //}}}
 //{{{
+__attribute__((optimize("no-tree-vectorize","no-tree-slp-vectorize","no-tree-loop-distribute-patterns"))) __attribute__((no_builtin))
 void concat4_chunk (
     const int C_in,
     const type x[],
@@ -138,6 +146,7 @@ void concat4_chunk (
 }
 //}}}
 //{{{
+__attribute__((optimize("no-tree-vectorize","no-tree-slp-vectorize","no-tree-loop-distribute-patterns"))) __attribute__((no_builtin))
 void conv_chunk (
     const int H_in,
     const int W_in, // W_in + p
@@ -186,6 +195,7 @@ void conv_chunk (
 }
 //}}}
 //{{{
+__attribute__((optimize("no-tree-vectorize","no-tree-slp-vectorize","no-tree-loop-distribute-patterns"))) __attribute__((no_builtin))
 void stemBlock (
     const int H_in,
     const int W_in,
@@ -199,6 +209,7 @@ void stemBlock (
     type out[],
     const int K,
     const int s,
+    const int id,
     const int target_id
 ) {
     const int p = W_out - (int)((W_in-K)/s) - 1;
@@ -209,10 +220,18 @@ void stemBlock (
 
     int y = 0, x = 0;
     int *out_chunk;
-    
+
+    long unsigned *conv = malloc(H_out*sizeof(long unsigned)); int conv_it = 0;
+    long unsigned *send = malloc(H_out*sizeof(long unsigned)); int send_it = 0;
+
+    long unsigned total_noc_time = 0;
+
     for (int k = 0; k < H_out; k++)
     {
         x = 0;
+
+        long unsigned to = memphis_get_tick();
+
         for (int l = 0; l < W_out; l++)
         {
             out_chunk = out + l*C_out + k*C_out*W_out;
@@ -235,17 +254,35 @@ void stemBlock (
             x += s*C_in;
         }
 
+        conv[conv_it++] = memphis_get_tick() - to;
+
         // send row
-        // printf("[conv] finished row (%d/%d)\n", k+1, H_out);
+        long unsigned s_to = memphis_get_tick();
         memphis_send(out + k*C_out*W_out, C_out*W_out*sizeof(type), target_id);
+        long unsigned s_tf = memphis_get_tick();
+
+        send[send_it++] = s_tf - s_to;
+        total_noc_time += (s_tf - s_to);
 
         y += s*C_in*(W_in+p);
     }
 
+    printf("--- STATS ---\n");
+
+    printf("[%d] noc_total  = %lu\n", id, total_noc_time);
+
+    PRINT_STATS(conv, H_out);
+    PRINT_STATS(send, H_out);
+
+    printf("--- END ---\n");
+
+    free(conv);
+    free(send);
     free(in_pd);
 }
 //}}}
 //{{{
+__attribute__((optimize("no-tree-vectorize","no-tree-slp-vectorize","no-tree-loop-distribute-patterns"))) __attribute__((no_builtin))
 void MFBlock (
    const int H_in,
    const int W_in,
@@ -261,6 +298,7 @@ void MFBlock (
    type x[],
    type out[],
    const int parent_id,
+   const int id,
    const int target_id
 ) {
     const int C_b11  = 12;
@@ -285,8 +323,13 @@ void MFBlock (
     int rows_b33b = 0;
     int rows_b33c = 0;
 
-    for (int k = 0; k < (H_in+20); k++)
+    unsigned *time_start  = malloc((H_in+3)*sizeof(unsigned));
+    unsigned *time_finish = malloc((H_in+3)*sizeof(unsigned));
+
+    for (int k = 0; k < (H_in+3); k++)
     {
+        time_start[k] = memphis_get_tick();
+
         // b11
         if (rows_b11 < H_in)
         {
@@ -393,14 +436,30 @@ void MFBlock (
             }
 
             // printf("[MFBlock] finished row (%d/%d)\n", rows_b33c+1, H_in);
-            
-            // send row 
+
+            // send row
+            time_finish[k] = memphis_get_tick();
             memphis_send(out + rows_b33c*C_out*W_in, C_out*W_in*sizeof(type), target_id);
 
             rows_b33c++;
         }
+        else
+        {
+            time_finish[k] = memphis_get_tick();
+        }
     }
 
+    long unsigned time_total = 0;
+    for (int k = 0; k < (H_in+3); k++)
+    {
+        printf("[%d] %d %u - %u = %u\n", id, k, time_finish[k], time_start[k], (time_finish[k]-time_start[k]));
+        time_total += (time_finish[k] - time_start[k]);
+    }
+
+    printf("[%d] time_total = %lu\n", id, time_total);
+
+    free(time_start);
+    free(time_finish);
     free(y0);
     free(y1);
     free(y2);
@@ -408,6 +467,7 @@ void MFBlock (
 }
 //}}}
 //{{{
+__attribute__((optimize("no-tree-vectorize","no-tree-slp-vectorize","no-tree-loop-distribute-patterns"))) __attribute__((no_builtin))
 void MFBlock_tran (
    const int H_in,
    const int W_in,
@@ -425,6 +485,7 @@ void MFBlock_tran (
    type x[],
    type out[], // pooled
    const int parent_id,
+   const int id,
    const int target_id
 ) {
     const int H_out = H_in / 2;
@@ -455,8 +516,13 @@ void MFBlock_tran (
     int rows_b33c = 0;
     int rows_pool = 0;
 
-    for (int k = 0; k < (H_in+20); k++)
+    unsigned *time_start  = malloc((H_in+3)*sizeof(unsigned));
+    unsigned *time_finish = malloc((H_in+3)*sizeof(unsigned));
+
+    for (int k = 0; k < (H_in+3); k++)
     {
+        time_start[k] = memphis_get_tick();
+
         // b11
         if (rows_b11 < H_in)
         {
@@ -595,15 +661,35 @@ void MFBlock_tran (
                 }
                 
                 // printf("[MFBlock_tran] finished row (%d/%d)\n", rows_pool+1, H_out);
-            
-                // send row 
+
+                // send row
+                time_finish[k] = memphis_get_tick();
                 memphis_send(out + rows_pool*C_out*W_out, C_out*W_out*sizeof(type), target_id);
 
                 rows_pool++;
             }
+            else
+            {
+                time_finish[k] = memphis_get_tick();
+            }
+        }
+        else
+        {
+            time_finish[k] = memphis_get_tick();
         }
     }
 
+    long unsigned time_total = 0;
+    for (int k = 0; k < (H_in+3); k++)
+    {
+        printf("[%d] %d %u - %u = %u\n", id, k, time_finish[k], time_start[k], (time_finish[k]-time_start[k]));
+        time_total += (time_finish[k] - time_start[k]);
+    }
+
+    printf("[%d] time_total = %lu\n", id, time_total);
+
+    free(time_start);
+    free(time_finish);
     free(y0);
     free(y1);
     free(y2);
@@ -612,6 +698,7 @@ void MFBlock_tran (
 }
 //}}}
 //{{{
+__attribute__((optimize("no-tree-vectorize","no-tree-slp-vectorize","no-tree-loop-distribute-patterns"))) __attribute__((no_builtin))
 void MFBlock_gap (
    const int H_in,
    const int W_in,
@@ -629,6 +716,7 @@ void MFBlock_gap (
    type x[],
    type out[], // pooled
    const int parent_id,
+   const int id,
    const int target_id
 ) {
     const int C_b11  = 12;
@@ -654,8 +742,13 @@ void MFBlock_gap (
     int rows_b33b = 0;
     int rows_b33c = 0;
 
-    for (int k = 0; k < (H_in+20); k++)
+    unsigned *time_start  = malloc((H_in+3)*sizeof(unsigned));
+    unsigned *time_finish = malloc((H_in+3)*sizeof(unsigned));
+
+    for (int k = 0; k < (H_in+3); k++)
     {
+        time_start[k] = memphis_get_tick();
+
         // b11
         if (rows_b11 < H_in)
         {
@@ -795,7 +888,11 @@ void MFBlock_gap (
 
             rows_b33c++;
         }
+
+        time_finish[k] = memphis_get_tick();
     }
+
+    unsigned time_div = memphis_get_tick();
 
     // GAP division
     size_t vl = 0;
@@ -811,10 +908,25 @@ void MFBlock_gap (
         out_addr += vl;
     }
 
+    time_div = memphis_get_tick() - time_div;
+
+    printf("[%d] time_div = %u\n", id, time_div);
+
+    long unsigned time_total = time_div;
+    for (int k = 0; k < (H_in+3); k++)
+    {
+        printf("[%d] %d %u - %u = %u\n", id, k, time_finish[k], time_start[k], (time_finish[k]-time_start[k]));
+        time_total += (time_finish[k] - time_start[k]);
+    }
+
+    printf("[%d] time_total = %lu\n", id, time_total);
+
     // printf("[MFBlock_gap] finished global average pooling\n");
 
     memphis_send(out, C_out*sizeof(type), target_id);
 
+    free(time_start);
+    free(time_finish);
     free(y0);
     free(y1);
     free(y2);
@@ -823,6 +935,213 @@ void MFBlock_gap (
 }
 //}}}
 //{{{
+// Vector tail half of MFBlock_tran: pairs with MFBlock_backbone (cnn_common_scalar.h)
+// running on a separate PE. Receives one full concat row (W_in*C_out elements) per
+// iteration from parent_id, runs tran_conv+relu (vector) per pixel, and every 2 rows
+// pools and streams the pooled row to target_id. Per-stage timing mirrors
+// applications/mfblock_tran/cnn_debug.h's granularity: NoC recv/send cost is tracked
+// separately from tran_conv/pool compute cost.
+__attribute__((optimize("no-tree-vectorize","no-tree-slp-vectorize","no-tree-loop-distribute-patterns"))) __attribute__((no_builtin))
+void MFBlock_tran_tail (
+   const int H_in,
+   const int W_in,
+   const int C_out,
+   const type w_tran[],
+   const type b_tran[],
+   type out[], // pooled
+   const int parent_id,
+   const int id,
+   const int target_id
+) {
+    const int H_out = H_in / 2;
+    const int W_out = W_in / 2;
+
+    type *concat_row = calloc(W_in*C_out, sizeof(type));
+    type *tran_out   = calloc(H_in*W_in*C_out, sizeof(type));
+    type *tran_chunk;
+    type *out_chunk;
+
+    int rows_b33c = 0;
+    int rows_pool = 0;
+
+    long unsigned *recv = malloc(H_in*sizeof(long unsigned));   int recv_it = 0;
+    long unsigned *tran = malloc(H_in*sizeof(long unsigned));   int tran_it = 0;
+    long unsigned *send = malloc(H_out*sizeof(long unsigned));  int send_it = 0;
+    long unsigned *pool = malloc(H_out*sizeof(long unsigned));  int pool_it = 0;
+
+    long unsigned total_noc_time = 0;
+
+    for (int k = 0; k < H_in; k++)
+    {
+        long unsigned r_to = memphis_get_tick();
+        memphis_receive(concat_row, W_in*C_out*sizeof(type), parent_id);
+        long unsigned r_tf = memphis_get_tick();
+
+        recv[recv_it++] = r_tf - r_to;
+        total_noc_time += (r_tf - r_to);
+
+        long unsigned to = memphis_get_tick();
+
+        for (int l = 0; l < W_in; l++)
+        {
+            tran_chunk = tran_out + l*C_out + rows_b33c*C_out*W_in;
+
+            conv_chunk (
+                1, 1, C_out,
+                concat_row + l*C_out,
+                w_tran,
+                1, 1, C_out,
+                tran_chunk,
+                1
+            );
+
+            int_handler(C_out, tran_chunk);
+            sum_bias(C_out, tran_chunk, b_tran);
+            relu(C_out, tran_chunk);
+        }
+
+        tran[tran_it++] = memphis_get_tick() - to;
+        rows_b33c++;
+
+        if (rows_b33c > 0 && rows_b33c % 2 == 0)
+        {
+            long unsigned p_to = memphis_get_tick();
+
+            for (int l_pool = 0; l_pool < W_out; l_pool++)
+            {
+                out_chunk = out + l_pool*C_out + rows_pool*C_out*W_out;
+
+                avg_pool_chunk(
+                    tran_out + (l_pool*2)*C_out + (rows_b33c-2)*C_out*W_in,
+                    W_in,
+                    C_out,
+                    out_chunk
+                );
+            }
+
+            pool[pool_it++] = memphis_get_tick() - p_to;
+
+            long unsigned s_to = memphis_get_tick();
+            memphis_send(out + rows_pool*C_out*W_out, C_out*W_out*sizeof(type), target_id);
+            long unsigned s_tf = memphis_get_tick();
+
+            send[send_it++] = s_tf - s_to;
+            total_noc_time += (s_tf - s_to);
+
+            rows_pool++;
+        }
+    }
+
+    printf("--- STATS ---\n");
+
+    printf("[%d] noc_total  = %lu\n", id, total_noc_time);
+
+    PRINT_STATS(recv, H_in);
+    PRINT_STATS(tran, H_in);
+    PRINT_STATS(pool, H_out);
+    PRINT_STATS(send, H_out);
+
+    printf("--- END ---\n");
+
+    free(recv);
+    free(tran);
+    free(pool);
+    free(send);
+
+    free(concat_row);
+    free(tran_out);
+}
+//}}}
+//{{{
+// Vector tail half of MFBlock_gap: same receive+tran_conv loop as MFBlock_tran_tail,
+// but accumulates a running global-average-pool sum across all rows/pixels instead
+// of pooling per-row, then divides and sends once after the last row.
+__attribute__((optimize("no-tree-vectorize","no-tree-slp-vectorize","no-tree-loop-distribute-patterns"))) __attribute__((no_builtin))
+void MFBlock_gap_tail (
+   const int H_in,
+   const int W_in,
+   const int C_out,
+   const type w_tran[],
+   const type b_tran[],
+   type out[],
+   const int parent_id,
+   const int id,
+   const int target_id
+) {
+    type *concat_row = calloc(W_in*C_out, sizeof(type));
+    type *tran_chunk = calloc(C_out, sizeof(type));
+
+    long unsigned *recv = malloc(H_in*sizeof(long unsigned)); int recv_it = 0;
+    long unsigned *tran = malloc(H_in*sizeof(long unsigned)); int tran_it = 0;
+
+    long unsigned total_noc_time = 0;
+
+    for (int k = 0; k < H_in; k++)
+    {
+        long unsigned r_to = memphis_get_tick();
+        memphis_receive(concat_row, W_in*C_out*sizeof(type), parent_id);
+        long unsigned r_tf = memphis_get_tick();
+
+        recv[recv_it++] = r_tf - r_to;
+        total_noc_time += (r_tf - r_to);
+
+        long unsigned to = memphis_get_tick();
+
+        for (int l = 0; l < W_in; l++)
+        {
+            conv_chunk (
+                1, 1, C_out,
+                concat_row + l*C_out,
+                w_tran,
+                1, 1, C_out,
+                tran_chunk,
+                1
+            );
+
+            int_handler(C_out, tran_chunk);
+            sum_bias(C_out, tran_chunk, b_tran);
+            relu(C_out, tran_chunk);
+
+            // GAP accumulator
+            for (int n = 0; n < C_out; n++) {
+                out[n] += tran_chunk[n];
+            }
+
+            memset(tran_chunk, 0, C_out*sizeof(type));
+        }
+
+        tran[tran_it++] = memphis_get_tick() - to;
+    }
+
+    // GAP division
+    for (int n = 0; n < C_out; n++)
+    {
+        out[n] >>= 4;
+    }
+
+    long unsigned s_to = memphis_get_tick();
+    memphis_send(out, C_out*sizeof(type), target_id);
+    long unsigned s_tf = memphis_get_tick();
+    total_noc_time += (s_tf - s_to);
+
+    printf("--- STATS ---\n");
+
+    printf("[%d] noc_total  = %lu\n", id, total_noc_time);
+
+    PRINT_STATS(recv, H_in);
+    PRINT_STATS(tran, H_in);
+
+    printf("--- END ---\n");
+
+    free(recv);
+    free(tran);
+
+    free(concat_row);
+    free(tran_chunk);
+}
+//}}}
+//{{{
+__attribute__((optimize("no-tree-vectorize","no-tree-slp-vectorize","no-tree-loop-distribute-patterns"))) __attribute__((no_builtin))
 void fc (
     const int INPUT_CHANNELS,
     type in[],
@@ -830,9 +1149,14 @@ void fc (
     const type b[],
     const int NEURONS,
     type out[],
-    const int parent_id
+    const int parent_id,
+    const int id
 ) {
-    // memphis_receive(in, INPUT_CHANNELS*sizeof(type), parent_id);
+    long unsigned r_to = memphis_get_tick();
+    memphis_receive(in, INPUT_CHANNELS*sizeof(type), parent_id);
+    long unsigned total_noc_time = memphis_get_tick() - r_to;
+
+    long unsigned to = memphis_get_tick();
 
     size_t vl;
     int pixel;
@@ -871,6 +1195,18 @@ void fc (
         out_addr  += vl;
         b_addr += vl;
     }
+
+    long unsigned compute[1] = { memphis_get_tick() - to };
+    long unsigned recv[1] = { total_noc_time };
+
+    printf("--- STATS ---\n");
+
+    printf("[%d] noc_total  = %lu\n", id, total_noc_time);
+
+    PRINT_STATS(recv, 1);
+    PRINT_STATS(compute, 1);
+
+    printf("--- END ---\n");
 }
 //}}}
 

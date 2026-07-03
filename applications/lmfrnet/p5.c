@@ -1,56 +1,34 @@
-// MMCBlock2_layer1
+// tran_conv + pool tail for p4's MFBlock_tran (vector PE)
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <memphis.h>
 
 #include "cnn_std.h"
+
+#define VECTOR
 #include "cnn_common.h"
 
-#include "./params/MMCBlock2_mmLayer1_branch11_conv_0_weight.h"
-#include "./params/MMCBlock2_mmLayer1_branch33a_conv_0_weight.h"
-#include "./params/MMCBlock2_mmLayer1_branch33b_conv_0_weight.h"
-#include "./params/MMCBlock2_mmLayer1_branch33c_conv_0_weight.h"
-#include "./params/MMCBlock2_mmLayer1_branch11_conv_0_bias.h"
-#include "./params/MMCBlock2_mmLayer1_branch33a_conv_0_bias.h"
-#include "./params/MMCBlock2_mmLayer1_branch33b_conv_0_bias.h"
-#include "./params/MMCBlock2_mmLayer1_branch33c_conv_0_bias.h"
+#include "./params/tran_ConvNormRelu1_conv_0_weight.h"
+#include "./params/tran_ConvNormRelu1_conv_0_bias.h"
 
 int main()
 {
     puts("[p5] starting application");
 
-    unsigned time_start;
-    unsigned time_finish;
-    
-    type x[STAGE_2_HEIGHT*STAGE_2_WIDTH*STAGE_2_CHANNELS] = {0};
-    type out[STAGE_2_HEIGHT*STAGE_2_WIDTH*(STAGE_2_CHANNELS + 24)] = {0};
-    
-    time_start = memphis_get_tick();
-    printf("[p5] starting MFBlock %u\n", time_start);
+    type out[STAGE_2_HEIGHT*STAGE_2_WIDTH*STAGE_2_CHANNELS] = {0};
 
-    MFBlock (
-        STAGE_2_HEIGHT, 
-        STAGE_2_WIDTH, 
+    MFBlock_tran_tail (
+        STAGE_1_HEIGHT,
+        STAGE_1_WIDTH,
         STAGE_2_CHANNELS,
-        MMCBlock2_mmLayer1_branch11_conv_0_weight,
-        MMCBlock2_mmLayer1_branch33a_conv_0_weight,
-        MMCBlock2_mmLayer1_branch33b_conv_0_weight,
-        MMCBlock2_mmLayer1_branch33c_conv_0_weight,
-        MMCBlock2_mmLayer1_branch11_conv_0_bias,
-        MMCBlock2_mmLayer1_branch33a_conv_0_bias,
-        MMCBlock2_mmLayer1_branch33b_conv_0_bias,
-        MMCBlock2_mmLayer1_branch33c_conv_0_bias,
-        x,
+        tran_ConvNormRelu1_conv_0_weight,
+        tran_ConvNormRelu1_conv_0_bias,
         out,
         p4,
         p5,
         p6
     );
-    
-    time_finish = memphis_get_tick();
-    printf("[p5] finished MFBlock %u\n", time_finish);
-    printf("[p5] time lapsed %u\n", time_finish-time_start);
 
     puts("[p5] finishing application");
 

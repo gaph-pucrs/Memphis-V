@@ -4,9 +4,12 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "debug.h"
+
 typedef int type;
 
 //{{{
+__attribute__((optimize("no-tree-vectorize","no-tree-slp-vectorize","no-tree-loop-distribute-patterns"))) __attribute__((no_builtin))
 void pad (
     const int H,
     const int W,
@@ -32,6 +35,7 @@ void pad (
 }
 //}}}
 //{{{
+__attribute__((optimize("no-tree-vectorize","no-tree-slp-vectorize","no-tree-loop-distribute-patterns"))) __attribute__((no_builtin))
 void sum_bias(const int C, type buf[], const type b[])
 {
     // memcpy(buf, b, C*sizeof(type));
@@ -42,6 +46,7 @@ void sum_bias(const int C, type buf[], const type b[])
 }
 //}}}
 //{{{
+__attribute__((optimize("no-tree-vectorize","no-tree-slp-vectorize","no-tree-loop-distribute-patterns"))) __attribute__((no_builtin))
 void relu(const int C, type buf[])
 {
     for (int n = 0; n < C; n++)
@@ -51,6 +56,7 @@ void relu(const int C, type buf[])
 }
 //}}}
 //{{{
+__attribute__((optimize("no-tree-vectorize","no-tree-slp-vectorize","no-tree-loop-distribute-patterns"))) __attribute__((no_builtin))
 void int_handler (const int C, type buf[])
 {
     for (int n = 0; n < C; n++)
@@ -60,6 +66,7 @@ void int_handler (const int C, type buf[])
 }
 //}}}
 //{{{
+__attribute__((optimize("no-tree-vectorize","no-tree-slp-vectorize","no-tree-loop-distribute-patterns"))) __attribute__((no_builtin))
 void avg_pool_chunk (
     const type *in,     // (0, 0)
     const int W_in,     
@@ -78,6 +85,7 @@ void avg_pool_chunk (
 }
 //}}}
 //{{{
+__attribute__((optimize("no-tree-vectorize","no-tree-slp-vectorize","no-tree-loop-distribute-patterns"))) __attribute__((no_builtin))
 void concat4_chunk (
     const int C_in,
     const type x[],
@@ -86,13 +94,18 @@ void concat4_chunk (
     const type y3[],
     type out[]
 ) {
-    memcpy(out                ,  x, C_in*sizeof(type));
-    memcpy(out + C_in         , y1,   12*sizeof(type));
-    memcpy(out + C_in + 12    , y2,    6*sizeof(type));
-    memcpy(out + C_in + 12 + 6, y3,    6*sizeof(type));
+    // Explicit element-wise copies (not memcpy): GCC's block-copy expansion
+    // ("move by pieces") can emit RVV load/store pairs for memcpy on this
+    // target independent of the no-tree-vectorize/no_builtin attributes
+    // above, since it isn't gated by either. A plain scalar loop is.
+    for (int n = 0; n < C_in; n++) out[n] = x[n];
+    for (int n = 0; n < 12; n++)   out[C_in + n] = y1[n];
+    for (int n = 0; n < 6; n++)    out[C_in + 12 + n] = y2[n];
+    for (int n = 0; n < 6; n++)    out[C_in + 12 + 6 + n] = y3[n];
 }
 //}}}
 //{{{
+__attribute__((optimize("no-tree-vectorize","no-tree-slp-vectorize","no-tree-loop-distribute-patterns"))) __attribute__((no_builtin))
 void conv_chunk (
     const int H_in,
     const int W_in, // W_in + p
@@ -125,6 +138,7 @@ void conv_chunk (
 }
 //}}}
 //{{{
+__attribute__((optimize("no-tree-vectorize","no-tree-slp-vectorize","no-tree-loop-distribute-patterns"))) __attribute__((no_builtin))
 void stemBlock (
     const int H_in,
     const int W_in,
@@ -145,7 +159,7 @@ void stemBlock (
     type *in_pd = calloc(C_in*(W_in+p)*(H_in+p), sizeof(type));
 
     if (p == 2) pad (H_in, W_in, C_in, in, in_pd);
-    else memcpy(in_pd, in, H_in*W_in*C_in*sizeof(type));
+    else { for (int n = 0; n < H_in*W_in*C_in; n++) in_pd[n] = in[n]; }
 
     int y = 0, x = 0;
     int *out_chunk;
@@ -206,6 +220,7 @@ void stemBlock (
 }
 //}}}
 //{{{
+__attribute__((optimize("no-tree-vectorize","no-tree-slp-vectorize","no-tree-loop-distribute-patterns"))) __attribute__((no_builtin))
 void MFBlock (
    const int H_in,
    const int W_in,
@@ -393,6 +408,7 @@ void MFBlock (
 }
 //}}}
 //{{{
+__attribute__((optimize("no-tree-vectorize","no-tree-slp-vectorize","no-tree-loop-distribute-patterns"))) __attribute__((no_builtin))
 void MFBlock_tran (
    const int H_in,
    const int W_in,
@@ -626,6 +642,7 @@ void MFBlock_tran (
 }
 //}}}
 //{{{
+__attribute__((optimize("no-tree-vectorize","no-tree-slp-vectorize","no-tree-loop-distribute-patterns"))) __attribute__((no_builtin))
 void MFBlock_gap (
    const int H_in,
    const int W_in,
@@ -801,7 +818,7 @@ void MFBlock_gap (
                     out[n] += tran_chunk[n];
                 }
 
-                memset(tran_chunk, 0, C_out*sizeof(type));
+                for (int n = 0; n < C_out; n++) tran_chunk[n] = 0;
             }
 
             rows_b33c++;
@@ -843,6 +860,240 @@ void MFBlock_gap (
 }
 //}}}
 //{{{
+// Backbone-only half of MFBlock_tran/MFBlock_gap: runs b11/b33a/b33b/b33c/concat
+// and streams one full concat row (W_in*C_out elements) to target_id per row,
+// instead of continuing on to tran_conv locally. Pairs with MFBlock_tran_tail /
+// MFBlock_gap_tail (cnn_common_vector.h) running on a separate PE. Per-stage
+// timing (not a single start/finish per row) mirrors
+// applications/mfblock_tran/cnn_debug.h's MFBlock_tran, so compute cost per
+// stage and NoC recv/send cost can be told apart.
+__attribute__((optimize("no-tree-vectorize","no-tree-slp-vectorize","no-tree-loop-distribute-patterns"))) __attribute__((no_builtin))
+void MFBlock_backbone (
+   const int H_in,
+   const int W_in,
+   const int C_in,
+   const type w_b11[],
+   const type w_b33a[],
+   const type w_b33b[],
+   const type w_b33c[],
+   const type b_b11[],
+   const type b_b33a[],
+   const type b_b33b[],
+   const type b_b33c[],
+   type x[],
+   const int parent_id,
+   const int id,
+   const int target_id
+) {
+    const int C_b11  = 12;
+    const int C_b33a = 12;
+    const int C_b33b =  6;
+    const int C_b33c =  6;
+    const int C_out = C_in + 24;
+
+    type *y0 = calloc((H_in+2)*(W_in+2)*12, sizeof(type));
+    type *y1 = calloc((H_in+2)*(W_in+2)*12, sizeof(type));
+    type *y2 = calloc((H_in+2)*(W_in+2)*6, sizeof(type));
+    type *y3 = calloc(H_in*W_in*6, sizeof(type));
+    type *concat_row = calloc(W_in*C_out, sizeof(type));
+
+    type *y0_chunk;
+    type *y1_chunk;
+    type *y2_chunk;
+    type *y3_chunk;
+    type *concat_chunk;
+
+    int rows_b11  = 0;
+    int rows_b33a = 0;
+    int rows_b33b = 0;
+    int rows_b33c = 0;
+
+    long unsigned *recv        = malloc(H_in*sizeof(long unsigned)); int recv_it        = 0;
+    long unsigned *b11         = malloc(H_in*sizeof(long unsigned)); int b11_it         = 0;
+    long unsigned *b33a        = malloc(H_in*sizeof(long unsigned)); int b33a_it        = 0;
+    long unsigned *b33b        = malloc(H_in*sizeof(long unsigned)); int b33b_it        = 0;
+    long unsigned *b33c_conv   = malloc(H_in*sizeof(long unsigned)); int b33c_conv_it   = 0;
+    long unsigned *b33c_concat = malloc(H_in*sizeof(long unsigned)); int b33c_concat_it = 0;
+    long unsigned *send        = malloc(H_in*sizeof(long unsigned)); int send_it        = 0;
+
+    long unsigned total_noc_time = 0;
+
+    for (int k = 0; k < (H_in+3); k++)
+    {
+        if (rows_b11 < H_in)
+        {
+            long unsigned r_to = memphis_get_tick();
+            memphis_receive(x + rows_b11*C_in*W_in, C_in*W_in*sizeof(type), parent_id);
+            long unsigned r_tf = memphis_get_tick();
+
+            recv[recv_it++] = r_tf - r_to;
+            total_noc_time += (r_tf - r_to);
+        }
+
+        // b11
+        if (rows_b11 < H_in)
+        {
+            long unsigned to = memphis_get_tick();
+
+            for (int l = 0; l < W_in; l++)
+            {
+                // y0: padded
+                y0_chunk = y0 + C_b11*(W_in+3); // initial offset
+                y0_chunk = y0_chunk + l*C_b11 + rows_b11*C_b11*(W_in+2);
+                conv_chunk (
+                    H_in, W_in, C_in, x + l*C_in + rows_b11*C_in*W_in,
+                    w_b11,
+                    H_in, W_in, C_b11, y0_chunk,
+                    1
+                );
+
+                int_handler (C_b11, y0_chunk);
+                sum_bias (C_b11, y0_chunk, b_b11);
+                relu (C_b11, y0_chunk);
+            }
+
+            b11[b11_it++] = memphis_get_tick() - to;
+            rows_b11++;
+        }
+
+        // b33a
+        if (rows_b11 >= 2 && rows_b33a < H_in)
+        {
+            long unsigned to = memphis_get_tick();
+
+            for (int l = 0; l < W_in; l++)
+            {
+                y1_chunk = y1 + C_b33a*(W_in+3);
+                y1_chunk = y1_chunk + l*C_b33a + rows_b33a*C_b33a*(W_in+2);
+                conv_chunk (
+                    H_in, W_in+2, C_b11,
+                    y0 + l*C_b11 + rows_b33a*C_b11*(W_in+2),
+                    w_b33a,
+                    H_in, W_in, C_b33a,
+                    y1_chunk,
+                    3
+                );
+
+                int_handler (C_b33a, y1_chunk);
+                sum_bias(C_b33a, y1_chunk, b_b33a);
+                relu (C_b33a, y1_chunk);
+            }
+
+            b33a[b33a_it++] = memphis_get_tick() - to;
+            rows_b33a++;
+        }
+
+        // b33b
+        if (rows_b33a >= 2 && rows_b33b < H_in)
+        {
+            long unsigned to = memphis_get_tick();
+
+            for (int l = 0; l < W_in; l++)
+            {
+                y2_chunk = y2 + C_b33b*(W_in+3);
+                y2_chunk = y2_chunk + l*C_b33b + rows_b33b*C_b33b*(W_in+2);
+                conv_chunk (
+                    H_in, W_in+2, C_b33a,
+                    y1 + l*C_b33a + rows_b33b*C_b33a*(W_in+2),
+                    w_b33b,
+                    H_in, W_in, C_b33b,
+                    y2_chunk,
+                    3
+                );
+
+                int_handler (C_b33b, y2_chunk);
+                sum_bias (C_b33b, y2_chunk, b_b33b);
+                relu (C_b33b, y2_chunk);
+            }
+
+            b33b[b33b_it++] = memphis_get_tick() - to;
+            rows_b33b++;
+        }
+
+        // b33c + concat -> stream row to target_id
+        if (rows_b33b >= 2 && rows_b33c < H_in)
+        {
+            long unsigned total_conv = 0, a;
+            long unsigned total_concat = 0, b;
+
+            for (int l = 0; l < W_in; l++)
+            {
+                y3_chunk = y3 + l*C_b33c + rows_b33c*C_b33c*W_in;
+
+                a = memphis_get_tick();
+                conv_chunk (
+                    H_in, W_in+2, C_b33b,
+                    y2 + l*C_b33b + rows_b33c*C_b33b*(W_in+2),
+                    w_b33c,
+                    H_in, W_in, C_b33c,
+                    y3_chunk,
+                    3
+                );
+
+                int_handler (C_b33c, y3_chunk);
+                sum_bias (C_b33c, y3_chunk, b_b33c);
+                relu (C_b33c, y3_chunk);
+                total_conv += memphis_get_tick() - a;
+
+                concat_chunk = concat_row + l*C_out;
+
+                b = memphis_get_tick();
+                concat4_chunk (
+                    C_in,
+                    x + l*C_in + rows_b33c*C_in*W_in,
+                    y1 + (C_b33a*(W_in+3)) + l*C_b33a + rows_b33c*C_b33a*(W_in+2),
+                    y2 + (C_b33b*(W_in+3)) + l*C_b33b + rows_b33c*C_b33b*(W_in+2),
+                    y3_chunk,
+                    concat_chunk
+                );
+                total_concat += memphis_get_tick() - b;
+            }
+
+            b33c_conv[b33c_conv_it++]     = total_conv;
+            b33c_concat[b33c_concat_it++] = total_concat;
+
+            rows_b33c++;
+
+            long unsigned s_to = memphis_get_tick();
+            memphis_send(concat_row, W_in*C_out*sizeof(type), target_id);
+            long unsigned s_tf = memphis_get_tick();
+
+            send[send_it++] = s_tf - s_to;
+            total_noc_time += (s_tf - s_to);
+        }
+    }
+
+    printf("--- STATS ---\n");
+
+    printf("[%d] noc_total  = %lu\n", id, total_noc_time);
+
+    PRINT_STATS(recv, H_in);
+    PRINT_STATS(b11, H_in);
+    PRINT_STATS(b33a, H_in);
+    PRINT_STATS(b33b, H_in);
+    PRINT_STATS(b33c_conv, H_in);
+    PRINT_STATS(b33c_concat, H_in);
+    PRINT_STATS(send, H_in);
+
+    printf("--- END ---\n");
+
+    free(recv);
+    free(b11);
+    free(b33a);
+    free(b33b);
+    free(b33c_conv);
+    free(b33c_concat);
+    free(send);
+
+    free(y0);
+    free(y1);
+    free(y2);
+    free(y3);
+    free(concat_row);
+}
+//}}}
+//{{{
+__attribute__((optimize("no-tree-vectorize","no-tree-slp-vectorize","no-tree-loop-distribute-patterns"))) __attribute__((no_builtin))
 void fc (
     const int INPUT_CHANNELS,
     type in[],

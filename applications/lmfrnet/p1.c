@@ -5,6 +5,8 @@
 #include <memphis.h>
 
 #include "cnn_std.h"
+
+#define VECTOR
 #include "cnn_common.h"
 
 #include "./dataset/image1.h"
