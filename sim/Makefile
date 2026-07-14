@@ -18,6 +18,13 @@ run-debug:
 	@echo "VFLAGS = -mrvv-vector-bits=zvl" >> ./testcase_debug/active_config.mk
 	@$(MAKE) _sim ACTIVE_TESTCASE=testcase_debug APP=$(APP) SCENARIO=$(SCENARIO)
 
+run-lmfrnet:
+      @echo "[Setup] preparing isolated environment for testcase_lmfrnet..."
+      @echo "VLEN = 128" > ./testcase_lmfrnet/active_config.mk
+      @echo "ARCH = rv32imc_zicsr_zve32x_zvl128b" >> ./testcase_lmfrnet/active_config.mk
+      @echo "VFLAGS = -mrvv-vector-bits=zvl" >> ./testcase_lmfrnet/active_config.mk
+      @$(MAKE) _sim ACTIVE_TESTCASE=testcase_lmfrnet APP=$(APP) SCENARIO=$(SCENARIO)
+
 run-scalar:
 	@echo "[Setup] preparing isolated environment for testcase_scalar..."
 	@echo "" > ./testcase_scalar/active_config.mk
