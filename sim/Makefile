@@ -15,6 +15,11 @@ run-debug:
 	@echo "VFLAGS = -mrvv-vector-bits=zvl" >> ./testcase_debug/active_config.mk
 	@$(MAKE) _sim ACTIVE_TESTCASE=testcase_debug APP=$(APP) SCENARIO=$(SCENARIO)
 
+run-scalar:
+	@echo "[Setup] preparing isolated environment for testcase_scalar..."
+	@echo "" > ./testcase_scalar/active_config.mk
+	@$(MAKE) _sim ACTIVE_TESTCASE=testcase_scalar APP=$(APP) SCENARIO=$(SCENARIO)
+
 _sim: _compile_app _deploy_scenario
 	@echo "[Simulation] starting $(ACTIVE_TESTCASE) testcase..."
 	@echo "[Simulation] deployed $(SCENARIO) scenario"
