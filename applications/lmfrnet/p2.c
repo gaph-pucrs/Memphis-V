@@ -20,8 +20,7 @@ int main()
     static type out_mf1[32*32*56] = {0};
     static type out_mf2[32*32*80] = {0};
 
-    for (int row = 0; row < 32; row++)
-        memphis_receive(out_mf1 + row*32*56, 32*56*sizeof(type), p1);
+    memphis_receive(out_mf1, sizeof(out_mf1), p1);
 
     data[0].to = memphis_get_tick();
         MFBlock(&MMCBlock1_mmLayer2_shapes, &MMCBlock1_mmLayer2_params, out_mf1, out_mf2);
