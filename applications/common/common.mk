@@ -26,10 +26,12 @@ INCMUTILS = $(DIRMUTILS)/src/include
 HDRMUTILS = $(wildcard $(DIRMUTILS)/*.h) $(wildcard $(DIRMUTILS)/**/*.h)
 LIBMUTILS = $(DIRMUTILS)/libmutils.a
 
-CFLAGS	+= -march=rv32imac_zicntr_zicsr_zihpm -mabi=ilp32 -Os -fdata-sections -ffunction-sections -flto -Wall -std=c23 -I$(SRCDIR) -I$(INCMUTILS) -I$(INCMEMPHIS)
-LDFLAGS += -L$(DIRMEMPHIS) -L$(DIRMUTILS) --specs=nano.specs -T $(DIRMEMPHIS)/memphis.ld -Wl,--gc-sections,-flto -u _getpid -march=rv32imac_zicntr_zicsr_zihpm -mabi=ilp32 -lmemphis -lmutils
+ARCH ?= rv32imac_zicntr_zicsr_zihpm
 
-all: $(TARGETS) $(ELFS) #$(LSTS)
+CFLAGS	+= -march=$(ARCH) -mabi=ilp32 -O2 $(VFLAGS) -fdata-sections -ffunction-sections -flto -Wall -std=c23 -I$(SRCDIR) -I$(INCMUTILS) -I$(INCMEMPHIS)
+LDFLAGS += -L$(DIRMEMPHIS) -L$(DIRMUTILS) --specs=nano.specs -T $(DIRMEMPHIS)/memphis.ld -Wl,--gc-sections,-flto -u _getpid -march=$(ARCH) -mabi=ilp32 $(VFLAGS) -lmemphis -lmutils
+
+all: $(TARGETS) $(ELFS) $(LSTS)
 
 $(SRCDIR)/%.txt: $(SRCDIR)/i%.bin $(SRCDIR)/d%.bin $(SRCDIR)/%.elf
 	@printf "${GREEN}Dumping to %s ...${NC}\n" "$(patsubst %.txt,%.bin,$@)"
@@ -48,9 +50,9 @@ $(SRCDIR)/i%.bin: $(SRCDIR)/%.elf
 	@printf "${GREEN}Generating binary %s ...${NC}\n" "$@"
 	@$(OBJCOPY) -j .text -O binary $< $@
 
-# $(SRCDIR)/%.lst: $(SRCDIR)/%.elf
-# 	@printf "${GREEN}Listing task: %s ...${NC}\n" "$@"
-# 	@$(OBJDUMP) -S $< > $@
+$(SRCDIR)/%.lst: $(SRCDIR)/%.elf
+	@printf "${GREEN}Listing task: %s ...${NC}\n" "$@"
+	@$(OBJDUMP) -S $< > $@
 
 $(SRCDIR)/%.elf: $(SRCDIR)/%.o $(LIBMEMPHIS) $(LIBMUTILS)
 	@printf "${GREEN}Linking %s ...${NC}\n" "$@"
