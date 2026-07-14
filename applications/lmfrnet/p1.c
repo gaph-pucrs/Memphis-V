@@ -64,18 +64,6 @@ int main()
 
     PRINT_STATS(data);
 
-    // printf("--- STATS ---\n");
-    // for (int i = 0; i<2; i++) {
-    //     printf("%u\n", data[i].lapsed);
-    // }
-
-    // printf("[p1] __atexit ptr = %p\n", (void*)__atexit);
-    // if (__atexit) {
-    //     unsigned *p = (unsigned*)__atexit;
-    //     for (int i = 0; i < 40; i++)
-    //         printf("[p1] __atexit[%d] (off %d) = %x\n", i, i*4, p[i]);
-    // }
-
     return 0;
     // _exit(0);
 }
