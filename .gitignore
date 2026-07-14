@@ -7,3 +7,5 @@
 *.txt
 *.lst
 regression/*/*
+
+sim/testcase_*
