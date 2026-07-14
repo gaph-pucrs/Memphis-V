@@ -28,8 +28,8 @@ LIBMUTILS = $(DIRMUTILS)/libmutils.a
 
 ARCH ?= rv32imac_zicntr_zicsr_zihpm
 
-CFLAGS	+= -march=$(ARCH) -mabi=ilp32 -O2 -fdata-sections -ffunction-sections -flto -Wall -std=c23 -I$(SRCDIR) -I$(INCMUTILS) -I$(INCMEMPHIS)
-LDFLAGS += -L$(DIRMEMPHIS) -L$(DIRMUTILS) --specs=nano.specs -T $(DIRMEMPHIS)/memphis.ld -Wl,--gc-sections,-flto -u _getpid -march=$(ARCH) -mabi=ilp32 -lmemphis -lmutils
+CFLAGS	+= -march=$(ARCH) -mabi=ilp32 -O2 $(VFLAGS) -fdata-sections -ffunction-sections -flto -Wall -std=c23 -I$(SRCDIR) -I$(INCMUTILS) -I$(INCMEMPHIS)
+LDFLAGS += -L$(DIRMEMPHIS) -L$(DIRMUTILS) --specs=nano.specs -T $(DIRMEMPHIS)/memphis.ld -Wl,--gc-sections,-flto -u _getpid -march=$(ARCH) -mabi=ilp32 $(VFLAGS) -lmemphis -lmutils
 
 all: $(TARGETS) $(ELFS) $(LSTS)
 
