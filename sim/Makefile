@@ -4,10 +4,6 @@ SCENARIOS	 ?= ./scenarios
 
 ACTIVE_TESTCASE ?= $(shell cat .active_testcase 2>/dev/null || echo testcase_scalar)
 
-hw-debug:
-	@echo "[Hardware] compiling RTL for debugging..."
-	@memphi5 testcase $(CONFIG_DIR)/testcase_debug.yaml
-
 hw-%:
 	@echo "[Hardware] compiling $* NoC..."
 	@memphi5 testcase $(CONFIG_DIR)/testcase_$*.yaml
