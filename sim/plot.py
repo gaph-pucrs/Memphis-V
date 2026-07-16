@@ -8,8 +8,11 @@ import seaborn as sns
 root = os.path.dirname(os.path.abspath(__file__))
 results = os.path.join(root, "results")
 
+# __target = "v128"
+__target = "scalar"
+
 __app = os.path.join(results, "lmfrnet")
-__data = os.path.join(__app, "v128.csv")
+__data = os.path.join(__app, f"{__target}.csv")
 __plots = __app
 
 data_df = pd.read_csv(__data)
@@ -32,7 +35,8 @@ color_vector = "red"
 # color_hline = "mediumspringgreen"
 color_hline = "mediumorchid"
 
-vector_tasks = [4, 6, 8]
+# vector_tasks = [4, 6, 8]
+vector_tasks = []
 it = 0
 
 palette = []
@@ -63,7 +67,8 @@ plt.yticks([1e6, 1e7, 1e8])
 
 plt.yscale("log")
 
-plt.title("LMFRNet pipeline - VLEN 128")
+# plt.title("LMFRNet pipeline - VLEN 128")
+plt.title("LMFRNet pipeline - SCALAR")
 plt.xlabel("Task")
 plt.ylabel("Cycles")
 
@@ -101,7 +106,7 @@ plt.axhline(
 )
 
 plt.savefig(
-    os.path.join(__plots, "plot_v128.png"), 
+    os.path.join(__plots, f"plot_{__target}.png"), 
     dpi=300, 
     bbox_inches="tight"
 )
