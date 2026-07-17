@@ -81,7 +81,18 @@ class Application:
 
 			self.text_sizes[task] = int(out[0])
 			self.data_sizes[task] = int(out[1])
-			self.bss_sizes[task] = int(out[2])
+
+			# `size` reports raw section sizes, missing any alignment padding the
+			# linker inserts between .data and .bss. The kernel computes the heap
+			# start as MMR_DATA_BASE + data_size + bss_size, so derive bss_size
+			# from the linker symbols instead: __bss_start == _edata (end of
+			# .data), thus _end - __bss_start includes the padding.
+			syms = {}
+			for line in check_output(["riscv64-elf-nm", path]).decode().splitlines():
+				fields = line.split()
+				if len(fields) == 3:
+					syms[fields[2]] = int(fields[0], 16)
+			self.bss_sizes[task] = syms["_end"] - syms["__bss_start"]
 
 			out = check_output(["riscv64-elf-readelf", path, "-h"]).split(b'\n')[10].split(b' ')[-1]
 			self.entry_points[task] = int(out, 16)

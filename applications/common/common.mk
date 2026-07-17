@@ -13,6 +13,7 @@ CC = riscv64-elf-gcc
 OBJDUMP = riscv64-elf-objdump
 OBJCOPY = riscv64-elf-objcopy
 SIZE    = riscv64-elf-size
+NM      = riscv64-elf-nm
 READELF = riscv64-elf-readelf
 HEXDUMP = hexdump -v -e '1/4 "%08x" "\n"'
 
@@ -35,7 +36,7 @@ $(SRCDIR)/%.txt: $(SRCDIR)/i%.bin $(SRCDIR)/d%.bin $(SRCDIR)/%.elf
 	@printf "${GREEN}Dumping to %s ...${NC}\n" "$(patsubst %.txt,%.bin,$@)"
 	@$(SIZE) -G $(patsubst %.txt,%.elf,$@) | sed -n '2p' | awk '{printf "%08x\n", $$1}' > $@
 	@$(SIZE) -G $(patsubst %.txt,%.elf,$@) | sed -n '2p' | awk '{printf "%08x\n", $$2}' >> $@
-	@$(SIZE) -G $(patsubst %.txt,%.elf,$@) | sed -n '2p' | awk '{printf "%08x\n", $$3}' >> $@
+	@$(NM) $(patsubst %.txt,%.elf,$@) | awk '$$3=="_end"{e=strtonum("0x"$$1)} $$3=="__bss_start"{b=strtonum("0x"$$1)} END{printf "%08x\n", e-b}' >> $@
 	@$(READELF) -h $(patsubst %.txt,%.elf,$@) | awk '/Entry point/ { printf "%08x\n", strtonum($$4) }' >> $@
 	@$(HEXDUMP) i$(patsubst %.txt,%.bin,$@) >> $@
 	@$(HEXDUMP) d$(patsubst %.txt,%.bin,$@) >> $@
