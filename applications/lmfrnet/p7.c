@@ -4,6 +4,10 @@
 #include <stdlib.h>
 #include <memphis.h>
 
+#if VECTOR_7
+    #define VECTOR
+#endif
+
 #include "./lmfrnet_common.h"
 #include "./lmfrnet_params.h"
 

@@ -5,6 +5,10 @@
 #include <unistd.h>
 #include <memphis.h>
 
+#if VECTOR_1
+    #define VECTOR
+#endif
+
 #include "./lmfrnet_common.h"
 #include "./lmfrnet_params.h"
 

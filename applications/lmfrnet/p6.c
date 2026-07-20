@@ -4,7 +4,9 @@
 #include <stdlib.h>
 #include <memphis.h>
 
-#define VECTOR
+#if VECTOR_6
+    #define VECTOR
+#endif
 
 #include "./lmfrnet_common.h"
 #include "./lmfrnet_params.h"

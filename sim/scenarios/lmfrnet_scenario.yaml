@@ -3,3 +3,5 @@ management:                 # Management application properties
     static_mapping: [0,0]   # Required: map mapper_task to 0x0
 apps:                       # Application properties
   - name: lmfrnet
+    instance: scalar
+    # instance: heterogeneous
