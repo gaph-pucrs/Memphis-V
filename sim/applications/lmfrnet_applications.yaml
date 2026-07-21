@@ -1,2 +1,9 @@
 apps:                             # Application properties
   - name: lmfrnet                 # Add application "lmfrnet"
+    instance: scalar
+  # - name: lmfrnet
+  #   instance: heterogeneous
+  #   definitions:
+  #     - VECTOR_4: 1
+  #     - VECTOR_6: 1
+  #     - VECTOR_8: 1
