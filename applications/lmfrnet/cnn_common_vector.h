@@ -6,6 +6,24 @@
 
 //{{{
 __attribute__((optimize("no-tree-vectorize","no-tree-slp-vectorize","no-tree-loop-distribute-patterns"))) __attribute__((no_builtin))
+void zero_fill (const int N, type buf[])
+{
+    size_t vl = 0;
+    int total;
+    type *out_addr = (type *) buf;
+
+    for (total = N; total > 0; total -= vl)
+    {
+        __asm__ volatile("vsetvli %0, %1, e32, m8, ta, ma" : "=r"(vl) : "r"(total));
+        __asm__ volatile("vmv.v.i v16, 0");
+        __asm__ volatile("vse32.v v16, (%0)" :: "r"(out_addr));
+
+        out_addr += vl;
+    }
+}
+//}}}
+//{{{
+__attribute__((optimize("no-tree-vectorize","no-tree-slp-vectorize","no-tree-loop-distribute-patterns"))) __attribute__((no_builtin))
 void pad (
     const int H,
     const int W,

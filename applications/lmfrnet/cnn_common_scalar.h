@@ -6,6 +6,17 @@
 
 //{{{
 __attribute__((optimize("no-tree-vectorize","no-tree-slp-vectorize","no-tree-loop-distribute-patterns"))) __attribute__((no_builtin))
+void zero_fill (const int N, type buf[])
+{
+    // Not memset(): GCC's block-fill expansion ("store by pieces") can emit
+    // RVV instructions for memset on this target independent of the
+    // no-tree-vectorize/no_builtin attributes, same as the memcpy case in
+    // concat4_chunk below. A plain scalar loop is gated by them.
+    for (int n = 0; n < N; n++) buf[n] = 0;
+}
+//}}}
+//{{{
+__attribute__((optimize("no-tree-vectorize","no-tree-slp-vectorize","no-tree-loop-distribute-patterns"))) __attribute__((no_builtin))
 void pad (
     const int H,
     const int W,
