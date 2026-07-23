@@ -12,7 +12,7 @@
 #include "./lmfrnet_common.h"
 #include "./lmfrnet_params.h"
 
-#include "./dataset/image1.h"
+#include "./images.h"
 
 #include "./debug.h"
 
@@ -20,22 +20,29 @@ int main()
 {
     puts("[p1] starting application");
 
-    static time data[2] = {0};
+    static time data[NUM_INFERENCES][2] = {0};
 
     static type out_stemBlock[32*32*32] = {0};
     static type out_mf1[32*32*56] = {0};
 
-    data[0].to = memphis_get_tick();
-        stemBlock(&stemBlock_shape, &stemBlock_params, image1, out_stemBlock);
-    data[0].tf = memphis_get_tick();
-    data[0].lapsed = data[0].tf - data[0].to;
+    for (int i = 0; i < NUM_INFERENCES; i++)
+    {
+        zero_fill(32*32*32, out_stemBlock);
+        // zero_fill(32*32*56, out_mf1); // unnecessary: MFBlock's out is fully
+        // overwritten by concat4_chunk every call, never accumulated onto.
 
-    data[1].to = memphis_get_tick();
-        MFBlock(&MMCBlock1_mmLayer1_shapes, &MMCBlock1_mmLayer1_params, out_stemBlock, out_mf1);
-    data[1].tf = memphis_get_tick();
-    data[1].lapsed = data[1].tf - data[1].to;
+        data[i][0].to = memphis_get_tick();
+            stemBlock(&stemBlock_shape, &stemBlock_params, images[i], out_stemBlock);
+        data[i][0].tf = memphis_get_tick();
+        data[i][0].lapsed = data[i][0].tf - data[i][0].to;
 
-    memphis_send(out_mf1, sizeof(out_mf1), p2);
+        data[i][1].to = memphis_get_tick();
+            MFBlock(&MMCBlock1_mmLayer1_shapes, &MMCBlock1_mmLayer1_params, out_stemBlock, out_mf1);
+        data[i][1].tf = memphis_get_tick();
+        data[i][1].lapsed = data[i][1].tf - data[i][1].to;
+
+        memphis_send(out_mf1, sizeof(out_mf1), p2);
+    }
 
     puts("[p1] finishing application");
 
