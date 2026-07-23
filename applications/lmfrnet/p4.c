@@ -19,21 +19,26 @@ int main()
 {
     puts("[p4] starting application");
 
-    static time data[1] = {0};
+    static time data[NUM_INFERENCES][1] = {0};
 
     static type out_mf3[32*32*104] = {0};
     static type out_tran1[32*32*104] = {0};
     static type out_pool1[16*16*104] = {0};
 
-    memphis_receive(out_mf3, sizeof(out_mf3), p3);
+    for (int i = 0; i < NUM_INFERENCES; i++)
+    {
+        memphis_receive(out_mf3, sizeof(out_mf3), p3);
 
-    data[0].to = memphis_get_tick();
-        tran_conv(&tran_ConvNormRelu1_shape, &tran_ConvNormRelu1_params, out_mf3, out_tran1);
-        avg_pool(&pool1_shape, out_tran1, out_pool1);
-    data[0].tf = memphis_get_tick();
-    data[0].lapsed = data[0].tf - data[0].to;
+        zero_fill(32*32*104, out_tran1);
 
-    memphis_send(out_pool1, sizeof(out_pool1), p5);
+        data[i][0].to = memphis_get_tick();
+            tran_conv(&tran_ConvNormRelu1_shape, &tran_ConvNormRelu1_params, out_mf3, out_tran1);
+            avg_pool(&pool1_shape, out_tran1, out_pool1);
+        data[i][0].tf = memphis_get_tick();
+        data[i][0].lapsed = data[i][0].tf - data[i][0].to;
+
+        memphis_send(out_pool1, sizeof(out_pool1), p5);
+    }
 
     puts("[p4] finishing application");
 

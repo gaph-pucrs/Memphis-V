@@ -7,16 +7,25 @@ typedef struct {
     unsigned lapsed;
 } time;
 
-#define PRINT_STATS(arr)                                          \
-    do {                                                          \
-        printf("--- STATS ---\n");                                \
-        unsigned _tot = 0;                                        \
-        size_t _len = sizeof(arr) / sizeof((arr)[0]);             \
-        for (size_t _i = 0; _i < _len; ++_i) {                    \
-            printf("%u\n", (arr)[_i].lapsed);                     \
-            _tot += (arr)[_i].lapsed;                             \
-        }                                                         \
-        printf("TOTAL: %u\n", _tot);                              \
+// arr must be time[NUM_INFERENCES][SLOTS]: one row of per-stage timing slots
+// per inference, so throughput can be read off per image and in aggregate.
+#define PRINT_STATS(arr)                                                    \
+    do {                                                                    \
+        printf("--- STATS ---\n");                                          \
+        size_t _n     = sizeof(arr) / sizeof((arr)[0]);                     \
+        size_t _slots = sizeof((arr)[0]) / sizeof((arr)[0][0]);             \
+        unsigned _grand_tot = 0;                                            \
+        for (size_t _i = 0; _i < _n; ++_i) {                                \
+            unsigned _tot = 0;                                              \
+            for (size_t _j = 0; _j < _slots; ++_j) {                        \
+                printf("%u\n", (arr)[_i][_j].lapsed);                       \
+                _tot += (arr)[_i][_j].lapsed;                               \
+            }                                                               \
+            printf("INFERENCE %zu TOTAL: %u\n", _i, _tot);                  \
+            _grand_tot += _tot;                                             \
+        }                                                                   \
+        printf("GRAND TOTAL: %u\n", _grand_tot);                            \
+        printf("AVG PER INFERENCE: %u\n", _grand_tot / (unsigned)_n);       \
     } while (0)
 
 #endif

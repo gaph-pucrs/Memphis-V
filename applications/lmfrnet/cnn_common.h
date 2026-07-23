@@ -37,4 +37,8 @@
         #include "cnn_common_vector.h"
     #endif
 
+    #ifndef NUM_INFERENCES
+        #define NUM_INFERENCES  1
+    #endif
+
 #endif
