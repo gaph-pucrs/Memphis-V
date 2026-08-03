@@ -2,7 +2,7 @@
 #define __IMAGE11_H__
 
 // class: 0 (plane)
-// predicted class: 0 (val = 0, plane)
+// predicted class: 0 (val = 97133, plane)
 const int image11[3072] = {
 -5606,
 167,

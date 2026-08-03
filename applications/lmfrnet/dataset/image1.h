@@ -2,7 +2,7 @@
 #define __IMAGE1_H__
 
 // class: 3 (cat)
-// predicted class: 3 (val = 3, cat)
+// predicted class: 3 (val = 131075, cat)
 const int image1[3072] = {
 5191,
 -1765,

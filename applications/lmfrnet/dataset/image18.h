@@ -2,7 +2,7 @@
 #define __IMAGE18_H__
 
 // class: 7 (horse)
-// predicted class: 7 (val = 7, horse)
+// predicted class: 7 (val = 124571, horse)
 const int image18[3072] = {
 -10370,
 811,
