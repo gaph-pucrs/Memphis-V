@@ -2,7 +2,7 @@
 #define __IMAGE6_H__
 
 // class: 6 (frog)
-// predicted class: 6 (val = 6, frog)
+// predicted class: 6 (val = 107439, frog)
 const int image6[3072] = {
 8526,
 -799,
