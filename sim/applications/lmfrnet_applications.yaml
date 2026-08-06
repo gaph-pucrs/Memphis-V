@@ -1,12 +1,12 @@
 apps:                             # Application properties
   - name: lmfrnet                 # Add application "lmfrnet"
-    # instance: scalar
-    # definitions:
-    #   - NUM_INFERENCES: 20
-  # - name: lmfrnet
-    instance: heterogeneous
+    instance: scalar
     definitions:
       - NUM_INFERENCES: 20
-      - VECTOR_4: 1
-      - VECTOR_6: 1
-      - VECTOR_8: 1
+  # - name: lmfrnet
+  #   instance: heterogeneous
+  #   definitions:
+  #     - NUM_INFERENCES: 20
+  #     - VECTOR_4: 1
+  #     - VECTOR_6: 1
+  #     - VECTOR_8: 1
