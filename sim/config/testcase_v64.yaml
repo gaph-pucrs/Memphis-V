@@ -11,7 +11,7 @@ hw:                         # Hardware properties
       pe: 0,0               # is connected at border PE 0x0
       port: S               # Connected at port SOUTH. Note to use a border port.
     - name: APP_INJ         # Required: Application Injector peripheral
-      pe: 4,4               # is at border PE 2x2
+      pe: 4,4               # is at border PE MxN
       port: N               # Connected at port NORTH. Note to use a border port.
   parameters:               # Optional: list of parameters to be passed to hardware build
     - TRAFFIC_DEBUG: yes    # Optional: enable NoC traffic debugging (default is on)
@@ -21,3 +21,5 @@ hw:                         # Hardware properties
     - RAM_DEBUG: no         # Optional: enable RAM access debug (default is off)
     - RS5_DEBUG: no         # Optional: enable core register bank debug (default is off)
     - DMNI_DEBUG: no        # Optional: enable DMNI timing debug (default is off)
+    - VEnable: yes
+    - VLEN: 64
