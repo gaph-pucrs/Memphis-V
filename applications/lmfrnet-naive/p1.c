@@ -19,6 +19,7 @@ int main()
     puts("[p1] starting application");
 
     static time data[NUM_INFERENCES][1] = {0};
+    static time comm[NUM_INFERENCES][1] = {0};
 
     static type out_stemBlock[32*32*32] = {0};
 
@@ -31,12 +32,19 @@ int main()
         data[i][0].tf = memphis_get_tick();
         data[i][0].lapsed = data[i][0].tf - data[i][0].to;
 
-        memphis_send(out_stemBlock, sizeof(out_stemBlock), p2);
+        comm[i][0].to = memphis_get_tick();
+            memphis_send(out_stemBlock, sizeof(out_stemBlock), p2);
+        comm[i][0].tf = memphis_get_tick();
+        comm[i][0].lapsed = comm[i][0].tf - comm[i][0].to;
     }
 
     puts("[p1] finishing application");
 
+    puts("[p1] compute:");
     PRINT_STATS(data);
+
+    puts("[p1] comm:");
+    PRINT_STATS(comm);
 
     return 0;
 }

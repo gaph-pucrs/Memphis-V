@@ -18,6 +18,7 @@ int main()
     puts("[p20] starting application");
 
     static time data[NUM_INFERENCES][1] = {0};
+    static time comm[NUM_INFERENCES][1] = {0};
 
     static type out_gap[464] = {0};
     static type out_fc[10] = {0};
@@ -26,7 +27,10 @@ int main()
 
     for (int i = 0; i < NUM_INFERENCES; i++)
     {
-        memphis_receive(out_gap, sizeof(out_gap), p19);
+        comm[i][0].to = memphis_get_tick();
+            memphis_receive(out_gap, sizeof(out_gap), p19);
+        comm[i][0].tf = memphis_get_tick();
+        comm[i][0].lapsed = comm[i][0].tf - comm[i][0].to;
 
         zero_fill(10, out_fc);
 
@@ -55,7 +59,11 @@ int main()
 
     puts("[p20] finishing application");
 
+    puts("[p20] compute:");
     PRINT_STATS(data);
+
+    puts("[p20] comm:");
+    PRINT_STATS(comm);
 
     return 0;
 }
