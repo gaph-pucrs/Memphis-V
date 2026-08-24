@@ -18,25 +18,36 @@ int main()
     puts("[p13] starting application");
 
     static time data[NUM_INFERENCES][1] = {0};
+    static time comm[NUM_INFERENCES][1] = {0};
 
     static type out_mf11[8*8*296] = {0};
     static type out_mf12[8*8*320] = {0};
 
     for (int i = 0; i < NUM_INFERENCES; i++)
     {
-        memphis_receive(out_mf11, sizeof(out_mf11), p12);
+        comm[i][0].to = memphis_get_tick();
+            memphis_receive(out_mf11, sizeof(out_mf11), p12);
+        comm[i][0].tf = memphis_get_tick();
+        comm[i][0].lapsed = comm[i][0].tf - comm[i][0].to;
 
         data[i][0].to = memphis_get_tick();
             MFBlock(&MMCBlock3_mmLayer5_shapes, &MMCBlock3_mmLayer5_params, out_mf11, out_mf12);
         data[i][0].tf = memphis_get_tick();
         data[i][0].lapsed = data[i][0].tf - data[i][0].to;
 
-        memphis_send(out_mf12, sizeof(out_mf12), p14);
+        comm[i][0].to = memphis_get_tick();
+            memphis_send(out_mf12, sizeof(out_mf12), p14);
+        comm[i][0].tf = memphis_get_tick();
+        comm[i][0].lapsed += comm[i][0].tf - comm[i][0].to;
     }
 
     puts("[p13] finishing application");
 
+    puts("[p13] compute:");
     PRINT_STATS(data);
+
+    puts("[p13] comm:");
+    PRINT_STATS(comm);
 
     return 0;
 }
