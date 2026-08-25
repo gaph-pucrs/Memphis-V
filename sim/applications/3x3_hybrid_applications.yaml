@@ -1,0 +1,8 @@
+apps:                             # Application properties
+  - name: lmfrnet                 # 9-task lmfrnet, only the transition tasks vectorized
+    instance: heterogeneous
+    definitions:
+      - NUM_INFERENCES: 20
+      - VECTOR_4: 1               # tran_conv1 + avg_pool1
+      - VECTOR_6: 1               # tran_conv2 + avg_pool2
+      - VECTOR_8: 1               # tran_conv3 + avg_pool3
