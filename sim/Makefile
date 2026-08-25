@@ -46,6 +46,25 @@ run-v256:
 	@echo "VFLAGS = -mrvv-vector-bits=zvl" >> ./testcase_v256/active_config.mk
 	@$(MAKE) _sim ACTIVE_TESTCASE=testcase_v256 APP=naive_applications SCENARIO=naive_scenario
 
+run-3x3-scalar:
+	@echo "[Setup] preparing isolated environment for testcase_3x3_scalar..."
+	@echo "" > ./testcase_3x3_scalar/active_config.mk
+	@$(MAKE) _sim ACTIVE_TESTCASE=testcase_3x3_scalar APP=3x3_scalar_applications SCENARIO=3x3_scalar_scenario
+
+run-3x3-vector:
+	@echo "[Setup] preparing isolated environment for testcase_3x3_vector..."
+	@echo "VLEN = 128" > ./testcase_3x3_vector/active_config.mk
+	@echo "ARCH = rv32imc_zicsr_zve32x_zvl128b" >> ./testcase_3x3_vector/active_config.mk
+	@echo "VFLAGS = -mrvv-vector-bits=zvl" >> ./testcase_3x3_vector/active_config.mk
+	@$(MAKE) _sim ACTIVE_TESTCASE=testcase_3x3_vector APP=3x3_vector_applications SCENARIO=3x3_vector_scenario
+
+run-3x3-hybrid:
+	@echo "[Setup] preparing isolated environment for testcase_3x3_hybrid..."
+	@echo "VLEN = 128" > ./testcase_3x3_hybrid/active_config.mk
+	@echo "ARCH = rv32imc_zicsr_zve32x_zvl128b" >> ./testcase_3x3_hybrid/active_config.mk
+	@echo "VFLAGS = -mrvv-vector-bits=zvl" >> ./testcase_3x3_hybrid/active_config.mk
+	@$(MAKE) _sim ACTIVE_TESTCASE=testcase_3x3_hybrid APP=3x3_hybrid_applications SCENARIO=3x3_hybrid_scenario
+
 run-scalar:
 	@echo "[Setup] preparing isolated environment for testcase_scalar..."
 	@echo "" > ./testcase_scalar/active_config.mk
