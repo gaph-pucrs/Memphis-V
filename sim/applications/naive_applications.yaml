@@ -1,29 +1,29 @@
 apps:                             # Application properties
-  # - name: lmfrnet-naive           # Add application "lmfrnet"
-  #   instance: scalar
-  #   definitions:
-  #     - NUM_INFERENCES: 1
-  - name: lmfrnet-naive
-    instance: vector
+  - name: lmfrnet-naive           # Add application "lmfrnet"
+    instance: scalar
     definitions:
       - NUM_INFERENCES: 1
-      - VECTOR_1: 1
-      - VECTOR_2: 1
-      - VECTOR_3: 1
-      - VECTOR_4: 1
-      - VECTOR_5: 1
-      - VECTOR_7: 1
-      - VECTOR_6: 1
-      - VECTOR_8: 1
-      - VECTOR_9: 1
-      - VECTOR_10: 1
-      - VECTOR_11: 1
-      - VECTOR_12: 1
-      - VECTOR_13: 1
-      - VECTOR_14: 1
-      - VECTOR_15: 1
-      - VECTOR_16: 1
-      - VECTOR_17: 1
-      - VECTOR_18: 1
-      - VECTOR_19: 1
-      - VECTOR_20: 1
+  # - name: lmfrnet-naive
+  #   instance: vector
+  #   definitions:
+  #     - NUM_INFERENCES: 1
+  #     - VECTOR_1: 1
+  #     - VECTOR_2: 1
+  #     - VECTOR_3: 1
+  #     - VECTOR_4: 1
+  #     - VECTOR_5: 1
+  #     - VECTOR_7: 1
+  #     - VECTOR_6: 1
+  #     - VECTOR_8: 1
+  #     - VECTOR_9: 1
+  #     - VECTOR_10: 1
+  #     - VECTOR_11: 1
+  #     - VECTOR_12: 1
+  #     - VECTOR_13: 1
+  #     - VECTOR_14: 1
+  #     - VECTOR_15: 1
+  #     - VECTOR_16: 1
+  #     - VECTOR_17: 1
+  #     - VECTOR_18: 1
+  #     - VECTOR_19: 1
+  #     - VECTOR_20: 1
