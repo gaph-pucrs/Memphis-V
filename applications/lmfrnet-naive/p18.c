@@ -20,18 +20,18 @@ int main()
     static time data[NUM_INFERENCES][1] = {0};
     static time comm[NUM_INFERENCES][1] = {0};
 
-    static type out_pool3[4*4*392] = {0};
+    static type out_mf16[4*4*416] = {0};
     static type out_mf17[4*4*440] = {0};
 
     for (int i = 0; i < NUM_INFERENCES; i++)
     {
         comm[i][0].to = memphis_get_tick();
-            memphis_receive(out_pool3, sizeof(out_pool3), p17);
+            memphis_receive(out_mf16, sizeof(out_mf16), p17);
         comm[i][0].tf = memphis_get_tick();
         comm[i][0].lapsed = comm[i][0].tf - comm[i][0].to;
 
         data[i][0].to = memphis_get_tick();
-            MFBlock(&MMCBlock4_mmLayer2_shapes, &MMCBlock4_mmLayer2_params, out_pool3, out_mf17);
+            MFBlock(&MMCBlock4_mmLayer2_shapes, &MMCBlock4_mmLayer2_params, out_mf16, out_mf17);
         data[i][0].tf = memphis_get_tick();
         data[i][0].lapsed = data[i][0].tf - data[i][0].to;
 
