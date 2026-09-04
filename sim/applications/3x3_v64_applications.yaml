@@ -1,0 +1,14 @@
+apps:                             # Application properties
+  - name: lmfrnet                 # 9-task lmfrnet, every task vectorized, VLEN 64
+    instance: v64
+    definitions:
+      - NUM_INFERENCES: 20
+      - VECTOR_1: 1
+      - VECTOR_2: 1
+      - VECTOR_3: 1
+      - VECTOR_4: 1
+      - VECTOR_5: 1
+      - VECTOR_6: 1
+      - VECTOR_7: 1
+      - VECTOR_8: 1
+      - VECTOR_9: 1
