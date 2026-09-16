@@ -36,7 +36,7 @@ int main()
 		return ret;
 
 	safe_t aes;
-	safe_init(&aes, SAFE_HASH_aes, avg, 55);
+	safe_init(&aes, SAFE_HASH_aes, bolt, 55);
 
 	while (true) {
 		static safe_infer_t message;
