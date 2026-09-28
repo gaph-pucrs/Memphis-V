@@ -1,22 +1,22 @@
 # Memphis-V
 
-Many-core Modeling Platform for Phivers (Processor Hive for RS5)
+Manycore Modeling Platform for Phivers (Processor Hive for RS5)
 
 ## About
 
-Memphis-V is a full many-core model with:
+Memphis-V is a full manycore model with:
 * [Phivers](https://github.com/gaph-pucrs/Phivers): hardware modeled in SystemVerilog
 * [MAestro](https://github.com/gaph-pucrs/MAestro): an operating system for many-cores 
 * [libmemphis](https://github.com/gaph-pucrs/libmemphis) and [libmutils](https://github.com/gaph-pucrs/libmutils): standard set of support libraries
+* [mint](https://github.com/gaph-pucrs/mint): CLI generation tools
+* [Debug tools](https://github.com/gaph-pucrs/GraphicalDebugger)
 * Standard set of applications
 * Standard Management Application
-* Scenario generation tools
-* [Debug tools](https://github.com/gaph-pucrs/GraphicalDebugger)
 
-The chip area is divided in two regions: GPPC (General Purpose Processing Cores) and Peripherals.
+The chip area is divided in two regions: GPPE (General Purpose Processing Elements) and Peripherals.
 For more information, check the [platform documentation](/docs/Platform.md) and all submodules linked above.
 
-Memphis-V is derived from several years of research in many-core platforms.
+Memphis-V is derived from several years of research in manycore platforms.
 It is also the 5th major version since [HeMPS](https://github.com/gaph-pucrs/hemps), hence the "V" suffix.
 The versions that contributed to Memphis-V are:
 * (1) [HeMPS](https://github.com/gaph-pucrs/hemps): Hermes Multiprocessor System on Chip (Cluster-based-management, MIPS core, SystemC/VHDL)
@@ -24,7 +24,7 @@ The versions that contributed to Memphis-V are:
 * (3) [HHeMPS](https://github.com/aedalzotto/hemps): Hybrid HeMPS RISC-V/MIPS (SystemC)
 * (3) [MMemphis](https://github.com/gaph-pucrs/MMemphis): Memphis without clustering (SystemC/VHDL)
 * (4) [MA-Memphis](https://github.com/gaph-pucrs/MA-Memphis): Application-Managed MMemphis with RISC-V and broadcast NoC (SystemC)
-* (5) [Memphis-V](https://github.com/gaph-pucrs/Memphis-5): RTL-modeled MA-Memphis (SystemVerilog)
+* (5) [Memphis-V](https://github.com/gaph-pucrs/Memphis-V): RTL-modeled MA-Memphis (SystemVerilog)
 
 ## Installation
 
@@ -35,7 +35,6 @@ It is possible to use the WSL to run Memphis-V platform under Windows.
 ### Pre-requisites
 
 * riscv64-elf-gcc (to build OS, libraries and applications, check [how to obtain RISCV cross-compiler](/docs/riscv.md))
-* Python >= 3.8 and needed libraries (to generate platform, check [how to obtain Python](/docs/python.md))
 * Graphical Debugger (optional, check [how to obtain Debugger](/docs/Debugger.md))
 * Either Verilator ([how to obtain Verilator](/docs/verilator.md)) or [Questa](https://eda.sw.siemens.com/en-US/ic/questa/simulation/advanced-simulator/)
 
@@ -45,20 +44,17 @@ Clone this repository **with submodules**.
 The master branch contains the latest release without development commits.
 In this example we chose the home directory to clone Memphis-V.
 
-```console
+```sh
 cd ~
-git clone https://github.com/gaph-pucrs/Memphis-5.git --recurse-submodules
+git clone https://github.com/gaph-pucrs/Memphis-V.git --recurse-submodules
 ```
 
-Export the environment variable:
-* `PATH=~/Memphis-5/bin:$PATH`
+Install `mint` according to the [README](https://github.com/gaph-pucrs/mint).
 
-Here we do it persistently with .bashrc. You can export in .zshrc or other environment file according to your needs.
-```console
-echo -e "# Memphis-V\nexport PATH=~/Memphis-5/bin:\${PATH}\n" >> ~/.bashrc
+Export the environment variable to the cloned `Memphis-V` directory:
+```sh
+export MEMPHIS_PATH=~/Memphis-V
 ```
-
-Remember to close and reopen the terminal after running or source the environment file (e.g. `source ~/.bashrc`).
 
 ## Generating the model
 
@@ -134,17 +130,17 @@ apps:                       # Application properties
 After creating the description of the testcase and the scenario, the testcase should be generated.
 This step builds the support libraries, the kernel, and all management tasks:
 ```console
-memphi5 testcase example_testcase.yaml
+mint testcase example_testcase.yaml
 ```
 
 Then, generate the application instances inside the testcase folder with the yaml description:
 ```
-memphi5 applications example_testcase example_applications.yaml
+mint applications example_testcase example_applications.yaml
 ```
 
 Then, the scenario should be generated for the testcase folder previously created:
 ```console
-memphi5 scenario example_testcase example_scenario.yaml 
+mint scenario example_testcase example_scenario.yaml 
 ```
 
 ## Simulating
@@ -152,19 +148,19 @@ memphi5 scenario example_testcase example_scenario.yaml
 To simulate the generated model, run the simulation for the generated scenario folder:
 
 ```console
-memphi5 simulate example_testcase/example_scenario
+mint simulate example_testcase/example_scenario
 ```
 
 If the graphical debugger is properly installed, it should open automatically.
 Otherwise, run the simulation without the graphical debugger:
 ```console
-memphi5 simulate example_testcase/example_scenario --nogui
+mint simulate example_testcase/example_scenario --nogui
 ```
 
 The simulation will automatically stop once all applications in the scenario are evaluated.
 You can also set a timeout for the simulation (in milliseconds):
 ```console
-memphi5 simulate example_testcase/example_scenario --timeout 50
+mint simulate example_testcase/example_scenario --timeout 50
 ```
 
 ## Evaluating and Debugging
@@ -172,7 +168,7 @@ memphi5 simulate example_testcase/example_scenario --timeout 50
 To open the debugger manually after a simulation is already done, run:
 
 ```console
-memphi5 debug example_testcase/example_scenario
+mint debug example_testcase/example_scenario
 ```
 
 ### Main window
