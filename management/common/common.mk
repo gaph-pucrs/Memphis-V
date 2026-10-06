@@ -1,4 +1,6 @@
-BLUE  =\033[0;34m
+TARGET = $(notdir $(CURDIR))
+
+BLUE =\033[0;34m
 NC   =\033[0m # No Color
 
 CONFIG = config.yaml
@@ -8,12 +10,12 @@ HEADERS = $(wildcard $(INCDIR)/*.h)
 
 DIRMEMPHIS = ../../libmemphis
 INCMEMPHIS = $(DIRMEMPHIS)/src/include
-HDRMEMPHIS = $(wildcard $(DIRMEMPHIS)/*.h) $(wildcard $(DIRMEMPHIS)/**/*.h)
+HDRMEMPHIS = $(wildcard $(DIRMEMPHIS)/src/include/*.h) $(wildcard $(DIRMEMPHIS)/src/include/memphis/*.h)
 LIBMEMPHIS = $(DIRMEMPHIS)/libmemphis.a
 
 DIRMUTILS = ../../libmutils
 INCMUTILS = $(DIRMUTILS)/src/include
-HDRMUTILS = $(wildcard $(DIRMUTILS)/*.h) $(wildcard $(DIRMUTILS)/**/*.h)
+HDRMUTILS = $(wildcard $(DIRMUTILS)/src/include/mutils/*.h)
 LIBMUTILS = $(DIRMUTILS)/libmutils.a
 
 CC = riscv64-elf-gcc
@@ -23,8 +25,8 @@ SIZE    = riscv64-elf-size
 READELF = riscv64-elf-readelf
 HEXDUMP = hexdump -v -e '1/4 "%08x" "\n"'
 
-CFLAGS	+= -march=rv32im -mabi=ilp32 -Os -fdata-sections -ffunction-sections -flto -Wall -std=c17 -I$(INCDIR) -I$(INCMEMPHIS) -I$(INCMUTILS)
-LDFLAGS += -L$(DIRMEMPHIS) -L$(DIRMUTILS) --specs=nano.specs -T $(DIRMEMPHIS)/memphis.ld -Wl,--gc-sections,-flto -u _getpid -march=rv32im -mabi=ilp32 -lmemphis -lmutils
+CFLAGS	+= -march=rv32imac_zicntr_zicsr_zihpm -mabi=ilp32 -Os -fdata-sections -ffunction-sections -flto -Wall -std=c23 -I$(INCDIR) -I$(INCMEMPHIS) -I$(INCMUTILS)
+LDFLAGS += -L$(DIRMEMPHIS) -L$(DIRMUTILS) --specs=nano.specs -T $(DIRMEMPHIS)/memphis.ld -Wl,--gc-sections,-flto -u _getpid -march=rv32imac_zicntr_zicsr_zihpm -mabi=ilp32 -lmemphis -lmutils
 
 SRC = $(wildcard $(SRCDIR)/*.c)
 OBJ = $(patsubst %.c, %.o, $(SRC))

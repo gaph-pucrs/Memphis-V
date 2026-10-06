@@ -14,6 +14,7 @@
 #pragma once
 
 #include <memphis/oda.h>
+#include <memphis/messaging.h>
 
 /**
  * @brief Verifies for a missed deadline in the observed task
@@ -25,4 +26,4 @@
  * @param id ID of the observed task
  * @param rt_diff Difference between slack time and remaining execution time
  */
-void rt_check(oda_t *decider, int id, int rt_diff);
+void rt_check(oda_t *decider, memphis_qos_monitor_t *message);

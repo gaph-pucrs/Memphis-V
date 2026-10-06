@@ -13,23 +13,27 @@
 
 #pragma once
 
+#include <stdint.h>
+
 #include "task.h"
 
 typedef struct _app {
 	int id;
+	int hash;
 	int injector;
 	size_t task_cnt;
 	size_t allocated_cnt;
 
+	unsigned release_time;
 	unsigned failed_cnt;
 	
 	task_t *tasks;
 
-	float score;
+	unsigned score;
 	bool has_static;
 } app_t;
 
-task_t *app_init(app_t *app, int id, int injector, size_t task_cnt, int *descriptor, int *communication);
+task_t *app_init(app_t *app, int id, int hash, int injector, size_t task_cnt, int *descriptor, int *communication);
 
 void app_set_failed(app_t *app, unsigned failed_cnt);
 
@@ -41,11 +45,11 @@ task_t *app_get_tasks(app_t *app, size_t *task_cnt);
 
 list_t *app_get_order(app_t *app);
 
-void app_set_score(app_t *app, float score);
+void app_set_score(app_t *app, unsigned score);
 
 unsigned app_allocated(app_t *app);
 
-void app_mapping_complete(app_t *app);
+void app_mapping_complete(app_t *app, uint32_t release_time);
 
 int app_get_injector(app_t *app);
 
@@ -66,3 +70,9 @@ int app_get_id(app_t *app);
 task_t *app_get_task(app_t *app, int taskid);
 
 void app_terminated(app_t *app);
+
+int app_get_hash(app_t *app);
+
+unsigned app_get_release_time(app_t *app);
+
+bool app_has_oda_running(app_t *app, unsigned tag);

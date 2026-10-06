@@ -26,14 +26,14 @@ LSB indicates the type of the task (Actuation, Decision, Observation or User tas
 |   |   |   |   | Observe | Decide | Act | User |
 
 The next byte indicates the Observation capabilities:
-| 15 | 14 | 13 | 12 | 11 | 10 | 9 | 8   |
-|----|----|----|----|----|----|---|-----|
-|    |    |    |    |    |    |   | QoS |
+| 15 | 14 | 13 | 12 | 11 | 10 |  9  |  8  |
+|----|----|----|----|----|----|-----|-----|
+|    |    |    |    |    |    | SEC | QoS |
 
 The next byte indicates the Decision capabilities:
-| 23 | 22 | 21 | 20 | 19 | 18 | 17 | 16  |
-|----|----|----|----|----|----|----|-----|
-|    |    |    |    |    |    |    | QoS |
+| 23 | 22 | 21 | 20 | 19 | 18 | 17  | 16  |
+|----|----|----|----|----|----|-----|-----|
+|    |    |    |    |    |    | SEC | QoS |
 
 And finally the MSB indicates the Actuation capabilities:
 | 31 | 30 | 29 | 28 | 27 | 26 | 25 | 24        |

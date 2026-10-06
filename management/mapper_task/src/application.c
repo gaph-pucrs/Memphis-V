@@ -20,12 +20,14 @@
 
 #include "mapper.h"
 
-task_t *app_init(app_t *app, int id, int injector, size_t task_cnt, int *descriptor, int *communication)
+task_t *app_init(app_t *app, int id, int hash, int injector, size_t task_cnt, int *descriptor, int *communication)
 {
 	app->id = id;
+	app->hash = hash;
 	app->injector = injector;
 	app->task_cnt = task_cnt;
 	app->allocated_cnt = 0;
+	app->release_time = -1;
 	app->failed_cnt = 0;
 	app->has_static = false;
 	app->score = 0;
@@ -176,7 +178,7 @@ list_t *app_get_order(app_t *app)
 	return order;
 }
 
-void app_set_score(app_t *app, float score)
+void app_set_score(app_t *app, unsigned score)
 {
 	app->score = score;
 }
@@ -187,13 +189,14 @@ unsigned app_allocated(app_t *app)
 	return app->allocated_cnt;
 }
 
-void app_mapping_complete(app_t *app)
+void app_mapping_complete(app_t *app, uint32_t release_time)
 {
-	int out_msg = APP_MAPPING_COMPLETE;
+	app->release_time = release_time;
+	int out_msg = (APP_MAPPING_COMPLETE << 16);
 	memphis_send_any(&out_msg, sizeof(out_msg), app->injector);
 
 	if(app->id == 0)
-		memphis_br_send_all(0, RELEASE_PERIPHERAL);
+		memphis_br_send(RELEASE_PERIPHERAL, 0);
 }
 
 int app_get_injector(app_t *app)
@@ -251,5 +254,28 @@ task_t *app_get_task(app_t *app, int taskid)
 
 void app_terminated(app_t *app)
 {
-	memphis_br_send_all(app->id, APP_TERMINATED);
+	memphis_br_send(APP_TERMINATED, app->id);
+}
+
+int app_get_hash(app_t *app)
+{
+	return app->hash;
+}
+
+unsigned app_get_release_time(app_t *app)
+{
+	return app->release_time;
+}
+
+bool app_has_oda_running(app_t *app, unsigned tag)
+{
+	for(int i = 0; i < app->task_cnt; i++){
+		task_t *task = &(app->tasks[i]);
+		if((task_get_tag(task) & tag) == 0 || !task_is_allocated(task))
+			continue;
+
+		return true;
+	}
+
+	return false;
 }

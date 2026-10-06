@@ -48,19 +48,11 @@ class Hardware:
 		definitions.define("PIPE_DEBUG",    int(self.__param_or_default("PIPE_DEBUG",     "True") == "True"))
 		definitions.define("TRAFFIC_DEBUG", int(self.__param_or_default("TRAFFIC_DEBUG",  "True") == "True"))
 		definitions.define("DMNI_DEBUG",    int(self.__param_or_default("DMNI_DEBUG",    "False") == "True"))
+		definitions.define("SAFE_DEBUG",    int(self.__param_or_default("SAFE_DEBUG",     "True") == "True"))
 
 		ports = ["" for x in range(self.PKG_N_PE_X) for y in range(self.PKG_N_PE_Y) for p in range(5)]
 		for link in self.links:
-			ports[5*(link[0][0] + self.PKG_N_PE_X*link[0][1]) + self.__port_val(link[0][2])] = link[1][0]
-			if link[1][0] == "rs":
-				with open("{}/link/rs{}x{}-{}.cfg".format(self.testcase_path, link[0][0], link[0][1], link[0][2]), "w") as file:
-					file.write("{}\n".format(self.__link_param_or_default(link[1][1], "tick_begin",   500000)))
-					file.write("{}\n".format(self.__link_param_or_default(link[1][1], "interval_min",      2)))
-					file.write("{}\n".format(self.__link_param_or_default(link[1][1], "interval_max",      5)))
-					file.write("{}\n".format(self.__link_param_or_default(link[1][1], "cycle_min",       100)))
-					file.write("{}\n".format(self.__link_param_or_default(link[1][1], "cycle_max",       500)))
-			else:
-				raise Exception("Invalid link type at {}x{}-{}".format(link[0][0], link[0][1], link[0][2]))
+			ports[5*(link[0][0] + self.PKG_N_PE_X*link[0][1]) + self.__port_val(link[0][2])] = link[1]
 
 		port_param = "{"
 		for port in ports[:-1]:
@@ -95,12 +87,6 @@ class Hardware:
 	def __param_or_default(self, key, default):
 		try:
 			return self.parameters[key]
-		except:
-			return default
-
-	def __link_param_or_default(self, dict, key, default):
-		try:
-			return dict[key]
 		except:
 			return default
 		

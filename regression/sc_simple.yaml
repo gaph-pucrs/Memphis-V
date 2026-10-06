@@ -1,0 +1,22 @@
+management:
+  - task: mapper_task
+    static_mapping: [1,1]
+  - task: migration_task
+    static_mapping: [1,2]
+  - task: rt_monitor
+    static_mapping: [0,2]
+  # - task: safe-mpeg
+  #   static_mapping: [1,3]
+  # - task: safe-monitor
+  #   static_mapping: [0,3]
+apps:
+  - name: mpeg_rt
+  #   static_mapping:
+  #     start: [2,1]
+  #     idct: [1,0]
+  #     iquant: [2,0]
+  #     ivlc: [0,1]
+  #     print: [1,1]
+  # - name: mpeg
+  # - name: prod_cons
+  # - name: prod_cons

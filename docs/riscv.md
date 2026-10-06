@@ -2,7 +2,7 @@
 
 ## RHEL (dnf-based distros) and Ubuntu (apt-based distros)
 
-For GCC 14.1.0 (the latest tested version, recommended), you must build it manually.
+For GCC 14.2.0 (the latest tested version, recommended), you must build it manually.
 First, install dependencies.
 
 For dnf-based (as root):
@@ -19,9 +19,9 @@ Export versions and directories to customize your installation:
 ```console
 export INSTALL_DIR=~/tools_memphis/riscv64-elf
 export BUILD_DIR=~/riscv64-elf
-export BINUTILS_VER=2.42
+export BINUTILS_VER=2.43
 export NEWLIB_VER=4.4.0.20231231
-export GCC_VER=14.1.0
+export GCC_VER=14.2.0
 ```
 
 Create directories for installation and for building:

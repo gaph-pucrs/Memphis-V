@@ -18,18 +18,16 @@
 #include <memphis.h>
 #include <memphis/services.h>
 
-void rt_check(oda_t *decider, int id, int rt_diff)
+void rt_check(oda_t *decider, memphis_qos_monitor_t *message)
 {
-	if(rt_diff < 0){
-		printf("Deadline violation detected in task %d\n", id);
+	int32_t rt_diff = message->slack_time - message->remaining_exec_time;
+	if (rt_diff < 0) {
+		printf("Deadline violation detected in task %d\n", message->task);
 
-		if(oda_is_enabled(decider)){
-			int msg[] = {
-				OBSERVE_PACKET,
-				id,
-				rt_diff
-			};
-			memphis_send_any(msg, sizeof(msg), oda_get_id(decider));
-		}
+		qos_analyze_t msg;
+		msg.id 		= message->task;
+		msg.service = QOS_ANALYZE;
+		msg.rt_diff = rt_diff;
+		memphis_send_any(&msg, sizeof(qos_analyze_t), oda_get_id(decider));
 	}
 }

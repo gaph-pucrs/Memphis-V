@@ -53,13 +53,7 @@ class Testcase:
 		links = []
 		try:
 			for link in yaml["hw"]["links"]:
-				param = {}
-				try:
-					for parameter in link["parameters"]:
-						param[str(list(parameter.keys())[0])] = str(list(parameter.values())[0])
-				except:
-					pass
-				links.append(((link["pe"][0], link["pe"][1], link["port"]), (link["trojan"], param)))
+				links.append(((link["pe"][0], link["pe"][1], link["port"]), link["trojan"]))
 		except:
 			pass
 				
@@ -99,8 +93,6 @@ class Testcase:
 
 		makedirs(self.base_dir, exist_ok=True)
 		copyfile(self.base, self.file)
-
-		makedirs("{}/link".format(self.base_dir), exist_ok=True)
 
 		self.libs.copy()
 		self.kernel.copy()
@@ -158,7 +150,7 @@ class Testcase:
 			with open("{}/debug/services.cfg".format(self.base_dir), "w") as cfg:
 				for line in services:
 					words = line.split()
-					if "#define" in words and len(words) > 2:
+					if len(words) > 2 and "#define" in words:
 						key = words[1]
 						value = 0
 						value = int(words[2], base=16)
@@ -167,8 +159,8 @@ class Testcase:
 				services.close()
 
 				cfg.write("\n")
-				cfg.write("$TASK_ALLOCATION_SERVICE 40 23\n")
-				cfg.write("$TASK_TERMINATED_SERVICE 70 23\n")
+				cfg.write("$TASK_ALLOCATION_SERVICE 42 23\n")
+				cfg.write("$TASK_TERMINATED_SERVICE 06 23\n")
 
 	def __create_cpu(self):
 		with open("{}/debug/cpu.cfg".format(self.base_dir), "w") as cfg:

@@ -21,7 +21,6 @@
  * 
  * @param tasks LRU queue of tasks
  * @param actuator Pointer to the ODA actuator
- * @param id ID of the monitored message task
- * @param remaining Slack time remaining for the task
+ * @param message Pointer to message
  */
-void mt_check_rt(lru_t *tasks, oda_t *actuator, int id, int remaining);
+void mt_check_rt(lru_t *tasks, oda_t *actuator, qos_analyze_t *message);
