@@ -21,24 +21,24 @@
 #include "cnn_std.h"
 #include "cnn_common.h"
 
-#include "p7_weights.h"
+#include "p7_5_weights.h"
 
 #define CHANNEL 5
 
 int main()
 {
-	puts("Inicio da aplicacao p7_5");
+	puts("[P7] Inicio da aplicacao p7_5");
     int i;
 
     int IN_DEPTH_4_LOCAL = (IN_DEPTH_4/P7_AMONT_OF_PES);
 
-	unsigned *time_rec  = malloc(IN_DEPTH_4_LOCAL*sizeof(unsigned));
-	unsigned *time_recd = malloc(IN_DEPTH_4_LOCAL*sizeof(unsigned));
-	unsigned *time_pad  = malloc(IN_DEPTH_4_LOCAL*sizeof(unsigned));
+	unsigned int *time_rec  = malloc(IN_DEPTH_4_LOCAL*sizeof(unsigned int));
+	unsigned int *time_recd = malloc(IN_DEPTH_4_LOCAL*sizeof(unsigned int));
+	unsigned int *time_pad  = malloc(IN_DEPTH_4_LOCAL*sizeof(unsigned int));
 
-    unsigned *time_start  = malloc(OUT_DEPTH_4*sizeof(unsigned));
-    unsigned *time_finish = malloc(OUT_DEPTH_4*sizeof(unsigned));
-    unsigned *time_sent   = malloc(OUT_DEPTH_4*sizeof(unsigned));
+    unsigned int *time_start  = malloc(OUT_DEPTH_4*sizeof(unsigned int));
+    unsigned int *time_finish = malloc(OUT_DEPTH_4*sizeof(unsigned int));
+    unsigned int *time_sent   = malloc(OUT_DEPTH_4*sizeof(unsigned int));
 
 	int *msg = malloc(P6_MSG_SIZE*sizeof(int));
 
@@ -67,18 +67,18 @@ int main()
         exit(EXIT_FAILURE);
     };
 
-	printf("Started P7_5 - Ticks = %d\n\n", memphis_get_tick());
+	printf("[P7] Started P7_5 - Ticks = %u\n\n", memphis_get_tick());
 
     /******************************** Receive ***********************************/
     for (unsigned i_channel = 0; i_channel < IN_DEPTH_4_LOCAL; i_channel += 1)
     {
         time_rec[i_channel] = memphis_get_tick();
-        printf("Receiving channel %d - Ticks = %d\n", i_channel, time_rec[i_channel]);
+        printf("[P7] Receiving channel %d - Ticks = %u\n", i_channel, time_rec[i_channel]);
 
         memphis_receive(msg, P6_MSG_SIZE*sizeof(int), p6);
 
         time_recd[i_channel] = memphis_get_tick();
-        printf("Received channel %d - Ticks = %d\n", i_channel, time_recd[i_channel]);
+        printf("[P7] Received channel %d - Ticks = %u\n", i_channel, time_recd[i_channel]);
 
         for(i = 0; i < P6_MSG_SIZE; i++){
             int index = i + (i_channel * OUT_CONV_HEIGHT_3 * OUT_CONV_WIDTH_3);
@@ -88,7 +88,7 @@ int main()
         pad(&out_3[i_channel * OUT_CONV_HEIGHT_3 * OUT_CONV_WIDTH_3], &in_4[i_channel * IN_HEIGHT_4 * IN_WIDTH_4], OUT_CONV_HEIGHT_3, OUT_CONV_WIDTH_3, 1, PAD_IN_4);
 
         time_pad[i_channel] = memphis_get_tick();
-        printf("Pad channel %d - Ticks = %d\n", i_channel, time_pad[i_channel]);
+        printf("[P7] Pad channel %d - Ticks = %u\n", i_channel, time_pad[i_channel]);
     }
 
     free(out_3);
@@ -101,7 +101,7 @@ int main()
 		}
 
         time_start[o_channel] = memphis_get_tick();
-        printf("Starting channel %d - Ticks = %d\n", o_channel, time_start[o_channel]);
+        printf("[P7] Starting channel %d - Ticks = %u\n", o_channel, time_start[o_channel]);
 
         for (int i_channel = 0; i_channel < IN_DEPTH_4_LOCAL; i_channel++)
         {
@@ -115,23 +115,23 @@ int main()
         }
 
         time_finish[o_channel] = memphis_get_tick();
-        printf("Finished channel %d - Ticks = %d\n", o_channel, time_finish[o_channel]);
+        printf("[P7] Finished channel %d - Ticks = %u\n", o_channel, time_finish[o_channel]);
 
         /* Send partial result to p8 */
 		memphis_send(out_slice, P7_MSG_SIZE*sizeof(int), p8);
 
         time_sent[o_channel] = memphis_get_tick();
-        printf("Sent channel %d - Ticks = %d\n\n", o_channel, time_sent[o_channel]);
+        printf("[P7] Sent channel %d - Ticks = %u\n\n", o_channel, time_sent[o_channel]);
     }
 
     /******************************** Finish ***********************************/
-	printf("Finished P7_5 - Ticks = %d\n\n", memphis_get_tick());
+	printf("[P7] Finished P7_5 - Ticks = %u\n\n", memphis_get_tick());
 
     printf("[(receiving, received, pad)]\n\n");
     printf("[\n");
 	for (int i_channel = 0; i_channel < IN_DEPTH_4_LOCAL; i_channel++)
     {
-        printf("(%d, %d, %d)", time_rec[i_channel], time_recd[i_channel], time_pad[i_channel]);
+        printf("(%u, %u, %u)", time_rec[i_channel], time_recd[i_channel], time_pad[i_channel]);
         if (i_channel+1 != IN_DEPTH_4_LOCAL) {
             printf(",");
         }
@@ -141,7 +141,7 @@ int main()
 
     for (int o_channel = 0; o_channel < OUT_DEPTH_4; o_channel++)
     {
-        printf("(%d, %d, %d)", time_start[o_channel], time_finish[o_channel], time_sent[o_channel]);
+        printf("(%u, %u, %u)", time_start[o_channel], time_finish[o_channel], time_sent[o_channel]);
         if (o_channel+1 != OUT_DEPTH_4) {
             printf(",");
         }
@@ -149,7 +149,7 @@ int main()
     }
     printf("]\n\n");
 
-    puts("Fim da aplicacao p7_5");
+    puts("[P7] Fim da aplicacao p7_5");
 
 	return 0;
 }

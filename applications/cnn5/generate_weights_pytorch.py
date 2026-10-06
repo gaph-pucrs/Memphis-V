@@ -6,16 +6,16 @@ Usage:
     python3 generate_weights_pytorch.py
 
 Outputs (written to same directory as this script):
-    p1_0_weights.h, p1_1_weights.h, p1_2_weights.h  (Conv1, 3 PEs, 1 in-ch each)
-    p2_bias.h                                         (Conv1 bias, 64 values)
-    p3_weights.h                                      (Conv2, 4 PEs, 16 in-ch each)
-    p4_bias.h                                         (Conv2 bias, 192 values)
-    p5_weights.h                                      (Conv3, 6 PEs, 32 in-ch each)
-    p6_bias.h                                         (Conv3 bias, 384 values)
-    p7_weights.h                                      (Conv4, 6 PEs, 64 in-ch each)
-    p8_bias.h                                         (Conv4 bias, 256 values)
-    p9_weights.h                                      (Conv5, 4 PEs, 64 in-ch each)
-    p10_bias.h                                        (Conv5 bias, 256 values)
+    p1_0_weights.h, p1_1_weights.h, p1_2_weights.h        (Conv1, 3 PEs, 1 in-ch each)
+    p2_bias.h                                               (Conv1 bias, 64 values)
+    p3_0_weights.h .. p3_7_weights.h                       (Conv2, 8 PEs, 8 in-ch each)
+    p4_bias.h                                               (Conv2 bias, 192 values)
+    p5_0_weights.h .. p5_3_weights.h                       (Conv3, 4 PEs, 48 in-ch each)
+    p6_bias.h                                               (Conv3 bias, 384 values)
+    p7_0_weights.h .. p7_5_weights.h                       (Conv4, 6 PEs, 64 in-ch each)
+    p8_bias.h                                               (Conv4 bias, 256 values)
+    p9_0_weights.h .. p9_3_weights.h                       (Conv5, 4 PEs, 64 in-ch each)
+    p10_bias.h                                              (Conv5 bias, 256 values)
 
 AlexNet torchvision feature indices:
     features[0]  : Conv2d(3,   64, 11, stride=4, padding=2)  → Layer 1
@@ -35,24 +35,27 @@ SCALE = 1024
 OUT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 LAYER_CONFIGS = [
-    # (feature_idx, out_depth, in_depth, kh, kw, num_pes, weight_var, weight_file, bias_var, bias_file, per_pe)
-    # per_pe=True → write one file per PE; per_pe=False → write single shared file
+    # per_pe=True → write one file per PE; each file has only that PE's input channels
     dict(feat=0,  out_d=64,  in_d=3,   kh=11, kw=11, n_pes=3,
-         w_var="weights_1", b_var="bias_1",  b_file="p2_bias.h",
+         b_var="bias_1", b_file="p2_bias.h",
          per_pe=True,
-         pe_files=[("p1_0_weights.h","weights_1"), ("p1_1_weights.h","weights_1"), ("p1_2_weights.h","weights_1")]),
-    dict(feat=3,  out_d=192, in_d=64,  kh=5,  kw=5,  n_pes=4,
-         w_var="weights_2", w_file="p3_weights.h",
-         b_var="bias_2",   b_file="p4_bias.h",  per_pe=False),
-    dict(feat=6,  out_d=384, in_d=192, kh=3,  kw=3,  n_pes=6,
-         w_var="weights_3", w_file="p5_weights.h",
-         b_var="bias_3",   b_file="p6_bias.h",  per_pe=False),
+         pe_files=[(f"p1_{i}_weights.h", "weights_1") for i in range(3)]),
+    dict(feat=3,  out_d=192, in_d=64,  kh=5,  kw=5,  n_pes=8,
+         b_var="bias_2", b_file="p4_bias.h",
+         per_pe=True,
+         pe_files=[(f"p3_{i}_weights.h", "weights_2") for i in range(8)]),
+    dict(feat=6,  out_d=384, in_d=192, kh=3,  kw=3,  n_pes=4,
+         b_var="bias_3", b_file="p6_bias.h",
+         per_pe=True,
+         pe_files=[(f"p5_{i}_weights.h", "weights_3") for i in range(4)]),
     dict(feat=8,  out_d=256, in_d=384, kh=3,  kw=3,  n_pes=6,
-         w_var="weights_4", w_file="p7_weights.h",
-         b_var="bias_4",   b_file="p8_bias.h",  per_pe=False),
+         b_var="bias_4", b_file="p8_bias.h",
+         per_pe=True,
+         pe_files=[(f"p7_{i}_weights.h", "weights_4") for i in range(6)]),
     dict(feat=10, out_d=256, in_d=256, kh=3,  kw=3,  n_pes=4,
-         w_var="weights_5", w_file="p9_weights.h",
-         b_var="bias_5",   b_file="p10_bias.h", per_pe=False),
+         b_var="bias_5", b_file="p10_bias.h",
+         per_pe=True,
+         pe_files=[(f"p9_{i}_weights.h", "weights_5") for i in range(4)]),
 ]
 
 

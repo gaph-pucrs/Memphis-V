@@ -24,11 +24,11 @@
 
 int main()
 {
-	puts("Inicio da aplicacao p1");
+	puts("[P1] Inicio da aplicacao p1");
 
-    unsigned *time_start  = malloc(OUT_DEPTH_1*sizeof(unsigned));
-    unsigned *time_finish = malloc(OUT_DEPTH_1*sizeof(unsigned));
-    unsigned *time_sent   = malloc(OUT_DEPTH_1*sizeof(unsigned));
+    unsigned long long *time_start  = malloc(OUT_DEPTH_1*sizeof(unsigned long long));
+    unsigned long long *time_finish = malloc(OUT_DEPTH_1*sizeof(unsigned long long));
+    unsigned long long *time_sent   = malloc(OUT_DEPTH_1*sizeof(unsigned long long));
 
 	size_t alloc_size = P1_MSG_SIZE;
     int *out_slice = malloc(alloc_size * sizeof(int));
@@ -38,7 +38,7 @@ int main()
         exit(EXIT_FAILURE);
     };
 
-    printf("Starting P1 - Ticks = %d\n\n", memphis_get_tick());
+    printf("[P1] Starting P1 - Ticks = %u\n\n", memphis_get_tick());
 
 	for (int o_channel = 0; o_channel < OUT_DEPTH_1; o_channel++)
     {
@@ -48,7 +48,7 @@ int main()
 		}
 
         time_start[o_channel] = memphis_get_tick();
-        printf("Starting channel %d - Ticks = %d\n", o_channel, time_start[o_channel]);
+        printf("[P1] Starting channel %d - Ticks = %u\n", o_channel, time_start[o_channel]);
 
         for (int i_channel = 0; i_channel < IN_DEPTH_1/P1_AMONT_OF_PES; i_channel++)
         {
@@ -62,29 +62,29 @@ int main()
         }
 
         time_finish[o_channel] = memphis_get_tick();
-        printf("Finished channel %d - Ticks = %d\n", o_channel, time_finish[o_channel]);
+        printf("[P1] Finished channel %d - Ticks = %u\n", o_channel, time_finish[o_channel]);
 
         // Send result
 		memphis_send(out_slice, P1_MSG_SIZE*sizeof(int), p2);
 
         time_sent[o_channel] = memphis_get_tick();
-        printf("Sent channel %d - Ticks = %d\n\n", o_channel, time_sent[o_channel]);
+        printf("[P1] Sent channel %d - Ticks = %u\n\n", o_channel, time_sent[o_channel]);
     }
 
-    printf("Finished P1 - Ticks = %d\n\n", memphis_get_tick());
+    printf("[P1] Finished P1 - Ticks = %u\n\n", memphis_get_tick());
 
     printf("[(start, finish, sent)]\n\n");
     printf("[\n");
 	for (int o_channel = 0; o_channel < OUT_DEPTH_1; o_channel++)
     {
-        printf("(%d, %d, %d)", time_start[o_channel], time_finish[o_channel], time_sent[o_channel]);
+        printf("(%u, %u, %u)", time_start[o_channel], time_finish[o_channel], time_sent[o_channel]);
         if (o_channel+1 != OUT_DEPTH_1) {
-            printf(",");
+            printf(" ,");
         }
         printf("\n");
     }
     printf("]\n\n");
 
-	puts("Fim da aplicacao p1");
+	puts("[P1] Fim da aplicacao p1");
 	return 0;
 }

@@ -129,11 +129,11 @@
 #endif
 
 #ifndef P3_AMONT_OF_PES
-    #define P3_AMONT_OF_PES	 4
+    #define P3_AMONT_OF_PES	 8
 #endif
 
 #ifndef P5_AMONT_OF_PES
-    #define P5_AMONT_OF_PES	 6
+    #define P5_AMONT_OF_PES	 4
 #endif
 
 #ifndef P7_AMONT_OF_PES

@@ -19,7 +19,7 @@
 #include "cnn_std.h"
 #include "cnn_common.h"
 
-#include "p3_1_weights.h"
+#include "p3_6_weights.h"
 
 #define CHANNEL 0
 
