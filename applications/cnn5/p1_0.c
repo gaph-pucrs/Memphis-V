@@ -26,9 +26,9 @@ int main()
 {
 	puts("[P1] Inicio da aplicacao p1");
 
-    unsigned long long *time_start  = malloc(OUT_DEPTH_1*sizeof(unsigned long long));
-    unsigned long long *time_finish = malloc(OUT_DEPTH_1*sizeof(unsigned long long));
-    unsigned long long *time_sent   = malloc(OUT_DEPTH_1*sizeof(unsigned long long));
+    unsigned int *time_start  = malloc(OUT_DEPTH_1*sizeof(unsigned int));
+    unsigned int *time_finish = malloc(OUT_DEPTH_1*sizeof(unsigned int));
+    unsigned int *time_sent   = malloc(OUT_DEPTH_1*sizeof(unsigned int));
 
 	size_t alloc_size = P1_MSG_SIZE;
     int *out_slice = malloc(alloc_size * sizeof(int));
@@ -79,7 +79,7 @@ int main()
     {
         printf("(%u, %u, %u)", time_start[o_channel], time_finish[o_channel], time_sent[o_channel]);
         if (o_channel+1 != OUT_DEPTH_1) {
-            printf(" ,");
+            printf(",");
         }
         printf("\n");
     }
