@@ -14,3 +14,6 @@
 	path = Phivers
 	url = https://github.com/gaph-pucrs/Phivers
 	branch = master
+[submodule "mint"]
+	path = mint
+	url = https://github.com/gaph-pucrs/mint
