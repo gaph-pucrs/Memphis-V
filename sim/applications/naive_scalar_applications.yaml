@@ -1,0 +1,5 @@
+apps:                             # Application properties
+  - name: lmfrnet-naive           # 20-task lmfrnet, every task scalar
+    instance: scalar
+    definitions:
+      - NUM_INFERENCES: 1
