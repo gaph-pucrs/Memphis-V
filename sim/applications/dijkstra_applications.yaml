@@ -1,2 +1,0 @@
-apps:                             # Application properties
-  - name: dijkstra                # Add application "dijkstra"
