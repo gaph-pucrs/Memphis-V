@@ -21,5 +21,7 @@ hw:                         # Hardware properties
     - RAM_DEBUG: no         # Optional: enable RAM access debug (default is off)
     - RS5_DEBUG: no         # Optional: enable core register bank debug (default is off)
     - DMNI_DEBUG: no        # Optional: enable DMNI timing debug (default is off)
+    - MEM_PROFILE: yes      # Optional: per-PE memory occupancy profiling (default is off)
+    - MEM_PROFILE_BLOCK: 4096 # Optional: profiling granularity in bytes (default is 4096)
     - VEnable: yes
     - VLEN: 64
