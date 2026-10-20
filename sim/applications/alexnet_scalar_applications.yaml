@@ -1,0 +1,5 @@
+apps:                             # Application properties
+  - name: alexnet                 # C_in-split alexnet (conv PEs + one join per layer), every task scalar
+    instance: scalar
+    definitions:
+      - NUM_INFERENCES: 1
