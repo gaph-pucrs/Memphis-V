@@ -64,29 +64,31 @@ Create a new yaml file in a sandbox folder.
 Here the example name will be example_testcase.yaml.
 The file should contain:
 ```yaml
-simulation:                 # Optional: simulation parameters
-  simulator: verilator      # Optional: verilator (default) or vsim
-  trace: no                 # Optional: generate wave trace (default is off)
-hw:                         # Hardware properties
-  page_size_inst_KB: 32     # Size of each instruction memory page (maximum task instruction size)
-  page_size_data_KB: 16     # Size of each task memory page (maximum task data size)
-  tasks_per_PE: 4           # Maximum number of tasks in the same PE (will define memory size)
-  mpsoc_dimension: [3,3]    # Dimension of the many-core [X, Y]
-  Peripherals:              # Attached peripherals
-    - name: MA_INJ          # Requided: MA Injector peripheral
-      pe: 0,0               # is connected at border PE 0x0
-      port: S               # Connected at port SOUTH. Note to use a border port.
-    - name: APP_INJ         # Required: Application Injector peripheral
-      pe: 2,2               # is at border PE 2x2
-      port: N               # Connected at port NORTH. Note to use a border port.
-  parameters:               # Optional: list of parameters to be passed to hardware build
-    - TRAFFIC_DEBUG: yes    # Optional: enable NoC traffic debugging (default is on)
-    - UART_DEBUG: yes       # Optional: enable application stdout to log files (default is on)
-    - SCHED_DEBUG: yes      # Optional: enable scheduler debugging (default is on)
-    - PIPE_DEBUG: yes       # Optional: enable messagin protocol debug (default is on)
-    - RAM_DEBUG: no         # Optional: enable RAM access debug (default is off)
-    - RS5_DEBUG: no         # Optional: enable core register bank debug (default is off)
-    - DMNI_DEBUG: no        # Optional: enable DMNI timing debug (default is off)
+simulation:                   # Optional: simulation parameters
+  simulator: verilator        # Optional: verilator (default) or vsim
+  trace: no                   # Optional: generate wave trace (default is off)
+hw:                           # Hardware properties
+  page_size_inst_KB: 32       # Size of each instruction memory page (maximum task instruction size)
+  page_size_data_KB: 16       # Size of each task memory page (maximum task data size)
+  tasks_per_PE: 4             # Maximum number of tasks in the same PE (will define memory size)
+  mpsoc_dimension: [3,3]      # Dimension of the many-core [X, Y]
+  Peripherals:                # Attached peripherals
+    - name: MA_INJ            # Requided: MA Injector peripheral
+      pe: 0,0                 # is connected at border PE 0x0
+      port: S                 # Connected at port SOUTH. Note to use a border port.
+    - name: APP_INJ           # Required: Application Injector peripheral
+      pe: 2,2                 # is at border PE 2x2
+      port: N                 # Connected at port NORTH. Note to use a border port.
+  parameters:                 # Optional: list of parameters to be passed to hardware build
+    - TRAFFIC_DEBUG: yes      # Optional: enable NoC traffic debugging (default is on)
+    - UART_DEBUG: yes         # Optional: enable application stdout to log files (default is on)
+    - SCHED_DEBUG: yes        # Optional: enable scheduler debugging (default is on)
+    - PIPE_DEBUG: yes         # Optional: enable messagin protocol debug (default is on)
+    - RAM_DEBUG: no           # Optional: enable RAM access debug (default is off)
+    - RS5_DEBUG: no           # Optional: enable core register bank debug (default is off)
+    - DMNI_DEBUG: no          # Optional: enable DMNI timing debug (default is off)
+    - MEM_PROFILE: no         # Optional: per-PE memory occupancy profiling (default is off)
+    - MEM_PROFILE_BLOCK: 4096 # Optional: profiling granularity in bytes (default is 4096)
 ```
 
 The applications description contains a list of **possible** applications to evaluate in a scenario.
