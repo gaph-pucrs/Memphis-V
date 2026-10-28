@@ -1,0 +1,7 @@
+apps:                             # Application properties
+  - name: alexnet                 # C_in-split alexnet (conv PEs + one join per layer), every task vectorized
+    instance: v128
+    definitions:
+      - NUM_INFERENCES: 1
+      - VECTOR: 1                 # cnn_common.h: RVV kernels
+      - VECTOR_OPT: 1             # the optimized ones (cnn_common_vector_opt.h), as in RS5's *-mul runs
