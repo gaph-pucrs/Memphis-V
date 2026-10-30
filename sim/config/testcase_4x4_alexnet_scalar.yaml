@@ -2,9 +2,9 @@ simulation:                   # Optional: simulation parameters
   simulator: verilator        # Optional: verilator (default) or vsim
   trace: no                   # Optional: generate wave trace (default is off)
 hw:                           # Hardware properties
-  page_size_inst_KB: 4096     # Size of each instruction memory page (maximum task instruction size)
-  page_size_data_KB: 4096     # Size of each task memory page (maximum task data size)
-  tasks_per_PE: 2             # 16 PEs, 30 alexnet tasks + mapper_task: needs 2 slots per PE
+  page_size_inst_KB: 262144   # 256 MiB: MAestro uses the instruction page size as the data page offset (paging.c:31)
+  page_size_data_KB: 262144   # 256 MiB: the classifier holds 224 MiB of fc6-8 weights
+  tasks_per_PE: 2             # 16 PEs, 31 alexnet tasks + mapper_task: needs 2 slots per PE (at most 3: 1 GiB data window)
   mpsoc_dimension: [4,4]      # Dimension of the many-core [X, Y]
   Peripherals:                # Attached peripherals
     - name: MA_INJ            # Requided: MA Injector peripheral
@@ -18,8 +18,6 @@ hw:                           # Hardware properties
     - UART_DEBUG: yes         # Optional: enable application stdout to log files (default is on)
     - SCHED_DEBUG: yes        # Optional: enable scheduler debugging (default is on)
     - PIPE_DEBUG: yes         # Optional: enable messagin protocol debug (default is on)
-    - RAM_DEBUG: no           # Optional: enable RAM access debug (default is off)
-    - RS5_DEBUG: no           # Optional: enable core register bank debug (default is off)
     - DMNI_DEBUG: no          # Optional: enable DMNI timing debug (default is off)
     - MEM_PROFILE: yes        # Optional: per-PE memory occupancy profiling (default is off)
     - MEM_PROFILE_BLOCK: 4096 # Optional: profiling granularity in bytes (default is 4096)

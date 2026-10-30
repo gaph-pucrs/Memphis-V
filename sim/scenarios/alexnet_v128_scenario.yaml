@@ -35,3 +35,4 @@ apps:                       # Application properties
       c5_1: [2,0]
       c5_2: [1,3]
       c5_3: [0,3]
+      classifier: [0,0]     # the only free slot (shares 0x0 with mapper_task); 6 hops from j5, 36 KB message
