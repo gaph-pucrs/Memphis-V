@@ -6,7 +6,7 @@
 // in the same order, or the classifier task after conv5), and includes its bias
 // (params/biasL.h). The join adds up the PEs' partial sums, applies conv_join (shift, bias,
 // relu) and the following maxpool, if any, prints the checksums, then sends each target its
-// contiguous block of channels.
+// contiguous block of channels. Each step has its own compute slot.
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -48,8 +48,9 @@ int main()
 {
     puts(TAG " starting application");
 
-    static time data[NUM_INFERENCES][1] = {0};
-    static time comm[NUM_INFERENCES][1] = {0};
+    static time data[NUM_INFERENCES][4] = {0};  // partial sum, shift + bias, relu, maxpool
+    static time send[NUM_INFERENCES][1] = {0};
+    static time recv[NUM_INFERENCES][1] = {0};
 
     static type conv[CONV_SIZE];
     static type partial[CONV_SIZE];
@@ -64,11 +65,11 @@ int main()
     for (int i = 0; i < NUM_INFERENCES; i++)
     {
         // the first partial is received straight into the sum
-        RECEIVE(comm[i][0], conv, sources[0]);
+        RECEIVE(recv[i][0], conv, sources[0]);
 
         for (unsigned pe = 1; pe < N_SOURCES; pe++)
         {
-            RECEIVE(comm[i][0], partial, sources[pe]);
+            RECEIVE(recv[i][0], partial, sources[pe]);
 
             TIMED(data[i][0], {
                 for (int n = 0; n < CONV_SIZE; n++)
@@ -76,13 +77,19 @@ int main()
             });
         }
 
-        TIMED(data[i][0], {
+        // conv_join, split to time the relu apart
+        TIMED(data[i][1], {
             for (int oc = 0; oc < L_(CHANNELS); oc++)
-                conv_join(CONV_HW, conv + oc*CONV_HW, BIAS[oc]);
+            {
+                int_handler(CONV_HW, conv + oc*CONV_HW);
+                sum_bias(CONV_HW, conv + oc*CONV_HW, BIAS[oc]);
+            }
         });
 
+        TIMED(data[i][2], relu(CONV_SIZE, conv));
+
         #if L_(POOL)
-            TIMED(data[i][0], maxpool(&pool_shape, conv, pool));
+            TIMED(data[i][3], maxpool(&pool_shape, conv, pool));
 
             printf(TAG " inference %d checksums: conv" STR(LAYER) ",%u pool" STR(LAYER) ",%u\n",
                    i + 1, (unsigned)checksum(CONV_SIZE, conv), (unsigned)checksum(OUT_SIZE, pool));
@@ -94,7 +101,7 @@ int main()
         #ifdef TARGETS
             // CHW: next-layer PE t gets the contiguous block of channels t
             for (unsigned t = 0; t < N_TARGETS; t++)
-                TIMED(comm[i][0], memphis_send(out + t*SLICE, SLICE*sizeof(type), targets[t]));
+                SEND_N(send[i][0], out + t*SLICE, SLICE*sizeof(type), targets[t]);
         #else
             (void)out;
         #endif
@@ -105,8 +112,17 @@ int main()
     puts(TAG " compute:");
     PRINT_STATS(data);
 
+    puts(TAG " send:");
+    PRINT_STATS(send);
+
+    puts(TAG " recv:");
+    PRINT_STATS(recv);
+
     puts(TAG " comm:");
-    PRINT_STATS(comm);
+    PRINT_COMM_SUM(send, recv);
+
+    puts(TAG " messages:");
+    PRINT_MSGS();
 
     return 0;
 }
