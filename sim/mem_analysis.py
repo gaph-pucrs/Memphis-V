@@ -19,6 +19,9 @@ per-PE occupancy profile measured during the run. It is merged in, giving the
 measured footprint including heap and stack.
 
 Usage: python3 mem_analysis.py [testcase_dir] [scenario_name]
+
+Writes results/<testcase without the testcase_ prefix>/memory_per_pe.csv, e.g.
+results/3x3_hybrid/memory_per_pe.csv for testcase_3x3_hybrid.
 """
 
 import csv
@@ -185,6 +188,10 @@ for y in range(n_y):
                 v["bytes_touched"] for (px, py, mem, _), v in profile.items()
                 if (px, py, mem) == (x, y, "D")
             )
+            # page 0 is MAestro's: besides its static data, its heap holds the
+            # kernel's copy of every outgoing message until the receiver asks for
+            # it (sys_writepipe -> opipe_push), so it grows with the message size
+            dmem_kernel = profile.get((x, y, "D", 0), {}).get("bytes_touched", 0)
             stack = sum(
                 v["page_sz"] - v["high_run_start"]
                 for (px, py, mem, _), v in profile.items()
@@ -193,6 +200,8 @@ for y in range(n_y):
             row.update({
                 "imem_measured_B": imem_meas,
                 "dmem_measured_B": dmem_meas,
+                "dmem_kernel_measured_B": dmem_kernel,
+                "dmem_tasks_measured_B": dmem_meas - dmem_kernel,
                 "stack_B": stack,
                 "total_measured_B": imem_meas + dmem_meas,
                 "total_measured_MB": round(
@@ -217,17 +226,20 @@ else:
 print()
 
 if measured:
-    hdr = "{:<5} {:<24} {:>10} {:>10} {:>11} {:>11} {:>9} {:>7}"
+    hdr = "{:<5} {:<24} {:>10} {:>10} {:>11} {:>11} {:>11} {:>11} {:>9} {:>7}"
     print(hdr.format("PE", "tasks", "IMEM(B)", "IMEM~(B)", "DMEM(B)",
-                     "DMEM~(B)", "stack(B)", "%DMEM"))
+                     "DMEM~(B)", "kernel~(B)", "tasks~(B)", "stack(B)", "%DMEM"))
     for r in rows:
         print(hdr.format(
             r["pe"], r["tasks"], r["imem_static_B"], r["imem_measured_B"],
-            r["dmem_static_B"], r["dmem_measured_B"], r["stack_B"],
+            r["dmem_static_B"], r["dmem_measured_B"],
+            r["dmem_kernel_measured_B"], r["dmem_tasks_measured_B"], r["stack_B"],
             round(100.0 * r["dmem_measured_B"] / dmem_sz, 3)))
     print()
     print("(static columns are .text / .data+.bss; ~ columns are measured,")
-    print(" rounded up to {}B blocks, and include heap and stack)".format(blk))
+    print(" rounded up to {}B blocks, and include heap and stack.".format(blk))
+    print(" DMEM~ = kernel~ + tasks~: kernel~ is MAestro's page, whose heap")
+    print(" also holds a copy of each outgoing message until it is delivered)")
 else:
     hdr = "{:<5} {:<24} {:>10} {:>8} {:>11} {:>8} {:>11}"
     print(hdr.format("PE", "tasks", "IMEM(B)", "%", "DMEM(B)", "%", "total(B)"))
@@ -277,7 +289,10 @@ print("largest single page: inst={}B data={}B".format(max_page_i, max_page_d))
 print("minimum page_size_*_KB that still fits: inst={} data={}".format(
     -(-max_page_i // 1024), -(-max_page_d // 1024)))
 
-out = os.path.join(sim_dir, "results", "lmfrnet_3x3", "memory_per_pe.csv")
+study = os.path.basename(os.path.normpath(testcase))
+if study.startswith("testcase_"):
+    study = study[len("testcase_"):]
+out = os.path.join(sim_dir, "results", study, "memory_per_pe.csv")
 os.makedirs(os.path.dirname(out), exist_ok=True)
 with open(out, "w", newline="") as f:
     skip = ("entries", "owner")
