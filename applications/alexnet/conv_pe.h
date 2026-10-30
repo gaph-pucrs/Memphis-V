@@ -41,7 +41,8 @@ int main()
     puts(TAG " starting application");
 
     static time data[NUM_INFERENCES][1] = {0};
-    static time comm[NUM_INFERENCES][1] = {0};
+    static time send[NUM_INFERENCES][1] = {0};
+    static time recv[NUM_INFERENCES][1] = {0};
 
     static type out[OUT_SIZE];
 
@@ -57,11 +58,11 @@ int main()
     for (int i = 0; i < NUM_INFERENCES; i++)
     {
         #if LAYER != 1
-            RECEIVE(comm[i][0], in, L_(FROM));
+            RECEIVE(recv[i][0], in, L_(FROM));
         #endif
 
         TIMED(data[i][0], conv_partial(&pe_shape, &pe_params, in, out));
-        SEND(comm[i][0], out, JOIN);
+        SEND(send[i][0], out, JOIN);
     }
 
     puts(TAG " finishing application");
@@ -69,8 +70,17 @@ int main()
     puts(TAG " compute:");
     PRINT_STATS(data);
 
+    puts(TAG " send:");
+    PRINT_STATS(send);
+
+    puts(TAG " recv:");
+    PRINT_STATS(recv);
+
     puts(TAG " comm:");
-    PRINT_STATS(comm);
+    PRINT_COMM_SUM(send, recv);
+
+    puts(TAG " messages:");
+    PRINT_MSGS();
 
     return 0;
 }
