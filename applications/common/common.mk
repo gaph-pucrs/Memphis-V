@@ -60,7 +60,7 @@ $(SRCDIR)/%.elf: $(SRCDIR)/%.o $(LIBMEMPHIS) $(LIBMUTILS)
 	@$(CC) -o $@ $< $(LDFLAGS) 
 #-Wl,-Map=$<.map
 
-$(SRCDIR)/%.o: $(SRCDIR)/%.c $(HDRMEMPHIS) $(HDRMUTILS)
+$(SRCDIR)/%.o: $(SRCDIR)/%.c $(wildcard $(SRCDIR)/*.h) $(HDRMEMPHIS) $(HDRMUTILS)
 	@printf "${GREEN}Compiling %s ...${NC}\n" "$<"
 	@$(CC) -c $< -o $@ $(CFLAGS)
 
