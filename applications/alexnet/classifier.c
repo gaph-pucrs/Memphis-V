@@ -37,8 +37,9 @@ int main()
 {
     puts(TAG " starting application");
 
-    static time data[NUM_INFERENCES][3] = {0};  // fc6, fc7, fc8
-    static time comm[NUM_INFERENCES][1] = {0};
+    static time data[NUM_INFERENCES][5] = {0};  // fc6, relu6, fc7, relu7, fc8
+    static time send[NUM_INFERENCES][1] = {0};  // nothing is sent: kept for the comm: sum
+    static time recv[NUM_INFERENCES][1] = {0};
 
     static type in[FC6_IN];
     static type fc6_out[FC6_OUT];
@@ -50,11 +51,14 @@ int main()
 
     for (int i = 0; i < NUM_INFERENCES; i++)
     {
-        RECEIVE(comm[i][0], in, j5);
+        RECEIVE(recv[i][0], in, j5);
 
-        TIMED(data[i][0], fc_relu(&fc6_shape, &fc6_params, in,      fc6_out));
-        TIMED(data[i][1], fc_relu(&fc7_shape, &fc7_params, fc6_out, fc7_out));
-        TIMED(data[i][2], fc     (&fc8_shape, &fc8_params, fc7_out, fc8_out));
+        // fc_relu, split to time the relu apart
+        TIMED(data[i][0], fc  (&fc6_shape, &fc6_params, in,      fc6_out));
+        TIMED(data[i][1], relu(FC6_OUT, fc6_out));
+        TIMED(data[i][2], fc  (&fc7_shape, &fc7_params, fc6_out, fc7_out));
+        TIMED(data[i][3], relu(FC7_OUT, fc7_out));
+        TIMED(data[i][4], fc  (&fc8_shape, &fc8_params, fc7_out, fc8_out));
 
         int class = 0;
         for (int c = 1; c < FC8_OUT; c++)
@@ -71,8 +75,17 @@ int main()
     puts(TAG " compute:");
     PRINT_STATS(data);
 
+    puts(TAG " send:");
+    PRINT_STATS(send);
+
+    puts(TAG " recv:");
+    PRINT_STATS(recv);
+
     puts(TAG " comm:");
-    PRINT_STATS(comm);
+    PRINT_COMM_SUM(send, recv);
+
+    puts(TAG " messages:");
+    PRINT_MSGS();
 
     return 0;
 }
