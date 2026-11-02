@@ -28,20 +28,20 @@ typedef struct {
 __attribute__((unused)) static msg_event msg_log[MAX_MSGS];
 __attribute__((unused)) static unsigned  n_msgs = 0;
 
-// RS5's user-mode shadows of mhpmcounter22 (mul) and mhpmcounter27 (vmac), as read by
-// RS5's alexnet-refactor. They count per core, so they include the other task on the PE
-// and the kernel, if those run during the slot (needs HPMCOUNTEREnable in PhiversPE.sv).
+// RS5's user-mode shadows of mhpmcounter21 (mul) and mhpmcounter26 (vector mul and mac:
+// vmul*, vwmul*, vmacc, vnmsac, vmadd, vnmsub), CSRBank.sv. They count per core, so they
+// include the other task on the PE and the kernel, if those run during the slot.
 static inline unsigned read_mul(void)
 {
     unsigned v;
-    __asm__ volatile("csrr %0, 0xC16" : "=r"(v));  // hpmcounter22
+    __asm__ volatile("csrr %0, 0xC15" : "=r"(v));  // hpmcounter21
     return v;
 }
 
 static inline unsigned read_vmac(void)
 {
     unsigned v;
-    __asm__ volatile("csrr %0, 0xC1B" : "=r"(v));  // hpmcounter27
+    __asm__ volatile("csrr %0, 0xC1A" : "=r"(v));  // hpmcounter26
     return v;
 }
 
