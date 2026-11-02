@@ -65,9 +65,9 @@ int main()
             if (fc8_out[class] < fc8_out[c])
                 class = c;
 
-        printf(TAG " inference %d checksums: fc6,%u fc7,%u fc8,%u class,%d\n", i + 1,
+        printf(TAG " inference %d checksums: fc6,%u fc7,%u fc8,%u class,%d val,%d\n", i + 1,
                (unsigned)checksum(FC6_OUT, fc6_out), (unsigned)checksum(FC7_OUT, fc7_out),
-               (unsigned)checksum(FC8_OUT, fc8_out), class);
+               (unsigned)checksum(FC8_OUT, fc8_out), class, (int)fc8_out[class]);
     }
 
     puts(TAG " finishing application");

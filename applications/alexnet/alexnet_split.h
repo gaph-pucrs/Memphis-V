@@ -7,7 +7,8 @@
 // The task templates (conv_pe.h, join_pe.h) read the layer's numbers with L_(name), which
 // expands to CONV<LAYER>_name; the conv shapes themselves are in cnn_std.h.
 //
-// CONV<L>_PES must match gen_slices.py --pes (alexnet-utils): conv_pe.h checks the slice sizes.
+// `make headers` passes CONV<L>_PES to gen_slices.py --pes (alexnet-utils), so rerun it after
+// changing them: conv_pe.h checks the slice sizes.
 
 #include "./cnn_std.h"
 

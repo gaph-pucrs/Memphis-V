@@ -17,3 +17,6 @@
 [submodule "mint"]
 	path = mint
 	url = https://github.com/gaph-pucrs/mint
+[submodule "alexnet-utils"]
+	path = alexnet-utils
+	url = https://github.com/santosantonio1/alexnet-utils.git
