@@ -143,8 +143,8 @@ hw:
   osz_window: [2,2]           # Optional: secure region size [X, Y] starting at PE 0x0 (default is none)
   Peripherals:
     - name: APP_INJ
-      pe: 4,0                 # Peripherals must be outside the region
-      port: S
+      pe: 4,4                 # Peripherals must be outside the region; top-right is recommended
+      port: E
     - name: MA_INJ
       pe: 4,4
       port: N
@@ -156,6 +156,15 @@ A secure application claims the lowest block of contiguous free rows that fits a
 A row is never shared between applications: slots left free in a claimed row stay reserved until the application terminates.
 A secure application that finds no free block waits until enough rows are released.
 Secure tasks are not migrated.
+
+Each secure application has a single entrance: the east port of PE (X-1, hi), where hi is the top row it claimed.
+The kernels route every packet through it with source routing (the DMNI SR flag, header bit 27):
+* Into the application: the packet first goes to PE (X, hi) in the free column, which turns it into row hi through the entrance, and it then reaches its target inside the application.
+* Out of the application: a task in row hi leaves directly through the entrance; a task in a lower row first goes up to row hi in its own column, turns there, and leaves through the entrance.
+* Inside the application and between non-secure PEs, packets follow plain XY routing.
+
+The mapper broadcasts which rows each secure application claims (`OSZ_ROWS`), and the application injector adds the same turn to the task binaries it sends.
+We recommend placing the mapper task and both injectors at the top-right PE of the mesh, so that management traffic runs along the top row and down the free column, away from the rows the secure applications use.
 
 In the scenario, each application entry can be marked secure, so the same application can run as secure in one entry and non-secure in another:
 ```yaml
@@ -177,7 +186,7 @@ mint checks, when generating:
 * A secure application fits in the region (its tasks need at most Y rows), and a non-secure application fits in the PEs at x >= X+1.
 * If an application is marked secure but the testcase has no `osz_window`, mint prints a warning and runs it as non-secure.
 
-Complete examples are in `regression/`: `tc_osz.yaml` and `tc_noosz.yaml` (the same platform without the region), `apps_osz.yaml`, `sc_osz.yaml` and `sc_osz_rows.yaml` (secure applications competing for rows).
+Complete examples are in `regression/`: `tc_osz.yaml` and `tc_noosz.yaml` (the same platform without the region), `apps_osz.yaml`, `sc_osz.yaml`, `sc_osz_rows.yaml` (secure applications competing for rows) and `sc_osz_entrance.yaml` (a two-row secure application and its single entrance).
 
 After creating the description of the testcase and the scenario, the testcase should be generated.
 This step builds the support libraries, the kernel, and all management tasks:

@@ -161,7 +161,12 @@ static bool _map_admit(map_t *mapper, app_t *app)
 		mapper->row_owner[r] = app_get_id(app);
 
 	app_set_rows(app, lo, rows_needed);
-	printf("App %d claimed region row(s) %d..%d\n", app_get_id(app), lo, lo + rows_needed - 1);
+	printf("App %d claimed region row(s) %d..%d at %u\n", app_get_id(app), lo, lo + rows_needed - 1, memphis_get_tick());
+
+	/* Every kernel routes into and out of these rows through the entrance, row hi */
+	const int hi = lo + rows_needed - 1;
+	memphis_br_send(OSZ_ROWS, MEMPHIS_OSZ_ROWS(true, lo, hi));
+	printf("App %d entrance at PE %d,%d\n", app_get_id(app), osz_row_width() - 1, hi);
 
 	return true;
 }
@@ -198,7 +203,8 @@ static void _map_release_rows(map_t *mapper, app_t *app)
 
 	mapper->slots += restored;
 	app_set_rows(app, 0, 0);
-	printf("App %d released region row(s) %d..%d\n", app_get_id(app), lo, lo + cnt - 1);
+	memphis_br_send(OSZ_ROWS, MEMPHIS_OSZ_ROWS(false, lo, lo + cnt - 1));
+	printf("App %d released region row(s) %d..%d at %u\n", app_get_id(app), lo, lo + cnt - 1, memphis_get_tick());
 }
 
 void _map_do(map_t *mapper, app_t *app)

@@ -15,8 +15,8 @@ hw:                         # Hardware properties
   mpsoc_dimension: [5,5]    # Dimension of the many-core
   Peripherals:              # Attached peripherals
     - name: APP_INJ         # Mandatory Application Injector peripheral
-      pe: 4,0
-      port: S               # Connected at port SOUTH. Note to use a border port.
+      pe: 4,4
+      port: E               # Connected at port EAST. Note to use a border port.
     - name: MA_INJ          # Mandatory MA Injector peripheral
       pe: 4,4
       port: N               # Connected at port NORTH. Note to use a border port.

@@ -4,15 +4,19 @@
 # covers x 0..1, y 0..1 (2 rows of 2 PEs). Column x=2 stays free; non-secure
 # tasks (management included) may only use x >= 3.
 #
-#   y=4 |  0,4   1,4  | 2,4 |  3,4   4,4  MA_INJ, mapper
+#   y=4 |  0,4   1,4  | 2,4 |  3,4   4,4  mapper, MA_INJ (N), APP_INJ (E)
 #   y=3 |  0,3   1,3  | 2,3 |  3,3   4,3
 #   y=2 |  0,2   1,2  | 2,2 |  3,2   4,2
 #   y=1 | [0,1   1,1] | 2,1 |  3,1   4,1      region row 1
-#   y=0 | [0,0   1,0] | 2,0 |  3,0   4,0  APP_INJ   region row 0
+#   y=0 | [0,0   1,0] | 2,0 |  3,0   4,0      region row 0
 #          region       free   non-secure
 #
 # With tasks_per_PE: 2 a region row holds 4 tasks. A secure app claims whole
 # rows; the slots it leaves free in them stay reserved until it terminates.
+# A secure app is entered only through the east port of PE (1, top row of
+# the app): traffic into it is source-routed through (2, top row), in the
+# free column, and traffic out of it leaves through that same port.
+# Recommended: mapper and injectors at the top-right PE, as here.
 # Peripherals must sit outside the region (mint rejects them inside it).
 #
 # Run with: mint all tc_osz.yaml apps_osz.yaml sc_osz.yaml --nogui
@@ -28,8 +32,8 @@ hw:                         # Hardware properties
   osz_window: [2,2]         # Optional: OSZ region size [X,Y] from PE 0,0. X <= mpsoc X - 2
   Peripherals:              # Attached peripherals
     - name: APP_INJ         # Mandatory Application Injector peripheral
-      pe: 4,0               # Outside the region
-      port: S               # Connected at port SOUTH. Note to use a border port.
+      pe: 4,4               # Top-right, with the mapper
+      port: E               # Connected at port EAST. Note to use a border port.
     - name: MA_INJ          # Mandatory MA Injector peripheral
       pe: 4,4               # Outside the region
       port: N               # Connected at port NORTH. Note to use a border port.
