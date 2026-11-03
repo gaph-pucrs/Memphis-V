@@ -33,6 +33,8 @@ typedef struct _map {
 	list_t apps;
 	bool finished;
 	unsigned finished_cnt;
+
+	int *row_owner;	/* OSZ region row owner app id, -1 when free; NULL without region */
 } map_t;
 
 void map_init(map_t *mapper);

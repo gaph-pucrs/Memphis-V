@@ -33,3 +33,35 @@ bool osz_enabled(void);
  * @param y Variable to store the region height (Y), 0 when disabled
  */
 void osz_get_size(size_t *x, size_t *y);
+
+/**
+ * @brief Checks if a PE may host a task of a secure or non-secure application
+ *
+ * @details Secure: inside the region. Non-secure: x >= X+1 (column X, right
+ * of the region, stays free). Every PE is eligible when there is no region.
+ *
+ * @param addr PE address (0xXXYY)
+ * @param secure Whether the application is secure
+ *
+ * @return true if eligible
+ */
+bool osz_pe_eligible(int addr, bool secure);
+
+/**
+ * @brief Gets the number of region rows (Y), 0 when disabled
+ */
+int osz_row_count(void);
+
+/**
+ * @brief Gets the width of a region row in PEs (X), 0 when disabled
+ */
+int osz_row_width(void);
+
+/**
+ * @brief Gets the region row of a PE
+ *
+ * @param addr PE address (0xXXYY)
+ *
+ * @return The row (its y coordinate), or -1 if the PE is outside the region
+ */
+int osz_row_of(int addr);

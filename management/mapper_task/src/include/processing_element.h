@@ -24,8 +24,23 @@ typedef struct _pe {
 	int addr;
 	unsigned slots;
 	unsigned pending_cnt;
+	unsigned reserved;	/* Idle slots withheld while the PE's OSZ row is claimed */
 	list_t tasks;
 } pe_t;
+
+/**
+ * @brief Withholds every free slot of the PE (idle PE of a claimed OSZ row)
+ *
+ * @return Number of slots withheld
+ */
+unsigned pe_reserve_idle(pe_t *pe);
+
+/**
+ * @brief Gives back the slots withheld by pe_reserve_idle
+ *
+ * @return Number of slots given back
+ */
+unsigned pe_release_idle(pe_t *pe);
 
 void pe_init(pe_t *pe, size_t slots, int addr);
 

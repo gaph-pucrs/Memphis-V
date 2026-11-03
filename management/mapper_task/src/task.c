@@ -5,6 +5,7 @@
 
 #include "mapper.h"
 #include "window.h"
+#include "osz.h"
 
 void task_init(task_t *task, int appid, int taskid, unsigned tag)
 {
@@ -54,17 +55,20 @@ list_t *task_get_preds(task_t *task)
 	return &(task->preds);
 }
 
-pe_t *task_map(task_t *task, pe_t *pes, wdo_t *window)
+pe_t *task_map(task_t *task, pe_t *pes, wdo_t *window, bool secure)
 {
 	unsigned cost = -1; 	/* Start at infinite cost */
 	pe_t *sel = NULL;
 	pe_t *old = task->pe;	/* Current mapped PE */
-	
+
 	size_t PE_SLOTS = memphis_get_max_tasks(NULL);
 	for(int x = window->x; x < window->x + window->wx; x++){
 		for(int y = window->y; y < window->y + window->wy; y++){	/* Traverse Y first */
 			pe_t *pe = &(pes[map_xy_to_idx(x, y)]);
-			
+
+			if(!osz_pe_eligible(pe_get_addr(pe), secure))
+				continue;	/* Skip PEs on the wrong side of the OSZ region */
+
 			int is_old_pe = (pe == old);
 			int free_slots = pe_get_slots(pe) + is_old_pe;	/* Add a free page in the current mapped */
 

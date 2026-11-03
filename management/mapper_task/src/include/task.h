@@ -54,7 +54,8 @@ list_t *task_get_succs(task_t *task);
 
 list_t *task_get_preds(task_t *task);
 
-pe_t *task_map(task_t *task, pe_t *pes, wdo_t *window);
+/* secure: only consider PEs a secure (or non-secure) application may use, see osz_pe_eligible */
+pe_t *task_map(task_t *task, pe_t *pes, wdo_t *window, bool secure);
 
 int task_get_id(task_t *task);
 

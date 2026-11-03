@@ -27,10 +27,11 @@ typedef struct _wdo {
 
 void wdo_init(wdo_t *window, int x, int y, int wx, int wy);
 
-void wdo_from_center(wdo_t *window, pe_t *pes, int req_slots);
+/* secure: count only PEs a secure (or non-secure) application may use, see osz_pe_eligible */
+void wdo_from_center(wdo_t *window, pe_t *pes, int req_slots, bool secure);
 
-bool wdo_has_slots(wdo_t *window, pe_t *pes, int req_slots);
+bool wdo_has_slots(wdo_t *window, pe_t *pes, int req_slots, bool secure);
 
 void wdo_slide(wdo_t *window);
 
-void wdo_from_last(wdo_t *window, pe_t *pes, int req_slots);
+void wdo_from_last(wdo_t *window, pe_t *pes, int req_slots, bool secure);

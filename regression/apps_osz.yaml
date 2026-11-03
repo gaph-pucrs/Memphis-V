@@ -1,3 +1,5 @@
-# Application set for the OSZ scenarios: only what sc_osz.yaml uses.
+# Application set for the OSZ scenarios: only what sc_osz*.yaml use.
 apps:
   - name: prod_cons
+  - name: synthetic
+  - name: dtw

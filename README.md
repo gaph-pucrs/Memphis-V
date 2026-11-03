@@ -134,19 +134,28 @@ apps:                       # Application properties
 A testcase can reserve a region of PEs for secure applications.
 `osz_window: [X, Y]` gives its size; the region always starts at PE 0x0 and covers x from 0 to X-1 and y from 0 to Y-1.
 For example, `[3,2]` covers PEs 0x0, 0x1, 1x0, 1x1, 2x0 and 2x1.
+Column X, right next to the region, is always left free: non-secure applications, including the management application, may only use PEs with x >= X+1.
+On a 5x5 mesh with `[2,2]`, the region is 0x0 to 1x1, column 2 is free, and non-secure tasks run at x >= 3.
 Omit the key to disable the region.
 ```yaml
 hw:
-  mpsoc_dimension: [4,4]
-  osz_window: [3,2]           # Optional: secure region size [X, Y] starting at PE 0x0 (default is none)
+  mpsoc_dimension: [5,5]
+  osz_window: [2,2]           # Optional: secure region size [X, Y] starting at PE 0x0 (default is none)
   Peripherals:
     - name: APP_INJ
-      pe: 3,0                 # Peripherals must be outside the region
+      pe: 4,0                 # Peripherals must be outside the region
       port: S
     - name: MA_INJ
-      pe: 3,3
+      pe: 4,4
       port: N
 ```
+
+The mapper places secure applications by whole region rows.
+Each region row is X PEs wide and holds X * tasks_per_PE tasks.
+A secure application claims the lowest block of contiguous free rows that fits all its tasks (and covers its statically mapped ones).
+A row is never shared between applications: slots left free in a claimed row stay reserved until the application terminates.
+A secure application that finds no free block waits until enough rows are released.
+Secure tasks are not migrated.
 
 In the scenario, each application entry can be marked secure, so the same application can run as secure in one entry and non-secure in another:
 ```yaml
@@ -157,17 +166,18 @@ apps:
       prod: [0,0]             # Secure applications may only be pinned inside the region
   - name: prod_cons           # Same application, non-secure
     static_mapping:
-      prod: [3,1]             # Non-secure applications may only be pinned outside the region
+      prod: [3,1]             # Non-secure applications may only be pinned at x >= X+1
 ```
 
 mint checks, when generating:
-* X is at most the mesh width minus 1, so at least one column stays free to the right of the region; Y is at most the mesh height.
+* X is at most the mesh width minus 2 (the free column plus at least one column for non-secure tasks); Y is at most the mesh height.
 * No peripheral is on a PE inside the region.
-* No management task is statically mapped inside the region.
-* Statically mapped tasks of secure applications are inside the region, and those of non-secure applications are outside it.
+* Management tasks and statically mapped tasks of non-secure applications are at x >= X+1.
+* Statically mapped tasks of secure applications are inside the region, within as many rows as the application claims.
+* A secure application fits in the region (its tasks need at most Y rows), and a non-secure application fits in the PEs at x >= X+1.
 * If an application is marked secure but the testcase has no `osz_window`, mint prints a warning and runs it as non-secure.
 
-A complete example is in `regression/tc_osz.yaml`, `regression/apps_osz.yaml` and `regression/sc_osz.yaml`.
+Complete examples are in `regression/`: `tc_osz.yaml` and `tc_noosz.yaml` (the same platform without the region), `apps_osz.yaml`, `sc_osz.yaml` and `sc_osz_rows.yaml` (secure applications competing for rows).
 
 After creating the description of the testcase and the scenario, the testcase should be generated.
 This step builds the support libraries, the kernel, and all management tasks:

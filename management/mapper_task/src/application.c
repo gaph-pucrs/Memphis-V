@@ -32,6 +32,8 @@ task_t *app_init(app_t *app, int id, int hash, int injector, size_t task_cnt, bo
 	app->failed_cnt = 0;
 	app->has_static = false;
 	app->score = 0;
+	app->row_lo = 0;
+	app->row_cnt = 0;
 
 	app->tasks = malloc(task_cnt * sizeof(task_t));
 
@@ -266,6 +268,20 @@ int app_get_hash(app_t *app)
 bool app_is_secure(app_t *app)
 {
 	return app->secure;
+}
+
+void app_set_rows(app_t *app, int row_lo, int row_cnt)
+{
+	app->row_lo = row_lo;
+	app->row_cnt = row_cnt;
+}
+
+int app_get_rows(app_t *app, int *row_lo)
+{
+	if(row_lo != NULL)
+		*row_lo = app->row_lo;
+
+	return app->row_cnt;
 }
 
 unsigned app_get_release_time(app_t *app)

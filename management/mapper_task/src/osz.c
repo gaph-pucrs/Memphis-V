@@ -43,3 +43,38 @@ void osz_get_size(size_t *x, size_t *y)
 	if(y != NULL)
 		*y = _y;
 }
+
+bool osz_pe_eligible(int addr, bool secure)
+{
+	if(!_enabled)
+		return true;
+
+	const size_t x = addr >> 8;
+	const size_t y = addr & 0xFF;
+
+	if(secure)
+		return (x < _x && y < _y);
+
+	return (x > _x);
+}
+
+int osz_row_count(void)
+{
+	return (int)_y;
+}
+
+int osz_row_width(void)
+{
+	return (int)_x;
+}
+
+int osz_row_of(int addr)
+{
+	const size_t x = addr >> 8;
+	const size_t y = addr & 0xFF;
+
+	if(!_enabled || x >= _x || y >= _y)
+		return -1;
+
+	return (int)y;
+}

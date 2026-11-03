@@ -1,26 +1,29 @@
 # OSZ scenario: the same application once as secure and once as non-secure.
 #
-# On tc_osz.yaml (region [3,2] = PEs 0,0 to 2,1) the mapper log shows:
-#   OSZ region: 3x2, PEs 0,0 to 2,1
+# On tc_osz.yaml (region [2,2] = PEs 0,0 to 1,1) the mapper log shows:
+#   OSZ region: 2x2, PEs 0,0 to 1,1
 #   App 1 is secure
+#   App 1 claimed region row(s) 0..0
+#   App 1 reserved 2 idle slot(s) in region row(s) 0..0
 #   App 2 is not secure
+#   App 1 released region row(s) 0..0
+# App 1's tasks run in region row 0; app 2's tasks run at x >= 3.
 #
-# On testcase.yaml (no osz_window) mint warns and runs app 1 as non-secure,
+# On tc_noosz.yaml (no osz_window) mint warns and runs app 1 as non-secure,
 # and the mapper log shows "OSZ region: disabled".
 #
 # Static mappings follow the region rules mint enforces: management tasks and
-# non-secure apps outside the region, secure apps inside it. The unpinned tasks
-# are mapped dynamically; the mapper does not confine them to the region yet.
+# non-secure apps at x >= 3, secure apps inside the region.
 management:                 # Management application properties
   - task: mapper_task       # The first in this list should ALWAYS be mapper_task
-    static_mapping: [3,3]   # Outside the region
+    static_mapping: [4,4]   # x >= 3
 apps:                       # Application properties
   - name: prod_cons
     secure: yes             # Optional: run this instance as secure (default is no)
     start_time_ms: 0
     static_mapping:
-      prod: [0,0]           # Inside the region
+      prod: [0,0]           # Inside the region, row 0
   - name: prod_cons         # Same application, non-secure
     start_time_ms: 1
     static_mapping:
-      prod: [3,1]           # Outside the region
+      prod: [3,1]           # x >= 3

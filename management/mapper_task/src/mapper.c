@@ -50,6 +50,155 @@ void map_init(map_t *mapper)
 	mapper->finished_cnt = 0;
 
 	osz_init();
+
+	mapper->row_owner = NULL;
+	const int ROWS = osz_row_count();
+	if(ROWS > 0){
+		mapper->row_owner = malloc(ROWS * sizeof(int));
+		if(mapper->row_owner == NULL){
+			puts("FATAL: not enough memory");
+			return;
+		}
+
+		for(int r = 0; r < ROWS; r++)
+			mapper->row_owner[r] = -1;
+	}
+}
+
+/**
+ * OSZ row-granular mapping
+ *
+ * A secure application claims whole region rows (X PEs each), a contiguous
+ * block of them, and never shares a row with another application. PEs of a
+ * claimed row left without tasks are reserved idle. Rows are released when the
+ * application terminates.
+ */
+
+static int _map_rows_needed(app_t *app)
+{
+	size_t task_cnt;
+	app_get_tasks(app, &task_cnt);
+	const int row_slots = osz_row_width() * (int)memphis_get_max_tasks(NULL);
+	return ((int)task_cnt + row_slots - 1) / row_slots;
+}
+
+/* Lowest contiguous block of free rows that also covers the statically mapped rows */
+static int _map_pick_rows(map_t *mapper, app_t *app, int rows_needed)
+{
+	int pin_lo = osz_row_count();
+	int pin_hi = -1;
+
+	size_t task_cnt;
+	task_t *tasks = app_get_tasks(app, &task_cnt);
+	for(int i = 0; i < task_cnt; i++){
+		pe_t *pe = task_get_pe(&tasks[i]);
+		if(pe == NULL)
+			continue;
+
+		int row = osz_row_of(pe_get_addr(pe));
+		if(row < pin_lo)
+			pin_lo = row;
+		if(row > pin_hi)
+			pin_hi = row;
+	}
+
+	for(int lo = 0; lo + rows_needed <= osz_row_count(); lo++){
+		const int hi = lo + rows_needed - 1;
+		if(pin_hi >= 0 && (pin_lo < lo || pin_hi > hi))
+			continue;	/* Block does not cover the static mapping */
+
+		bool free = true;
+		for(int r = lo; r <= hi && free; r++)
+			free = (mapper->row_owner[r] == -1);
+
+		if(free)
+			return lo;
+	}
+
+	return -1;
+}
+
+static unsigned _map_free_eligible_slots(map_t *mapper, bool secure)
+{
+	unsigned slots = 0;
+	const size_t N_PE = memphis_get_nprocs(NULL, NULL);
+	for(int i = 0; i < N_PE; i++){
+		if(osz_pe_eligible(pe_get_addr(&(mapper->pes[i])), secure))
+			slots += pe_get_slots(&(mapper->pes[i]));
+	}
+	return slots;
+}
+
+/* Decides if the application can be mapped now. A secure app claims its rows here. */
+static bool _map_admit(map_t *mapper, app_t *app)
+{
+	size_t task_cnt;
+	app_get_tasks(app, &task_cnt);
+
+	if(!osz_enabled())
+		return (task_cnt <= mapper->slots && app_get_failed(app) == 0);
+
+	if(!app_is_secure(app))
+		return (task_cnt <= _map_free_eligible_slots(mapper, false) && app_get_failed(app) == 0);
+
+	/* Secure: rows are the only admission criterion */
+	const int rows_needed = _map_rows_needed(app);
+	if(rows_needed > osz_row_count()){
+		printf(
+			"FATAL: app %d needs %d region row(s) but the region has %d\n",
+			app_get_id(app), rows_needed, osz_row_count()
+		);
+		return false;
+	}
+
+	const int lo = _map_pick_rows(mapper, app, rows_needed);
+	if(lo < 0){
+		printf("App %d waiting for %d free region row(s)\n", app_get_id(app), rows_needed);
+		return false;
+	}
+
+	for(int r = lo; r < lo + rows_needed; r++)
+		mapper->row_owner[r] = app_get_id(app);
+
+	app_set_rows(app, lo, rows_needed);
+	printf("App %d claimed region row(s) %d..%d\n", app_get_id(app), lo, lo + rows_needed - 1);
+
+	return true;
+}
+
+/* Withholds the free slots left in the claimed rows so no other app is offered them */
+static void _map_reserve_rows(map_t *mapper, app_t *app)
+{
+	int lo;
+	const int cnt = app_get_rows(app, &lo);
+	unsigned withheld = 0;
+	for(int y = lo; y < lo + cnt; y++){
+		for(int x = 0; x < osz_row_width(); x++)
+			withheld += pe_reserve_idle(&(mapper->pes[map_xy_to_idx(x, y)]));
+	}
+
+	mapper->slots -= withheld;
+	printf("App %d reserved %u idle slot(s) in region row(s) %d..%d\n", app_get_id(app), withheld, lo, lo + cnt - 1);
+}
+
+static void _map_release_rows(map_t *mapper, app_t *app)
+{
+	int lo;
+	const int cnt = app_get_rows(app, &lo);
+	if(cnt == 0)
+		return;
+
+	unsigned restored = 0;
+	for(int y = lo; y < lo + cnt; y++){
+		for(int x = 0; x < osz_row_width(); x++)
+			restored += pe_release_idle(&(mapper->pes[map_xy_to_idx(x, y)]));
+
+		mapper->row_owner[y] = -1;
+	}
+
+	mapper->slots += restored;
+	app_set_rows(app, 0, 0);
+	printf("App %d released region row(s) %d..%d\n", app_get_id(app), lo, lo + cnt - 1);
 }
 
 void _map_do(map_t *mapper, app_t *app)
@@ -119,11 +268,25 @@ void _map_do(map_t *mapper, app_t *app)
 		if(wy > PE_Y_CNT)
 			wy = PE_Y_CNT;
 
+		const bool secure = app_is_secure(app);
+
+		/*
+		 * With a region, request only the tasks still to place: the statically
+		 * mapped ones already hold their slots, and a confined side may not
+		 * have task_cnt free slots left after them.
+		 */
+		const int req_slots = osz_enabled() ? (int)(task_cnt - static_cnt) : (int)task_cnt;
+
 		wdo_t window;
-		if(static_cnt != 0){
+		if(secure){
+			/* Secure: the window is exactly the region rows the app claimed */
+			int row_lo;
+			const int row_cnt = app_get_rows(app, &row_lo);
+			wdo_init(&window, 0, row_lo, osz_row_width(), row_cnt);
+		} else if(static_cnt != 0){
 			/* Set the window based on the center of the statically mapped tasks */
 			wdo_init(&window, center_x - wx/2, center_y - wy/2, wx, wy);
-			wdo_from_center(&window, mapper->pes, task_cnt);
+			wdo_from_center(&window, mapper->pes, req_slots, false);
 		} else {
 			/* Set the window based on the last one selected */
 			static bool initialized = false;
@@ -137,7 +300,7 @@ void _map_do(map_t *mapper, app_t *app)
 			}
 
 			wdo_init(&window, last_x, last_y, wx, wy);
-			wdo_from_last(&window, mapper->pes, task_cnt);
+			wdo_from_last(&window, mapper->pes, req_slots, false);
 		}
 
 		/* 2nd step: get the mapping order */
@@ -160,7 +323,7 @@ void _map_do(map_t *mapper, app_t *app)
 			task_t *task = list_get_data(entry);
 			pe_t *pe = task_get_pe(task);
 			if(pe == NULL){	/* Skip tasks already mapped */
-				pe_t *pe = task_map(task, mapper->pes, &window);
+				pe_t *pe = task_map(task, mapper->pes, &window, secure);
 
 				task_set_pe(task, pe);
 				pe_task_push_back(pe, task);
@@ -172,6 +335,9 @@ void _map_do(map_t *mapper, app_t *app)
 		list_destroy(ordered_tasks);
 		free(ordered_tasks);
 	}
+
+	if(app_get_rows(app, NULL) != 0)
+		_map_reserve_rows(mapper, app);
 
 	/* Send allocation message */
 	const size_t msg_size = sizeof(memphis_info_t) + (task_cnt * sizeof(int));
@@ -251,6 +417,12 @@ void map_new_app(map_t *mapper, memphis_new_app_t *packet, int32_t *descriptor, 
 
 	// @todo get hash id
 	bool secure = (packet->pad16 & MEMPHIS_NEW_APP_SECURE) != 0;
+	if(secure && !osz_enabled()){
+		/* mint downgrades these already; kept for robustness */
+		puts("WARNING: secure app on a platform without OSZ region. Mapping it as non-secure.");
+		secure = false;
+	}
+
 	task_t *tasks = app_init(app, mapper->appid_cnt, packet->hash, packet->source, packet->task_cnt, secure, (int*)descriptor, (int*)communication);
 	if(tasks == NULL){
 		puts("FATAL: not enough memory");
@@ -265,6 +437,17 @@ void map_new_app(map_t *mapper, memphis_new_app_t *packet, int32_t *descriptor, 
 	for(int i = 0; i < packet->task_cnt; i++){
 		int pe_addr = descriptor[i * MAP_DESCR_ENTRY_LEN];
 		if(pe_addr != -1){
+			if(!osz_pe_eligible(pe_addr, secure)){
+				/* mint rejects these at generation; never map across the region boundary */
+				printf(
+					"FATAL: task %d of app %d is statically mapped to %x, not allowed for a %s app. Dropping the app.\n",
+					i, app_get_id(app), pe_addr, secure ? "secure" : "non-secure"
+				);
+				app_destroy(app);
+				free(app);
+				return;
+			}
+
 			int pe_idx = map_coord_to_idx(pe_addr);
 			failed_cnt += task_set_pe(&tasks[i], &(mapper->pes[pe_idx]));
 			has_static = true;
@@ -274,10 +457,10 @@ void map_new_app(map_t *mapper, memphis_new_app_t *packet, int32_t *descriptor, 
 	app_set_has_static(app, has_static);
 
 	/* Check if it will be mapped now or later */
-	if(packet->task_cnt > mapper->slots || failed_cnt > 0){
+	app_set_failed(app, failed_cnt);
+	if(!_map_admit(mapper, app)){
 		puts("No available slots");
 
-		app_set_failed(app, failed_cnt);
 		mapper->pending = app;
 		return;
 	}
@@ -431,6 +614,7 @@ void _map_terminate_app(map_t *mapper, app_t *app)
 {
 	printf("App %d terminated at time %d\n", app_get_id(app), memphis_get_tick());
 	app_terminated(app);	/* Broadcast app termination to clear migration table */
+	_map_release_rows(mapper, app);	/* Before the pending check of the callers */
 	app_destroy(app);
 	list_entry_t *entry = list_find(&(mapper->apps), app, NULL);
 	list_remove(&(mapper->apps), entry);
@@ -445,17 +629,10 @@ void _map_terminate_app(map_t *mapper, app_t *app)
 void _map_verify_pending(map_t *mapper)
 {
 	/* There is a pending application which could not be allocated before */
-	size_t task_cnt;
-	app_get_tasks(mapper->pending, &task_cnt);
-	if(mapper->slots < task_cnt)
+	if(!_map_admit(mapper, mapper->pending))
 		return;
 
-	/* Able to map unless it was due to static mapping not available */
-	unsigned failed_cnt = app_get_failed(mapper->pending);
-	if(failed_cnt != 0)
-		return;
-
-	/* Application is able to map (enough slots) and static mapping is OK */
+	/* Application is able to map (enough slots or rows) and static mapping is OK */
 	_map_do(mapper, mapper->pending);
 	mapper->pending = NULL;
 }
@@ -654,6 +831,12 @@ void map_migration_map(map_t *mapper, memphis_info_t *info)
 		return;
 	}
 
+	if(app_is_secure(app)){
+		/* A secure task must stay inside the region rows its app claimed */
+		puts("WARNING: Migration of secure tasks is not supported. Ignoring.");
+		return;
+	}
+
 	pe_t *old_pe = task_get_pe(task);
 	// unsigned then = memphis_get_tick();
 
@@ -684,14 +867,14 @@ void map_migration_map(map_t *mapper, memphis_info_t *info)
 	/* Get window from this center (able to grow) */
 	wdo_t window;
 	wdo_init(&window, center_x - MAP_MIN_WX/2, center_y - MAP_MIN_WX/2, MAP_MIN_WX, MAP_MIN_WX);
-	wdo_from_center(&window, mapper->pes, 1);
+	wdo_from_center(&window, mapper->pes, 1, false);	/* Ends: the old PE is eligible and free now */
 
 	/* Reallocate resource */
 	task_set_pe(task, old_pe);			/* Needed because PE push back changes pending mappings */
 	pe_task_push_back(old_pe, task);
 
 	/* Map to the specific window */
-	pe_t *pe = task_map(task, mapper->pes, &window);
+	pe_t *pe = task_map(task, mapper->pes, &window, false);
 
 	// unsigned now = memphis_get_tick(); 
 	// printf("Ticks of mapping task for migration = %d\n", now-then);

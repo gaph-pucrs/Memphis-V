@@ -32,6 +32,8 @@ typedef struct _app {
 	unsigned score;
 	bool has_static;
 	bool secure;	/* Per-instance flag from the injector (NEW_APP pad16) */
+	int row_lo;		/* First OSZ region row claimed (secure apps) */
+	int row_cnt;	/* Number of OSZ region rows claimed, 0 when none */
 } app_t;
 
 task_t *app_init(app_t *app, int id, int hash, int injector, size_t task_cnt, bool secure, int *descriptor, int *communication);
@@ -75,6 +77,17 @@ void app_terminated(app_t *app);
 int app_get_hash(app_t *app);
 
 bool app_is_secure(app_t *app);
+
+void app_set_rows(app_t *app, int row_lo, int row_cnt);
+
+/**
+ * @brief Gets the OSZ region rows claimed by the app
+ *
+ * @param row_lo Variable to store the first row
+ *
+ * @return Number of rows claimed, 0 when none
+ */
+int app_get_rows(app_t *app, int *row_lo);
 
 unsigned app_get_release_time(app_t *app);
 
