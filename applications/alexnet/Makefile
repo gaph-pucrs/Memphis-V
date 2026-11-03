@@ -4,7 +4,7 @@ include ../common/common.mk
 
 # params/ and dataset/ are generated, not tracked. Regenerate them from the source tree with
 #   make -C applications/alexnet headers PYTHON=<python with torch>
-UTILS  ?= ../../alexnet-utils
+UTILS  ?= ../../tools/alexnet-utils
 PYTHON ?= python3
 comma   = ,
 PES     = $(shell awk '/^\#define CONV[1-5]_PES/ { print $$3 }' alexnet_split.h | paste -sd,)
