@@ -18,5 +18,8 @@
 	path = mint
 	url = https://github.com/gaph-pucrs/mint
 [submodule "alexnet-utils"]
-	path = alexnet-utils
+	path = tools/alexnet-utils
 	url = https://github.com/santosantonio1/alexnet-utils.git
+[submodule "tools/lmfrnet-utils"]
+	path = tools/lmfrnet-utils
+	url = https://github.com/santosantonio1/lmfrnet-utils.git
