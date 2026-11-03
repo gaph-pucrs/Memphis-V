@@ -38,6 +38,14 @@ It is possible to use the WSL to run Memphis-V platform under Windows.
 * Graphical Debugger (optional, check [how to obtain Debugger](/docs/Debugger.md))
 * Either Verilator ([how to obtain Verilator](/docs/verilator.md)) or [Questa](https://eda.sw.siemens.com/en-US/ic/questa/simulation/advanced-simulator/)
 
+The Verilator build uses `--binary`, which needs C++20 coroutines in the host compiler (GCC 10 or newer).
+On a host whose default GCC is older, load a C++20-capable Verilator and a newer GCC before building, e.g.:
+```sh
+source /usr/share/Modules/init/bash
+module load riscv64-elf/15.2.0-gaph verilator/5.024-CXX20
+source /opt/rh/gcc-toolset-13/enable
+```
+
 ### Obtaining Memphis-V
 
 Clone this repository **with submodules**.
@@ -186,7 +194,38 @@ mint checks, when generating:
 * A secure application fits in the region (its tasks need at most Y rows), and a non-secure application fits in the PEs at x >= X+1.
 * If an application is marked secure but the testcase has no `osz_window`, mint prints a warning and runs it as non-secure.
 
-Complete examples are in `regression/`: `tc_osz.yaml` and `tc_noosz.yaml` (the same platform without the region), `apps_osz.yaml`, `sc_osz.yaml`, `sc_osz_rows.yaml` (secure applications competing for rows) and `sc_osz_entrance.yaml` (a two-row secure application and its single entrance).
+#### Closing the zone
+
+Every region row is always inside a closed zone: the zone of the secure application that claimed it, or, while no application owns it, a one-row zone of its own.
+The links on a zone's edge are blocked by a wrapper around each PE's external ports (`Phivers/rtl/PhiversOszFilter.sv`), which the kernel drives through the `DMNI_OSZ_BLOCK` register:
+* A packet arriving at, or leaving through, a blocked port is dropped whole, and the simulation log shows one `[OSZ] ... dropped packet` line for it. A port changes mode only between packets.
+* The east port of the entrance PE (X-1, hi) is the zone's access point. For now it accepts only task binaries from the application injector and messages whose source is the mapper or an injector; this stands in for a shared-key check.
+* A task of a secure application is released only once its PE belongs to the application's closed zone.
+
+The mapper's PE is learned once, from the first `RELEASE_PERIPHERAL` broadcast (sent when the management application is mapped, before any other application runs). Only that PE may change the zones (`OSZ_ROWS`, `OSZ_ZONE_CLEAR`).
+
+#### Teardown
+
+When a task of a secure application ends, its kernel clears what the task leaves on the PE (the whole data page, which also holds `.rodata`, the saved registers, pending messages) and reports `OSZ_TASK_DONE` over the broadcast network.
+When the application has no task left, after a normal end or an abort, the mapper broadcasts `OSZ_ZONE_CLEAR` for its rows; every PE of the zone clears what remains and replies `OSZ_ZONE_CLEARED`.
+The rows are released for another application only after one reply from each PE of the zone.
+The text page is not cleared: instruction memory can only be written by the DMNI, and tasks cannot read it as data.
+
+#### Examples and regression
+
+Complete examples are in `regression/`:
+* `tc_osz.yaml`, and `tc_noosz.yaml` (the same platform without the region)
+* `apps_osz.yaml`: the applications the scenarios use
+* `sc_osz.yaml`, `sc_osz_rows.yaml` (secure applications competing for rows), `sc_osz_entrance.yaml` (a two-row secure application and its single entrance)
+* `sc_osz_clear.yaml`: `osz_mark` fills its data pages with a pattern and `osz_probe`, on the same PEs afterwards, counts what is left (`PAGE CLEAN` on `tc_osz.yaml`, `PAGE DIRTY` on `tc_noosz.yaml`)
+* `sc_osz_abort.yaml`: teardown after an abort
+* `tc_osz_attack.yaml`: `tc_osz.yaml` with `OSZ_ATTACK: yes`, a simulation-only test that injects packets ignoring the single entrance from unused mesh-edge ports; every one must be dropped
+
+`regression/run_osz.sh` builds and simulates all of them and checks each with `regression/osz_check.py` (placement, entrance routing, dropped packets, residue, errors):
+```sh
+cd regression
+./run_osz.sh -j 4          # add --long for sc_osz_rows (about 20 minutes)
+```
 
 After creating the description of the testcase and the scenario, the testcase should be generated.
 This step builds the support libraries, the kernel, and all management tasks:
