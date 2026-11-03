@@ -1,0 +1,22 @@
+# OSZ teardown on abort, on tc_osz.yaml.
+#
+#   App 1 osz_abort  secure: overflow runs out of stack and is aborted by its
+#                    kernel; the mapper then aborts waiter. The zone is cleared
+#                    (OSZ_ZONE_CLEAR / OSZ_ZONE_CLEARED) before its row is released.
+#   App 2 prod_cons  secure, pinned to the same row: it can only be mapped once
+#                    that row is released.
+management:                 # Management application properties
+  - task: mapper_task       # The first in this list should ALWAYS be mapper_task
+    static_mapping: [4,4]   # Top-right
+apps:                       # Application properties
+  - name: osz_abort
+    secure: yes
+    start_time_ms: 0
+    static_mapping:
+      overflow: [0,0]
+      waiter: [1,0]
+  - name: prod_cons
+    secure: yes
+    start_time_ms: 1
+    static_mapping:
+      prod: [0,0]

@@ -632,6 +632,107 @@ void _map_terminate_app(map_t *mapper, app_t *app)
 	}
 }
 
+void _map_verify_pending(map_t *mapper);
+
+/**
+ * OSZ teardown: every task of a secure application reports OSZ_TASK_DONE once
+ * its kernel has cleared it. Then every PE of the app's rows is told to clear
+ * what remains (OSZ_ZONE_CLEAR) and replies OSZ_ZONE_CLEARED. Only after one
+ * reply per zone PE are the rows released for another application.
+ */
+static void _map_zone_clear(map_t *mapper, app_t *app)
+{
+	int lo;
+	const int cnt = app_get_rows(app, &lo);
+	const unsigned expected = osz_row_width() * cnt;
+
+	if(!app_start_clear(app, expected)){
+		puts("FATAL: not enough memory");
+		return;
+	}
+
+	printf(
+		"App %d: OSZ_ZONE_CLEAR for rows %d..%d at %u, awaiting %u PE(s)\n",
+		app_get_id(app), lo, lo + cnt - 1, memphis_get_tick(), expected
+	);
+	memphis_br_send(OSZ_ZONE_CLEAR, MEMPHIS_OSZ_ROWS(false, lo, lo + cnt - 1));
+}
+
+/* The application has no task left: terminate it, after its zone is cleared */
+static void _map_finish_app(map_t *mapper, app_t *app)
+{
+	if(app_get_rows(app, NULL) != 0){
+		if(!app_is_clearing(app))
+			_map_zone_clear(mapper, app);
+		return;
+	}
+
+	_map_terminate_app(mapper, app);
+}
+
+void map_osz_task_done(map_t *mapper, memphis_osz_report_t *report)
+{
+	const int id = report->payload;
+	app_t *app = _map_find_app(mapper, id >> 8);
+	task_t *task = (app != NULL) ? app_get_task(app, id & 0xFF) : NULL;
+
+	if(task == NULL || !task_is_allocated(task)){
+		printf("WARNING: OSZ_TASK_DONE for task %d from %lx, not running. Ignoring.\n", id, report->src_addr);
+		return;
+	}
+
+	/* Only the PE the task was mapped to may report it */
+	const int addr = pe_get_addr(task_get_pe(task));
+	if((uint32_t)addr != report->src_addr){
+		printf("WARNING: OSZ_TASK_DONE for task %d from %lx, but it runs on %x. Ignoring.\n", id, report->src_addr, addr);
+		return;
+	}
+
+	memphis_info_t info;
+	info.task = id;
+	map_task_terminated(mapper, &info);
+}
+
+void map_osz_zone_cleared(map_t *mapper, memphis_osz_report_t *report)
+{
+	const int lo = MEMPHIS_OSZ_ROWS_LO(report->payload);
+	const int hi = MEMPHIS_OSZ_ROWS_HI(report->payload);
+	const int x  = report->src_addr >> 8;
+	const int y  = report->src_addr & 0xFF;
+
+	app_t *app = NULL;
+	if(mapper->row_owner != NULL && lo < osz_row_count() && mapper->row_owner[lo] != -1)
+		app = _map_find_app(mapper, mapper->row_owner[lo]);
+
+	int app_lo = 0;
+	const int cnt = (app != NULL) ? app_get_rows(app, &app_lo) : 0;
+	if(app == NULL || !app_is_clearing(app) || app_lo != lo || app_lo + cnt - 1 != hi){
+		printf("WARNING: OSZ_ZONE_CLEARED for rows %d..%d from %lx, no zone clearing there. Ignoring.\n", lo, hi, report->src_addr);
+		return;
+	}
+
+	/* Only a PE of the zone may reply, once */
+	int got = -1;
+	if(x < osz_row_width() && y >= lo && y <= hi)
+		got = app_add_cleared(app, (y - lo) * osz_row_width() + x);
+
+	if(got < 0){
+		printf("WARNING: OSZ_ZONE_CLEARED for rows %d..%d from %lx, not a zone PE or repeated. Ignoring.\n", lo, hi, report->src_addr);
+		return;
+	}
+
+	const unsigned expected = app_get_clear_expected(app);
+	printf("App %d: PE %d,%d cleared (%d/%u)\n", app_get_id(app), x, y, got, expected);
+	if((unsigned)got < expected)
+		return;
+
+	app_end_clear(app);
+	_map_terminate_app(mapper, app);	/* Releases the rows */
+
+	if(mapper->pending != NULL)
+		_map_verify_pending(mapper);
+}
+
 void _map_verify_pending(map_t *mapper)
 {
 	/* There is a pending application which could not be allocated before */
@@ -692,7 +793,7 @@ void map_task_terminated(map_t *mapper, memphis_info_t *info)
 
 	/* All tasks terminated, terminate app */
 	if(alloc_cnt == 0)
-		_map_terminate_app(mapper, app);
+		_map_finish_app(mapper, app);
 
 	if(mapper->pending != NULL)
 		_map_verify_pending(mapper);
@@ -735,7 +836,7 @@ void map_task_aborted(map_t *mapper, memphis_info_t *info)
 		}
 	}
 
-	_map_terminate_app(mapper, app);
+	_map_finish_app(mapper, app);
 
 	if(mapper->pending != NULL)
 		_map_verify_pending(mapper);

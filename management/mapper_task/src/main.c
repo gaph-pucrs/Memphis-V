@@ -54,6 +54,12 @@ int main()
 			case TASK_ABORTED:
 				map_task_aborted(&mapper, (memphis_info_t*)message);
 				break;
+			case OSZ_TASK_DONE:
+				map_osz_task_done(&mapper, (memphis_osz_report_t*)message);
+				break;
+			case OSZ_ZONE_CLEARED:
+				map_osz_zone_cleared(&mapper, (memphis_osz_report_t*)message);
+				break;
 			case TASK_MIGRATION_MAP:
 				map_migration_map(&mapper, (memphis_info_t*)message);
 				break;

@@ -55,6 +55,16 @@ void map_task_terminated(map_t *mapper, memphis_info_t *info);
 
 void map_task_aborted(map_t *mapper, memphis_info_t *info);
 
+/**
+ * @brief OSZ_TASK_DONE: a task of a secure application ended and was cleared
+ */
+void map_osz_task_done(map_t *mapper, memphis_osz_report_t *report);
+
+/**
+ * @brief OSZ_ZONE_CLEARED: a PE of a secure application's rows was cleared
+ */
+void map_osz_zone_cleared(map_t *mapper, memphis_osz_report_t *report);
+
 void map_request_nearest_service(map_t *mapper, oda_provider_t *packet);
 
 void map_request_all_services(map_t *mapper, oda_provider_t *packet);
