@@ -23,6 +23,7 @@
 #include <memphis/oda.h>
 
 #include "window.h"
+#include "osz.h"
 
 void map_init(map_t *mapper)
 {
@@ -47,6 +48,8 @@ void map_init(map_t *mapper)
 
 	mapper->finished = false;
 	mapper->finished_cnt = 0;
+
+	osz_init();
 }
 
 void _map_do(map_t *mapper, app_t *app)
@@ -247,11 +250,14 @@ void map_new_app(map_t *mapper, memphis_new_app_t *packet, int32_t *descriptor, 
 	}
 
 	// @todo get hash id
-	task_t *tasks = app_init(app, mapper->appid_cnt, packet->hash, packet->source, packet->task_cnt, (int*)descriptor, (int*)communication);
+	bool secure = (packet->pad16 & MEMPHIS_NEW_APP_SECURE) != 0;
+	task_t *tasks = app_init(app, mapper->appid_cnt, packet->hash, packet->source, packet->task_cnt, secure, (int*)descriptor, (int*)communication);
 	if(tasks == NULL){
 		puts("FATAL: not enough memory");
 		return;
 	}
+
+	printf("App %d is %s\n", app_get_id(app), app_is_secure(app) ? "secure" : "not secure");
 
 	/* Search for statically mapped tasks */
 	unsigned failed_cnt = 0;

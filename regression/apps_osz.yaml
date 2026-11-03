@@ -1,0 +1,3 @@
+# Application set for the OSZ scenarios: only what sc_osz.yaml uses.
+apps:
+  - name: prod_cons

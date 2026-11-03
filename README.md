@@ -129,6 +129,46 @@ apps:                       # Application properties
       prod: [1,1]           # Optional: task "prod" is mapped to 1x1
 ```
 
+### Secure region (OSZ)
+
+A testcase can reserve a region of PEs for secure applications.
+`osz_window: [X, Y]` gives its size; the region always starts at PE 0x0 and covers x from 0 to X-1 and y from 0 to Y-1.
+For example, `[3,2]` covers PEs 0x0, 0x1, 1x0, 1x1, 2x0 and 2x1.
+Omit the key to disable the region.
+```yaml
+hw:
+  mpsoc_dimension: [4,4]
+  osz_window: [3,2]           # Optional: secure region size [X, Y] starting at PE 0x0 (default is none)
+  Peripherals:
+    - name: APP_INJ
+      pe: 3,0                 # Peripherals must be outside the region
+      port: S
+    - name: MA_INJ
+      pe: 3,3
+      port: N
+```
+
+In the scenario, each application entry can be marked secure, so the same application can run as secure in one entry and non-secure in another:
+```yaml
+apps:
+  - name: prod_cons
+    secure: yes               # Optional: run this instance as secure (default is no)
+    static_mapping:
+      prod: [0,0]             # Secure applications may only be pinned inside the region
+  - name: prod_cons           # Same application, non-secure
+    static_mapping:
+      prod: [3,1]             # Non-secure applications may only be pinned outside the region
+```
+
+mint checks, when generating:
+* X is at most the mesh width minus 1, so at least one column stays free to the right of the region; Y is at most the mesh height.
+* No peripheral is on a PE inside the region.
+* No management task is statically mapped inside the region.
+* Statically mapped tasks of secure applications are inside the region, and those of non-secure applications are outside it.
+* If an application is marked secure but the testcase has no `osz_window`, mint prints a warning and runs it as non-secure.
+
+A complete example is in `regression/tc_osz.yaml`, `regression/apps_osz.yaml` and `regression/sc_osz.yaml`.
+
 After creating the description of the testcase and the scenario, the testcase should be generated.
 This step builds the support libraries, the kernel, and all management tasks:
 ```console

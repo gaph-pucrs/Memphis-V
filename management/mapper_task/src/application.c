@@ -20,12 +20,13 @@
 
 #include "mapper.h"
 
-task_t *app_init(app_t *app, int id, int hash, int injector, size_t task_cnt, int *descriptor, int *communication)
+task_t *app_init(app_t *app, int id, int hash, int injector, size_t task_cnt, bool secure, int *descriptor, int *communication)
 {
 	app->id = id;
 	app->hash = hash;
 	app->injector = injector;
 	app->task_cnt = task_cnt;
+	app->secure = secure;
 	app->allocated_cnt = 0;
 	app->release_time = -1;
 	app->failed_cnt = 0;
@@ -260,6 +261,11 @@ void app_terminated(app_t *app)
 int app_get_hash(app_t *app)
 {
 	return app->hash;
+}
+
+bool app_is_secure(app_t *app)
+{
+	return app->secure;
 }
 
 unsigned app_get_release_time(app_t *app)

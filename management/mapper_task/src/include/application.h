@@ -31,9 +31,10 @@ typedef struct _app {
 
 	unsigned score;
 	bool has_static;
+	bool secure;	/* Per-instance flag from the injector (NEW_APP pad16) */
 } app_t;
 
-task_t *app_init(app_t *app, int id, int hash, int injector, size_t task_cnt, int *descriptor, int *communication);
+task_t *app_init(app_t *app, int id, int hash, int injector, size_t task_cnt, bool secure, int *descriptor, int *communication);
 
 void app_set_failed(app_t *app, unsigned failed_cnt);
 
@@ -72,6 +73,8 @@ task_t *app_get_task(app_t *app, int taskid);
 void app_terminated(app_t *app);
 
 int app_get_hash(app_t *app);
+
+bool app_is_secure(app_t *app);
 
 unsigned app_get_release_time(app_t *app);
 

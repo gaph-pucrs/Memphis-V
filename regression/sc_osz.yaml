@@ -1,0 +1,26 @@
+# OSZ scenario: the same application once as secure and once as non-secure.
+#
+# On tc_osz.yaml (region [3,2] = PEs 0,0 to 2,1) the mapper log shows:
+#   OSZ region: 3x2, PEs 0,0 to 2,1
+#   App 1 is secure
+#   App 2 is not secure
+#
+# On testcase.yaml (no osz_window) mint warns and runs app 1 as non-secure,
+# and the mapper log shows "OSZ region: disabled".
+#
+# Static mappings follow the region rules mint enforces: management tasks and
+# non-secure apps outside the region, secure apps inside it. The unpinned tasks
+# are mapped dynamically; the mapper does not confine them to the region yet.
+management:                 # Management application properties
+  - task: mapper_task       # The first in this list should ALWAYS be mapper_task
+    static_mapping: [3,3]   # Outside the region
+apps:                       # Application properties
+  - name: prod_cons
+    secure: yes             # Optional: run this instance as secure (default is no)
+    start_time_ms: 0
+    static_mapping:
+      prod: [0,0]           # Inside the region
+  - name: prod_cons         # Same application, non-secure
+    start_time_ms: 1
+    static_mapping:
+      prod: [3,1]           # Outside the region
