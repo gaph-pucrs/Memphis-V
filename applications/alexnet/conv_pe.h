@@ -15,7 +15,8 @@
 #include "./alexnet_split.h"
 #include "./debug.h"
 
-#define TAG         "[c" STR(LAYER) "_" STR(PE) "]"
+#define NAME        "c" STR(LAYER) "_" STR(PE)
+#define TAG         "[" NAME "]"
 #define WEIGHTS     CAT(CAT(CAT(c, LAYER), _), CAT(PE, _weight))
 #define JOIN        CAT(j, LAYER)
 
@@ -40,10 +41,6 @@ int main()
 {
     puts(TAG " starting application");
 
-    static time data[NUM_INFERENCES][1] = {0};
-    static time send[NUM_INFERENCES][1] = {0};
-    static time recv[NUM_INFERENCES][1] = {0};
-
     static type out[OUT_SIZE];
 
     #if LAYER == 1
@@ -57,30 +54,19 @@ int main()
 
     for (int i = 0; i < NUM_INFERENCES; i++)
     {
+        INFERENCE(i);
+
         #if LAYER != 1
-            RECEIVE(recv[i][0], in, L_(FROM));
+            RECEIVE(in, L_(FROM));
         #endif
 
-        TIMED(data[i][0], conv_partial(&pe_shape, &pe_params, in, out));
-        SEND(send[i][0], out, JOIN);
+        TIMED("conv", conv_partial(&pe_shape, &pe_params, in, out));
+        SEND(out, JOIN);
     }
 
     puts(TAG " finishing application");
 
-    puts(TAG " compute:");
-    PRINT_STATS(data);
-
-    puts(TAG " send:");
-    PRINT_STATS(send);
-
-    puts(TAG " recv:");
-    PRINT_STATS(recv);
-
-    puts(TAG " comm:");
-    PRINT_COMM_SUM(send, recv);
-
-    puts(TAG " messages:");
-    PRINT_MSGS();
+    PRINT_TABLE(NAME);
 
     return 0;
 }
