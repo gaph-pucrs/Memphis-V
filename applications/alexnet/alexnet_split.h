@@ -3,7 +3,7 @@
 
 // How AlexNet is split over the PEs. Conv layer L runs on CONV<L>_PES conv PEs (cL_0, cL_1, ..),
 // each with a contiguous block of CONV<L>_IN_C/CONV<L>_PES input channels, and one join task (jL)
-// that sums their partial sums, applies conv_join and the following maxpool, if any.
+// that sums their partial sums, applies the shift, bias and relu and the following maxpool, if any.
 // The task templates (conv_pe.h, join_pe.h) read the layer's numbers with L_(name), which
 // expands to CONV<LAYER>_name; the conv shapes themselves are in cnn_std.h.
 //

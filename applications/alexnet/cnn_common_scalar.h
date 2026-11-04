@@ -91,21 +91,25 @@ void int_handler (const int n, type buf[])
 //}}}
 //{{{
 KERNEL
-void sum_bias (const int n, type buf[], const type b)
+void bias (const int C, const int HW, type buf[], const type b[])
 {
-    for (int i = 0; i < n; i++)
+    // buf[c][i] += b[c]
+    for (int c = 0; c < C; c++)
     {
-        buf[i] += b;
+        for (int i = 0; i < HW; i++)
+        {
+            buf[c*HW + i] += b[c];
+        }
     }
 }
 //}}}
 //{{{
 KERNEL
-void add_bias (const int n, type buf[], const type b[])
+void add (const int n, type buf[], const type in[])
 {
     for (int i = 0; i < n; i++)
     {
-        buf[i] += b[i];
+        buf[i] += in[i];
     }
 }
 //}}}
@@ -186,9 +190,6 @@ void fc (
         }
         out[o] = acc;
     }
-
-    int_handler (C_out, out);
-    add_bias (C_out, out, params->b);
 }
 //}}}
 

@@ -34,7 +34,7 @@ static const TensorShape pe_shape = {
 };
 
 static const ConvParams pe_params = {
-    WEIGHTS, NULL, L_(KERNEL), L_(STRIDE), L_(PAD)
+    WEIGHTS, L_(KERNEL), L_(STRIDE), L_(PAD)
 };
 
 int main()
@@ -60,7 +60,7 @@ int main()
             RECEIVE(in, L_(FROM));
         #endif
 
-        TIMED("conv", conv_partial(&pe_shape, &pe_params, in, out));
+        TIMED("conv", conv(&pe_shape, &pe_params, in, out));
         SEND(out, JOIN);
     }
 

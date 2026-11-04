@@ -1,4 +1,4 @@
-// join3: conv3 partials + conv_join, then conv3 to the conv4 PEs
+// join3: conv3 partials + shift, bias, relu, then conv3 to the conv4 PEs
 
 #define LAYER   3
 #define SOURCES c3_0, c3_1, c3_2, c3_3

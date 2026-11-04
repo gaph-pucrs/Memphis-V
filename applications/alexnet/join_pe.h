@@ -4,8 +4,8 @@
 // Body of a join task (jL.c). The task file defines LAYER, SOURCES (the layer's conv PEs, in
 // channel-block order) and, if the next layer is wired up, TARGETS (the next layer's conv PEs,
 // in the same order, or the classifier task after conv5), and includes its bias
-// (params/biasL.h). The join adds up the PEs' partial sums, applies conv_join (shift, bias,
-// relu) and the following maxpool, if any, records the checksums, then sends each target its
+// (params/biasL.h). The join adds up the PEs' partial sums, applies the shift, bias and
+// relu and the following maxpool, if any, records the checksums, then sends each target its
 // contiguous block of channels. Each step is timed as its own compute row.
 
 #include <stdio.h>
@@ -43,20 +43,20 @@ static_assert(N_SOURCES == L_(PES), "SOURCES must list the CONV<LAYER>_PES conv 
     };
 #endif
 
-// KERNEL: keeps GCC from vectorizing the accumulation loop
+// KERNEL: keeps GCC from vectorizing the checksum loops
 KERNEL
 int main()
 {
     puts(TAG " starting application");
 
-    static type conv[CONV_SIZE];
+    static type fmap[CONV_SIZE];
     static type partial[CONV_SIZE];
 
     #if L_(POOL)
         static type pool[OUT_SIZE];
         type *out = pool;
     #else
-        type *out = conv;
+        type *out = fmap;
     #endif
 
     for (int i = 0; i < NUM_INFERENCES; i++)
@@ -64,32 +64,26 @@ int main()
         INFERENCE(i);
 
         // the first partial is received straight into the sum
-        RECEIVE(conv, sources[0]);
+        RECEIVE(fmap, sources[0]);
 
         for (unsigned pe = 1; pe < N_SOURCES; pe++)
         {
             RECEIVE(partial, sources[pe]);
 
-            TIMED("psum", {
-                for (int n = 0; n < CONV_SIZE; n++)
-                    conv[n] += partial[n];
-            });
+            TIMED("psum", add(CONV_SIZE, fmap, partial));
         }
 
-        // conv_join, split to time the relu apart
+        // shift and bias, timed apart from the relu
         TIMED("bias", {
-            for (int oc = 0; oc < L_(CHANNELS); oc++)
-            {
-                int_handler(CONV_HW, conv + oc*CONV_HW);
-                sum_bias(CONV_HW, conv + oc*CONV_HW, BIAS[oc]);
-            }
+            int_handler(CONV_SIZE, fmap);
+            bias(L_(CHANNELS), CONV_HW, fmap, BIAS);
         });
 
-        TIMED("relu", relu(CONV_SIZE, conv));
-        CHECK("conv" STR(LAYER), checksum(CONV_SIZE, conv));
+        TIMED("relu", relu(CONV_SIZE, fmap));
+        CHECK("conv" STR(LAYER), checksum(CONV_SIZE, fmap));
 
         #if L_(POOL)
-            TIMED("pool", maxpool(&pool_shape, conv, pool));
+            TIMED("pool", maxpool(&pool_shape, fmap, pool));
             CHECK("pool" STR(LAYER), checksum(OUT_SIZE, pool));
         #endif
 
