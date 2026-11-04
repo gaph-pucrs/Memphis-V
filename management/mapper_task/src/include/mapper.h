@@ -33,6 +33,8 @@ typedef struct _map {
 	list_t apps;
 	bool finished;
 	unsigned finished_cnt;
+
+	int *row_owner;	/* OSZ region row owner app id, -1 when free; NULL without region */
 } map_t;
 
 void map_init(map_t *mapper);
@@ -52,6 +54,16 @@ void map_task_allocated(map_t *mapper, memphis_info_t *info);
 void map_task_terminated(map_t *mapper, memphis_info_t *info);
 
 void map_task_aborted(map_t *mapper, memphis_info_t *info);
+
+/**
+ * @brief OSZ_TASK_DONE: a task of a secure application ended and was cleared
+ */
+void map_osz_task_done(map_t *mapper, memphis_osz_report_t *report);
+
+/**
+ * @brief OSZ_ZONE_CLEARED: a PE of a secure application's rows was cleared
+ */
+void map_osz_zone_cleared(map_t *mapper, memphis_osz_report_t *report);
 
 void map_request_nearest_service(map_t *mapper, oda_provider_t *packet);
 

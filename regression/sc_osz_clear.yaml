@@ -1,0 +1,27 @@
+# OSZ teardown: is a secure application's memory cleared before its rows are reused?
+#
+#   App 1 osz_mark   secure, mark on 0,0 and msink on 1,0: fill 16 KiB of their
+#                    data pages with 0x5EC5E7A5, then exit
+#   App 2 osz_probe  secure, probe on 0,0 and psink on 1,0: count how much of the
+#                    pattern is still in the pages they get
+#
+# On tc_osz.yaml probe waits until mark's zone is cleared and its rows released,
+# and reports "RESIDUE 0/4096 ... PAGE CLEAN".
+# On tc_noosz.yaml (no region, both apps run as non-secure, nothing is cleared)
+# it is the control and reports "RESIDUE 4096/4096 ... PAGE DIRTY".
+management:                 # Management application properties
+  - task: mapper_task       # The first in this list should ALWAYS be mapper_task
+    static_mapping: [4,4]   # Top-right
+apps:                       # Application properties
+  - name: osz_mark
+    secure: yes
+    start_time_ms: 0
+    static_mapping:
+      mark: [0,0]
+      msink: [1,0]
+  - name: osz_probe
+    secure: yes
+    start_time_ms: 3        # After mark has ended
+    static_mapping:
+      probe: [0,0]
+      psink: [1,0]

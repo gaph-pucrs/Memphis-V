@@ -1,0 +1,16 @@
+# OSZ single entrance, on tc_osz.yaml (region [2,2]).
+#
+#   App 1 dtw        secure  6 tasks -> rows 0..1, entrance PE 1,1 (top row)
+#   App 2 prod_cons  non-secure      -> x >= 3, runs alongside
+#
+# Every packet into app 1 comes down the free column and turns at PE 2,1 into
+# the entrance; every packet out of it leaves through the entrance's east
+# port. Tasks in row 0 first go up to row 1 in their own column, turn there,
+# and then leave east along row 1.
+management:                 # Management application properties
+  - task: mapper_task       # The first in this list should ALWAYS be mapper_task
+    static_mapping: [4,4]   # Top-right
+apps:                       # Application properties
+  - name: dtw
+    secure: yes
+  - name: prod_cons

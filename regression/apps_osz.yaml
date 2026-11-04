@@ -1,0 +1,8 @@
+# Application set for the OSZ scenarios: only what the sc_osz*.yaml scenarios use.
+apps:
+  - name: prod_cons
+  - name: synthetic
+  - name: dtw
+  - name: osz_mark
+  - name: osz_probe
+  - name: osz_abort

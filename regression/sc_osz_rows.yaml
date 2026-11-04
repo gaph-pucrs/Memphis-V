@@ -1,0 +1,20 @@
+# OSZ row contention, on tc_osz.yaml (region [2,2]: 2 rows of 4 slots).
+#
+#   App 1 synthetic  secure  4 tasks -> 1 row  -> claims row 0 (row full)
+#   App 2 prod_cons  secure  2 tasks -> 1 row  -> claims row 1, 2 idle slots reserved
+#   App 3 dtw        secure  6 tasks -> 2 rows -> waits until rows 0 and 1 are both free
+#   App 4 synthetic  non-secure      -> x >= 3, mapped once app 3 is
+#
+# The mapper keeps one pending application and the injector waits for it, so
+# app 4 is injected after app 3 is mapped.
+management:                 # Management application properties
+  - task: mapper_task       # The first in this list should ALWAYS be mapper_task
+    static_mapping: [4,4]   # x >= 3
+apps:                       # Application properties
+  - name: synthetic
+    secure: yes
+  - name: prod_cons
+    secure: yes
+  - name: dtw
+    secure: yes
+  - name: synthetic         # Non-secure

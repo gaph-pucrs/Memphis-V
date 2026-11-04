@@ -20,17 +20,23 @@
 
 #include "mapper.h"
 
-task_t *app_init(app_t *app, int id, int hash, int injector, size_t task_cnt, int *descriptor, int *communication)
+task_t *app_init(app_t *app, int id, int hash, int injector, size_t task_cnt, bool secure, int *descriptor, int *communication)
 {
 	app->id = id;
 	app->hash = hash;
 	app->injector = injector;
 	app->task_cnt = task_cnt;
+	app->secure = secure;
 	app->allocated_cnt = 0;
 	app->release_time = -1;
 	app->failed_cnt = 0;
 	app->has_static = false;
 	app->score = 0;
+	app->row_lo = 0;
+	app->row_cnt = 0;
+	app->cleared = NULL;
+	app->clear_expected = 0;
+	app->clear_cnt = 0;
 
 	app->tasks = malloc(task_cnt * sizeof(task_t));
 
@@ -260,6 +266,61 @@ void app_terminated(app_t *app)
 int app_get_hash(app_t *app)
 {
 	return app->hash;
+}
+
+bool app_is_secure(app_t *app)
+{
+	return app->secure;
+}
+
+void app_set_rows(app_t *app, int row_lo, int row_cnt)
+{
+	app->row_lo = row_lo;
+	app->row_cnt = row_cnt;
+}
+
+int app_get_rows(app_t *app, int *row_lo)
+{
+	if(row_lo != NULL)
+		*row_lo = app->row_lo;
+
+	return app->row_cnt;
+}
+
+bool app_start_clear(app_t *app, unsigned expected)
+{
+	app->cleared = calloc(expected, sizeof(bool));
+	if(app->cleared == NULL)
+		return false;
+
+	app->clear_expected = expected;
+	app->clear_cnt = 0;
+	return true;
+}
+
+bool app_is_clearing(app_t *app)
+{
+	return (app->cleared != NULL);
+}
+
+int app_add_cleared(app_t *app, unsigned idx)
+{
+	if(app->cleared == NULL || idx >= app->clear_expected || app->cleared[idx])
+		return -1;
+
+	app->cleared[idx] = true;
+	return ++app->clear_cnt;
+}
+
+unsigned app_get_clear_expected(app_t *app)
+{
+	return app->clear_expected;
+}
+
+void app_end_clear(app_t *app)
+{
+	free(app->cleared);
+	app->cleared = NULL;
 }
 
 unsigned app_get_release_time(app_t *app)

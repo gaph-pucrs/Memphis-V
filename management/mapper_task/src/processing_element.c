@@ -22,7 +22,24 @@ void pe_init(pe_t *pe, size_t slots, int addr)
 	pe->addr = addr;
 	pe->pending_cnt = 0;
 	pe->slots = slots;
+	pe->reserved = 0;
 	list_init(&(pe->tasks));
+}
+
+unsigned pe_reserve_idle(pe_t *pe)
+{
+	unsigned withheld = pe->slots;
+	pe->reserved += withheld;
+	pe->slots = 0;
+	return withheld;
+}
+
+unsigned pe_release_idle(pe_t *pe)
+{
+	unsigned restored = pe->reserved;
+	pe->slots += restored;
+	pe->reserved = 0;
+	return restored;
 }
 
 bool pe_add_pending(pe_t *pe)

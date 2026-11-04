@@ -38,6 +38,14 @@ It is possible to use the WSL to run Memphis-V platform under Windows.
 * Graphical Debugger (optional, check [how to obtain Debugger](/docs/Debugger.md))
 * Either Verilator ([how to obtain Verilator](/docs/verilator.md)) or [Questa](https://eda.sw.siemens.com/en-US/ic/questa/simulation/advanced-simulator/)
 
+The Verilator build uses `--binary`, which needs C++20 coroutines in the host compiler (GCC 10 or newer).
+On a host whose default GCC is older, load a C++20-capable Verilator and a newer GCC before building, e.g.:
+```sh
+source /usr/share/Modules/init/bash
+module load riscv64-elf/15.2.0-gaph verilator/5.024-CXX20
+source /opt/rh/gcc-toolset-13/enable
+```
+
 ### Obtaining Memphis-V
 
 Clone this repository **with submodules**.
@@ -87,6 +95,8 @@ hw:                           # Hardware properties
     - RAM_DEBUG: no           # Optional: enable RAM access debug (default is off)
     - RS5_DEBUG: no           # Optional: enable core register bank debug (default is off)
     - DMNI_DEBUG: no          # Optional: enable DMNI timing debug (default is off)
+    - SR_TRACE: yes           # Optional: simulation-only packet monitor for tools/meshviz (default follows TRAFFIC_DEBUG)
+    - OSZ_TRACE: yes          # Optional: simulation-only OSZ zone monitor for tools/meshviz (default follows TRAFFIC_DEBUG)
     - MEM_PROFILE: no         # Optional: per-PE memory occupancy profiling (default is off)
     - MEM_PROFILE_BLOCK: 4096 # Optional: profiling granularity in bytes (default is 4096)
 ```
@@ -128,6 +138,98 @@ apps:                       # Application properties
     static_mapping:         # Optional: static mapping (default is dynamic)
       prod: [1,1]           # Optional: task "prod" is mapped to 1x1
 ```
+
+### Secure region (OSZ)
+
+A testcase can reserve a region of PEs for secure applications.
+`osz_window: [X, Y]` gives its size; the region always starts at PE 0x0 and covers x from 0 to X-1 and y from 0 to Y-1.
+For example, `[3,2]` covers PEs 0x0, 0x1, 1x0, 1x1, 2x0 and 2x1.
+Column X, right next to the region, is always left free: non-secure applications, including the management application, may only use PEs with x >= X+1.
+On a 5x5 mesh with `[2,2]`, the region is 0x0 to 1x1, column 2 is free, and non-secure tasks run at x >= 3.
+Omit the key to disable the region.
+```yaml
+hw:
+  mpsoc_dimension: [5,5]
+  osz_window: [2,2]           # Optional: secure region size [X, Y] starting at PE 0x0 (default is none)
+  Peripherals:
+    - name: APP_INJ
+      pe: 4,4                 # Peripherals must be outside the region; top-right is recommended
+      port: E
+    - name: MA_INJ
+      pe: 4,4
+      port: N
+```
+
+The mapper places secure applications by whole region rows.
+Each region row is X PEs wide and holds X * tasks_per_PE tasks.
+A secure application claims the lowest block of contiguous free rows that fits all its tasks (and covers its statically mapped ones).
+A row is never shared between applications: slots left free in a claimed row stay reserved until the application terminates.
+A secure application that finds no free block waits until enough rows are released.
+Secure tasks are not migrated.
+
+Each secure application has a single entrance: the east port of PE (X-1, hi), where hi is the top row it claimed.
+The kernels route every packet through it with source routing (the DMNI SR flag, header bit 27):
+* Into the application: the packet first goes to PE (X, hi) in the free column, which turns it into row hi through the entrance, and it then reaches its target inside the application.
+* Out of the application: a task in row hi leaves directly through the entrance; a task in a lower row first goes up to row hi in its own column, turns there, and leaves through the entrance.
+* Inside the application and between non-secure PEs, packets follow plain XY routing.
+
+The mapper broadcasts which rows each secure application claims (`OSZ_ROWS`), and the application injector adds the same turn to the task binaries it sends.
+We recommend placing the mapper task and both injectors at the top-right PE of the mesh, so that management traffic runs along the top row and down the free column, away from the rows the secure applications use.
+
+In the scenario, each application entry can be marked secure, so the same application can run as secure in one entry and non-secure in another:
+```yaml
+apps:
+  - name: prod_cons
+    secure: yes               # Optional: run this instance as secure (default is no)
+    static_mapping:
+      prod: [0,0]             # Secure applications may only be pinned inside the region
+  - name: prod_cons           # Same application, non-secure
+    static_mapping:
+      prod: [3,1]             # Non-secure applications may only be pinned at x >= X+1
+```
+
+mint checks, when generating:
+* X is at most the mesh width minus 2 (the free column plus at least one column for non-secure tasks); Y is at most the mesh height.
+* No peripheral is on a PE inside the region.
+* Management tasks and statically mapped tasks of non-secure applications are at x >= X+1.
+* Statically mapped tasks of secure applications are inside the region, within as many rows as the application claims.
+* A secure application fits in the region (its tasks need at most Y rows), and a non-secure application fits in the PEs at x >= X+1.
+* If an application is marked secure but the testcase has no `osz_window`, mint prints a warning and runs it as non-secure.
+
+#### Closing the zone
+
+Every region row is always inside a closed zone: the zone of the secure application that claimed it, or, while no application owns it, a one-row zone of its own.
+The links on a zone's edge are blocked by a wrapper around each PE's external ports (`Phivers/rtl/PhiversOszFilter.sv`), which the kernel drives through the `DMNI_OSZ_BLOCK` register:
+* A packet arriving at, or leaving through, a blocked port is dropped whole, and the simulation log shows one `[OSZ] ... dropped packet` line for it. A port changes mode only between packets.
+* The east port of the entrance PE (X-1, hi) is the zone's access point. For now it accepts only task binaries from the application injector and messages whose source is the mapper or an injector; this stands in for a shared-key check.
+* A task of a secure application is released only once its PE belongs to the application's closed zone.
+
+The mapper's PE is learned once, from the first `RELEASE_PERIPHERAL` broadcast (sent when the management application is mapped, before any other application runs). Only that PE may change the zones (`OSZ_ROWS`, `OSZ_ZONE_CLEAR`).
+
+#### Teardown
+
+When a task of a secure application ends, its kernel clears what the task leaves on the PE (the whole data page, which also holds `.rodata`, the saved registers, pending messages) and reports `OSZ_TASK_DONE` over the broadcast network.
+When the application has no task left, after a normal end or an abort, the mapper broadcasts `OSZ_ZONE_CLEAR` for its rows; every PE of the zone clears what remains and replies `OSZ_ZONE_CLEARED`.
+The rows are released for another application only after one reply from each PE of the zone.
+The text page is not cleared: instruction memory can only be written by the DMNI, and tasks cannot read it as data.
+
+#### Examples and regression
+
+Complete examples are in `regression/`:
+* `tc_osz.yaml`, and `tc_noosz.yaml` (the same platform without the region)
+* `apps_osz.yaml`: the applications the scenarios use
+* `sc_osz.yaml`, `sc_osz_rows.yaml` (secure applications competing for rows), `sc_osz_entrance.yaml` (a two-row secure application and its single entrance)
+* `sc_osz_clear.yaml`: `osz_mark` fills its data pages with a pattern and `osz_probe`, on the same PEs afterwards, counts what is left (`PAGE CLEAN` on `tc_osz.yaml`, `PAGE DIRTY` on `tc_noosz.yaml`)
+* `sc_osz_abort.yaml`: teardown after an abort
+* `tc_osz_attack.yaml`: `tc_osz.yaml` with `OSZ_ATTACK: yes`, a simulation-only test that injects packets ignoring the single entrance from unused mesh-edge ports; every one must be dropped
+
+`regression/run_osz.sh` builds and simulates all of them and checks each with `regression/osz_check.py` (placement, entrance routing, dropped packets, residue, errors):
+```sh
+cd regression
+./run_osz.sh -j 4          # add --long for sc_osz_rows (about 20 minutes)
+```
+
+Every case folder is a scenario that `tools/meshviz` can replay: the zones, the blocked ports, the access point opening and closing, the dropped packets and the teardown (see [Visual replay: meshviz](#visual-replay-meshviz)).
 
 After creating the description of the testcase and the scenario, the testcase should be generated.
 This step builds the support libraries, the kernel, and all management tasks:
@@ -172,6 +274,14 @@ To open the debugger manually after a simulation is already done, run:
 ```console
 mint debug example_testcase/example_scenario
 ```
+
+### Visual replay: meshviz
+
+`tools/meshviz/meshviz.py` replays a finished scenario on a picture of the mesh: every packet as a moving worm with its source-routing turns, exit and entry ports, and, with an OSZ region, the zones, blocked ports, access point, dropped packets, held tasks and teardown. Time can be played, stepped, scrubbed and zoomed.
+```console
+python3 tools/meshviz/meshviz.py example_testcase/example_scenario
+```
+It needs an X display and only the Python standard library. It reads `debug/sr_trace.txt` and `debug/osz_trace.txt`, written by simulation-only monitors that `PhiversTB` attaches under `` `ifdef SR_TRACE `` / `` `ifdef OSZ_TRACE `` (the RTL instantiates none). See [tools/meshviz/MESHVIZ.md](tools/meshviz/MESHVIZ.md) and, to change it, [MESHVIZ_DEV_GUIDE.md](tools/meshviz/MESHVIZ_DEV_GUIDE.md).
 
 ### Main window
 

@@ -19,6 +19,7 @@
 
 #include "mapper.h"
 #include "processing_element.h"
+#include "osz.h"
 
 void wdo_init(wdo_t *window, int x, int y, int wx, int wy)
 {
@@ -28,7 +29,7 @@ void wdo_init(wdo_t *window, int x, int y, int wx, int wy)
 	window->wy = wy;
 }
 
-void wdo_from_center(wdo_t *window, pe_t *pes, int req_slots)
+void wdo_from_center(wdo_t *window, pe_t *pes, int req_slots, bool secure)
 {
 	if(window->x < 0)
 		window->x = 0;
@@ -46,7 +47,7 @@ void wdo_from_center(wdo_t *window, pe_t *pes, int req_slots)
 	if(window->y + window->wy > PE_Y_CNT)
 		window->y = PE_Y_CNT - window->wy;
 
-	while(!wdo_has_slots(window, pes, req_slots)){
+	while(!wdo_has_slots(window, pes, req_slots, secure)){
 		/* Select window by changing W instead of sliding */		
 		if(window->wy <= window->wx){
 			window->wy++;
@@ -62,11 +63,13 @@ void wdo_from_center(wdo_t *window, pe_t *pes, int req_slots)
 	}
 }
 
-bool wdo_has_slots(wdo_t *window, pe_t *pes, int req_slots)
+bool wdo_has_slots(wdo_t *window, pe_t *pes, int req_slots, bool secure)
 {
 	for(int x = window->x; x < window->x + window->wx; x++){
 		for(int y = window->y; y < window->y + window->wy; y++){
 			int seq = map_xy_to_idx(x, y);
+			if(!osz_pe_eligible(pe_get_addr(&pes[seq]), secure))
+				continue;	/* Only count PEs this application may use */
 			req_slots -= pes[seq].slots;
 			if(req_slots <= 0)
 				return true;
@@ -98,7 +101,7 @@ void wdo_slide(wdo_t *window)
 	}
 }
 
-void wdo_from_last(wdo_t *window, pe_t *pes, int req_slots)
+void wdo_from_last(wdo_t *window, pe_t *pes, int req_slots, bool secure)
 {
 	int last_x = window->x;
 	int last_y = window->y;
@@ -109,7 +112,7 @@ void wdo_from_last(wdo_t *window, pe_t *pes, int req_slots)
 		/* From last window to top right corner */
 		while(window->x > last_x || window->y > last_y){
 
-			if(wdo_has_slots(window, pes, req_slots)){
+			if(wdo_has_slots(window, pes, req_slots, secure)){
 				last_x = window->x;
 				last_y = window->y;
 				return;
@@ -121,7 +124,7 @@ void wdo_from_last(wdo_t *window, pe_t *pes, int req_slots)
 		/* From bottom left corner to last window */
 		while(window->x < last_x || window->y < last_y){
 
-			if(wdo_has_slots(window, pes, req_slots)){
+			if(wdo_has_slots(window, pes, req_slots, secure)){
 				last_x = window->x;
 				last_y = window->y;
 				return;
@@ -131,7 +134,7 @@ void wdo_from_last(wdo_t *window, pe_t *pes, int req_slots)
 		}
 
 		/* Exactly last window */
-		if(wdo_has_slots(window, pes, req_slots)){
+		if(wdo_has_slots(window, pes, req_slots, secure)){
 			last_x = window->x;
 			last_y = window->y;
 			return;

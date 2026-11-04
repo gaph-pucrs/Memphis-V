@@ -1,0 +1,4 @@
+ctg:
+  probe:
+    successors:
+      - "psink"
