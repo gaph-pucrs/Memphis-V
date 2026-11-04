@@ -57,6 +57,8 @@ Recommended layout: mapper task and both injectors at the top-right PE.
 | DMNI register `DMNI_OSZ_BLOCK` (0x64, kernel-written) | `[3:0]` blocked ports {S,N,W,E}, `[4]` E is the access point, `[5]` source valid, `[31:16]` accepted source (mapper PE) | `Phivers/DMNI/rtl/DMNIPkg.sv`, `NI.sv` |
 | Kernel context | `OSZ_X`, `OSZ_Y` | `MAestro/src/syscall.c`, `libmemphis` `memphis_get_osz_window()` |
 | NEW_APP | `pad16` bit 0 = secure (`MEMPHIS_NEW_APP_SECURE`) | TaskParser, TaskInjector, mapper |
+| Debug register `MMR_DBG_OSZ` (0x70 of the debug area) | `osz_dbg(event, data)`: one store per kernel OSZ event, for the simulation monitor | `MAestro/src/include/osz.h`, `mmr.h` |
+| Wrapper status `ev_drop`, `ev_hold`, `ev_accept`, `ev_refuse_*` | plain signals for the simulation monitor; unused by the RTL | `Phivers/rtl/PhiversOszFilter.sv` |
 
 ## 4. Mapping (mapper)
 
@@ -193,6 +195,27 @@ four packets from unused mesh-edge ports: towards a blocked east port below the
 entrance row, a wrong source and a forbidden service at the access point, and
 towards a zone's blocked north edge.
 
+### Observing a run
+
+Two simulation-only monitors write `debug/osz_trace.txt`. mint emits
+`` `define OSZ_TRACE `` into `PhiversPkg.sv` (it follows `TRAFFIC_DEBUG` unless
+the testcase sets `OSZ_TRACE`), and `PhiversTB.sv` attaches them with `bind`
+under `` `ifdef OSZ_TRACE ``; no RTL file instantiates them:
+
+* `OszFilterTrace`, in every zone wrapper: `HOLD` and `ACCEPT` at the access
+  point, and one `DROP` per dropped packet with its reason (`blocked`,
+  `service`, `source`, `single`) and identity (header, source, IDs);
+* `OszPeTrace`, in every PE: `BLOCK` on every change of `DMNI_OSZ_BLOCK`, and
+  `KERNEL` for each `osz_dbg()` store (`MAPPER`, `TASK_HELD`, `TASK_RELEASED`,
+  `TASK_CLEARED`, `TASK_DONE`, `ZONE_CLEAR`, `ZONE_CLEARED`, `BCAST_IGNORED`).
+
+`osz_check.py` counts the drops from the `DROP` lines when the file exists (the
+console lines otherwise). `SR_TRACE` adds `debug/sr_trace.txt` (every packet,
+hop by hop, from the RX side of each link, before the wrapper). The mapper
+prints the cycle in its OSZ lines (waiting, claimed, teardown, cleared,
+released). `tools/meshviz` replays all of it:
+[MESHVIZ.md](../tools/meshviz/MESHVIZ.md).
+
 ## 10. Limitations and open items
 
 * The access point is a stand-in: a spoofed mapper or injector source passes.
@@ -213,20 +236,23 @@ towards a zone's blocked north edge.
 
 ## 11. Results
 
-`regression/run_osz.sh -j 8 --long`, 5x5 mesh, `osz_window: [2,2]`, mapper and
-injectors at PE 4,4. All cases pass; in every case all applications terminate,
-with no kernel ERROR/FATAL and no WARNING.
+`regression/run_osz.sh -j 4`, 5x5 mesh, `osz_window: [2,2]`, mapper and
+injectors at PE 4,4, with the simulation monitors on (`SR_TRACE`,
+`OSZ_TRACE`; the kernel's `osz_dbg()` stores and the mapper's cycle in its
+OSZ lines are in these builds). All cases pass; in every case all applications
+terminate, with no kernel ERROR/FATAL and no WARNING. `tools/meshviz` opens
+every case and finds the same drops as `osz_check.py`.
 
 | Case | Simulated | Dropped | Entrance hops checked | Other |
 |---|---|---|---|---|
-| basic | 16.822 ms | 0 | 714 | |
-| entrance | 38.149 ms | 0 | 1142 | two-row zone: 4 `OSZ_ZONE_CLEARED` before release |
-| noosz | 14.818 ms | 0 | n/a | no region |
-| attack | 38.149 ms | 4 | 1154 | same end time as `entrance`: the attack has no effect on the applications |
-| clear | 15.069 ms | 0 | 533 | probe and psink: `RESIDUE 0/4096`, `PAGE CLEAN` |
-| dirty | 9.594 ms | 0 | n/a | probe and psink: `RESIDUE 4096/4096`, `PAGE DIRTY` |
-| abort | 23.113 ms | 0 | 675 | aborted application torn down, its row reused |
-| rows | 160.683 ms | 0 | 2729 | rows claimed, waited for and reused; one zone torn down while another runs |
+| basic | 16.930 ms | 0 | 714 | |
+| entrance | 38.254 ms | 0 | 1142 | two-row zone: 4 `OSZ_ZONE_CLEARED` before release |
+| noosz | 14.911 ms | 0 | n/a | no region |
+| attack | 38.284 ms | 4 | 1154 | same mapping and checks as `entrance`; the two runs already differ at the first packet (cycle 7, the mapper binary), a million cycles before the first attack packet, so the 0.03 ms is not caused by the attack |
+| clear | 15.208 ms | 0 | 533 | probe and psink: `RESIDUE 0/4096`, `PAGE CLEAN` |
+| dirty | 9.599 ms | 0 | n/a | probe and psink: `RESIDUE 4096/4096`, `PAGE DIRTY` |
+| abort | 23.246 ms | 0 | 675 | aborted application torn down, its row reused by app 2 |
+| rows | 160.683 ms | 0 | 2729 | earlier run (`--long`, before the monitors): rows claimed, waited for and reused; one zone torn down while another runs |
 
 Every kernel learned the mapper as PE 4,4 from `RELEASE_PERIPHERAL`.
 

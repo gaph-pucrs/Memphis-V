@@ -95,6 +95,8 @@ hw:                           # Hardware properties
     - RAM_DEBUG: no           # Optional: enable RAM access debug (default is off)
     - RS5_DEBUG: no           # Optional: enable core register bank debug (default is off)
     - DMNI_DEBUG: no          # Optional: enable DMNI timing debug (default is off)
+    - SR_TRACE: yes           # Optional: simulation-only packet monitor for tools/meshviz (default follows TRAFFIC_DEBUG)
+    - OSZ_TRACE: yes          # Optional: simulation-only OSZ zone monitor for tools/meshviz (default follows TRAFFIC_DEBUG)
     - MEM_PROFILE: no         # Optional: per-PE memory occupancy profiling (default is off)
     - MEM_PROFILE_BLOCK: 4096 # Optional: profiling granularity in bytes (default is 4096)
 ```
@@ -227,6 +229,8 @@ cd regression
 ./run_osz.sh -j 4          # add --long for sc_osz_rows (about 20 minutes)
 ```
 
+Every case folder is a scenario that `tools/meshviz` can replay: the zones, the blocked ports, the access point opening and closing, the dropped packets and the teardown (see [Visual replay: meshviz](#visual-replay-meshviz)).
+
 After creating the description of the testcase and the scenario, the testcase should be generated.
 This step builds the support libraries, the kernel, and all management tasks:
 ```console
@@ -270,6 +274,14 @@ To open the debugger manually after a simulation is already done, run:
 ```console
 mint debug example_testcase/example_scenario
 ```
+
+### Visual replay: meshviz
+
+`tools/meshviz/meshviz.py` replays a finished scenario on a picture of the mesh: every packet as a moving worm with its source-routing turns, exit and entry ports, and, with an OSZ region, the zones, blocked ports, access point, dropped packets, held tasks and teardown. Time can be played, stepped, scrubbed and zoomed.
+```console
+python3 tools/meshviz/meshviz.py example_testcase/example_scenario
+```
+It needs an X display and only the Python standard library. It reads `debug/sr_trace.txt` and `debug/osz_trace.txt`, written by simulation-only monitors that `PhiversTB` attaches under `` `ifdef SR_TRACE `` / `` `ifdef OSZ_TRACE `` (the RTL instantiates none). See [tools/meshviz/MESHVIZ.md](tools/meshviz/MESHVIZ.md) and, to change it, [MESHVIZ_DEV_GUIDE.md](tools/meshviz/MESHVIZ_DEV_GUIDE.md).
 
 ### Main window
 

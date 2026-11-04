@@ -49,7 +49,8 @@ run_case() {
 	local name=$1 tc=$2 sc=$3; shift 3
 	local dir="$WORK/$name"
 	rm -rf "$dir"; mkdir -p "$dir"; cd "$dir"
-	mint all "$HERE/$tc.yaml" "$HERE/apps_osz.yaml" "$HERE/$sc.yaml" --nogui --skipdebug > run.log 2>&1
+	# --nogui without --skipdebug: the debug/ configuration is written, so tools/meshviz shows task and service names
+	mint all "$HERE/$tc.yaml" "$HERE/apps_osz.yaml" "$HERE/$sc.yaml" --nogui > run.log 2>&1
 	{
 		echo "== $name: $tc + $sc"
 		python3 "$HERE/osz_check.py" "$dir/$tc/$sc" run.log "$@"

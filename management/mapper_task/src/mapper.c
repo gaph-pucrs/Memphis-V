@@ -153,7 +153,7 @@ static bool _map_admit(map_t *mapper, app_t *app)
 
 	const int lo = _map_pick_rows(mapper, app, rows_needed);
 	if(lo < 0){
-		printf("App %d waiting for %d free region row(s)\n", app_get_id(app), rows_needed);
+		printf("App %d waiting for %d free region row(s) at %u\n", app_get_id(app), rows_needed, memphis_get_tick());
 		return false;
 	}
 
@@ -435,7 +435,7 @@ void map_new_app(map_t *mapper, memphis_new_app_t *packet, int32_t *descriptor, 
 		return;
 	}
 
-	printf("App %d is %s\n", app_get_id(app), app_is_secure(app) ? "secure" : "not secure");
+	printf("App %d is %s at %u\n", app_get_id(app), app_is_secure(app) ? "secure" : "not secure", memphis_get_tick());
 
 	/* Search for statically mapped tasks */
 	unsigned failed_cnt = 0;
@@ -722,7 +722,7 @@ void map_osz_zone_cleared(map_t *mapper, memphis_osz_report_t *report)
 	}
 
 	const unsigned expected = app_get_clear_expected(app);
-	printf("App %d: PE %d,%d cleared (%d/%u)\n", app_get_id(app), x, y, got, expected);
+	printf("App %d: PE %d,%d cleared (%d/%u) at %u\n", app_get_id(app), x, y, got, expected, memphis_get_tick());
 	if((unsigned)got < expected)
 		return;
 

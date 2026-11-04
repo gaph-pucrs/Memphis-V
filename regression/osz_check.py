@@ -9,7 +9,8 @@ testcase copy mint keeps next to it. Checks:
 
   - the simulation ended and every application terminated
   - no kernel ERROR/FATAL line, no mapper WARNING line
-  - the number of packets the zone wrapper dropped ([OSZ] ... dropped)
+  - the number of packets the zone wrapper dropped (DROP lines of
+    debug/osz_trace.txt, else the console lines "[OSZ] ... dropped")
   - with a region:
       placement: secure tasks only inside the region, non-secure only at x >= X+1
       entrance:  every packet entering or leaving a secure application's rows
@@ -173,7 +174,12 @@ def main():
     else:
         ok("no WARNING")
 
-    drops = len(re.findall(r"\[OSZ\].*dropped packet", run))
+    # Dropped packets: DROP lines of debug/osz_trace.txt (OSZ_TRACE), else the console lines
+    trace = os.path.join(args.scenario_dir, "debug", "osz_trace.txt")
+    if os.path.exists(trace):
+        drops = sum(1 for line in open(trace) if " DROP " in line)
+    else:
+        drops = len(re.findall(r"\[OSZ\].*dropped packet", run))
     if drops == args.drops:
         ok("{} packet(s) dropped by the zone wrapper, as expected".format(drops))
     else:
