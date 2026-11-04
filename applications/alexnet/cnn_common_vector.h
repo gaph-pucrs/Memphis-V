@@ -64,9 +64,10 @@ void conv_channel (
 ) {
     // out[oy][ox] += sum_{ky,kx} w[oc][ic][ky][kx] * in[ic][oy*s+ky][ox*s+kx]
     //
-    // Vectorized over kx: a kernel row and the input row under it are both
-    // contiguous, so only unit-stride loads are used (strided loads are avoided
-    // on the current RTL). Needs K <= VLMAX: 11 <= 16 at VLEN=64 with m8.
+    // Vectorized over ox: vl output pixels of a row at a time, each (ky, kx)
+    // adds w[ky][kx] times the vl input pixels under it. Those pixels are s
+    // apart, so a strided load is used when s > 1 (conv1), a unit-stride one
+    // otherwise (strided accesses go one element per cycle)
     const int C_in  = shape->C_in;
     const int H_out = shape->H_out;
     const int W_out = shape->W_out;
@@ -77,36 +78,38 @@ void conv_channel (
 
     const type *w = params->w + (oc*C_in + ic)*K*K;
     const type *in_c = in + ic*Hp*Wp;
+    const int stride = s*sizeof(type);
 
     size_t vl = 0;
-    type acc;
-
-    __asm__ volatile("vsetvli %0, %1, e32, m8, ta, ma" : "=r"(vl) : "r"(K));
 
     for (int oy = 0; oy < H_out; oy++)
     {
-        for (int ox = 0; ox < W_out; ox++)
-        {
-            const type *in_addr = in_c + oy*s*Wp + ox*s;
-            const type *k_addr = w;
+        type *out_addr = out + oy*W_out;
 
-            __asm__ volatile("vmv.v.i v24, 0");
+        for (int ox = 0; ox < W_out; ox += vl)
+        {
+            __asm__ volatile("vsetvli %0, %1, e32, m8, ta, ma" : "=r"(vl) : "r"(W_out - ox));
+            __asm__ volatile("vle32.v v24, (%0)" :: "r"(out_addr) : "memory");
 
             for (int ky = 0; ky < K; ky++)
             {
-                __asm__ volatile("vle32.v v16, (%0)" :: "r"(in_addr) : "memory");
-                __asm__ volatile("vle32.v  v8, (%0)" :: "r"(k_addr) : "memory");
-                __asm__ volatile("vmacc.vv v24, v16, v8");
+                const type *in_addr = in_c + (oy*s + ky)*Wp + ox*s;
 
-                in_addr += Wp;
-                k_addr += K;
+                for (int kx = 0; kx < K; kx++)
+                {
+                    if (s == 1)
+                        __asm__ volatile("vle32.v v16, (%0)" :: "r"(in_addr) : "memory");
+                    else
+                        __asm__ volatile("vlse32.v v16, (%0), %1" :: "r"(in_addr), "r"(stride) : "memory");
+                    __asm__ volatile("vmacc.vx v24, %0, v16" :: "r"(w[ky*K + kx]));
+
+                    in_addr++;
+                }
             }
 
-            __asm__ volatile("vmv.s.x v8, zero");
-            __asm__ volatile("vredsum.vs v8, v24, v8");
-            __asm__ volatile("vmv.x.s %0, v8" : "=r"(acc));
+            __asm__ volatile("vse32.v v24, (%0)" :: "r"(out_addr) : "memory");
 
-            out[oy*W_out + ox] += acc;
+            out_addr += vl;
         }
     }
 }
@@ -133,43 +136,47 @@ void int_handler (const int n, type buf[])
 //}}}
 //{{{
 KERNEL
-void sum_bias (const int n, type buf[], const type b)
+void bias (const int C, const int HW, type buf[], const type b[])
 {
+    // buf[c][i] += b[c]
     size_t vl = 0;
     int total;
 
     type *out_addr = buf;
 
-    for (total = n; total > 0; total -= vl)
+    for (int c = 0; c < C; c++)
     {
-        __asm__ volatile("vsetvli %0, %1, e32, m8, ta, ma" : "=r"(vl) : "r"(total));
-        __asm__ volatile("vle32.v v16, (%0)" :: "r"(out_addr) : "memory");
-        __asm__ volatile("vadd.vx v16, v16, %0" :: "r"(b));
-        __asm__ volatile("vse32.v v16, (%0)" :: "r"(out_addr) : "memory");
+        for (total = HW; total > 0; total -= vl)
+        {
+            __asm__ volatile("vsetvli %0, %1, e32, m8, ta, ma" : "=r"(vl) : "r"(total));
+            __asm__ volatile("vle32.v v16, (%0)" :: "r"(out_addr) : "memory");
+            __asm__ volatile("vadd.vx v16, v16, %0" :: "r"(b[c]));
+            __asm__ volatile("vse32.v v16, (%0)" :: "r"(out_addr) : "memory");
 
-        out_addr += vl;
+            out_addr += vl;
+        }
     }
 }
 //}}}
 //{{{
 KERNEL
-void add_bias (const int n, type buf[], const type b[])
+void add (const int n, type buf[], const type in[])
 {
     size_t vl = 0;
     int total;
 
     type *out_addr = buf;
-    const type *bias_addr = b;
+    const type *in_addr = in;
 
     for (total = n; total > 0; total -= vl)
     {
         __asm__ volatile("vsetvli %0, %1, e32, m8, ta, ma" : "=r"(vl) : "r"(total));
         __asm__ volatile("vle32.v v16, (%0)" :: "r"(out_addr) : "memory");
-        __asm__ volatile("vle32.v  v8, (%0)" :: "r"(bias_addr) : "memory");
+        __asm__ volatile("vle32.v  v8, (%0)" :: "r"(in_addr) : "memory");
         __asm__ volatile("vadd.vv v16, v16, v8");
         __asm__ volatile("vse32.v v16, (%0)" :: "r"(out_addr) : "memory");
 
-        bias_addr += vl;
+        in_addr += vl;
         out_addr += vl;
     }
 }
@@ -203,21 +210,36 @@ void maxpool_chunk (
     const int W_out,
     type out[]       // [W_out]
 ) {
-    // 3x3 window, stride 2. Scalar: vectorizing over the output pixels needs
-    // stride-2 loads, which are avoided on the current RTL (pools are <0.1% of
-    // the cycles)
-    for (int ox = 0; ox < W_out; ox++)
+    // 3x3 window, stride 2. Vectorized over ox: the windows of vl consecutive
+    // outputs start 2 pixels apart, so each of the 9 window positions is one
+    // stride-2 load
+    const int stride = 2*sizeof(type);
+
+    size_t vl = 0;
+
+    type *out_addr = out;
+
+    for (int ox = 0; ox < W_out; ox += vl)
     {
         const type *win = in + 2*ox;
-        type max = win[0];
+
+        __asm__ volatile("vsetvli %0, %1, e32, m8, ta, ma" : "=r"(vl) : "r"(W_out - ox));
+        __asm__ volatile("vlse32.v v24, (%0), %1" :: "r"(win), "r"(stride) : "memory");
+
         for (int dy = 0; dy < 3; dy++)
         {
             for (int dx = 0; dx < 3; dx++)
             {
-                max = (win[dy*W_in + dx] > max) ? win[dy*W_in + dx] : max;
+                if (dy == 0 && dx == 0)
+                    continue;
+                __asm__ volatile("vlse32.v v16, (%0), %1" :: "r"(win + dy*W_in + dx), "r"(stride) : "memory");
+                __asm__ volatile("vmax.vv v24, v24, v16");
             }
         }
-        out[ox] = max;
+
+        __asm__ volatile("vse32.v v24, (%0)" :: "r"(out_addr) : "memory");
+
+        out_addr += vl;
     }
 }
 //}}}
@@ -286,9 +308,6 @@ void fc (
 
         out[o] = acc;
     }
-
-    int_handler (C_out, out);
-    add_bias (C_out, out, params->b);
 }
 //}}}
 
