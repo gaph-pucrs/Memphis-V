@@ -20,13 +20,17 @@ are read from it and the tables saved in its experiments/.
 --checksums also saves the checksums, one row per inference, in <scenario>_checksums.csv.
 --compare also prints, for each checksum, whether every run has the same value, and exits
 with 1 if one differs. Give it the runs with a glob: testcase_4x4_alexnet_*/alexnet_*_scenario.
---layers saves, in experiments/layer_cycles.csv, one column per run with the compute cycles of
-each layer (x10^6): the slowest conv PE plus the join; fc6-8: the classifier. Its last row,
-total, is the whole run from the mapper's "App 1 started" to "App 1 terminated". Only runs
-with one inference are supported.
+--layers adds the runs to experiments/layer_cycles.csv, which has one column per run with the
+compute cycles of each layer (x10^6): the slowest conv PE plus the join; fc6-8: the
+classifier. Its last row, total, is the whole run from the mapper's "App 1 started" to
+"App 1 terminated". Only runs with one inference are supported. It also saves
+experiments/layer_breakdown.csv: each layer's cycles split into conv/FC (conv, psum and bias
+steps; fc and bias), relu and maxpool, with the speedup over the scalar run. The runs already
+in the tables stay in them, rebuilt from their saved tables; to start over, delete
+layer_cycles.csv.
 --print prints the tables.
 
-Usage: python3 alexnet_log.py [--rebuild] [--print] [--sim <dir>] <run> [<run> ...]
+Usage: python3 alexnet_log.py [options] <run> [<run> ...]   (see alexnet_log.md)
 """
 
 import argparse
@@ -50,6 +54,9 @@ INTS = ["id", "inf", "bytes", "to", "tf", "cycles", "mul", "vmac", "value"]
 # the check steps, in network order: the joins' and the classifier's CHECKs
 CHECKSUMS = ["conv1", "pool1", "conv2", "pool2", "conv3", "conv4", "conv5", "pool5",
              "fc6", "fc7", "fc8", "class", "val"]
+
+# the parts of a layer's compute cycles, for --layers
+PARTS = ["conv_fc", "relu", "maxpool"]
 
 
 def to_signed(v):
@@ -198,23 +205,76 @@ def compare(sums):
     return all_match
 
 
-def layer_cycles(rows):
-    """Compute cycles of each layer: the slowest conv PE plus the join; FC: the classifier"""
+def part(step):
+    """The part of its layer a compute step is counted in"""
+    if step.startswith("relu"):
+        return "relu"
+    if step == "pool":
+        return "maxpool"
+    return "conv_fc"  # conv, psum, bias; fc6..8, bias6..8
+
+
+def layer_parts(rows):
+    """Compute cycles of each layer, split into PARTS.
+
+    A conv layer is its slowest conv PE (all conv_fc) plus its join; fc6-8 is the classifier.
+    """
     if rows.inf.nunique() > 1:
         sys.exit("layer cycles: only runs with one inference are supported")
 
-    compute = rows[rows.kind == "compute"]
-    tasks   = compute.groupby("task").cycles.sum()  # task -> its compute cycles
+    compute         = rows[rows.kind == "compute"].copy()
+    compute["part"] = compute.step.map(part)
+
+    # task -> its compute cycles in each part
+    tasks = compute.pivot_table(index="task", columns="part", values="cycles", aggfunc="sum")
+    tasks = tasks.reindex(columns=PARTS).fillna(0)
 
     layers = {}
     for layer in range(1, 6):
-        conv_pes = tasks[tasks.index.str.fullmatch(f"c{layer}_\\d+")]
-        layers[f"conv{layer}"] = conv_pes.max() + tasks[f"j{layer}"]
+        conv_pes = tasks.conv_fc[tasks.index.str.fullmatch(f"c{layer}_\\d+")]
+
+        join            = tasks.loc[f"j{layer}"].copy()
+        join["conv_fc"] += conv_pes.max()
+        layers[f"conv{layer}"] = join
 
     # the conv-only runs have no classifier
-    layers["fc6-8"] = tasks.get("classifier")
+    if "classifier" in tasks.index:
+        layers["fc6-8"] = tasks.loc["classifier"]
 
-    return pd.Series(layers)
+    table          = pd.DataFrame(layers).T
+    table["total"] = table.sum(axis=1)
+    return table
+
+
+def layer_cycles(rows):
+    """Compute cycles of each layer: the slowest conv PE plus the join; FC: the classifier"""
+    return layer_parts(rows)["total"]
+
+
+def breakdown(parts):
+    """One row per layer and run: the cycles of each part (x10^6) and the speedup over scalar.
+
+    parts is {run name: layer_parts table}. A run's scalar run is its name with the VLEN
+    replaced by scalar (4x4_alexnet_v128 -> 4x4_alexnet_scalar); without it the speedups are
+    empty.
+    """
+    columns = PARTS + ["total"]
+
+    table = pd.concat(parts, names=["run", "layer"]).reset_index()
+    table = table.sort_values("layer", kind="stable")  # conv1..conv5, fc6-8; runs in order
+
+    # the scalar run's cycles next to each row
+    table["scalar_run"] = table.run.str.replace(r"v\d+", "scalar", regex=True)
+    scalar = table[["run", "layer"] + columns].rename(columns={"run": "scalar_run"})
+    table  = table.merge(scalar, on=["scalar_run", "layer"], how="left",
+                         suffixes=("", "_scalar"))
+
+    for column in columns:
+        table[column + "_speedup"] = (table[column + "_scalar"] / table[column]).round(2)
+        table[column]              = (table[column] / 1e6).round(2)
+
+    speedups = [column + "_speedup" for column in columns]
+    return table[["layer", "run"] + columns + speedups]
 
 
 def app_cycles(scenario_dir):
@@ -231,6 +291,31 @@ def app_cycles(scenario_dir):
     if start is None or end is None:
         return None
     return end - start
+
+
+def saved_run(name, sim=SIM):
+    """4x4_alexnet_v128 -> testcase_4x4_alexnet_v128/<scenario>, from its table in experiments/"""
+    tables = glob.glob(os.path.join(sim, "experiments", name, "*.csv"))
+    tables = [table for table in tables if not table.endswith("_checksums.csv")]
+
+    if len(tables) != 1:
+        sys.exit(f"{name}: expected one saved table in experiments/{name}/, found {len(tables)}")
+
+    scenario = os.path.basename(tables[0]).removesuffix(".csv")
+    return f"testcase_{name}/{scenario}"
+
+
+def layer_runs(runs, sim=SIM):
+    """The runs already in experiments/layer_cycles.csv, then the given ones not in it yet"""
+    path = os.path.join(sim, "experiments", "layer_cycles.csv")
+
+    saved = []
+    if os.path.exists(path):
+        names = pd.read_csv(path).columns.drop("layer")
+        saved = [saved_run(name, sim) for name in names]
+
+    runs = [os.path.normpath(run) for run in saved + runs]
+    return list(dict.fromkeys(runs))  # without repeats, in order
 
 
 def save(table, path):
@@ -257,8 +342,8 @@ if __name__ == "__main__":
     parser.add_argument("--compare", action="store_true",
                         help="check that every run has the same checksums (implies --checksums)")
     parser.add_argument("--layers", action="store_true",
-                        help="save the compute cycles per layer of every run in "
-                             "experiments/layer_cycles.csv")
+                        help="add the runs to experiments/layer_cycles.csv and "
+                             "layer_breakdown.csv")
     args = parser.parse_args()
 
     pd.set_option("display.max_rows", None)
@@ -266,6 +351,7 @@ if __name__ == "__main__":
 
     sums   = {}  # run name -> checksums table, for --compare
     layers = {}  # run name -> cycles per layer, for --layers
+    parts  = {}  # run name -> cycles per layer and part, for --layers
 
     for run in args.runs:
         rows   = load(run, args.rebuild, args.sim)
@@ -276,17 +362,21 @@ if __name__ == "__main__":
             sums[run_name(run)] = tables["checksums"]
             save(tables["checksums"], table_path(run, args.sim).replace(".csv", "_checksums.csv"))
 
-        if args.layers:
-            cycles          = layer_cycles(rows)
-            cycles["total"] = app_cycles(find_scenario(run, args.sim))
-            layers[run_name(run)] = cycles
-
         if args.print:
             for name, table in tables.items():
                 print(f"{run}: {name}")
                 print(table.to_string(index=False))
 
     if args.layers:
+        # the runs already in the layer tables stay in them
+        for run in layer_runs(args.runs, args.sim):
+            rows = load(run, sim=args.sim)
+
+            cycles          = layer_cycles(rows)
+            cycles["total"] = app_cycles(find_scenario(run, args.sim))
+            layers[run_name(run)] = cycles
+            parts[run_name(run)]  = layer_parts(rows)
+
         # one row per layer, one column per run, in millions of cycles
         table = pd.DataFrame(layers).astype(float).div(1e6).round(2)
         table = table.rename_axis("layer").reset_index()
@@ -294,6 +384,13 @@ if __name__ == "__main__":
         save(table, os.path.join(args.sim, "experiments", "layer_cycles.csv"))
         if args.print:
             print("layer cycles (x10^6)")
+            print(table.to_string(index=False))
+
+        table = breakdown(parts)
+
+        save(table, os.path.join(args.sim, "experiments", "layer_breakdown.csv"))
+        if args.print:
+            print("layer breakdown (x10^6)")
             print(table.to_string(index=False))
 
     if args.compare and not compare(sums):
