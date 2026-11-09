@@ -49,6 +49,7 @@ cd sim
 | `--checksums` | save each run's checksums |
 | `--compare` | check that every run has the same checksums; exits with 1 if one differs (implies `--checksums`) |
 | `--layers` | add the runs to the cycles-per-layer tables |
+| `--comm` | add the runs to the communication-per-link table |
 | `--sim <dir>` | read the runs from another `sim/`-like dir and save the tables there |
 
 Examples:
@@ -71,6 +72,7 @@ Everything is saved in `experiments/`:
 experiments/
 ├── layer_cycles.csv                         --layers
 ├── layer_breakdown.csv                      --layers
+├── comm.csv                                 --comm
 └── <run name>/
     ├── <scenario>.csv                       every row of every task
     └── <scenario>_checksums.csv             --checksums, --compare
@@ -123,11 +125,23 @@ The same layers, one row per layer and run, split into parts by step:
 
 Each part, and `total`, also has a speedup over the run's scalar run: the run name with the VLEN replaced by `scalar` (`4x4_alexnet_v128` → `4x4_alexnet_scalar`). If that run is not in the table, the speedups are empty.
 
+### `comm.csv`
+
+One row per link and run. A link groups a layer's conv PEs (`c2_* -> j2`, `j1 -> c2_*`), and the links are in pipeline order. Each send is matched with the receive of the same sender, receiver and inference.
+
+| column | |
+|---|---|
+| `messages`, `bytes_per_msg`, `total_bytes` | the link's messages and their size |
+| `send_cycles_per_msg` | send `tf - to`: how long `memphis_send` blocks the sender |
+| `transfer_cycles_per_msg` | recv `tf - max(recv to, send tf)`: the receive without the wait for the sender. Messages between tasks on the same PE (`j4 -> c5_2`) don't cross the NoC and are left out |
+| `transfer_bytes_per_cycle` | `bytes_per_msg / transfer_cycles_per_msg` |
+| `send_pct_compute` | each sender's send cycles on the link as a % of its compute cycles, averaged over the link's senders |
+
 ### Adding runs
 
-`--layers` adds the runs to the tables; it does not replace them. The runs already in `layer_cycles.csv` stay, and both tables are rebuilt from those runs' saved tables plus the new runs. A run passed again is not repeated. To start over, delete `layer_cycles.csv`.
+`--layers` and `--comm` add the runs to their tables; they don't replace them. The runs already in a table stay, and the table is rebuilt from those runs' saved tables plus the new runs. A run passed again is not repeated. The runs are always in the order scalar, v64, v128, v256. To start over, delete the table (`layer_breakdown.csv` for `--layers`, `comm.csv` for `--comm`).
 
 ## Limitations
 
 - `--layers` supports runs with one inference only; it exits otherwise. Every AlexNet applications YAML sets `NUM_INFERENCES: 1`.
-- A testcase must have one scenario with a saved table in `experiments/<run name>/`. `--layers` uses it to find the runs already in the tables.
+- A testcase must have one scenario with a saved table in `experiments/<run name>/`. `--layers` and `--comm` use it to find the runs already in their tables.

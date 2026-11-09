@@ -27,7 +27,9 @@ classifier. Its last row, total, is the whole run from the mapper's "App 1 start
 experiments/layer_breakdown.csv: each layer's cycles split into conv/FC (conv, psum and bias
 steps; fc and bias), relu and maxpool, with the speedup over the scalar run. The runs already
 in the tables stay in them, rebuilt from their saved tables; to start over, delete
-layer_cycles.csv.
+layer_breakdown.csv.
+--comm adds the runs to experiments/comm.csv: one row per link (c2_* -> j2) and run, with
+its messages, bytes, send and transfer cycles (see comm()). Runs stay in it like in --layers.
 --print prints the tables.
 
 Usage: python3 alexnet_log.py [options] <run> [<run> ...]   (see alexnet_log.md)
@@ -293,6 +295,76 @@ def app_cycles(scenario_dir):
     return end - start
 
 
+def messages(rows):
+    """One row per message: its send next to its receive.
+
+    A send is matched with the receive of the same sender, receiver and inference. Columns:
+    inf, sender, receiver, then pe, bytes, to, tf and cycles with _send and _recv, plus
+      local:    sender and receiver on the same PE, so the message does not cross the NoC
+      transfer: recv tf - max(recv to, send tf), the receive without the wait for the sender
+    """
+    columns = ["inf", "sender", "receiver", "pe", "bytes", "to", "tf", "cycles"]
+
+    sends = rows[rows.kind == "send"].rename(columns={"task": "sender", "peer": "receiver"})
+    recvs = rows[rows.kind == "recv"].rename(columns={"task": "receiver", "peer": "sender"})
+
+    msgs = sends[columns].merge(recvs[columns], on=["inf", "sender", "receiver"],
+                                suffixes=("_send", "_recv"), validate="one_to_one")
+
+    msgs["local"]    = msgs.pe_send == msgs.pe_recv
+    msgs["transfer"] = msgs.tf_recv - msgs[["to_recv", "tf_send"]].max(axis=1)
+    return msgs
+
+
+def link(task):
+    """c2_3 -> c2_*: the conv PEs of a layer are one end of a link"""
+    return re.sub(r"_\d+$", "_*", task)
+
+
+def comm(rows):
+    """One row per link (c2_* -> j2), in pipeline order: its messages, bytes and cycles.
+
+    send:      send tf - to, the cycles memphis_send blocks the sender
+    transfer:  see messages(); the messages within a PE are left out
+    send_pct_compute: each sender's send cycles on the link as a % of its compute cycles,
+               averaged over the link's senders
+    """
+    msgs         = messages(rows).sort_values("to_send")
+    msgs["link"] = msgs.sender.map(link) + " -> " + msgs.receiver.map(link)
+
+    links = msgs.groupby("link", sort=False)
+    noc   = msgs[~msgs.local].groupby("link", sort=False)
+
+    table = pd.DataFrame({
+        "messages":                links.size(),
+        "bytes_per_msg":           links.bytes_send.first(),
+        "send_cycles_per_msg":     links.cycles_send.mean().round(),
+        "transfer_cycles_per_msg": noc.transfer.mean().round(),
+    })
+    table["total_bytes"]              = table.messages * table.bytes_per_msg
+    table["transfer_bytes_per_cycle"] = (table.bytes_per_msg
+                                         / table.transfer_cycles_per_msg).round(2)
+
+    # each sender's sends on the link, as a % of its compute
+    compute    = rows[rows.kind == "compute"].groupby("task").cycles.sum()
+    sends      = msgs.groupby(["link", "sender"]).cycles_send.sum().reset_index()
+    sends["%"] = 100 * sends.cycles_send / sends.sender.map(compute)
+
+    table["send_pct_compute"] = sends.groupby("link")["%"].mean().round(1)
+    return table
+
+
+def by_link(links):
+    """One row per link and run, from {run name: comm table}; links in pipeline order"""
+    table = pd.concat(links, names=["run", "link"]).reset_index()
+
+    order = list(dict.fromkeys(table.link))  # as they first appear
+    table = table.sort_values("link", key=lambda links: links.map(order.index), kind="stable")
+
+    columns = [column for column in table.columns if column not in ("link", "run")]
+    return table[["link", "run"] + columns]
+
+
 def saved_run(name, sim=SIM):
     """4x4_alexnet_v128 -> testcase_4x4_alexnet_v128/<scenario>, from its table in experiments/"""
     tables = glob.glob(os.path.join(sim, "experiments", name, "*.csv"))
@@ -305,17 +377,24 @@ def saved_run(name, sim=SIM):
     return f"testcase_{name}/{scenario}"
 
 
-def layer_runs(runs, sim=SIM):
-    """The runs already in experiments/layer_cycles.csv, then the given ones not in it yet"""
-    path = os.path.join(sim, "experiments", "layer_cycles.csv")
-
+def table_runs(path, runs, sim=SIM):
+    """The runs already in a saved table (its run column) and the given ones, sorted by VLEN"""
     saved = []
     if os.path.exists(path):
-        names = pd.read_csv(path).columns.drop("layer")
+        names = pd.read_csv(path).run.unique()
         saved = [saved_run(name, sim) for name in names]
 
     runs = [os.path.normpath(run) for run in saved + runs]
-    return list(dict.fromkeys(runs))  # without repeats, in order
+    runs = list(dict.fromkeys(runs))  # without repeats
+    return sorted(runs, key=vlen)
+
+
+def vlen(run):
+    """The run's VLEN, 0 for scalar: sorts the runs scalar, v64, v128, v256"""
+    m = re.search(r"_v(\d+)", run_name(run))
+    if m is None:
+        return 0
+    return int(m.group(1))
 
 
 def save(table, path):
@@ -344,6 +423,8 @@ if __name__ == "__main__":
     parser.add_argument("--layers", action="store_true",
                         help="add the runs to experiments/layer_cycles.csv and "
                              "layer_breakdown.csv")
+    parser.add_argument("--comm", action="store_true",
+                        help="add the runs to experiments/comm.csv")
     args = parser.parse_args()
 
     pd.set_option("display.max_rows", None)
@@ -367,9 +448,12 @@ if __name__ == "__main__":
                 print(f"{run}: {name}")
                 print(table.to_string(index=False))
 
+    experiments = os.path.join(args.sim, "experiments")
+
     if args.layers:
         # the runs already in the layer tables stay in them
-        for run in layer_runs(args.runs, args.sim):
+        for run in table_runs(os.path.join(experiments, "layer_breakdown.csv"), args.runs,
+                              args.sim):
             rows = load(run, sim=args.sim)
 
             cycles          = layer_cycles(rows)
@@ -381,16 +465,31 @@ if __name__ == "__main__":
         table = pd.DataFrame(layers).astype(float).div(1e6).round(2)
         table = table.rename_axis("layer").reset_index()
 
-        save(table, os.path.join(args.sim, "experiments", "layer_cycles.csv"))
+        save(table, os.path.join(experiments, "layer_cycles.csv"))
         if args.print:
             print("layer cycles (x10^6)")
             print(table.to_string(index=False))
 
         table = breakdown(parts)
 
-        save(table, os.path.join(args.sim, "experiments", "layer_breakdown.csv"))
+        save(table, os.path.join(experiments, "layer_breakdown.csv"))
         if args.print:
             print("layer breakdown (x10^6)")
+            print(table.to_string(index=False))
+
+    if args.comm:
+        path  = os.path.join(experiments, "comm.csv")
+        links = {}  # run name -> comm table
+
+        # the runs already in comm.csv stay in it
+        for run in table_runs(path, args.runs, args.sim):
+            links[run_name(run)] = comm(load(run, sim=args.sim))
+
+        table = by_link(links)
+
+        save(table, path)
+        if args.print:
+            print("communication per link")
             print(table.to_string(index=False))
 
     if args.compare and not compare(sums):
