@@ -66,10 +66,10 @@ The shell expands the globs, so run from the dir that holds the runs (`sim/`, or
 
 ## Output
 
-Everything is saved in `experiments/`:
+Everything is saved in `results/alexnet/`:
 
 ```
-experiments/
+results/alexnet/
 ├── layer_cycles.csv                         --layers
 ├── layer_breakdown.csv                      --layers
 ├── comm.csv                                 --comm
@@ -144,4 +144,4 @@ One row per link and run. A link groups a layer's conv PEs (`c2_* -> j2`, `j1 ->
 ## Limitations
 
 - `--layers` supports runs with one inference only; it exits otherwise. Every AlexNet applications YAML sets `NUM_INFERENCES: 1`.
-- A testcase must have one scenario with a saved table in `experiments/<run name>/`. `--layers` and `--comm` use it to find the runs already in their tables.
+- A testcase must have one scenario with a saved table in `results/alexnet/<run name>/`. `--layers` and `--comm` use it to find the runs already in their tables.
