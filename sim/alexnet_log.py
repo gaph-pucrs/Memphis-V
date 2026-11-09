@@ -11,24 +11,24 @@ prefix and replaces the peer ids by task names.
 A run is a scenario, given as its path relative to sim/
 (testcase_4x4_alexnet_v128/alexnet_v128_scenario). Its table is saved in
 
-    experiments/<testcase without testcase_>/<scenario>.csv
+    results/alexnet/<testcase without testcase_>/<scenario>.csv
 
 and read from there afterwards. It is rebuilt from the logs when a log is newer than the
-table, or with --rebuild. --sim points at another sim/ dir, e.g. one with test logs: the runs
-are read from it and the tables saved in its experiments/.
+table, or with --rebuild. --sim points at another sim/ dir: the runs are read from it and
+the tables saved in its results/alexnet/.
 
 --checksums also saves the checksums, one row per inference, in <scenario>_checksums.csv.
 --compare also prints, for each checksum, whether every run has the same value, and exits
 with 1 if one differs. Give it the runs with a glob: testcase_4x4_alexnet_*/alexnet_*_scenario.
---layers adds the runs to experiments/layer_cycles.csv, which has one column per run with the
+--layers adds the runs to results/alexnet/layer_cycles.csv, which has one column per run with the
 compute cycles of each layer (x10^6): the slowest conv PE plus the join; fc6-8: the
 classifier. Its last row, total, is the whole run from the mapper's "App 1 started" to
 "App 1 terminated". Only runs with one inference are supported. It also saves
-experiments/layer_breakdown.csv: each layer's cycles split into conv/FC (conv, psum and bias
+results/alexnet/layer_breakdown.csv: each layer's cycles split into conv/FC (conv, psum and bias
 steps; fc and bias), relu and maxpool, with the speedup over the scalar run. The runs already
 in the tables stay in them, rebuilt from their saved tables; to start over, delete
 layer_breakdown.csv.
---comm adds the runs to experiments/comm.csv: one row per link (c2_* -> j2) and run, with
+--comm adds the runs to results/alexnet/comm.csv: one row per link (c2_* -> j2) and run, with
 its messages, bytes, send and transfer cycles (see comm()). Runs stay in it like in --layers.
 --print prints the tables.
 
@@ -46,6 +46,9 @@ import pandas as pd
 
 
 SIM = os.path.dirname(os.path.abspath(__file__))
+
+# where the tables are saved, relative to sim/
+RESULTS = os.path.join("results", "alexnet")
 
 # $$$_<pe>_<app>_<task id>_<kind>,<fields>
 LINE = re.compile(r"\$\$\$_(\d+x\d+)_\d+_(\d+)_(hdr|row|row-overflow),(.*)")
@@ -134,9 +137,9 @@ def run_name(run):
 
 
 def table_path(run, sim=SIM):
-    """sim/experiments/<testcase without testcase_>/<scenario>.csv"""
+    """sim/results/alexnet/<testcase without testcase_>/<scenario>.csv"""
     scenario = os.path.basename(os.path.normpath(run))
-    return os.path.join(sim, "experiments", run_name(run), scenario + ".csv")
+    return os.path.join(sim, RESULTS, run_name(run), scenario + ".csv")
 
 
 def is_outdated(table, scenario_dir):
@@ -366,12 +369,12 @@ def by_link(links):
 
 
 def saved_run(name, sim=SIM):
-    """4x4_alexnet_v128 -> testcase_4x4_alexnet_v128/<scenario>, from its table in experiments/"""
-    tables = glob.glob(os.path.join(sim, "experiments", name, "*.csv"))
+    """4x4_alexnet_v128 -> testcase_4x4_alexnet_v128/<scenario>, from its table in RESULTS"""
+    tables = glob.glob(os.path.join(sim, RESULTS, name, "*.csv"))
     tables = [table for table in tables if not table.endswith("_checksums.csv")]
 
     if len(tables) != 1:
-        sys.exit(f"{name}: expected one saved table in experiments/{name}/, found {len(tables)}")
+        sys.exit(f"{name}: expected one saved table in {RESULTS}/{name}/, found {len(tables)}")
 
     scenario = os.path.basename(tables[0]).removesuffix(".csv")
     return f"testcase_{name}/{scenario}"
@@ -421,10 +424,10 @@ if __name__ == "__main__":
     parser.add_argument("--compare", action="store_true",
                         help="check that every run has the same checksums (implies --checksums)")
     parser.add_argument("--layers", action="store_true",
-                        help="add the runs to experiments/layer_cycles.csv and "
+                        help="add the runs to results/alexnet/layer_cycles.csv and "
                              "layer_breakdown.csv")
     parser.add_argument("--comm", action="store_true",
-                        help="add the runs to experiments/comm.csv")
+                        help="add the runs to results/alexnet/comm.csv")
     args = parser.parse_args()
 
     pd.set_option("display.max_rows", None)
@@ -448,11 +451,11 @@ if __name__ == "__main__":
                 print(f"{run}: {name}")
                 print(table.to_string(index=False))
 
-    experiments = os.path.join(args.sim, "experiments")
+    results = os.path.join(args.sim, RESULTS)
 
     if args.layers:
         # the runs already in the layer tables stay in them
-        for run in table_runs(os.path.join(experiments, "layer_breakdown.csv"), args.runs,
+        for run in table_runs(os.path.join(results, "layer_breakdown.csv"), args.runs,
                               args.sim):
             rows = load(run, sim=args.sim)
 
@@ -465,20 +468,20 @@ if __name__ == "__main__":
         table = pd.DataFrame(layers).astype(float).div(1e6).round(2)
         table = table.rename_axis("layer").reset_index()
 
-        save(table, os.path.join(experiments, "layer_cycles.csv"))
+        save(table, os.path.join(results, "layer_cycles.csv"))
         if args.print:
             print("layer cycles (x10^6)")
             print(table.to_string(index=False))
 
         table = breakdown(parts)
 
-        save(table, os.path.join(experiments, "layer_breakdown.csv"))
+        save(table, os.path.join(results, "layer_breakdown.csv"))
         if args.print:
             print("layer breakdown (x10^6)")
             print(table.to_string(index=False))
 
     if args.comm:
-        path  = os.path.join(experiments, "comm.csv")
+        path  = os.path.join(results, "comm.csv")
         links = {}  # run name -> comm table
 
         # the runs already in comm.csv stay in it
