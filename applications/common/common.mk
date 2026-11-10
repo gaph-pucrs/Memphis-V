@@ -32,22 +32,15 @@ LDFLAGS += -L$(DIRMEMPHIS) -L$(DIRMUTILS) --specs=nano.specs -T $(DIRMEMPHIS)/me
 
 all: $(TARGETS) $(ELFS) #$(LSTS)
 
-$(SRCDIR)/%.txt: $(SRCDIR)/i%.bin $(SRCDIR)/d%.bin $(SRCDIR)/%.elf
+$(SRCDIR)/%.txt: $(SRCDIR)/%.bin $(SRCDIR)/%.elf
 	@printf "${GREEN}Dumping to %s ...${NC}\n" "$(patsubst %.txt,%.bin,$@)"
-	@$(SIZE) -G $(patsubst %.txt,%.elf,$@) | sed -n '2p' | awk '{printf "%08x\n", $$1}' > $@
-	@$(SIZE) -G $(patsubst %.txt,%.elf,$@) | sed -n '2p' | awk '{printf "%08x\n", $$2}' >> $@
-	@$(NM) $(patsubst %.txt,%.elf,$@) | awk '$$3=="_end"{e=strtonum("0x"$$1)} $$3=="__bss_start"{b=strtonum("0x"$$1)} END{printf "%08x\n", e-b}' >> $@
+	@$(NM) $(patsubst %.txt,%.elf,$@) | awk 'BEGIN{n=split("__text_size __rodata_size __data_size __bss_size",f," ")} {v[$$3]=$$1} END{for(i=1;i<=n;i++) print v[f[i]]}' > $@
 	@$(READELF) -h $(patsubst %.txt,%.elf,$@) | awk '/Entry point/ { printf "%08x\n", strtonum($$4) }' >> $@
-	@$(HEXDUMP) i$(patsubst %.txt,%.bin,$@) >> $@
-	@$(HEXDUMP) d$(patsubst %.txt,%.bin,$@) >> $@
+	@$(HEXDUMP) $(patsubst %.txt,%.bin,$@) >> $@
 
-$(SRCDIR)/d%.bin: $(SRCDIR)/%.elf
+$(SRCDIR)/%.bin: $(SRCDIR)/%.elf
 	@printf "${GREEN}Generating binary %s ...${NC}\n" "$@"
-	@$(OBJCOPY) -j .data -O binary $< $@
-
-$(SRCDIR)/i%.bin: $(SRCDIR)/%.elf
-	@printf "${GREEN}Generating binary %s ...${NC}\n" "$@"
-	@$(OBJCOPY) -j .text -O binary $< $@
+	@$(OBJCOPY) -j .text -j .rodata -j .data -O binary $< $@
 
 # $(SRCDIR)/%.lst: $(SRCDIR)/%.elf
 # 	@printf "${GREEN}Listing task: %s ...${NC}\n" "$@"

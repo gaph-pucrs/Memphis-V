@@ -22,6 +22,7 @@ CC = riscv64-elf-gcc
 OBJDUMP = riscv64-elf-objdump
 OBJCOPY = riscv64-elf-objcopy
 SIZE    = riscv64-elf-size
+NM      = riscv64-elf-nm
 READELF = riscv64-elf-readelf
 HEXDUMP = hexdump -v -e '1/4 "%08x" "\n"'
 
@@ -33,22 +34,15 @@ OBJ = $(patsubst %.c, %.o, $(SRC))
 
 all: $(TARGET).txt $(TARGET).lst
 
-$(TARGET).txt: i$(TARGET).bin d$(TARGET).bin $(TARGET).elf
+$(TARGET).txt: $(TARGET).bin $(TARGET).elf
 	@printf "${BLUE}Dumping task: %s ...${NC}\n" "$(TARGET)"
-	@$(SIZE) -G $(TARGET).elf | sed -n '2p' | awk '{printf "%08x\n", $$1}' > $@
-	@$(SIZE) -G $(TARGET).elf | sed -n '2p' | awk '{printf "%08x\n", $$2}' >> $@
-	@$(SIZE) -G $(TARGET).elf | sed -n '2p' | awk '{printf "%08x\n", $$3}' >> $@
+	@$(NM) $(TARGET).elf | awk 'BEGIN{n=split("__text_size __rodata_size __data_size __bss_size",f," ")} {v[$$3]=$$1} END{for(i=1;i<=n;i++) print v[f[i]]}' > $@
 	@$(READELF) -h $(TARGET).elf | awk '/Entry point/ { printf "%08x\n", strtonum($$4) }' >> $@
-	@$(HEXDUMP) i$(TARGET).bin >> $@
-	@$(HEXDUMP) d$(TARGET).bin >> $@
+	@$(HEXDUMP) $(TARGET).bin >> $@
 
-d$(TARGET).bin: $(TARGET).elf
-	@printf "${BLUE}Generating data binary for task: %s ...${NC}\n" "$(TARGET)"
-	@$(OBJCOPY) -j .rodata -j .eh_frame -j .init_array -j .fini_array -j .data -j .sdata -O binary $< $@
-
-i$(TARGET).bin: $(TARGET).elf
-	@printf "${BLUE}Generating instruction binary for task: %s ...${NC}\n" "$(TARGET)"
-	@$(OBJCOPY) -j .text -O binary $< $@
+$(TARGET).bin: $(TARGET).elf
+	@printf "${BLUE}Generating binary for task: %s ...${NC}\n" "$(TARGET)"
+	@$(OBJCOPY) -j .text -j .rodata -j .data -O binary $< $@
 
 $(TARGET).elf: $(OBJ) $(LIBMEMPHIS) $(LIBMUTILS)
 	@printf "${BLUE}Linking task: %s ...${NC}\n" "$(TARGET)"
@@ -64,8 +58,7 @@ $(SRCDIR)/%.o: $(SRCDIR)/%.c $(HEADERS) $(HDRMEMPHIS) $(HDRMUTILS)
 
 clean:
 	@rm -f $(SRCDIR)/*.o
-	@rm -f i$(TARGET).bin
-	@rm -f d$(TARGET).bin
+	@rm -f $(TARGET).bin
 	@rm -f $(TARGET).elf
 	@rm -f $(TARGET).lst
 	@rm -f $(TARGET).map
