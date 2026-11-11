@@ -1,0 +1,19 @@
+ctg:
+  master:
+    successors:
+      - "worker0"
+      - "worker1"
+      - "worker2"
+      - "worker3"
+  worker0:
+    successors:
+      - "master"
+  worker1:
+    successors:
+      - "master"
+  worker2:
+    successors:
+      - "master"
+  worker3:
+    successors:
+      - "master"
