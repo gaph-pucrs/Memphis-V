@@ -1,0 +1,11 @@
+management:
+  - task: mapper_task
+    static_mapping: [0,0]
+apps:
+  - name: matmul_rows
+    static_mapping:
+      master: [2,2]
+      worker0: [1,2]
+      worker1: [2,1]
+      worker2: [2,3]
+      worker3: [3,2]
