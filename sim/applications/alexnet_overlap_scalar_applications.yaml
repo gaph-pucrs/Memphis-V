@@ -1,0 +1,5 @@
+apps:                             # Application properties
+  - name: alexnet-overlap         # alexnet with round-robin channels, joins stream channel by channel, every task scalar
+    instance: scalar
+    definitions:
+      - NUM_INFERENCES: 1

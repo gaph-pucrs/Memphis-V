@@ -92,6 +92,33 @@ run-4x4-alexnet-v256:
 	@echo "VFLAGS = -mrvv-vector-bits=zvl" >> ./testcase_4x4_alexnet_v256/active_config.mk
 	@$(MAKE) _sim ACTIVE_TESTCASE=testcase_4x4_alexnet_v256 APP=alexnet_v256_applications SCENARIO=alexnet_v256_scenario
 
+# alexnet-overlap (round-robin channels, joins stream channel by channel): same testcases and mapping as alexnet
+run-4x4-alexnet-overlap-scalar:
+	@echo "[Setup] preparing isolated environment for testcase_4x4_alexnet_scalar..."
+	@echo "" > ./testcase_4x4_alexnet_scalar/active_config.mk
+	@$(MAKE) _sim ACTIVE_TESTCASE=testcase_4x4_alexnet_scalar APP=alexnet_overlap_scalar_applications SCENARIO=alexnet_overlap_scalar_scenario
+
+run-4x4-alexnet-overlap-v64:
+	@echo "[Setup] preparing isolated environment for testcase_4x4_alexnet_v64..."
+	@echo "VLEN = 64" > ./testcase_4x4_alexnet_v64/active_config.mk
+	@echo "ARCH = rv32imc_zicsr_zve32x_zvl64b" >> ./testcase_4x4_alexnet_v64/active_config.mk
+	@echo "VFLAGS = -mrvv-vector-bits=zvl" >> ./testcase_4x4_alexnet_v64/active_config.mk
+	@$(MAKE) _sim ACTIVE_TESTCASE=testcase_4x4_alexnet_v64 APP=alexnet_overlap_v64_applications SCENARIO=alexnet_overlap_v64_scenario
+
+run-4x4-alexnet-overlap-v128:
+	@echo "[Setup] preparing isolated environment for testcase_4x4_alexnet_v128..."
+	@echo "VLEN = 128" > ./testcase_4x4_alexnet_v128/active_config.mk
+	@echo "ARCH = rv32imc_zicsr_zve32x_zvl128b" >> ./testcase_4x4_alexnet_v128/active_config.mk
+	@echo "VFLAGS = -mrvv-vector-bits=zvl" >> ./testcase_4x4_alexnet_v128/active_config.mk
+	@$(MAKE) _sim ACTIVE_TESTCASE=testcase_4x4_alexnet_v128 APP=alexnet_overlap_v128_applications SCENARIO=alexnet_overlap_v128_scenario
+
+run-4x4-alexnet-overlap-v256:
+	@echo "[Setup] preparing isolated environment for testcase_4x4_alexnet_v256..."
+	@echo "VLEN = 256" > ./testcase_4x4_alexnet_v256/active_config.mk
+	@echo "ARCH = rv32imc_zicsr_zve32x_zvl256b" >> ./testcase_4x4_alexnet_v256/active_config.mk
+	@echo "VFLAGS = -mrvv-vector-bits=zvl" >> ./testcase_4x4_alexnet_v256/active_config.mk
+	@$(MAKE) _sim ACTIVE_TESTCASE=testcase_4x4_alexnet_v256 APP=alexnet_overlap_v256_applications SCENARIO=alexnet_overlap_v256_scenario
+
 _sim: _compile_app _deploy_scenario
 	@echo "[Simulation] starting $(ACTIVE_TESTCASE) testcase..."
 	@echo "[Simulation] deployed $(SCENARIO) scenario"
