@@ -281,7 +281,7 @@ mint debug example_testcase/example_scenario
 ```console
 python3 tools/meshviz/meshviz.py example_testcase/example_scenario
 ```
-It needs an X display and only the Python standard library. It reads `debug/sr_trace.txt` and `debug/osz_trace.txt`, written by simulation-only monitors that `PhiversTB` attaches under `` `ifdef SR_TRACE `` / `` `ifdef OSZ_TRACE `` (the RTL instantiates none). See [tools/meshviz/MESHVIZ.md](tools/meshviz/MESHVIZ.md) and, to change it, [MESHVIZ_DEV_GUIDE.md](tools/meshviz/MESHVIZ_DEV_GUIDE.md).
+It needs an X display and only the Python standard library. It reads `debug/sr_trace.txt` and `debug/osz_trace.txt`, written by simulation-only monitors that `PhiversTB` attaches under `` `ifdef SR_TRACE `` / `` `ifdef OSZ_TRACE `` (the RTL instantiates none). meshviz has its own repository, [gaph-pucrs/meshviz](https://github.com/gaph-pucrs/meshviz), checked out at `tools/meshviz` as a submodule. See [MESHVIZ.md](https://github.com/gaph-pucrs/meshviz/blob/master/MESHVIZ.md) and, to change it, [MESHVIZ_DEV_GUIDE.md](https://github.com/gaph-pucrs/meshviz/blob/master/MESHVIZ_DEV_GUIDE.md).
 
 ### Main window
 

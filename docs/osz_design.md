@@ -214,7 +214,7 @@ console lines otherwise). `SR_TRACE` adds `debug/sr_trace.txt` (every packet,
 hop by hop, from the RX side of each link, before the wrapper). The mapper
 prints the cycle in its OSZ lines (waiting, claimed, teardown, cleared,
 released). `tools/meshviz` replays all of it:
-[MESHVIZ.md](../tools/meshviz/MESHVIZ.md).
+[MESHVIZ.md](https://github.com/gaph-pucrs/meshviz/blob/master/MESHVIZ.md).
 
 ## 10. Limitations and open items
 
