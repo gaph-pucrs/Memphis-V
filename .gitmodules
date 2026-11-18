@@ -17,3 +17,7 @@
 [submodule "mint"]
 	path = mint
 	url = https://github.com/gaph-pucrs/mint
+[submodule "tools/meshviz"]
+	path = tools/meshviz
+	url = https://github.com/gaph-pucrs/meshviz
+	branch = master
