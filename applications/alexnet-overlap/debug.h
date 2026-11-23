@@ -6,8 +6,9 @@
 #include <memphis.h>
 
 // Every measurement a task makes is one row of a table: each TIMED call, each message sent or
-// received and each checksum. The rows are buffered and printed after the run by PRINT_TABLE,
-// so printing takes no cycles inside the measured intervals. One CSV line per row:
+// received and each checksum. The rows are buffered and printed by PRINT_TABLE only once the
+// whole app is done: every task waits for the classifier's message before printing, so printing
+// takes no cycles from a task on the same PE that is still measuring. One CSV line per row:
 //
 //     hdr,task,inf,kind,step,peer,bytes,to,tf,cycles,mul,vmac,value
 //     row,<task>,<inf>,compute,<step>,,,<to>,<tf>,<cycles>,<mul>,<vmac>,

@@ -87,6 +87,13 @@ int main()
 
     puts(TAG " finishing application");
 
+    // the app is done: let every other task print its table (debug.h). mint numbers the tasks
+    // 0, 1, .. in name order (id_tasks.h), so j5 is the last one
+    static int done = 1;
+    for (int t = 0; t <= j5; t++)
+        if (t != classifier)
+            memphis_send(&done, sizeof(done), t);
+
     PRINT_TABLE(NAME);
 
     return 0;

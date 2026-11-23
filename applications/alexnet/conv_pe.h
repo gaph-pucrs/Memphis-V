@@ -66,6 +66,10 @@ int main()
 
     puts(TAG " finishing application");
 
+    // print only once the classifier is done (debug.h)
+    static int done;
+    memphis_receive(&done, sizeof(done), classifier);
+
     PRINT_TABLE(NAME);
 
     return 0;
