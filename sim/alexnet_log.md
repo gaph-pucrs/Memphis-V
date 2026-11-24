@@ -32,7 +32,7 @@ A run is a scenario, given by its path relative to `sim/`:
 testcase_4x4_alexnet_v128/alexnet_v128_scenario
 ```
 
-Its name in the tables is the testcase without `testcase_`, e.g. `4x4_alexnet_v128`.
+Its name in the tables is the scenario without `_scenario`, e.g. `alexnet_v128` or `alexnet_overlap_v128`.
 
 ## Usage
 
@@ -59,7 +59,7 @@ Examples:
 ~/lmfrnet/bin/python alexnet_log.py --compare testcase_4x4_alexnet_*/alexnet_*_scenario
 
 # cycles per layer of the four configs, printed
-~/lmfrnet/bin/python alexnet_log.py --layers --print testcase_4x4_alexnet_{scalar,v64,v128,v256}/alexnet_*_scenario
+~/lmfrnet/bin/python alexnet_log.py --layers --print testcase_4x4_alexnet_*/alexnet_*_scenario
 ```
 
 The shell expands the globs, so run from the dir that holds the runs (`sim/`, or the `--sim` dir).
@@ -73,7 +73,7 @@ results/alexnet/
 ├── layer_cycles.csv                         --layers
 ├── layer_breakdown.csv                      --layers
 ├── comm.csv                                 --comm
-└── <run name>/
+└── <testcase without testcase_>/
     ├── <scenario>.csv                       every row of every task
     └── <scenario>_checksums.csv             --checksums, --compare
 ```
@@ -102,7 +102,7 @@ A conv-only run has no `fc6`..`val` columns. `--compare` prints `match` or `DIFF
 
 ```
 conv1  match
-conv3  DIFFER  inference 1:   4x4_alexnet_scalar 10518399   4x4_alexnet_v128 10518400
+conv3  DIFFER  inference 1:   alexnet_scalar 10518399   alexnet_v128 10518400
 ```
 
 ### `layer_cycles.csv`
@@ -111,7 +111,9 @@ Compute cycles of each layer (×10⁶), one column per run:
 
 - `conv1`..`conv5`: the slowest conv PE of the layer plus its join.
 - `fc6-8`: the classifier. It is empty for conv-only runs.
-- `total`: the whole run, communication and idle time included, from the mapper's "App 1 started" to "App 1 terminated".
+- `total`: the whole run, communication and idle time included, from the mapper's "App 1 started" to the last measured row (the classifier's `bias8`). Not "App 1 terminated": the tasks print their tables only after the classifier is done, so that one includes the printing.
+
+In `alexnet-overlap` a join works while its conv PEs compute, so a layer's compute cycles add up work that partly runs at the same time: they are not the layer's time. See `time` in `layer_breakdown.csv`.
 
 ### `layer_breakdown.csv`
 
@@ -123,11 +125,13 @@ The same layers, one row per layer and run, split into parts by step:
 | `relu` | `relu`, `relu6`, `relu7` |
 | `maxpool` | `pool` |
 
-Each part, and `total`, also has a speedup over the run's scalar run: the run name with the VLEN replaced by `scalar` (`4x4_alexnet_v128` → `4x4_alexnet_scalar`). If that run is not in the table, the speedups are empty.
+`time` is the layer's wall cycles: from the previous layer's end to this layer's end, where a layer ends at its join's last row (`fc6-8`: the classifier's). `conv1` starts at the app's start, so a run's `time`s add up to its `total`. It includes the communication and idle time, and work that overlaps another layer's counts once.
+
+Each part, `total` and `time` also have a speedup over the run's scalar run: the run name with the VLEN replaced by `scalar` (`alexnet_overlap_v128` → `alexnet_overlap_scalar`). If that run is not in the table, the speedups are empty.
 
 ### `comm.csv`
 
-One row per link and run. A link groups a layer's conv PEs (`c2_* -> j2`, `j1 -> c2_*`), and the links are in pipeline order. Each send is matched with the receive of the same sender, receiver and inference.
+One row per link and run. A link groups a layer's conv PEs (`c2_* -> j2`, `j1 -> c2_*`), and the links are in pipeline order. The n-th send from a sender to a receiver in an inference is matched with the n-th receive of that receiver from that sender: MAestro delivers them in order, since a task has at most one pending send.
 
 | column | |
 |---|---|
@@ -144,4 +148,4 @@ One row per link and run. A link groups a layer's conv PEs (`c2_* -> j2`, `j1 ->
 ## Limitations
 
 - `--layers` supports runs with one inference only; it exits otherwise. Every AlexNet applications YAML sets `NUM_INFERENCES: 1`.
-- A testcase must have one scenario with a saved table in `results/alexnet/<run name>/`. `--layers` and `--comm` use it to find the runs already in their tables.
+- A run name must be unique: one saved table `results/alexnet/*/<run name>_scenario.csv`. `--layers` and `--comm` use it to find the runs already in their tables.

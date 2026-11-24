@@ -9,7 +9,8 @@ read_logs() puts the rows of every PE's log in one table, adds the pe and task i
 prefix and replaces the peer ids by task names.
 
 A run is a scenario, given as its path relative to sim/
-(testcase_4x4_alexnet_v128/alexnet_v128_scenario). Its table is saved in
+(testcase_4x4_alexnet_v128/alexnet_v128_scenario). Its name in the tables is the scenario
+without _scenario (alexnet_v128, alexnet_overlap_v128). Its table is saved in
 
     results/alexnet/<testcase without testcase_>/<scenario>.csv
 
@@ -22,10 +23,11 @@ the tables saved in its results/alexnet/.
 with 1 if one differs. Give it the runs with a glob: testcase_4x4_alexnet_*/alexnet_*_scenario.
 --layers adds the runs to results/alexnet/layer_cycles.csv, which has one column per run with the
 compute cycles of each layer (x10^6): the slowest conv PE plus the join; fc6-8: the
-classifier. Its last row, total, is the whole run from the mapper's "App 1 started" to
-"App 1 terminated". Only runs with one inference are supported. It also saves
+classifier. Its last row, total, is the whole run from the mapper's "App 1 started" to the
+last measured row (see app_start()). Only runs with one inference are supported. It also saves
 results/alexnet/layer_breakdown.csv: each layer's cycles split into conv/FC (conv, psum and bias
-steps; fc and bias), relu and maxpool, with the speedup over the scalar run. The runs already
+steps; fc and bias), relu and maxpool, plus the layer's wall time (see layer_time()), with the
+speedup over the scalar run. The runs already
 in the tables stay in them, rebuilt from their saved tables; to start over, delete
 layer_breakdown.csv.
 --comm adds the runs to results/alexnet/comm.csv: one row per link (c2_* -> j2) and run, with
@@ -131,15 +133,15 @@ def find_scenario(run, sim=SIM):
 
 
 def run_name(run):
-    """testcase_4x4_alexnet_v128/alexnet_v128_scenario -> 4x4_alexnet_v128"""
-    testcase = os.path.dirname(os.path.normpath(run))
-    return testcase.removeprefix("testcase_")
+    """testcase_4x4_alexnet_v128/alexnet_overlap_v128_scenario -> alexnet_overlap_v128"""
+    scenario = os.path.basename(os.path.normpath(run))
+    return scenario.removesuffix("_scenario")
 
 
 def table_path(run, sim=SIM):
     """sim/results/alexnet/<testcase without testcase_>/<scenario>.csv"""
-    scenario = os.path.basename(os.path.normpath(run))
-    return os.path.join(sim, RESULTS, run_name(run), scenario + ".csv")
+    testcase, scenario = os.path.split(os.path.normpath(run))
+    return os.path.join(sim, RESULTS, testcase.removeprefix("testcase_"), scenario + ".csv")
 
 
 def is_outdated(table, scenario_dir):
@@ -259,11 +261,11 @@ def layer_cycles(rows):
 def breakdown(parts):
     """One row per layer and run: the cycles of each part (x10^6) and the speedup over scalar.
 
-    parts is {run name: layer_parts table}. A run's scalar run is its name with the VLEN
-    replaced by scalar (4x4_alexnet_v128 -> 4x4_alexnet_scalar); without it the speedups are
-    empty.
+    parts is {run name: layer_parts table plus a time column (layer_time)}. A run's scalar run
+    is its name with the VLEN replaced by scalar (alexnet_v128 -> alexnet_scalar); without it
+    the speedups are empty.
     """
-    columns = PARTS + ["total"]
+    columns = PARTS + ["total", "time"]
 
     table = pd.concat(parts, names=["run", "layer"]).reset_index()
     table = table.sort_values("layer", kind="stable")  # conv1..conv5, fc6-8; runs in order
@@ -282,36 +284,59 @@ def breakdown(parts):
     return table[["layer", "run"] + columns + speedups]
 
 
-def app_cycles(scenario_dir):
-    """The whole run, communication included: App 1 started -> terminated (the mapper's log)"""
-    start = end = None
+def app_start(scenario_dir):
+    """The tick the app started at: the mapper's "App 1 started".
 
+    The run ends at its last measured row, not at the mapper's "App 1 terminated": the tasks
+    print their tables only after the classifier is done, so that one includes the printing.
+    """
     for path in log_files(scenario_dir):
         for line in open(path, errors="replace"):
             if m := re.search(r"App 1 started at (-?\d+)", line):
-                start = int(m.group(1)) % 2**32  # printed as a signed 32-bit int
-            elif m := re.search(r"App 1 terminated at time (-?\d+)", line):
-                end = int(m.group(1)) % 2**32
+                return int(m.group(1)) % 2**32  # printed as a signed 32-bit int
 
-    if start is None or end is None:
-        return None
-    return end - start
+    sys.exit(f"{scenario_dir}: no \"App 1 started\" in the logs")
+
+
+def layer_time(rows, start):
+    """Wall cycles of each layer: from the previous layer's end to the end of this one.
+
+    A layer ends at its join's last row (fc6-8: the classifier's). conv1 starts at the app's
+    start, so the layers add up to the whole run. Unlike layer_cycles, this counts the
+    communication and idle time, and the work of a layer that overlaps with another counts
+    once.
+    """
+    tasks = [f"j{layer}" for layer in range(1, 6)] + ["classifier"]
+    names = [f"conv{layer}" for layer in range(1, 6)] + ["fc6-8"]
+
+    # the conv-only runs have no classifier
+    ends = pd.Series({name: rows.tf[rows.task == task].max()
+                      for name, task in zip(names, tasks) if task in set(rows.task)})
+
+    return ends.diff().fillna(ends.iloc[0] - start)
 
 
 def messages(rows):
     """One row per message: its send next to its receive.
 
-    A send is matched with the receive of the same sender, receiver and inference. Columns:
-    inf, sender, receiver, then pe, bytes, to, tf and cycles with _send and _recv, plus
+    The n-th send from a sender to a receiver in an inference is matched with the n-th receive
+    of that receiver from that sender: MAestro delivers them in order, since a task has at
+    most one pending send. Columns: inf, sender, receiver, n, then pe, bytes, to, tf and
+    cycles with _send and _recv, plus
       local:    sender and receiver on the same PE, so the message does not cross the NoC
       transfer: recv tf - max(recv to, send tf), the receive without the wait for the sender
     """
-    columns = ["inf", "sender", "receiver", "pe", "bytes", "to", "tf", "cycles"]
+    pair    = ["inf", "sender", "receiver"]
+    columns = pair + ["n", "pe", "bytes", "to", "tf", "cycles"]
 
     sends = rows[rows.kind == "send"].rename(columns={"task": "sender", "peer": "receiver"})
     recvs = rows[rows.kind == "recv"].rename(columns={"task": "receiver", "peer": "sender"})
 
-    msgs = sends[columns].merge(recvs[columns], on=["inf", "sender", "receiver"],
+    # n: the message's number within its pair, in time order
+    sends = sends.sort_values("to").assign(n=lambda t: t.groupby(pair).cumcount())
+    recvs = recvs.sort_values("to").assign(n=lambda t: t.groupby(pair).cumcount())
+
+    msgs = sends[columns].merge(recvs[columns], on=pair + ["n"],
                                 suffixes=("_send", "_recv"), validate="one_to_one")
 
     msgs["local"]    = msgs.pe_send == msgs.pe_recv
@@ -369,15 +394,15 @@ def by_link(links):
 
 
 def saved_run(name, sim=SIM):
-    """4x4_alexnet_v128 -> testcase_4x4_alexnet_v128/<scenario>, from its table in RESULTS"""
-    tables = glob.glob(os.path.join(sim, RESULTS, name, "*.csv"))
-    tables = [table for table in tables if not table.endswith("_checksums.csv")]
+    """alexnet_v128 -> testcase_4x4_alexnet_v128/alexnet_v128_scenario, from its table in RESULTS"""
+    tables = glob.glob(os.path.join(sim, RESULTS, "*", name + "_scenario.csv"))
 
     if len(tables) != 1:
-        sys.exit(f"{name}: expected one saved table in {RESULTS}/{name}/, found {len(tables)}")
+        sys.exit(f"{name}: expected one saved table {RESULTS}/*/{name}_scenario.csv, "
+                 f"found {len(tables)}")
 
-    scenario = os.path.basename(tables[0]).removesuffix(".csv")
-    return f"testcase_{name}/{scenario}"
+    testcase = os.path.basename(os.path.dirname(tables[0]))
+    return f"testcase_{testcase}/{name}_scenario"
 
 
 def table_runs(path, runs, sim=SIM):
@@ -457,12 +482,15 @@ if __name__ == "__main__":
         # the runs already in the layer tables stay in them
         for run in table_runs(os.path.join(results, "layer_breakdown.csv"), args.runs,
                               args.sim):
-            rows = load(run, sim=args.sim)
+            rows  = load(run, sim=args.sim)
+            start = app_start(find_scenario(run, args.sim))
 
             cycles          = layer_cycles(rows)
-            cycles["total"] = app_cycles(find_scenario(run, args.sim))
+            cycles["total"] = rows.tf.max() - start
             layers[run_name(run)] = cycles
-            parts[run_name(run)]  = layer_parts(rows)
+
+            parts[run_name(run)]         = layer_parts(rows)
+            parts[run_name(run)]["time"] = layer_time(rows, start)
 
         # one row per layer, one column per run, in millions of cycles
         table = pd.DataFrame(layers).astype(float).div(1e6).round(2)
