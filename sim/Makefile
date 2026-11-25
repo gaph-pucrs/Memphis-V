@@ -119,6 +119,33 @@ run-4x4-alexnet-overlap-v256:
 	@echo "VFLAGS = -mrvv-vector-bits=zvl" >> ./testcase_4x4_alexnet_v256/active_config.mk
 	@$(MAKE) _sim ACTIVE_TESTCASE=testcase_4x4_alexnet_v256 APP=alexnet_overlap_v256_applications SCENARIO=alexnet_overlap_v256_scenario
 
+# alexnet-rows (every task streams row by row, all layers at once): same testcases as alexnet, own mapping
+run-4x4-alexnet-rows-scalar:
+	@echo "[Setup] preparing isolated environment for testcase_4x4_alexnet_scalar..."
+	@echo "" > ./testcase_4x4_alexnet_scalar/active_config.mk
+	@$(MAKE) _sim ACTIVE_TESTCASE=testcase_4x4_alexnet_scalar APP=alexnet_rows_scalar_applications SCENARIO=alexnet_rows_scalar_scenario
+
+run-4x4-alexnet-rows-v64:
+	@echo "[Setup] preparing isolated environment for testcase_4x4_alexnet_v64..."
+	@echo "VLEN = 64" > ./testcase_4x4_alexnet_v64/active_config.mk
+	@echo "ARCH = rv32imc_zicsr_zve32x_zvl64b" >> ./testcase_4x4_alexnet_v64/active_config.mk
+	@echo "VFLAGS = -mrvv-vector-bits=zvl" >> ./testcase_4x4_alexnet_v64/active_config.mk
+	@$(MAKE) _sim ACTIVE_TESTCASE=testcase_4x4_alexnet_v64 APP=alexnet_rows_v64_applications SCENARIO=alexnet_rows_v64_scenario
+
+run-4x4-alexnet-rows-v128:
+	@echo "[Setup] preparing isolated environment for testcase_4x4_alexnet_v128..."
+	@echo "VLEN = 128" > ./testcase_4x4_alexnet_v128/active_config.mk
+	@echo "ARCH = rv32imc_zicsr_zve32x_zvl128b" >> ./testcase_4x4_alexnet_v128/active_config.mk
+	@echo "VFLAGS = -mrvv-vector-bits=zvl" >> ./testcase_4x4_alexnet_v128/active_config.mk
+	@$(MAKE) _sim ACTIVE_TESTCASE=testcase_4x4_alexnet_v128 APP=alexnet_rows_v128_applications SCENARIO=alexnet_rows_v128_scenario
+
+run-4x4-alexnet-rows-v256:
+	@echo "[Setup] preparing isolated environment for testcase_4x4_alexnet_v256..."
+	@echo "VLEN = 256" > ./testcase_4x4_alexnet_v256/active_config.mk
+	@echo "ARCH = rv32imc_zicsr_zve32x_zvl256b" >> ./testcase_4x4_alexnet_v256/active_config.mk
+	@echo "VFLAGS = -mrvv-vector-bits=zvl" >> ./testcase_4x4_alexnet_v256/active_config.mk
+	@$(MAKE) _sim ACTIVE_TESTCASE=testcase_4x4_alexnet_v256 APP=alexnet_rows_v256_applications SCENARIO=alexnet_rows_v256_scenario
+
 _sim: _compile_app _deploy_scenario
 	@echo "[Simulation] starting $(ACTIVE_TESTCASE) testcase..."
 	@echo "[Simulation] deployed $(SCENARIO) scenario"

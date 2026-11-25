@@ -1,0 +1,6 @@
+apps:                             # Application properties
+  - name: alexnet-rows            # alexnet with every task streaming row by row, every task vectorized
+    instance: v64
+    definitions:
+      - NUM_INFERENCES: 1
+      - VECTOR: 1                 # cnn_common.h: RVV kernels
