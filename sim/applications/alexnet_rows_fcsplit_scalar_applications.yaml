@@ -1,0 +1,5 @@
+apps:                             # Application properties
+  - name: alexnet-rows-fcsplit    # alexnet-rows with fc6-8 split over 16 fc tasks, every task scalar
+    instance: scalar
+    definitions:
+      - NUM_INFERENCES: 1
